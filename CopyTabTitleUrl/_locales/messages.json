@@ -1,0 +1,76 @@
+﻿{
+  "extensionName": {
+    "translate":  false,
+    "message":    "CopyTabTitleUrl",
+    "description":"拡張機能の名称"
+  },
+  "extensionDescription": {
+    "message":    "クリップボードへタブのタイトルとURLをコピーします。",
+    "description":"拡張機能の説明"
+  },
+  "contextMenu_CopyTabTitleUrl": {
+    "message":    "タブのタイトルとURLをコピー",
+    "description":"タブのタイトルとURLをコピー"
+  },
+  "contextMenu_CopyTabTitle": {
+    "message":    "タブのタイトルをコピー",
+    "description":"タブのタイトルをコピー"
+  },
+  "contextMenu_CopyTabUrl": {
+    "message":    "タブのURLをコピー",
+    "description":"タブのURLをコピー"
+  },
+  "contextMenu_CopyTabAllTitleUrl": {
+    "message":    "すべてのタブのタイトルとURLをコピー",
+    "description":"すべてのタブのタイトルとURLをコピー"
+  },
+  "contextMenu_CopyTabAllTitle": {
+    "message":    "すべてのタブのタイトルをコピー",
+    "description":"すべてのタブのタイトルをコピー"
+  },
+  "contextMenu_CopyTabAllUrl": {
+    "message":    "すべてのタブのURLをコピー",
+    "description":"すべてのタブのURLをコピー"
+  },
+  "optionsPage_Menu": {
+    "message":    "メニュー",
+    "description":"メニュー"
+  },
+  "optionsPage_MenuItem": {
+    "message":    "メニューアイテム",
+    "description":"メニューアイテム"
+  },
+  "optionsPage_ContextMenuCheckbox": {
+    "message":    "コンテキストメニュー",
+    "description":"コンテキストメニュー"
+  },
+  "optionsPage_PageContextMenuCheckbox": {
+    "message":    "ページコンテキストメニュー",
+    "description":"ページコンテキストメニュー"
+  },
+  "optionsPage_TabContextMenuCheckbox": {
+    "message":    "タブコンテキストメニュー",
+    "description":"タブコンテキストメニュー"
+  },
+  "optionsPage_AdditionalFunctionsSettingsTitle": {
+    "message":    "追加機能",
+    "description":"追加機能"
+  },
+  "optionsPage_CurrentTabSettingsTitle": {
+    "message":    "カレントタブ",
+    "description":"カレントタブ"
+  },
+  "optionsPage_CurrentWindowSettingsTitle": {
+    "message":    "カレントウィンドウ",
+    "description":"カレントウィンドウ"
+  },
+  "optionsPage_AllWindowSettingsTitle": {
+    "message":    "すべてのウィンドウ",
+    "description":"すべてのウィンドウ"
+  },
+  "dummyDummyDummy": {
+    "translate":  false,
+    "message":    "dummy",
+    "description":"dummy"
+  }
+}

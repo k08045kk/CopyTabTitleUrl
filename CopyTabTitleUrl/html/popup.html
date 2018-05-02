@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+body {
+	width: 250px;
+    line-height: 1.25;
+    font-size: 13px;
+	color: #3b3c40;
+}
+a {
+    margin: 6px;
+    display: inline-block;
+    text-decoration: none;
+    color: #217ac0;
+}
+a:hover {
+    background-color: #217ac0;
+    color: #fff;
+}
+a:active {
+    background-color: silver;
+    color: #fff;
+}
+.panel {
+    margin: 4px;
+}
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="panel-section panel-section-header">
+            <div class="text-section-header" data-label="optionsPage_CurrentTabSettingsTitle"></div>
+        </div>
+        <a href="#" id="item_CopyTabTitleUrl" data-label="contextMenu_CopyTabTitleUrl"></a><br>
+        <a href="#" id="item_CopyTabTitle" data-label="contextMenu_CopyTabTitle"></a><br>
+        <a href="#" id="item_CopyTabUrl" data-label="contextMenu_CopyTabUrl"></a><br>
+		
+        <div class="panel-section panel-section-header">
+            <div class="text-section-header" data-label="optionsPage_CurrentWindowSettingsTitle"></div>
+        </div>
+        <a href="#" id="current_CopyTabTitleUrl" data-label="contextMenu_CopyTabAllTitleUrl"></a><br>
+        <a href="#" id="current_CopyTabTitle" data-label="contextMenu_CopyTabAllTitle"></a><br>
+        <a href="#" id="current_CopyTabUrl" data-label="contextMenu_CopyTabAllUrl"></a><br>
+		
+        <div class="panel-section panel-section-header">
+            <div class="text-section-header" data-label="optionsPage_AllWindowSettingsTitle"></div>
+        </div>
+        <a href="#" id="all_CopyTabTitleUrl" data-label="contextMenu_CopyTabAllTitleUrl"></a><br>
+        <a href="#" id="all_CopyTabTitle" data-label="contextMenu_CopyTabAllTitle"></a><br>
+        <a href="#" id="all_CopyTabUrl" data-label="contextMenu_CopyTabAllUrl"></a><br>
+		
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/popup.js"></script>
+</body>
+</html>

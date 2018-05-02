@@ -1,76 +1,60 @@
-﻿// ページ読み込み完了イベント
-function onPageLoaded() {
-  // 多言語化
-  var labels = document.querySelectorAll('*[data-label]');
-  for (var i=0; i<labels.length; i++) {
-    labels[i].textContent = chrome.i18n.getMessage(labels[i].dataset.label);
-  }
-  
-  // 設定の読み込み
-  getStorageArea()
-    .get({
-      'menu_all': false,
-      'menu_tab': true,
-      'item_CopyTabTitleUrl': true,
-      'item_CopyTabTitle': true,
-      'item_CopyTabUrl': true,
-      'item_CopyTabAllTitleUrl': false,
-      'item_CopyTabAllTitle': false,
-      'item_CopyTabAllUrl': false
-    }, function(item) {
-      document.getElementById("menu_all").checked = item.menu_all;
-      document.getElementById("menu_tab").checked = item.menu_tab;
-      document.getElementById("item_CopyTabTitleUrl").checked = item.item_CopyTabTitleUrl;
-      document.getElementById("item_CopyTabTitle").checked = item.item_CopyTabTitle;
-      document.getElementById("item_CopyTabUrl").checked = item.item_CopyTabUrl;
-      document.getElementById("item_CopyTabAllTitleUrl").checked = item.item_CopyTabAllTitleUrl;
-      document.getElementById("item_CopyTabAllTitle").checked = item.item_CopyTabAllTitle;
-      document.getElementById("item_CopyTabAllUrl").checked = item.item_CopyTabAllUrl;
-    });
+﻿/**
+ * オプションページ処理
+ */
+
+// メニュー更新
+function updateContextMenu() {
+  // ALL選択時は、PAGEを無効化
+  document.getElementById('menu_page').disabled = 
+      document.getElementById('menu_all').checked;
 }
-document.addEventListener('DOMContentLoaded', onPageLoaded);
+
+// ページ読み込み完了イベント
+function onPageLoaded() {
+  // テキスト読込み(国際化)
+  document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
+    v.textContent = chrome.i18n.getMessage(v.dataset.label);
+  });
+  
+  // ストレージから設定を読込み
+  getStorageArea().get(defaultStorageValueSet, function(item) {
+    Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
+      document.getElementById(v).checked = item[v];
+    });
+  });
+  
+  // メニュー更新
+  updateContextMenu();
+}
+//document.addEventListener('DOMContentLoaded', onPageLoaded);
+onPageLoaded();
 
 // コンテキストメニュー変更イベント
 function onUpdateContextMenu() {
-  getStorageArea()
-    .set({
-      'menu_all': document.getElementById("menu_all").checked,
-      'menu_tab': document.getElementById("menu_tab").checked,
-      'item_CopyTabTitleUrl': document.getElementById("item_CopyTabTitleUrl").checked,
-      'item_CopyTabTitle': document.getElementById("item_CopyTabTitle").checked,
-      'item_CopyTabUrl': document.getElementById("item_CopyTabUrl").checked,
-      'item_CopyTabAllTitleUrl': document.getElementById("item_CopyTabAllTitleUrl").checked,
-      'item_CopyTabAllTitle': document.getElementById("item_CopyTabAllTitle").checked,
-      'item_CopyTabAllUrl': document.getElementById("item_CopyTabAllUrl").checked
-    }, function() {
-      updateContextMenus();
-    });
+  // メニュー更新
+  updateContextMenu();
+  
+  // 設定を作成
+  let valueSet = {};
+  Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
+    valueSet[v] = document.getElementById(v).checked;
+  });
+  
+  // ストレージへ設定を保存
+  getStorageArea().set(valueSet, function() {
+    updateContextMenus();
+  });
 }
-document.getElementById('menu_all').addEventListener('click', onUpdateContextMenu);
-document.getElementById('menu_tab').addEventListener('click', onUpdateContextMenu);
-document.getElementById('item_CopyTabTitleUrl').addEventListener('click', onUpdateContextMenu);
-document.getElementById('item_CopyTabTitle').addEventListener('click', onUpdateContextMenu);
-document.getElementById('item_CopyTabUrl').addEventListener('click', onUpdateContextMenu);
-document.getElementById('item_CopyTabAllTitleUrl').addEventListener('click', onUpdateContextMenu);
-document.getElementById('item_CopyTabAllTitle').addEventListener('click', onUpdateContextMenu);
-document.getElementById('item_CopyTabAllUrl').addEventListener('click', onUpdateContextMenu);
+Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
+  document.getElementById(v).addEventListener('click', onUpdateContextMenu);
+});
 
-// 追加機能
-document.getElementById('func_all_CopyTabAllTitleUrl').addEventListener('click', function() {
-  onCopyTabs(0, {});
-});
-document.getElementById('func_all_CopyTabAllTitle').addEventListener('click', function() {
-  onCopyTabs(1, {});
-});
-document.getElementById('func_all_CopyTabAllUrl').addEventListener('click', function() {
-  onCopyTabs(2, {});
-});
-document.getElementById('func_current_CopyTabAllTitleUrl').addEventListener('click', function() {
-  onCopyTabs(0, {currentWindow: true});
-});
-document.getElementById('func_current_CopyTabAllTitle').addEventListener('click', function() {
-  onCopyTabs(1, {currentWindow: true});
-});
-document.getElementById('func_current_CopyTabAllUrl').addEventListener('click', function() {
-  onCopyTabs(2, {currentWindow: true});
+// 追加機能(Firefox only)
+['CopyTabAllTitleUrl', 'CopyTabAllTitle', 'CopyTabAllUrl'].forEach(function(v, i, a) {
+  document.getElementById('current_'+v).addEventListener('click', function() {
+    onCopyTabs(i, {currentWindow: true});
+  });
+  document.getElementById('all_'+v).addEventListener('click', function() {
+    onCopyTabs(i, {});
+  });
 });
