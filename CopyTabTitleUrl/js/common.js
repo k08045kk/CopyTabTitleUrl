@@ -16,10 +16,10 @@ function copyToClipboard(text) {
 }
 
 // すべてのタブをクリップボードにコピー
-function onCopyAllTab(type, query) {
+function onCopyTabs(type, query) {
   // すべてのタブ: {}
   // カレントウィンドウのすべてのタブ: {currentWindow: true}
-  chrome.tabs.query(query)
+  browser.tabs.query(query)
     .then(function(tabs) {
       let text = '';
       for (let tab of tabs) {
@@ -34,7 +34,7 @@ function onCopyAllTab(type, query) {
       }
       copyToClipboard(text);
     }, function() {
-      //console.log('onCopyAllTab() error.');
+      //console.log('onCopyTabs() error.');
     });
 }
 
@@ -107,7 +107,7 @@ function updateContextMenus() {
           title: chrome.i18n.getMessage("contextMenu_CopyTabAllTitleUrl"),
           contexts: contexts,
           "onclick": function(info, tab) {
-            onCopyAllTab(0, {currentWindow: true});
+            onCopyTabs(0, {currentWindow: true});
           }
         });
       }
@@ -117,7 +117,7 @@ function updateContextMenus() {
           title: chrome.i18n.getMessage("contextMenu_CopyTabAllTitle"),
           contexts: contexts,
           "onclick": function(info, tab) {
-            onCopyAllTab(1, {currentWindow: true});
+            onCopyTabs(1, {currentWindow: true});
           }
         });
       }
@@ -127,7 +127,7 @@ function updateContextMenus() {
           title: chrome.i18n.getMessage("contextMenu_CopyTabAllUrl"),
           contexts: contexts,
           "onclick": function(info, tab) {
-            onCopyAllTab(2, {currentWindow: true});
+            onCopyTabs(2, {currentWindow: true});
           }
         });
       }

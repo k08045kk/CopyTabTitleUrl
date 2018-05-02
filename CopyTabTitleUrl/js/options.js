@@ -57,20 +57,20 @@ document.getElementById('item_CopyTabAllUrl').addEventListener('click', onUpdate
 
 // 追加機能
 document.getElementById('func_all_CopyTabAllTitleUrl').addEventListener('click', function() {
-  onCopyAllTab(0, {});
+  onCopyTabs(0, {});
 });
 document.getElementById('func_all_CopyTabAllTitle').addEventListener('click', function() {
-  onCopyAllTab(1, {});
+  onCopyTabs(1, {});
 });
 document.getElementById('func_all_CopyTabAllUrl').addEventListener('click', function() {
-  onCopyAllTab(2, {});
+  onCopyTabs(2, {});
 });
 document.getElementById('func_current_CopyTabAllTitleUrl').addEventListener('click', function() {
-  onCopyAllTab(0, {currentWindow: true});
+  onCopyTabs(0, {currentWindow: true});
 });
 document.getElementById('func_current_CopyTabAllTitle').addEventListener('click', function() {
-  onCopyAllTab(1, {currentWindow: true});
+  onCopyTabs(1, {currentWindow: true});
 });
 document.getElementById('func_current_CopyTabAllUrl').addEventListener('click', function() {
-  onCopyAllTab(2, {currentWindow: true});
+  onCopyTabs(2, {currentWindow: true});
 });
