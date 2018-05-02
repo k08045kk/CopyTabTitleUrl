@@ -21,10 +21,10 @@ function onPageLoaded() {
     Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
       document.getElementById(v).checked = item[v];
     });
+    
+    // メニュー更新
+    updateContextMenu();
   });
-  
-  // メニュー更新
-  updateContextMenu();
 }
 //document.addEventListener('DOMContentLoaded', onPageLoaded);
 onPageLoaded();
