@@ -1,4 +1,4 @@
-{
+﻿{
   "extensionDescription": {
     "message": "タブコンテキストメニューを追加して、クリップボードへタイトルとURLをコピーします。",
     "description": "拡張機能の説明"
@@ -15,28 +15,44 @@
     "message": "タブのURLをコピー",
     "description": "コンテキストメニューの説明"
   },
-  "optionsPage_SpecialActionSettingsTitle": {
+  "contextMenu_CopyTabAllTitleUrl": {
+    "message": "すべてのタブのタイトルとURLをコピー",
+    "description": "コンテキストメニューの説明"
+  },
+  "contextMenu_CopyTabAllTitle": {
+    "message": "すべてのタブのタイトルをコピー",
+    "description": "コンテキストメニューの説明"
+  },
+  "contextMenu_CopyTabAllUrl": {
+    "message": "すべてのタブのURLをコピー",
+    "description": "コンテキストメニューの説明"
+  },
+  "optionsPage_Menu": {
+    "message": "メニュー",
+    "description": "オプションページ"
+  },
+  "optionsPage_MenuItem": {
+    "message": "メニューアイテム",
+    "description": "オプションページ"
+  },
+  "optionsPage_ContextMenuCheckbox": {
+    "message": "コンテキストメニュー",
+    "description": "オプションページ"
+  },
+  "optionsPage_TabContextMenuCheckbox": {
+    "message": "タブコンテキストメニュー",
+    "description": "オプションページ"
+  },
+  "optionsPage_AdditionalFunctionsSettingsTitle": {
     "message": "追加機能",
     "description": "オプションページ"
   },
-  "optionsPage_AllWindow": {
+  "optionsPage_AllWindowSettingsTitle": {
     "message": "すべてのウィンドウ",
     "description": "オプションページ"
   },
-  "optionsPage_CurrentWindow": {
+  "optionsPage_CurrentWindowSettingsTitle": {
     "message": "カレントウィンドウ",
-    "description": "オプションページ"
-  },
-  "optionsPage_CopyAllTabTitleUrl": {
-    "message": "すべてタブのタイトルとURLをコピー",
-    "description": "オプションページ"
-  },
-  "optionsPage_CopyAllTabTitle": {
-    "message": "すべてタブのタイトルをコピー",
-    "description": "オプションページ"
-  },
-  "optionsPage_CopyAllTabUrl": {
-    "message": "すべてタブのURLをコピー",
     "description": "オプションページ"
   },
   "dummyDummyDummy": {

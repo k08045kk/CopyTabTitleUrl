@@ -1,8 +1,8 @@
-{
+﻿{
   "manifest_version": 2,
   "name": "CopyTabTitleUrl",
   "description": "__MSG_extensionDescription__",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "default_locale": "en",
   "homepage_url": "https://www.bugbugnow.net/",
   "applications": {
@@ -12,7 +12,10 @@
   },
   
   "background": {
-    "scripts": ["js/background.js"],
+    "scripts": [
+      "js/common.js",
+      "js/background.js"
+    ],
     "persistent": false
   },
   
@@ -25,6 +28,7 @@
     "activeTab",
     "contextMenus",
     "clipboardWrite",
-    "tabs"
+    "tabs",
+    "storage"
   ]
 }
