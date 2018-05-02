@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "CopyTabTitleUrl",
+  "description": "コンテキストメニューを追加して、クリップボードへタイトルとURLをコピーします。",
+  "version": "0.0.1",
+  "applications": {
+    "gecko": {
+      "id": "CopyTabTitleUrl@bugbugnow.net"
+    }
+  },
+  
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "clipboardWrite",
+    "tabs"
+  ]
+}
