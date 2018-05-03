@@ -7,10 +7,12 @@ body {
 	font-size: 1.25rem;
 	padding: 1em;
 }
-
 fieldset {
     margin: 0 0 1em 0;
     border: 1px solid #b1b1b1;
+}
+#format_CopyTabFormat {
+	width: 80%;
 }
     </style>
 </head>
@@ -29,12 +31,21 @@ fieldset {
 			<label for="item_CopyTabTitle" data-label="contextMenu_CopyTabTitle"></label></p>
 		<p><input id="item_CopyTabUrl" type="checkbox"/>
 			<label for="item_CopyTabUrl" data-label="contextMenu_CopyTabUrl"></label></p>
+		<p><input id="item_CopyTabFormat" type="checkbox"/>
+			<label for="item_CopyTabFormat" data-label="contextMenu_CopyTabFormat"></label></p>
 		<p><input id="item_CopyTabAllTitleUrl" type="checkbox"/>
 			<label for="item_CopyTabAllTitleUrl" data-label="contextMenu_CopyTabAllTitleUrl"></label></p>
 		<p><input id="item_CopyTabAllTitle" type="checkbox"/>
 			<label for="item_CopyTabAllTitle" data-label="contextMenu_CopyTabAllTitle"></label></p>
 		<p><input id="item_CopyTabAllUrl" type="checkbox"/>
 			<label for="item_CopyTabAllUrl" data-label="contextMenu_CopyTabAllUrl"></label></p>
+		<p><input id="item_CopyTabAllFormat" type="checkbox"/>
+			<label for="item_CopyTabAllFormat" data-label="contextMenu_CopyTabAllFormat"></label></p>
+    </fieldset>
+    <fieldset>
+		<legend data-label="optionsPage_Format"></legend>
+		<p data-label="optionsPage_FormatMessage"></p>
+		<p><input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
     </fieldset>
 	
 	<hr/>
@@ -46,12 +57,14 @@ fieldset {
 		    <button id="current_CopyTabAllTitleUrl" data-label="contextMenu_CopyTabAllTitleUrl"></button>
 		    <button id="current_CopyTabAllTitle" data-label="contextMenu_CopyTabAllTitle"></button>
 		    <button id="current_CopyTabAllUrl" data-label="contextMenu_CopyTabAllUrl"></button>
+		    <button id="current_CopyTabAllFormat" data-label="contextMenu_CopyTabAllFormat"></button>
 	    </fieldset>
 	    <fieldset>
 			<legend data-label="optionsPage_AllWindowSettingsTitle"></legend>
 		    <button id="all_CopyTabAllTitleUrl" data-label="contextMenu_CopyTabAllTitleUrl"></button>
 		    <button id="all_CopyTabAllTitle" data-label="contextMenu_CopyTabAllTitle"></button>
 		    <button id="all_CopyTabAllUrl" data-label="contextMenu_CopyTabAllUrl"></button>
+		    <button id="all_CopyTabAllFormat" data-label="contextMenu_CopyTabAllFormat"></button>
 	    </fieldset>
     </fieldset>
     <script src="/js/common.js"></script>

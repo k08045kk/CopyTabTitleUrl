@@ -12,19 +12,22 @@ function onPageLoaded() {
 //document.addEventListener('DOMContentLoaded', onPageLoaded);
 onPageLoaded();
 
-// 追加機能(Firefox only)
-['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl'].forEach(function(v, i, a) {
+// アクション設定
+['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat'].forEach(function(v, i, a) {
   document.getElementById('item_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow:true, active:true});
-    window.close();
+    onCopyTabs(i, {currentWindow:true, active:true}, null, function() {
+      window.close();
+    });
   });
   document.getElementById('current_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow:true});
-    window.close();
+    onCopyTabs(i, {currentWindow:true}, null, function() {
+      window.close();
+    });
   });
   document.getElementById('all_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {});
-    window.close();
+    onCopyTabs(i, {}, null, function() {
+      window.close();
+    });
   });
 });
 

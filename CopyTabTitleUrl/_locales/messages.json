@@ -20,6 +20,10 @@
     "message":    "タブのURLをコピー",
     "description":"タブのURLをコピー"
   },
+  "contextMenu_CopyTabFormat": {
+    "message":    "タブのフォーマットをコピー",
+    "description":"タブのフォーマットをコピー"
+  },
   "contextMenu_CopyTabAllTitleUrl": {
     "message":    "すべてのタブのタイトルとURLをコピー",
     "description":"すべてのタブのタイトルとURLをコピー"
@@ -32,6 +36,10 @@
     "message":    "すべてのタブのURLをコピー",
     "description":"すべてのタブのURLをコピー"
   },
+  "contextMenu_CopyTabAllFormat": {
+    "message":    "すべてのタブのフォーマットをコピー",
+    "description":"すべてのタブのフォーマットをコピー"
+  },
   "optionsPage_Menu": {
     "message":    "メニュー",
     "description":"メニュー"
@@ -39,6 +47,15 @@
   "optionsPage_MenuItem": {
     "message":    "メニューアイテム",
     "description":"メニューアイテム"
+  },
+  "optionsPage_Format": {
+    "message":    "フォーマット",
+    "description":"フォーマット"
+  },
+  "optionsPage_FormatMessage": {
+    "translate":  false,
+    "message":    "${title}, ${url}. - (example: \"[${title}](${url})\")",
+    "description":"フォーマットの説明"
   },
   "optionsPage_ContextMenuCheckbox": {
     "message":    "コンテキストメニュー",
