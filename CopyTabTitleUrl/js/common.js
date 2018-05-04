@@ -20,7 +20,11 @@ var defaultStorageValueSet = {
 
 // ブラウザ判定
 function isFirefox() {
-  return true;
+  try {
+    browser;
+    return true;
+  } catch (e) {}
+  return false;
 }
 
 // ストレージの取得
