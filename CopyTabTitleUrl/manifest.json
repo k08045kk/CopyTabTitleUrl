@@ -2,18 +2,9 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "default_locale": "en",
   "homepage_url": "https://www.bugbugnow.net/",
-  "developer": {
-    "name": "toshi",
-    "url": "https://www.bugbugnow.net/"
-  },
-  "applications": {
-    "gecko": {
-      "id": "CopyTabTitleUrl@bugbugnow.net"
-    }
-  },
   
   "background": {
     "scripts": [
@@ -24,12 +15,10 @@
   },
   
   "options_ui": {
-    "browser_style": true,
     "page": "html/options.html"
   },
   
   "browser_action": {
-    "browser_style": true,
     "default_title": "__MSG_extensionName__",
     "default_popup": "html/popup.html"
   },

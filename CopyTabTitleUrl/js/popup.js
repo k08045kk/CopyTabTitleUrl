@@ -13,21 +13,18 @@ function onPageLoaded() {
 onPageLoaded();
 
 // アクション設定
+function onTabCopyComplete() {
+  window.close();
+}
 ['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat'].forEach(function(v, i, a) {
   document.getElementById('item_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow:true, active:true}, null, function() {
-      window.close();
-    });
+    onCopyTabs(i, {currentWindow:true, active:true}, onTabCopyComplete);
   });
   document.getElementById('current_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow:true}, null, function() {
-      window.close();
-    });
+    onCopyTabs(i, {currentWindow:true}, onTabCopyComplete);
   });
   document.getElementById('all_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {}, null, function() {
-      window.close();
-    });
+    onCopyTabs(i, {}, onTabCopyComplete);
   });
 });
 

@@ -4,19 +4,24 @@
 
 // ストレージの初期値
 var defaultStorageValueSet = {
-  'menu_all': false,  // Firefox only
-  'menu_page': false, // Firefox only
-  'menu_tab': true,   // Firefox only
-  'item_CopyTabTitleUrl': true,
-  'item_CopyTabTitle': true,
-  'item_CopyTabUrl': true,
-  'item_CopyTabFormat': false,
-  'item_CopyTabAllTitleUrl': false, // Firefox only
-  'item_CopyTabAllTitle': false,    // Firefox only
-  'item_CopyTabAllUrl': false,      // Firefox only
-  'item_CopyTabAllFormat': false,    // Firefox only
-  'format_CopyTabFormat': '[${title}](${url})'
+  menu_all: false,
+  menu_page: false,
+  menu_tab: true,       // Firefox only
+  item_CopyTabTitleUrl: true,
+  item_CopyTabTitle: true,
+  item_CopyTabUrl: true,
+  item_CopyTabFormat: false,
+  item_CopyTabAllTitleUrl: false,
+  item_CopyTabAllTitle: false,
+  item_CopyTabAllUrl: false,
+  item_CopyTabAllFormat: false,
+  format_CopyTabFormat: '[${title}](${url})'
 };
+
+// ブラウザ判定
+function isFirefox() {
+  return false;
+}
 
 // ストレージの取得
 function getStorageArea() {
@@ -47,32 +52,35 @@ function createCopyTabFormat(format, tab) {
 }
 
 // タブをクリップボードにコピー
-function onCopyTabs(type, query, format, callback) {
-  if (type == 3 && format == null) {
+function copyTabs(type, query, format, callback) {
+  // すべてのタブ: {}
+  // カレントウィンドウのすべてのタブ: {currentWindow:true}
+  // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
+  chrome.tabs.query(query, function(tabs) {
+    let temp = [];
+    for (let tab of tabs) {
+      switch (type) {
+      case 0: temp.push(tab.title+'\n'+tab.url);  break;
+      case 1: temp.push(tab.title); break;
+      case 2: temp.push(tab.url); break;
+      case 3: temp.push(createCopyTabFormat(format, tab)); break;
+      }
+    }
+    copyToClipboard(temp.join('\n'));
+    if (callback) {
+      // 処理完了通知
+      callback();
+    }
+  });
+}
+function onCopyTabs(type, query, callback) {
+  if (type == 3) {
     getStorageArea().get(defaultStorageValueSet, function(item) {
       format = (item.format_CopyTabFormat == null)? '': item.format_CopyTabFormat;
-      onCopyTabs(type, query, format, callback);
+      copyTabs(type, query, format, callback);
     });
   } else {
-    // すべてのタブ: {}
-    // カレントウィンドウのすべてのタブ: {currentWindow:true}
-    // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
-    chrome.tabs.query(query, function(tabs) {
-      let temp = [];
-      for (let tab of tabs) {
-        switch (type) {
-        case 0: temp.push(tab.title+'\n'+tab.url);  break;
-        case 1: temp.push(tab.title); break;
-        case 2: temp.push(tab.url); break;
-        case 3: temp.push(createCopyTabFormat(format, tab)); break;
-        }
-      }
-      copyToClipboard(temp.join('\n'));
-      if (callback) {
-        // 処理完了通知
-        callback();
-      }
-    });
+    copyTabs(type, query, null, callback);
   }
 }
 
@@ -80,19 +88,21 @@ function onCopyTabs(type, query, format, callback) {
 function updateContextMenus() {
   // メニュー削除
   chrome.contextMenus.removeAll(function() {
-    
     // ストレージ取得
     getStorageArea().get(defaultStorageValueSet, function(item) {
       // メニュー追加
       let contexts = [];
       if (item.menu_all) {  contexts.push('all'); }
       if (item.menu_page) { contexts.push('page');}
-      if (item.menu_tab) {  contexts.push('tab'); }
+      if (item.menu_tab && isFirefox()) {
+        // Firefox only
+        contexts.push('tab');
+      }
       
       if (contexts.length != 0) {
         [
-           'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat'
-          ,'CopyTabAllTitleUrl', 'CopyTabAllTitle', 'CopyTabAllUrl', 'CopyTabAllFormat' // Firefox
+          'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 
+          'CopyTabAllTitleUrl', 'CopyTabAllTitle', 'CopyTabAllUrl', 'CopyTabAllFormat'
         ].forEach(function(v, i, a) {
           if (item['item_'+v]) {
             chrome.contextMenus.create({
@@ -109,13 +119,15 @@ function updateContextMenus() {
           case 'contextMenu_CopyTabTitle':    copyToClipboard(tab.title);  break;
           case 'contextMenu_CopyTabUrl':      copyToClipboard(tab.url);  break;
           case 'contextMenu_CopyTabFormat':
-             copyToClipboard(createCopyTabFormat(item.format_CopyTabFormat, tab));
-             break;
-          case 'contextMenu_CopyTabAllFormat':type++;   // Firefox only
-          case 'contextMenu_CopyTabAllUrl':   type++;   // Firefox only
-          case 'contextMenu_CopyTabAllTitle': type++;   // Firefox only
-          case 'contextMenu_CopyTabAllTitleUrl':        // Firefox only
-            onCopyTabs(type, {currentWindow:true}, item.format_CopyTabFormat);
+            getStorageArea().get(defaultStorageValueSet, function(item2) {
+              copyToClipboard(createCopyTabFormat(item2.format_CopyTabFormat, tab));
+            });
+            break;
+          case 'contextMenu_CopyTabAllFormat':type++;
+          case 'contextMenu_CopyTabAllUrl':   type++;
+          case 'contextMenu_CopyTabAllTitle': type++;
+          case 'contextMenu_CopyTabAllTitleUrl':
+            onCopyTabs(type, {currentWindow:true});
             break;
           }
         });

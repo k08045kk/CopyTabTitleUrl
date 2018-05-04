@@ -26,6 +26,25 @@ a:active {
 .panel {
     margin: 4px;
 }
+/* Chrome限定 */
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+	/* chrome://browser/content/extension.css */
+	/* stylelint-disable property-no-vendor-prefix */
+	.panel-section {
+	  display: flex;
+	  flex-direction: row;
+	}
+	/* Panel Section - Header */
+	.panel-section-header {
+	  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+	  padding: 16px;
+	}
+	.panel-section-header > .text-section-header {
+	  align-self: center;
+	  font-size: 1.385em;
+	  font-weight: lighter;
+	}
+}
     </style>
 </head>
 <body>
