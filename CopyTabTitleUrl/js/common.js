@@ -2,6 +2,41 @@
  * 共通処理
  */
 
+// Object判定
+function _isObject(obj) {
+  var type = typeof obj;
+  return type === 'function' || type === 'object' && !!obj;
+}
+
+var edge  = _isObject(chrome) 
+         && Object.keys(chrome).length == 1
+         && _isObject(chrome.app)
+         && Object.keys(chrome.app).length == 1
+         && Object.keys(chrome.app) == 'getDetails';
+try {
+  // Edge対策(chromeを使用しない前提)
+  var chrome = browser;
+} catch (e) {}
+
+// ブラウザ判定
+function isFirefox() {
+  try {
+    browser;
+    return !edge;
+  } catch (e) {}
+  return false;
+}
+function isEdge() {
+  return edge;
+}
+function isChrome() {
+  // Chrome or Opera
+  return !(isFirefox() || isEdge())
+}
+console.log('firefox: '+isFirefox());
+console.log('edge: '+isEdge());
+console.log('chrome: '+isChrome());
+
 // ストレージの初期値
 var defaultStorageValueSet = {
   menu_all: false,
@@ -18,15 +53,6 @@ var defaultStorageValueSet = {
   format_CopyTabFormat: '[${title}](${url})'
 };
 
-// ブラウザ判定
-function isFirefox() {
-  try {
-    browser;
-    return true;
-  } catch (e) {}
-  return false;
-}
-
 // ストレージの取得
 function getStorageArea() {
   //return (chrome.storage.sync ? chrome.storage.sync : chrome.storage.local);
@@ -36,18 +62,15 @@ function getStorageArea() {
 // クリップボードにコピー
 function copyToClipboard(text) {
   function oncopy(event) {
-    document.removeEventListener("copy", oncopy, true);
-    // Hide the event from the page to prevent tampering.
+    document.removeEventListener('copy', oncopy, true);
     event.stopImmediatePropagation();
     
-    // Overwrite the clipboard content.
     event.preventDefault();
-    event.clipboardData.setData("text/plain", text);
+    event.clipboardData.setData('text/plain', text);
   }
-  document.addEventListener("copy", oncopy, true);
+  document.addEventListener('copy', oncopy, true);
   
-  // Requires the clipboardWrite permission, or a user gesture:
-  document.execCommand("copy");
+  document.execCommand('copy');
 }
 
 function createCopyTabFormat(format, tab) {
