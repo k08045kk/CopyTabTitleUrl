@@ -11,7 +11,7 @@ function updateContextMenu() {
 
 // ページ読み込み完了イベント
 function onPageLoaded() {
-  if (!isFirefox()) {   // Chrome
+  if (!isFirefox()) {   // Chrome or Edge or Opera
     defaultStorageValueSet.menu_tab = false;
     document.getElementById('menu_tab').parentNode.style.display = 'none';
   }
@@ -75,7 +75,7 @@ Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
 ['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat']
 .forEach(function(v, i, a) {
   document.getElementById('current_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow: true});
+    onCopyTabs(i, {currentWindow:true});
   });
   document.getElementById('all_'+v).addEventListener('click', function() {
     onCopyTabs(i, {});

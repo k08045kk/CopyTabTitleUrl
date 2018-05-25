@@ -2,40 +2,29 @@
  * 共通処理
  */
 
-// Object判定
-function _isObject(obj) {
-  var type = typeof obj;
-  return type === 'function' || type === 'object' && !!obj;
-}
-
-var edge  = _isObject(chrome) 
-         && Object.keys(chrome).length == 1
-         && _isObject(chrome.app)
-         && Object.keys(chrome.app).length == 1
-         && Object.keys(chrome.app) == 'getDetails';
-try {
-  // Edge対策(chromeを使用しない前提)
-  var chrome = browser;
-} catch (e) {}
-
 // ブラウザ判定
+function isEdge() {
+  return isEdge.edge;
+}
+isEdge.edge = typeof chrome === 'object'
+           && Object.keys(chrome).length == 1
+           && typeof chrome.app === 'object'
+           && Object.keys(chrome.app).length == 1
+           && Object.keys(chrome.app) == 'getDetails';
 function isFirefox() {
   try {
     browser;
-    return !edge;
+    return !isEdge();
   } catch (e) {}
   return false;
 }
-function isEdge() {
-  return edge;
+function isChrome() { // Chrome or Opera
+  return !(isEdge() || isFirefox());
 }
-function isChrome() {
-  // Chrome or Opera
-  return !(isFirefox() || isEdge())
-}
-console.log('firefox: '+isFirefox());
-console.log('edge: '+isEdge());
-console.log('chrome: '+isChrome());
+try {
+  // Edge対策(chromeを使用しない前提)
+  chrome = browser;
+} catch (e) {}
 
 // ストレージの初期値
 var defaultStorageValueSet = {
