@@ -10,7 +10,7 @@ isEdge.edge = typeof chrome === 'object'
            && Object.keys(chrome).length == 1
            && typeof chrome.app === 'object'
            && Object.keys(chrome.app).length == 1
-           && Object.keys(chrome.app) == 'getDetails';
+           && Object.keys(chrome.app)[0] == 'getDetails';
 function isFirefox() {
   try {
     browser;
