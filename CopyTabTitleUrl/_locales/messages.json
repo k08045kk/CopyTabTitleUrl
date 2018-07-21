@@ -41,21 +41,20 @@
     "description":"すべてのタブのフォーマットをコピー"
   },
   "optionsPage_Menu": {
-    "message":    "メニュー",
-    "description":"メニュー"
+    "message":    "コンテキストメニュー",
+    "description":"コンテキストメニュー"
   },
   "optionsPage_MenuItem": {
     "message":    "メニューアイテム",
     "description":"メニューアイテム"
   },
+  "optionsPage_BrowserAction": {
+    "message":    "ツールチップ(ブラウザアクション)",
+    "description":"ブラウザアクション"
+  },
   "optionsPage_Format": {
     "message":    "フォーマット",
     "description":"フォーマット"
-  },
-  "optionsPage_FormatMessage": {
-    "translate":  false,
-    "message":    "${title}, ${url}. - (example: \"[${title}](${url})\")",
-    "description":"フォーマットの説明"
   },
   "optionsPage_ContextMenuCheckbox": {
     "message":    "コンテキストメニュー",
@@ -68,6 +67,22 @@
   "optionsPage_TabContextMenuCheckbox": {
     "message":    "タブコンテキストメニュー",
     "description":"タブコンテキストメニュー"
+  },
+  "optionsPage_Popup": {
+    "message":    "ポップアップメニューを表示する。",
+    "description":"ポップアップメニューを表示する。"
+  },
+  "optionsPage_Action": {
+    "message":    "アクションを実行する。",
+    "description":"アクションを実行する。"
+  },
+  "optionsPage_ActionTarget": {
+    "message":    "対象範囲",
+    "description":"対象範囲"
+  },
+  "optionsPage_ActionItem": {
+    "message":    "アクション",
+    "description":"アクション"
   },
   "optionsPage_AdditionalFunctionsSettingsTitle": {
     "message":    "追加機能",

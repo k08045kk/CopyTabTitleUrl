@@ -20,26 +20,26 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "js/common.js",
-      "js/background.js"
+      "/js/common.js",
+      "/js/background.js"
     ]
   },
   
   "options_ui": {
     "browser_style": true,
-    "page": "html/options.html"
+    "page": "/html/options.html"
   },
   
   "browser_action": {
     "browser_style": true,
     "default_title": "__MSG_extensionName__",
-    "default_popup": "html/popup.html"
+    "default_popup": "/html/popup.html"
   },
   
   "permissions": [
     "clipboardWrite",
-    "contextMenus",
     "tabs",
+    "contextMenus",
     "storage"
   ]
 }

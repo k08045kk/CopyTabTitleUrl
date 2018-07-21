@@ -28,34 +28,62 @@ fieldset {
 		<p><input id="menu_all" type="checkbox"/> <label for="menu_all" data-label="optionsPage_ContextMenuCheckbox"></label></p>
 		<p><input id="menu_page" type="checkbox"/> <label for="menu_page" data-label="optionsPage_PageContextMenuCheckbox"></label></p>
 		<p><input id="menu_tab" type="checkbox"/> <label for="menu_tab" data-label="optionsPage_TabContextMenuCheckbox"></label></p>
+	    <fieldset id='item'>
+			<legend data-label="optionsPage_MenuItem"></legend>
+			<p><input id="item_CopyTabTitleUrl" type="checkbox"/>
+				<label for="item_CopyTabTitleUrl" data-label="contextMenu_CopyTabTitleUrl"></label></p>
+			<p><input id="item_CopyTabTitle" type="checkbox"/>
+				<label for="item_CopyTabTitle" data-label="contextMenu_CopyTabTitle"></label></p>
+			<p><input id="item_CopyTabUrl" type="checkbox"/>
+				<label for="item_CopyTabUrl" data-label="contextMenu_CopyTabUrl"></label></p>
+			<p><input id="item_CopyTabFormat" type="checkbox"/>
+				<label for="item_CopyTabFormat" data-label="contextMenu_CopyTabFormat"></label></p>
+			<p><input id="item_CopyTabAllTitleUrl" type="checkbox"/>
+				<label for="item_CopyTabAllTitleUrl" data-label="contextMenu_CopyTabAllTitleUrl"></label></p>
+			<p><input id="item_CopyTabAllTitle" type="checkbox"/>
+				<label for="item_CopyTabAllTitle" data-label="contextMenu_CopyTabAllTitle"></label></p>
+			<p><input id="item_CopyTabAllUrl" type="checkbox"/>
+				<label for="item_CopyTabAllUrl" data-label="contextMenu_CopyTabAllUrl"></label></p>
+			<p><input id="item_CopyTabAllFormat" type="checkbox"/>
+				<label for="item_CopyTabAllFormat" data-label="contextMenu_CopyTabAllFormat"></label></p>
+	    </fieldset>
     </fieldset>
     <fieldset>
-		<legend data-label="optionsPage_MenuItem"></legend>
-		<p><input id="item_CopyTabTitleUrl" type="checkbox"/>
-			<label for="item_CopyTabTitleUrl" data-label="contextMenu_CopyTabTitleUrl"></label></p>
-		<p><input id="item_CopyTabTitle" type="checkbox"/>
-			<label for="item_CopyTabTitle" data-label="contextMenu_CopyTabTitle"></label></p>
-		<p><input id="item_CopyTabUrl" type="checkbox"/>
-			<label for="item_CopyTabUrl" data-label="contextMenu_CopyTabUrl"></label></p>
-		<p><input id="item_CopyTabFormat" type="checkbox"/>
-			<label for="item_CopyTabFormat" data-label="contextMenu_CopyTabFormat"></label></p>
-		<p><input id="item_CopyTabAllTitleUrl" type="checkbox"/>
-			<label for="item_CopyTabAllTitleUrl" data-label="contextMenu_CopyTabAllTitleUrl"></label></p>
-		<p><input id="item_CopyTabAllTitle" type="checkbox"/>
-			<label for="item_CopyTabAllTitle" data-label="contextMenu_CopyTabAllTitle"></label></p>
-		<p><input id="item_CopyTabAllUrl" type="checkbox"/>
-			<label for="item_CopyTabAllUrl" data-label="contextMenu_CopyTabAllUrl"></label></p>
-		<p><input id="item_CopyTabAllFormat" type="checkbox"/>
-			<label for="item_CopyTabAllFormat" data-label="contextMenu_CopyTabAllFormat"></label></p>
+		<legend data-label="optionsPage_BrowserAction"></legend>
+		<p><input id="ba_Popup" type="radio" name="ba" value="Popup"/>
+			<label for="ba_Popup" data-label="optionsPage_Popup"></label></p>
+		<p><input id="ba_Action" type="radio" name="ba" value="Action"/>
+			<label for="ba_Action" data-label="optionsPage_Action"></label></p>
+	    <fieldset id="bat" style="display:none;">
+			<legend data-label="optionsPage_ActionTarget"></legend>
+			<p><input id="bat_CurrentTab" type="radio" name="bat" value="CurrentTab"/>
+				<label for="bat_CurrentTab" data-label="optionsPage_CurrentTabSettingsTitle"></label></p>
+			<p><input id="bat_CurrentWindow" type="radio" name="bat" value="CurrentWindow"/>
+				<label for="bat_CurrentWindow" data-label="optionsPage_CurrentWindowSettingsTitle"></label></p>
+			<p><input id="bat_AllWindow" type="radio" name="bat" value="AllWindow"/>
+				<label for="bat_AllWindow" data-label="optionsPage_AllWindowSettingsTitle"></label></p>
+	    </fieldset>
+	    <fieldset id="baa" style="display:none;">
+			<legend data-label="optionsPage_ActionItem"></legend>
+			<p><input id="baa_CopyTabTitleUrl" type="radio" name="baa" value="CopyTabTitleUrl"/>
+				<label for="baa_CopyTabTitleUrl" data-label="contextMenu_CopyTabTitleUrl"></label></p>
+			<p><input id="baa_CopyTabTitle" type="radio" name="baa" value="CopyTabTitle"/>
+				<label for="baa_CopyTabTitle" data-label="contextMenu_CopyTabTitle"></label></p>
+			<p><input id="baa_CopyTabUrl" type="radio" name="baa" value="CopyTabUrl"/>
+				<label for="baa_CopyTabUrl" data-label="contextMenu_CopyTabUrl"></label></p>
+			<p><input id="baa_CopyTabFormat" type="radio" name="baa" value="CopyTabFormat"/>
+				<label for="baa_CopyTabFormat" data-label="contextMenu_CopyTabFormat"></label></p>
+	    </fieldset>
     </fieldset>
     <fieldset>
 		<legend data-label="optionsPage_Format"></legend>
-		<p data-label="optionsPage_FormatMessage"></p>
+		<!-- Chrome対策("${"が消える) -->
+		<p id="format_FormatMessage">${title}, ${url}.<br/>example: [${title}](${url})</p>
 		<p><input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
+		<p><input id="format_enter" type="checkbox"/> <label for="format_enter">(All tabs) Separate by newline.</label></p>
+		<p><input id="format_html" type="checkbox"/> <label for="format_html">Copy in HTML format. - example: &lt;a href=&quot;${url}&quot;&gt;${title}&lt;/a&gt;&lt;br/&gt;</label></p>
+		<p><input id="format_extension" type="checkbox"/> <label for="format_extension">Extended mode (beta)</label></p>
     </fieldset>
-	
-	<hr/>
-	
     <fieldset>
 		<legend data-label="optionsPage_AdditionalFunctionsSettingsTitle"></legend>
 	    <fieldset>

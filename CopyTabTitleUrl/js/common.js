@@ -39,7 +39,13 @@ var defaultStorageValueSet = {
   item_CopyTabAllTitle: false,
   item_CopyTabAllUrl: false,
   item_CopyTabAllFormat: false,
-  format_CopyTabFormat: '[${title}](${url})'
+  action: 'Popup',
+  action_target: 'CurrentTab',
+  action_action: 'CopyTabTitleUrl',
+  format_CopyTabFormat: '[${title}](${url})',
+  format_enter: true,
+  format_html: false,
+  format_extension: false
 };
 
 // ストレージの取得
@@ -49,40 +55,48 @@ function getStorageArea() {
 }
 
 // クリップボードにコピー
-function copyToClipboard(text) {
+function copyToClipboard(text, html) {
   function oncopy(event) {
     document.removeEventListener('copy', oncopy, true);
     event.stopImmediatePropagation();
     
     event.preventDefault();
     event.clipboardData.setData('text/plain', text);
+    if (html === true) {
+      event.clipboardData.setData('text/html', text);
+    }
   }
   document.addEventListener('copy', oncopy, true);
   
   document.execCommand('copy');
 }
 
-function createCopyTabFormat(format, tab) {
+function createCopyTabFormat(format, tab, index, ex) {
+  if (ex === true) {
+    format = format.replace(/\${index}/ig, index)
+                   .replace(/\${tab}/ig, '\t')
+                   .replace(/\${enter}/ig, '\n');
+  }
   return format.replace(/\${title}/ig, tab.title)
                .replace(/\${url}/ig, tab.url);
 }
 
 // タブをクリップボードにコピー
-function copyTabs(type, query, format, callback) {
+function copyTabs(type, query, format, separator, html, ex, callback) {
   // すべてのタブ: {}
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
   chrome.tabs.query(query, function(tabs) {
     let temp = [];
-    for (let tab of tabs) {
+    for (let i=0; i<tabs.length; i++) {
       switch (type) {
-      case 0: temp.push(tab.title+'\n'+tab.url);  break;
-      case 1: temp.push(tab.title); break;
-      case 2: temp.push(tab.url); break;
-      case 3: temp.push(createCopyTabFormat(format, tab)); break;
+      case 0: temp.push(tabs[i].title+'\n'+tabs[i].url); break;
+      case 1: temp.push(tabs[i].title); break;
+      case 2: temp.push(tabs[i].url); break;
+      case 3: temp.push(createCopyTabFormat(format, tabs[i], i+1, ex)); break;
       }
     }
-    copyToClipboard(temp.join('\n'));
+    copyToClipboard(temp.join(separator), html);
     if (callback) {
       // 処理完了通知
       callback();
@@ -92,11 +106,37 @@ function copyTabs(type, query, format, callback) {
 function onCopyTabs(type, query, callback) {
   if (type == 3) {
     getStorageArea().get(defaultStorageValueSet, function(item) {
-      format = (item.format_CopyTabFormat == null)? '': item.format_CopyTabFormat;
-      copyTabs(type, query, format, callback);
+      let format = item.format_CopyTabFormat;
+      let separator = (item.format_extension && item.format_enter !== true)? '': '\n';
+      let html = item.format_extension && item.format_html;
+      let ex = item.format_extension;
+      copyTabs(type, query, format, separator, html, ex, callback);
     });
   } else {
-    copyTabs(type, query, null, callback);
+    copyTabs(type, query, null, '\n', false, false, callback);
+  }
+}
+
+function onContextMenus(info, tab) {
+  let type = 0;
+  switch (info.menuItemId) {
+  case 'contextMenu_CopyTabTitleUrl': copyToClipboard(tab.title+'\n'+tab.url);  break;
+  case 'contextMenu_CopyTabTitle':    copyToClipboard(tab.title);  break;
+  case 'contextMenu_CopyTabUrl':      copyToClipboard(tab.url);  break;
+  case 'contextMenu_CopyTabFormat':
+    getStorageArea().get(defaultStorageValueSet, function(item) {
+      let format = item.format_CopyTabFormat;
+      let html = item.format_extension && item.format_html;
+      let ex = item.format_extension;
+      copyToClipboard(createCopyTabFormat(format, tab, 1, ex), html);
+    });
+    break;
+  case 'contextMenu_CopyTabAllFormat':type++;
+  case 'contextMenu_CopyTabAllUrl':   type++;
+  case 'contextMenu_CopyTabAllTitle': type++;
+  case 'contextMenu_CopyTabAllTitleUrl':
+    onCopyTabs(type, {currentWindow:true});
+    break;
   }
 }
 
@@ -111,7 +151,6 @@ function updateContextMenus() {
       if (item.menu_all) {  contexts.push('all'); }
       if (item.menu_page) { contexts.push('page');}
       if (item.menu_tab && isFirefox()) {
-        // Firefox only
         contexts.push('tab');
       }
       
@@ -128,25 +167,7 @@ function updateContextMenus() {
             });
           }
         });
-        chrome.contextMenus.onClicked.addListener(function(info, tab) {
-          let type = 0;
-          switch (info.menuItemId) {
-          case 'contextMenu_CopyTabTitleUrl': copyToClipboard(tab.title+'\n'+tab.url);  break;
-          case 'contextMenu_CopyTabTitle':    copyToClipboard(tab.title);  break;
-          case 'contextMenu_CopyTabUrl':      copyToClipboard(tab.url);  break;
-          case 'contextMenu_CopyTabFormat':
-            getStorageArea().get(defaultStorageValueSet, function(item2) {
-              copyToClipboard(createCopyTabFormat(item2.format_CopyTabFormat, tab));
-            });
-            break;
-          case 'contextMenu_CopyTabAllFormat':type++;
-          case 'contextMenu_CopyTabAllUrl':   type++;
-          case 'contextMenu_CopyTabAllTitle': type++;
-          case 'contextMenu_CopyTabAllTitleUrl':
-            onCopyTabs(type, {currentWindow:true});
-            break;
-          }
-        });
+        chrome.contextMenus.onClicked.addListener(onContextMenus);
       }
     });
   });

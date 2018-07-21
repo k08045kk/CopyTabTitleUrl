@@ -28,3 +28,21 @@ function onTabCopyComplete() {
   });
 });
 
+// アクション(ポップアップ表示なし時)
+getStorageArea().get(defaultStorageValueSet, function(item) {
+  if (item.action == 'Action') {
+    // 2重にストレージを取得できないため、copyTabs関数を直呼びする
+    let targetSet = {CurrentTab: {currentWindow:true, active:true}, 
+                      CurrentWindow: {currentWindow:true}, 
+                      AllWindow: {}};
+    let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
+    let type = actionSet[item.action_action];
+    let query = targetSet[item.action_target];
+    let format = item.format_CopyTabFormat;
+    let separator = (item.format_extension && item.format_enter !== true)? '': '\n';
+    let html = item.format_extension && item.format_html;
+    let ex = item.format_extension;
+    copyTabs(type, query, format, separator, html, ex, null);
+    onTabCopyComplete();
+  }
+});
