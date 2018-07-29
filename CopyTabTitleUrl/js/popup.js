@@ -9,7 +9,6 @@ function onPageLoaded() {
     v.textContent = chrome.i18n.getMessage(v.dataset.label);
   });
 }
-//document.addEventListener('DOMContentLoaded', onPageLoaded);
 onPageLoaded();
 
 // アクション設定
@@ -38,11 +37,7 @@ getStorageArea().get(defaultStorageValueSet, function(item) {
     let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
     let type = actionSet[item.action_action];
     let query = targetSet[item.action_target];
-    let format = item.format_CopyTabFormat;
-    let separator = (item.format_extension && item.format_enter !== true)? '': '\n';
-    let html = item.format_extension && item.format_html;
-    let ex = item.format_extension;
-    copyTabs(type, query, format, separator, html, ex, null);
+    copyTabs(type, query, item, null);
     onTabCopyComplete();
   }
 });

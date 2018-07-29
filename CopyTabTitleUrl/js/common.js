@@ -43,6 +43,7 @@ var defaultStorageValueSet = {
   action_target: 'CurrentTab',
   action_action: 'CopyTabTitleUrl',
   format_CopyTabFormat: '[${title}](${url})',
+  format_newline: false,
   format_enter: true,
   format_html: false,
   format_extension: false
@@ -54,15 +55,28 @@ function getStorageArea() {
   return chrome.storage.local;
 }
 
+// 改行文字を取得
+function getEnterCode() {
+  let enter = '\n';
+  if (window.navigator.platform.indexOf('Win') == 0) {
+    // Windows
+    enter = '\r\n';
+  } else {
+    // Mac/Linux
+    enter = '\n';
+  }
+  return enter;
+}
+
 // クリップボードにコピー
-function copyToClipboard(text, html) {
+function copyToClipboard(text, valueSet) {
   function oncopy(event) {
     document.removeEventListener('copy', oncopy, true);
     event.stopImmediatePropagation();
     
     event.preventDefault();
     event.clipboardData.setData('text/plain', text);
-    if (html === true) {
+    if (valueSet && valueSet.format_extension && valueSet.format_html) {
       event.clipboardData.setData('text/html', text);
     }
   }
@@ -71,18 +85,26 @@ function copyToClipboard(text, html) {
   document.execCommand('copy');
 }
 
-function createCopyTabFormat(format, tab, index, ex) {
-  if (ex === true) {
+function createCopyTabFormat(tab, index, valueSet) {
+  let format = valueSet.format_CopyTabFormat;
+  if (valueSet.format_extension === true) {
+    let newline = (valueSet.format_newline === true)? '\n': getEnterCode();
     format = format.replace(/\${index}/ig, index)
                    .replace(/\${tab}/ig, '\t')
-                   .replace(/\${enter}/ig, '\n');
+                   .replace(/\${enter}/ig, newline);
   }
   return format.replace(/\${title}/ig, tab.title)
                .replace(/\${url}/ig, tab.url);
 }
 
 // タブをクリップボードにコピー
-function copyTabs(type, query, format, separator, html, ex, callback) {
+function copyTabs(type, query, valueSet, callback) {
+  let enter = getEnterCode();
+  let separator = (valueSet.format_extension && valueSet.format_enter !== true)? '': enter;
+  if (separator != '' && valueSet.format_extension && valueSet.format_newline === true) {
+    separator = '\n';
+  }
+  
   // すべてのタブ: {}
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
@@ -90,13 +112,13 @@ function copyTabs(type, query, format, separator, html, ex, callback) {
     let temp = [];
     for (let i=0; i<tabs.length; i++) {
       switch (type) {
-      case 0: temp.push(tabs[i].title+'\n'+tabs[i].url); break;
+      case 0: temp.push(tabs[i].title+enter+tabs[i].url); break;
       case 1: temp.push(tabs[i].title); break;
       case 2: temp.push(tabs[i].url); break;
-      case 3: temp.push(createCopyTabFormat(format, tabs[i], i+1, ex)); break;
+      case 3: temp.push(createCopyTabFormat(tabs[i], i+1, valueSet)); break;
       }
     }
-    copyToClipboard(temp.join(separator), html);
+    copyToClipboard(temp.join(separator), valueSet);
     if (callback) {
       // 処理完了通知
       callback();
@@ -106,29 +128,22 @@ function copyTabs(type, query, format, separator, html, ex, callback) {
 function onCopyTabs(type, query, callback) {
   if (type == 3) {
     getStorageArea().get(defaultStorageValueSet, function(item) {
-      let format = item.format_CopyTabFormat;
-      let separator = (item.format_extension && item.format_enter !== true)? '': '\n';
-      let html = item.format_extension && item.format_html;
-      let ex = item.format_extension;
-      copyTabs(type, query, format, separator, html, ex, callback);
+      copyTabs(type, query, item, callback);
     });
   } else {
-    copyTabs(type, query, null, '\n', false, false, callback);
+    copyTabs(type, query, defaultStorageValueSet, callback);
   }
 }
 
 function onContextMenus(info, tab) {
   let type = 0;
   switch (info.menuItemId) {
-  case 'contextMenu_CopyTabTitleUrl': copyToClipboard(tab.title+'\n'+tab.url);  break;
+  case 'contextMenu_CopyTabTitleUrl': copyToClipboard(tab.title+getEnterCode()+tab.url);  break;
   case 'contextMenu_CopyTabTitle':    copyToClipboard(tab.title);  break;
   case 'contextMenu_CopyTabUrl':      copyToClipboard(tab.url);  break;
   case 'contextMenu_CopyTabFormat':
     getStorageArea().get(defaultStorageValueSet, function(item) {
-      let format = item.format_CopyTabFormat;
-      let html = item.format_extension && item.format_html;
-      let ex = item.format_extension;
-      copyToClipboard(createCopyTabFormat(format, tab, 1, ex), html);
+      copyToClipboard(createCopyTabFormat(tab, 1, item), item);
     });
     break;
   case 'contextMenu_CopyTabAllFormat':type++;

@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "default_locale": "en",
   
   "author": "toshi",
@@ -18,7 +18,6 @@
   },
   
   "background": {
-    "persistent": false,
     "scripts": [
       "/js/common.js",
       "/js/background.js"

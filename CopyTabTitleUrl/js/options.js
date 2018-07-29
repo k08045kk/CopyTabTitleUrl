@@ -46,11 +46,13 @@ function updateMenu() {
     document.getElementById('format_FormatMessage').innerHTML = ''
         + '${title}, ${url}, ${index}, ${tab}, ${enter}.<br/>example: [${title}](${url})';
     document.getElementById('format_enter').parentNode.style.display = 'block';
+    document.getElementById('format_newline').parentNode.style.display = 'block';
     document.getElementById('format_html').parentNode.style.display = 'block';
   } else {
     document.getElementById('format_FormatMessage').innerHTML = ''
         + '${title}, ${url}.<br/>example: [${title}](${url})';
     document.getElementById('format_enter').parentNode.style.display = 'none';
+    document.getElementById('format_newline').parentNode.style.display = 'none';
     document.getElementById('format_html').parentNode.style.display = 'none';
   }
 }
@@ -70,8 +72,9 @@ function onPageLoaded() {
   getStorageArea().get(defaultStorageValueSet, function(item) {
     // ストレージ内の値で初期化
     Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-      if (v.startsWith('menu_') || v.startsWith('item_')
-       || v == 'format_enter' || v == 'format_html' || v == 'format_extension') {
+      if (v.startsWith('menu_') || v.startsWith('item_')) {
+        document.getElementById(v).checked = item[v];
+      } else if (v.startsWith('format_') && v != 'format_CopyTabFormat') {
         document.getElementById(v).checked = item[v];
       }
     });
@@ -94,8 +97,9 @@ function onUpdateContextMenu() {
   // 設定を作成
   let valueSet = {};
   Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-    if (v.startsWith('menu_') || v.startsWith('item_')
-       || v == 'format_enter' || v == 'format_html' || v == 'format_extension') {
+    if (v.startsWith('menu_') || v.startsWith('item_')) {
+      valueSet[v] = document.getElementById(v).checked;
+    } else if (v.startsWith('format_') && v != 'format_CopyTabFormat') {
       valueSet[v] = document.getElementById(v).checked;
     }
   });
@@ -119,7 +123,6 @@ Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
   if (v == 'format_CopyTabFormat') {
     document.getElementById(v).addEventListener('input', onUpdateFormat);
   } else if (v == 'action' || v == 'action_target' || v == 'action_action') {
-  //} else if (v == 'format_enter' || v == 'format_html' || v == 'format_extension') {
   } else {
     document.getElementById(v).addEventListener('click', onUpdateContextMenu);
   }
