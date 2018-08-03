@@ -1,11 +1,11 @@
 ﻿# CopyTabTitleUrl
-It is an extension of WebExtension format of browser.
+It is an extension of WebExtension format of browser.  
 You can download from the site below.
 
-CopyTabTitleUrl – Add-ons for Firefox
+CopyTabTitleUrl – Add-ons for Firefox  
 https://addons.mozilla.org/firefox/addon/copytabtitleurl/
 
-CopyTabTitleUrl - Chrome Web Store
+CopyTabTitleUrl - Chrome Web Store  
 https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgjpaohjfeapp
 
 ## Features
@@ -28,6 +28,6 @@ You can perform actions from the following operations.
 + Option screen
 
 ## Copyright
-Copyright (c) 2018 toshi (https://www.bugbugnow.net/)
-Released under the MIT license.
+Copyright (c) 2018 toshi (https://www.bugbugnow.net/)  
+Released under the MIT license.  
 see https://opensource.org/licenses/MIT
