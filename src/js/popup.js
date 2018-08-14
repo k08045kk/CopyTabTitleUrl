@@ -37,7 +37,6 @@ getStorageArea().get(defaultStorageValueSet, function(item) {
     let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
     let type = actionSet[item.action_action];
     let query = targetSet[item.action_target];
-    copyTabs(type, query, item, null);
-    onTabCopyComplete();
+    copyTabs(type, query, item, onTabCopyComplete);
   }
 });
