@@ -44,15 +44,13 @@ function updateMenu() {
   let extension = document.getElementById('format_extension').checked;
   if (extension) {
     document.getElementById('format_FormatMessage').innerHTML = ''
-        + '${title}, ${url}, ${index}, ${tab}, ${enter}.<br/>example: [${title}](${url})';
+        + '${title}, ${url}, ${index}, ${tab}, ${enter}, ${CR}, ${LF}.<br/>example: [${title}](${url})';
     document.getElementById('format_enter').parentNode.style.display = 'block';
-    document.getElementById('format_newline').parentNode.style.display = 'block';
     document.getElementById('format_html').parentNode.style.display = 'block';
   } else {
     document.getElementById('format_FormatMessage').innerHTML = ''
         + '${title}, ${url}.<br/>example: [${title}](${url})';
     document.getElementById('format_enter').parentNode.style.display = 'none';
-    document.getElementById('format_newline').parentNode.style.display = 'none';
     document.getElementById('format_html').parentNode.style.display = 'none';
   }
 }

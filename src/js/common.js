@@ -43,7 +43,6 @@ var defaultStorageValueSet = {
   action_target: 'CurrentTab',
   action_action: 'CopyTabTitleUrl',
   format_CopyTabFormat: '[${title}](${url})',
-  format_newline: false,
   format_enter: true,
   format_html: false,
   format_extension: false
@@ -56,16 +55,16 @@ function getStorageArea() {
 }
 
 // 改行文字を取得
+let enterCode = '\n';
+if (window.navigator.platform.indexOf('Win') == 0) {
+  // Windows
+  enterCode = '\r\n';
+} else {
+  // Mac/Linux
+  enterCode = '\n';
+}
 function getEnterCode() {
-  let enter = '\n';
-  if (window.navigator.platform.indexOf('Win') == 0) {
-    // Windows
-    enter = '\r\n';
-  } else {
-    // Mac/Linux
-    enter = '\n';
-  }
-  return enter;
+  return enterCode;
 }
 
 // クリップボードにコピー
@@ -88,22 +87,19 @@ function copyToClipboard(text, valueSet) {
 function createCopyTabFormat(tab, index, valueSet) {
   let format = valueSet.format_CopyTabFormat;
   if (valueSet.format_extension === true) {
-    let newline = (valueSet.format_newline === true)? '\n': getEnterCode();
     format = format.replace(/\${index}/ig, index)
                    .replace(/\${tab}/ig, '\t')
-                   .replace(/\${enter}/ig, newline);
+                   .replace(/\${cr}/ig,  '\r')
+                   .replace(/\${lf}/ig,  '\n');
   }
   return format.replace(/\${title}/ig, tab.title)
-               .replace(/\${url}/ig, tab.url);
+               .replace(/\${url}/ig, tab.url)
+               .replace(/\${enter}/ig, getEnterCode());
 }
 
 // タブをクリップボードにコピー
 function copyTabs(type, query, valueSet, callback) {
   let enter = getEnterCode();
-  let separator = (valueSet.format_extension && valueSet.format_enter !== true)? '': enter;
-  if (separator != '' && valueSet.format_extension && valueSet.format_newline === true) {
-    separator = '\n';
-  }
   
   // すべてのタブ: {}
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
@@ -118,7 +114,7 @@ function copyTabs(type, query, valueSet, callback) {
       case 3: temp.push(createCopyTabFormat(tabs[i], i+1, valueSet)); break;
       }
     }
-    copyToClipboard(temp.join(separator), valueSet);
+    copyToClipboard(temp.join(enter), valueSet);
     if (callback) {
       // 処理完了通知
       callback();
