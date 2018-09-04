@@ -41,17 +41,18 @@ function updateMenu() {
           || document.getElementById('menu_tab').checked;
   document.getElementById('item').style.display = menu? 'block': 'none';
   
-  let extension = document.getElementById('format_extension').checked;
-  if (extension) {
+  if (document.getElementById('format_extension').checked) {
     document.getElementById('format_FormatMessage').innerHTML = ''
-        + '${title}, ${url}, ${index}, ${tab}, ${enter}, ${CR}, ${LF}.<br/>example: [${title}](${url})';
-    document.getElementById('format_enter').parentNode.style.display = 'block';
-    document.getElementById('format_html').parentNode.style.display = 'block';
+        + '${title},${url},${index},${tab},${enter},${CR},${LF}.<br/>example: [${title}](${url})';
+    document.querySelectorAll('.extension').forEach(function(v, i, a) {
+      v.style.display = 'block';
+    });
   } else {
     document.getElementById('format_FormatMessage').innerHTML = ''
-        + '${title}, ${url}.<br/>example: [${title}](${url})';
-    document.getElementById('format_enter').parentNode.style.display = 'none';
-    document.getElementById('format_html').parentNode.style.display = 'none';
+        + '${title},${url}.<br/>example: [${title}](${url})';
+    document.querySelectorAll('.extension').forEach(function(v, i, a) {
+      v.style.display = 'none';
+    });
   }
 }
 

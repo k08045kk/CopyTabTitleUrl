@@ -26,7 +26,7 @@ fieldset > fieldset {
     </style>
 </head>
 <body>
-    <fieldset>
+    <fieldset><!-- コンテキストメニュー -->
 		<legend data-label="optionsPage_Menu"></legend>
 		<p><input id="menu_all" type="checkbox"/> <label for="menu_all" data-label="optionsPage_ContextMenuCheckbox"></label></p>
 		<p><input id="menu_page" type="checkbox"/> <label for="menu_page" data-label="optionsPage_PageContextMenuCheckbox"></label></p>
@@ -51,7 +51,7 @@ fieldset > fieldset {
 				<label for="item_CopyTabAllFormat" data-label="contextMenu_CopyTabAllFormat"></label></p>
 	    </fieldset>
     </fieldset>
-    <fieldset>
+    <fieldset><!-- ブラウザアクション -->
 		<legend data-label="optionsPage_BrowserAction"></legend>
 		<p><input id="ba_Popup" type="radio" name="ba" value="Popup"/>
 			<label for="ba_Popup" data-label="optionsPage_Popup"></label></p>
@@ -78,16 +78,15 @@ fieldset > fieldset {
 				<label for="baa_CopyTabFormat" data-label="contextMenu_CopyTabFormat"></label></p>
 	    </fieldset>
     </fieldset>
-    <fieldset>
+    <fieldset><!-- フォーマット -->
 		<legend data-label="optionsPage_Format"></legend>
-		<!-- Chrome対策("${"が消える) -->
-		<p id="format_FormatMessage">${title}, ${url}.<br/>example: [${title}](${url})</p>
+		<p id="format_FormatMessage"></p>
 		<p><input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
-		<p><input id="format_enter" type="checkbox"/> <label for="format_enter">(All tabs) Separate by newline.</label></p>
-		<p><input id="format_html" type="checkbox"/> <label for="format_html">Copy in HTML format. - example: &lt;a href=&quot;${url}&quot;&gt;${title}&lt;/a&gt;&lt;br/&gt;</label></p>
+		<p class="extension"><input id="format_enter" type="checkbox"/> <label for="format_enter">(All tabs) Separate by newline.</label></p>
+		<p class="extension"><input id="format_html" type="checkbox"/> <label for="format_html">Copy in HTML format. - example: &lt;a href=&quot;${url}&quot;&gt;${title}&lt;/a&gt;&lt;br/&gt;</label></p>
 		<p><input id="format_extension" type="checkbox"/> <label for="format_extension">Extended mode (beta)</label></p>
     </fieldset>
-    <fieldset>
+    <fieldset><!-- 追加機能 -->
 		<legend data-label="optionsPage_AdditionalFunctionsSettingsTitle"></legend>
 	    <fieldset>
 			<legend data-label="optionsPage_CurrentWindowSettingsTitle"></legend>
