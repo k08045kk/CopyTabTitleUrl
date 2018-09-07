@@ -43,13 +43,13 @@ function updateMenu() {
   
   if (document.getElementById('format_extension').checked) {
     document.getElementById('format_FormatMessage').innerHTML = ''
-        + '${title},${url},${index},${tab},${enter},${CR},${LF}.<br/>example: [${title}](${url})';
+        + '<p>${title}, ${url}, ${index}, ${tab}, ${enter}, ${CR}, ${LF}.<br/>example: [${title}](${url})</p>';
     document.querySelectorAll('.extension').forEach(function(v, i, a) {
       v.style.display = 'block';
     });
   } else {
     document.getElementById('format_FormatMessage').innerHTML = ''
-        + '${title},${url}.<br/>example: [${title}](${url})';
+        + '<p>${title}, ${url}.<br/>example: [${title}](${url})</p>';
     document.querySelectorAll('.extension').forEach(function(v, i, a) {
       v.style.display = 'none';
     });
