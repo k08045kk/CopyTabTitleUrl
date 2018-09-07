@@ -4,24 +4,28 @@
     <meta charset="UFT-8" />
     <style>
 body {
-	font-size: 1.25rem;
-	padding: 1em;
+    padding: 0.5em;
 }
 fieldset {
     margin: 0 0 1em 0;
     border: 1px solid #b1b1b1;
 }
+fieldset > legend {
+	font-size: 1.25rem;
+	font-weight: bold;
+}
 fieldset > fieldset {
     margin-bottom: 0.5em;
 }
+p {
+	font-size: 1rem;
+    margin:0.25em;
+}
+input[type="text"] {
+    margin:0.5em;
+}
 #format_CopyTabFormat {
 	width: 80%;
-}
-/* Chrome限定 */
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
-	body p {
-		font-size: 0.85rem;
-	}
 }
     </style>
 </head>
