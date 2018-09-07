@@ -45,6 +45,7 @@ var defaultStorageValueSet = {
   format_CopyTabFormat: '[${title}](${url})',
   format_enter: true,
   format_html: false,
+  format_pin: false,
   format_extension: false
 };
 
@@ -100,6 +101,9 @@ function createCopyTabFormat(tab, index, valueSet) {
 // タブをクリップボードにコピー
 function copyTabs(type, query, valueSet, callback) {
   let enter = getEnterCode();
+  if (valueSet.format_extension && valueSet.format_pin) {
+    query.pinned = false;
+  }
   
   // すべてのタブ: {}
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
