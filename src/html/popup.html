@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <style>
 body {
-	width: 300px;
+	width: 320px;
     line-height: 1.25;
-    font-size: 1em;
+    font-size: 16px;
 	color: #3b3c40;
 }
 a {
-    margin: 6px;
+    margin: 3px 0 3px 1.5em;
     display: inline-block;
     text-decoration: none;
     color: #217ac0;
@@ -24,26 +24,20 @@ a:active {
     color: #fff;
 }
 .panel {
-    margin: 4px;
+    margin: 0 4px 1em 4px;
 }
-/* Chrome限定 */
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
-	/* chrome://browser/content/extension.css */
-	/* stylelint-disable property-no-vendor-prefix */
-	.panel-section {
-	  display: flex;
-	  flex-direction: row;
-	}
-	/* Panel Section - Header */
-	.panel-section-header {
-	  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-	  padding: 1em 1em 0.5em 1em;
-	}
-	.panel-section-header > .text-section-header {
-	  align-self: center;
-	  font-size: 1.385em;
-	  font-weight: lighter;
-	}
+.panel-section {
+    display: flex;
+    flex-direction: row;
+}
+.panel-section-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 1em 1em 0.5em 1em;
+}
+.panel-section-header > .text-section-header {
+    align-self: center;
+    font-size: 18px;
+    font-weight: lighter;
 }
     </style>
 </head>
