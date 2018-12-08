@@ -28,15 +28,15 @@ function onTabCopyComplete() {
 });
 
 // アクション(ポップアップ表示なし時)
-getStorageArea().get(defaultStorageValueSet, function(item) {
-  if (item.action == 'Action') {
+getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+  if (valueSet.action == 'Action') {
     // 2重にストレージを取得できないため、copyTabs関数を直呼びする
     let targetSet = {CurrentTab: {currentWindow:true, active:true}, 
                       CurrentWindow: {currentWindow:true}, 
                       AllWindow: {}};
     let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
-    let type = actionSet[item.action_action];
-    let query = targetSet[item.action_target];
-    copyTabs(type, query, item, onTabCopyComplete);
+    let type = actionSet[valueSet.action_action];
+    let query = targetSet[valueSet.action_target];
+    copyTabs(type, query, valueSet, onTabCopyComplete);
   }
 });

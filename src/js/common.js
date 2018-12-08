@@ -127,8 +127,8 @@ function copyTabs(type, query, valueSet, callback) {
 }
 function onCopyTabs(type, query, callback) {
   if (type == 3) {
-    getStorageArea().get(defaultStorageValueSet, function(item) {
-      copyTabs(type, query, item, callback);
+    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+      copyTabs(type, query, valueSet, callback);
     });
   } else {
     copyTabs(type, query, defaultStorageValueSet, callback);
@@ -142,8 +142,8 @@ function onContextMenus(info, tab) {
   case 'contextMenu_CopyTabTitle':    copyToClipboard(tab.title);  break;
   case 'contextMenu_CopyTabUrl':      copyToClipboard(tab.url);  break;
   case 'contextMenu_CopyTabFormat':
-    getStorageArea().get(defaultStorageValueSet, function(item) {
-      copyToClipboard(createCopyTabFormat(tab, 1, item), item);
+    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+      copyToClipboard(createCopyTabFormat(tab, 1, valueSet), valueSet);
     });
     break;
   case 'contextMenu_CopyTabAllFormat':type++;
@@ -160,12 +160,12 @@ function updateContextMenus() {
   // メニュー削除
   chrome.contextMenus.removeAll(function() {
     // ストレージ取得
-    getStorageArea().get(defaultStorageValueSet, function(item) {
+    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
       // メニュー追加
       let contexts = [];
-      if (item.menu_all) {  contexts.push('all'); }
-      if (item.menu_page) { contexts.push('page');}
-      if (item.menu_tab && isFirefox()) {
+      if (valueSet.menu_all) {  contexts.push('all'); }
+      if (valueSet.menu_page) { contexts.push('page');}
+      if (valueSet.menu_tab && isFirefox()) {
         contexts.push('tab');
       }
       
@@ -174,7 +174,7 @@ function updateContextMenus() {
           'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 
           'CopyTabAllTitleUrl', 'CopyTabAllTitle', 'CopyTabAllUrl', 'CopyTabAllFormat'
         ].forEach(function(v, i, a) {
-          if (item['item_'+v]) {
+          if (valueSet['item_'+v]) {
             chrome.contextMenus.create({
               id: 'contextMenu_'+v,
               title: chrome.i18n.getMessage('contextMenu_'+v),

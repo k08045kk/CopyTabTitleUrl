@@ -68,19 +68,19 @@ function onPageLoaded() {
     v.textContent = chrome.i18n.getMessage(v.dataset.label);
   });
   
-  getStorageArea().get(defaultStorageValueSet, function(item) {
+  getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     // ストレージ内の値で初期化
     Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
       if (v.startsWith('menu_') || v.startsWith('item_')) {
-        document.getElementById(v).checked = item[v];
+        document.getElementById(v).checked = valueSet[v];
       } else if (v.startsWith('format_') && v != 'format_CopyTabFormat') {
-        document.getElementById(v).checked = item[v];
+        document.getElementById(v).checked = valueSet[v];
       }
     });
-    document.getElementById('format_CopyTabFormat').value = item.format_CopyTabFormat;
-    document.getElementById('ba_'+item.action).checked = true;
-    document.getElementById('bat_'+item.action_target).checked = true;
-    document.getElementById('baa_'+item.action_action).checked = true;
+    document.getElementById('format_CopyTabFormat').value = valueSet.format_CopyTabFormat;
+    document.getElementById('ba_'+valueSet.action).checked = true;
+    document.getElementById('bat_'+valueSet.action_target).checked = true;
+    document.getElementById('baa_'+valueSet.action_action).checked = true;
     
     // メニュー更新
     updateMenu();
