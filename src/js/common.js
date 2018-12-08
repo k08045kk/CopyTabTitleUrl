@@ -56,7 +56,7 @@ function getStorageArea() {
 }
 
 // 改行文字を取得
-let enterCode = '\n';
+var enterCode = '\n';
 if (window.navigator.platform.indexOf('Win') == 0) {
   // Windows
   enterCode = '\r\n';
