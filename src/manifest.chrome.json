@@ -2,14 +2,13 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "default_locale": "en",
   
   "author": "toshi",
   "homepage_url": "https://www.bugbugnow.net/",
   
   "background": {
-    "persistent": false,
     "scripts": [
       "/js/common.js",
       "/js/background.js"
