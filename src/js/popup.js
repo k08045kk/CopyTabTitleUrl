@@ -37,6 +37,13 @@ getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
     let type = actionSet[valueSet.action_action];
     let query = targetSet[valueSet.action_target];
-    copyTabs(type, query, valueSet, onTabCopyComplete);
+    
+    let msg = chrome.i18n.getMessage('optionsPage_CopyComplated');
+    document.querySelector('.panel').innerHTML = '<p style="text-align:center;">'+msg+'</p>';
+    copyTabs(type, query, valueSet, function() {
+      setTimeout(function() {
+        window.close();
+      }, 1000);
+    });
   }
 });

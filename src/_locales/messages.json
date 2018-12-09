@@ -100,6 +100,10 @@
     "message":    "すべてのウィンドウ",
     "description":"すべてのウィンドウ"
   },
+  "optionsPage_CopyComplated": {
+    "message":    "コピー完了",
+    "description":"コピー完了"
+  },
   "dummyDummyDummy": {
     "translate":  false,
     "message":    "dummy",
