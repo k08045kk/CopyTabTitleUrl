@@ -23,7 +23,8 @@ a:active {
     background-color: silver;
     color: #fff;
 }
-.panel {
+.panel, 
+.action {
     margin: 0 4px 1em 4px;
 }
 .panel-section {
@@ -42,6 +43,7 @@ a:active {
     </style>
 </head>
 <body>
+    <div class="action" style="display:none;"><p style="text-align:center;"></p></div>
     <div class="panel">
         <div class="panel-section panel-section-header">
             <div class="text-section-header" data-label="optionsPage_CurrentTabSettingsTitle"></div>
@@ -66,7 +68,6 @@ a:active {
         <a href="#" id="all_CopyTabTitle" data-label="contextMenu_CopyTabAllTitle"></a><br>
         <a href="#" id="all_CopyTabUrl" data-label="contextMenu_CopyTabAllUrl"></a><br>
         <a href="#" id="all_CopyTabFormat" data-label="contextMenu_CopyTabAllFormat"></a><br>
-		
     </div>
     <script src="/js/common.js"></script>
     <script src="/js/popup.js"></script>

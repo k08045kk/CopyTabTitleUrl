@@ -39,7 +39,9 @@ getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     let query = targetSet[valueSet.action_target];
     
     let msg = chrome.i18n.getMessage('optionsPage_CopyComplated');
-    document.querySelector('.panel').innerHTML = '<p style="text-align:center;">'+msg+'</p>';
+    document.querySelector('.action p').innerText = msg;
+    document.querySelector('.action').style.display = 'block';
+    document.querySelector('.panel').style.display = 'none';
     copyTabs(type, query, valueSet, function() {
       setTimeout(function() {
         window.close();
