@@ -23,8 +23,9 @@ You can perform actions from the following operations.
 + Context menu
 + Page context menu
 + Tab context menu (Firefox only)
-+ Tooltip popup menu
-+ Tooltip click action
++ Browser action (popup menu)
++ Browser action (click action)
++ Shortcut
 + Option screen
 
 ## Copyright
