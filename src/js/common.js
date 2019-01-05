@@ -42,6 +42,7 @@ var defaultStorageValueSet = {
   action: 'Popup',
   action_target: 'CurrentTab',
   action_action: 'CopyTabTitleUrl',
+  shortcut_command: 'Alt+C',
   format_CopyTabFormat: '[${title}](${url})',
   format_enter: true,
   format_html: false,

@@ -81,6 +81,21 @@ function onPageLoaded() {
     document.getElementById('ba_'+valueSet.action).checked = true;
     document.getElementById('bat_'+valueSet.action_target).checked = true;
     document.getElementById('baa_'+valueSet.action_action).checked = true;
+    if (isFirefox()) {
+      document.getElementById('shortcut_command').value = valueSet.shortcut_command;
+    } else {
+      document.getElementById('shortcut_command').style.display = 'none';
+      document.getElementById('shortcut_message').innerText = 'You can change the shortcut command from the standard setting. <chrome://extensions/shortcuts>';
+      chrome.commands.getAll(function(commands) {
+        for (let i=0; i<commands.length; i++) {
+          if (commands[i].shortcut != '') {
+            document.getElementById('shortcut_message').innerText = ''
+              + commands[i].name+': '+commands[i].shortcut + '\n'
+              + document.getElementById('shortcut_message').innerText;
+          }
+        }
+      });
+    }
     
     // メニュー更新
     updateMenu();
@@ -118,9 +133,39 @@ function onUpdateFormat() {
     format_CopyTabFormat: document.getElementById('format_CopyTabFormat').value
   }, function() {});
 }
+function onUpdateCommand() {
+  if (isFirefox()) {
+    try {
+      const command = document.getElementById('shortcut_command').value;
+      if (command != '') {
+        chrome.commands.update({
+          'name': 'shortcut_action',
+          'shortcut': command
+        });
+      } else {
+        chrome.commands.reset('shortcut_action');
+      }
+      getStorageArea().set({
+        shortcut_command: command
+      }, function() {});
+      document.getElementById('shortcut_command').style.background = '';
+    } catch (e) {
+      // 直前の成功状態に戻す
+      getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+        chrome.commands.update({
+          'name': 'shortcut_action',
+          'shortcut': valueSet.shortcut_command
+        });
+      });
+      document.getElementById('shortcut_command').style.background = '#ffeaee';
+    }
+  }
+}
 Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
   if (v == 'format_CopyTabFormat') {
     document.getElementById(v).addEventListener('input', onUpdateFormat);
+  } else if (v == 'shortcut_command') {
+    document.getElementById(v).addEventListener('input', onUpdateCommand);
   } else if (v == 'action' || v == 'action_target' || v == 'action_action') {
   } else {
     document.getElementById(v).addEventListener('click', onUpdateContextMenu);
