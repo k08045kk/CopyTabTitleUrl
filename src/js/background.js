@@ -24,3 +24,23 @@ chrome.commands.onCommand.addListener(function(command) {
     }
   });
 });
+
+// ブラウザアクション
+getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
+    chrome.browserAction.setPopup({popup: '/html/popup.html'})
+  }
+});
+chrome.browserAction.onClicked.addListener(function(info, tab) {
+  getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+    // アクションを実行
+    let targetSet = {CurrentTab: {currentWindow:true, active:true}, 
+                      CurrentWindow: {currentWindow:true}, 
+                      AllWindow: {}};
+    let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
+    let type = actionSet[valueSet.action_action];
+    let query = targetSet[valueSet.action_target];
+    
+    copyTabs(type, query, valueSet, function() {});
+  });
+});

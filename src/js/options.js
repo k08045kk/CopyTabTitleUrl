@@ -18,6 +18,10 @@ function updateMenu() {
   document.getElementById('menu_page').disabled = 
       document.getElementById('menu_all').checked;
   
+  // コピー完了通知
+  document.getElementById('browser_ShowPopup').disabled = 
+      !document.getElementById('ba_Action').checked;
+  
   // BrowserActionのAction選択時のみアクション一覧表示
   let action = document.getElementById('ba_Action').checked? 'block': 'none';
   document.getElementById('bat').style.display = action;
@@ -71,7 +75,7 @@ function onPageLoaded() {
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     // ストレージ内の値で初期化
     Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-      if (v.startsWith('menu_') || v.startsWith('item_')) {
+      if (v.startsWith('menu_') || v.startsWith('item_') || v.startsWith('browser_')) {
         document.getElementById(v).checked = valueSet[v];
       } else if (v.startsWith('format_') && v != 'format_CopyTabFormat') {
         document.getElementById(v).checked = valueSet[v];
@@ -111,16 +115,21 @@ function onUpdateContextMenu() {
   // 設定を作成
   let valueSet = {};
   Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-    if (v.startsWith('menu_') || v.startsWith('item_')) {
+    if (v.startsWith('menu_') || v.startsWith('item_') || v.startsWith('browser_')) {
       valueSet[v] = document.getElementById(v).checked;
     } else if (v.startsWith('format_') && v != 'format_CopyTabFormat') {
       valueSet[v] = document.getElementById(v).checked;
     }
   });
-  valueSet.format_CopyTabFormat = document.getElementById('format_CopyTabFormat').value
+  valueSet.format_CopyTabFormat = document.getElementById('format_CopyTabFormat').value;
   valueSet.action = getRadioCheckItem('ba');
   valueSet.action_target = getRadioCheckItem('bat');
   valueSet.action_action = getRadioCheckItem('baa');
+  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
+    chrome.browserAction.setPopup({popup: '/html/popup.html'})
+  } else {
+    chrome.browserAction.setPopup({popup: ''})
+  }
   
   // ストレージへ設定を保存
   getStorageArea().set(valueSet, function() {
