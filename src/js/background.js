@@ -27,8 +27,10 @@ chrome.commands.onCommand.addListener(function(command) {
 
 // ブラウザアクション
 getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup || isMobile()) {
-    chrome.browserAction.setPopup({popup: '/html/popup.html'})
+  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
+    chrome.browserAction.setPopup({popup: '/html/popup.html'});
+  } else {
+    chrome.browserAction.setPopup({popup: ''});
   }
 });
 chrome.browserAction.onClicked.addListener(function(info, tab) {
