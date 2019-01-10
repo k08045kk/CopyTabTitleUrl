@@ -161,10 +161,14 @@ function onUpdateCommand() {
     } catch (e) {
       // 直前の成功状態に戻す
       getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-        chrome.commands.update({
-          'name': 'shortcut_action',
-          'shortcut': valueSet.shortcut_command
-        });
+        if (valueSet.shortcut_command != '') {
+          chrome.commands.update({
+            'name': 'shortcut_action',
+            'shortcut': valueSet.shortcut_command
+          });
+        } else {
+          chrome.commands.reset('shortcut_action');
+        }
       });
       document.getElementById('shortcut_command').style.background = '#ffeaee';
     }
