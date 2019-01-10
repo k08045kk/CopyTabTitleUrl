@@ -26,6 +26,15 @@ try {
   chrome = browser;
 } catch (e) {}
 
+// モバイル判定
+function isMobile() {
+  let ua = window.navigator.userAgent.toLowerCase();
+  return ua.indexOf('android') > 0
+      || ua.indexOf('mobile') > 0
+      || ua.indexOf('iphone') > 0
+      || ua.indexOf('ipod') > 0;
+}
+
 // ストレージの初期値
 var defaultStorageValueSet = {
   menu_all: false,

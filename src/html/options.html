@@ -28,10 +28,14 @@ input[type="text"] {
 #format_CopyTabFormat {
 	width: 80%;
 }
+.hide {
+	display: none !important;
+}
+
     </style>
 </head>
 <body>
-    <fieldset><!-- コンテキストメニュー -->
+    <fieldset id="context_menu"><!-- コンテキストメニュー -->
 		<legend data-label="optionsPage_Menu"></legend>
 		<p><input id="menu_all" type="checkbox"/> <label for="menu_all" data-label="optionsPage_ContextMenuCheckbox"></label></p>
 		<p><input id="menu_page" type="checkbox"/> <label for="menu_page" data-label="optionsPage_PageContextMenuCheckbox"></label></p>
@@ -56,7 +60,7 @@ input[type="text"] {
 				<label for="item_CopyTabAllFormat" data-label="contextMenu_CopyTabAllFormat"></label></p>
 	    </fieldset>
     </fieldset>
-    <fieldset><!-- ブラウザアクション -->
+    <fieldset id="browser_action"><!-- ブラウザアクション -->
 		<legend data-label="optionsPage_BrowserAction"></legend>
 		<p><input id="ba_Popup" type="radio" name="ba" value="Popup"/>
 			<label for="ba_Popup" data-label="optionsPage_Popup"></label></p>
@@ -84,17 +88,17 @@ input[type="text"] {
 				<label for="baa_CopyTabFormat" data-label="contextMenu_CopyTabFormat"></label></p>
 	    </fieldset>
     </fieldset>
-    <fieldset><!-- フォーマット -->
+    <fieldset id="format"><!-- フォーマット -->
 		<legend data-label="optionsPage_Format"></legend>
 		<p id="format_FormatMessage"></p>
 		<p><input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
 		<p class="extension"><input id="format_enter" type="checkbox"/> <label for="format_enter">(All tabs) Separate by newline.</label></p>
 		<p class="extension"><input id="format_html" type="checkbox"/> <label for="format_html">Copy in HTML format. - example: &lt;a href=&quot;${url}&quot;&gt;${title}&lt;/a&gt;&lt;br/&gt;</label></p>
-		<p class="extension"><input id="format_pin" type="checkbox"/> <label for="format_pin">Except tabs with pinned.</label></p>
-		<p><span id="shortcut_message">shortcut: </span><input type="text" id="shortcut_command" maxlength="100" /></p>
+		<p id="format_pin_" class="extension"><input id="format_pin" type="checkbox"/> <label for="format_pin">Except tabs with pinned.</label></p>
+		<p id="shortcut"><span id="shortcut_message">shortcut: </span><input type="text" id="shortcut_command" maxlength="100" /></p>
 		<p><input id="format_extension" type="checkbox"/> <label for="format_extension">Extended mode (beta)</label></p>
     </fieldset>
-    <fieldset><!-- 追加機能 -->
+    <fieldset id="functions"><!-- 追加機能 -->
 		<legend data-label="optionsPage_AdditionalFunctionsSettingsTitle"></legend>
 	    <fieldset>
 			<legend data-label="optionsPage_CurrentWindowSettingsTitle"></legend>

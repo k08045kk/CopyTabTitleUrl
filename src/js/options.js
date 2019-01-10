@@ -2,6 +2,13 @@
  * オプションページ処理
  */
 
+if (isMobile()) {
+  document.getElementById('context_menu').classList.add('hide');
+  document.getElementById('format_pin_').classList.add('hide');
+  document.getElementById('shortcut').classList.add('hide');
+}
+
+
 function getRadioCheckItem(name) {
   let elements = document.getElementsByName(name);
   for (let i=0; i<elements.length; i++) {
@@ -48,13 +55,13 @@ function updateMenu() {
   if (document.getElementById('format_extension').checked) {
     document.getElementById('format_FormatMessage').innerHTML = ''
         + '<p>${title}, ${url}, ${index}, ${tab}, ${enter}, ${CR}, ${LF}.<br/>example: [${title}](${url})</p>';
-    document.querySelectorAll('.extension').forEach(function(v, i, a) {
+    document.querySelectorAll('.extension:not(.hide)').forEach(function(v, i, a) {
       v.style.display = 'block';
     });
   } else {
     document.getElementById('format_FormatMessage').innerHTML = ''
         + '<p>${title}, ${url}.<br/>example: [${title}](${url})</p>';
-    document.querySelectorAll('.extension').forEach(function(v, i, a) {
+    document.querySelectorAll('.extension:not(.hide)').forEach(function(v, i, a) {
       v.style.display = 'none';
     });
   }
