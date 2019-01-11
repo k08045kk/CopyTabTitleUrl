@@ -6,6 +6,7 @@ if (isMobile()) {
   document.getElementById('context_menu').classList.add('hide');
   document.getElementById('format_pin_').classList.add('hide');
   document.getElementById('shortcut').classList.add('hide');
+  document.getElementById('show_popup').classList.add('hide');
 }
 
 
@@ -134,7 +135,7 @@ function onUpdateContextMenu() {
   valueSet.action = getRadioCheckItem('ba');
   valueSet.action_target = getRadioCheckItem('bat');
   valueSet.action_action = getRadioCheckItem('baa');
-  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
+  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup || isMobile()) {
     chrome.browserAction.setPopup({popup: '/html/popup.html'})
   } else {
     chrome.browserAction.setPopup({popup: ''})
