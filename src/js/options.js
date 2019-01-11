@@ -6,7 +6,6 @@ if (isMobile()) {
   document.getElementById('context_menu').classList.add('hide');
   document.getElementById('format_pin_').classList.add('hide');
   document.getElementById('shortcut').classList.add('hide');
-  document.getElementById('show_popup').classList.add('hide');
 }
 
 
