@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.4.9",
+  "version": "1.5.0",
   "default_locale": "en",
   
   "author": "toshi",

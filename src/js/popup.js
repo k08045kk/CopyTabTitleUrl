@@ -43,9 +43,7 @@ getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     document.querySelector('.action').style.display = 'block';
     document.querySelector('.panel').style.display = 'none';
     copyTabs(type, query, valueSet, function() {
-      setTimeout(function() {
-        window.close();
-      }, 1000);
+      setTimeout(onTabCopyComplete, 1000);
     });
   }
 });
