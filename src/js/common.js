@@ -1,6 +1,7 @@
 ﻿/**
  * 共通処理
  */
+var page = 'common';
 
 // ブラウザ判定
 function isFirefox() {
@@ -79,20 +80,32 @@ function createCommand(valueSet, type) {
 
 // クリップボードにコピー
 function copyToClipboard(text, command) {
-  function oncopy(event) {
-    document.removeEventListener('copy', oncopy, true);
-    event.stopImmediatePropagation();
-    
-    event.preventDefault();
-    if (command.ex && command.html) {
-      event.clipboardData.setData('text/html', text);
-    } else {
-      event.clipboardData.setData('text/plain', text);
+  if (isMobile() && page == 'background') {
+    // Firefox63+ Clipboard API
+    // Android Firefoxのバッググランドでは、execCommand('copy')が動作しない。
+    // そのため、対象環境のみClicpboard APIを使用する。
+    // なので、HTMLコピーできない。HTMLコピーには、about:configの設定が必要となる。
+    navigator.clipboard.writeText(text).then(function() {
+      /* success */
+    }, function() {
+      /* failure */
+    });
+  } else {
+    function oncopy(event) {
+      document.removeEventListener('copy', oncopy, true);
+      event.stopImmediatePropagation();
+      
+      event.preventDefault();
+      if (command.ex && command.html) {
+        event.clipboardData.setData('text/html', text);
+      } else {
+        event.clipboardData.setData('text/plain', text);
+      }
     }
+    document.addEventListener('copy', oncopy, true);
+    
+    document.execCommand('copy');
   }
-  document.addEventListener('copy', oncopy, true);
-  
-  document.execCommand('copy');
 }
 
 function createCopyTabText(command, tab, index) {

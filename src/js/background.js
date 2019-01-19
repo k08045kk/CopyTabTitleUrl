@@ -1,10 +1,11 @@
 ﻿/**
  * バックグラウンド処理
  */
+page = 'background';
 
 // ブラウザアクション
 getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup || isMobile()) {
+  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
     chrome.browserAction.setPopup({popup: '/html/popup.html'});
   } else {
     chrome.browserAction.setPopup({popup: ''});

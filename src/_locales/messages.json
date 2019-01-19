@@ -108,6 +108,10 @@
     "message":    "コピー完了",
     "description":"コピー完了"
   },
+  "optionsPage_ReStart": {
+    "message":    "再起動",
+    "description":"再起動"
+  },
   "dummyDummyDummy": {
     "translate":  false,
     "message":    "dummy",

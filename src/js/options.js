@@ -6,7 +6,6 @@ if (isMobile()) {
   document.getElementById('context_menu').classList.add('hide');
   document.getElementById('format_pin_').classList.add('hide');
   document.getElementById('shortcut').classList.add('hide');
-  document.getElementById('show_popup').classList.add('hide');
 }
 
 
@@ -109,6 +108,14 @@ function onPageLoaded() {
           }
         });
       }
+    } else if (!(valueSet.action == 'Popup' || valueSet.browser_ShowPopup)) {
+      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
+      // そのため、設定反映には再起動が必要
+      chrome.browserAction.getPopup({}, function(url) {
+        if (!(url == null || url == '')) {
+          document.querySelector('#browser_option').style.display = 'inline-block';
+        }
+      });
     }
     
     // メニュー更新
@@ -135,10 +142,16 @@ function onUpdateContextMenu() {
   valueSet.action = getRadioCheckItem('ba');
   valueSet.action_target = getRadioCheckItem('bat');
   valueSet.action_action = getRadioCheckItem('baa');
-  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup || isMobile()) {
-    chrome.browserAction.setPopup({popup: '/html/popup.html'})
+  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
+    chrome.browserAction.setPopup({popup: '/html/popup.html'});
+    document.querySelector('#browser_option').style.display = 'none';
   } else {
-    chrome.browserAction.setPopup({popup: ''})
+    chrome.browserAction.setPopup({popup: ''});
+    if (isMobile()) {
+      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
+      // そのため、設定反映には再起動が必要
+      document.querySelector('#browser_option').style.display = 'inline-block';
+    }
   }
   
   // ストレージへ設定を保存
