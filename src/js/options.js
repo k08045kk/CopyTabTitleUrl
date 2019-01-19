@@ -221,9 +221,9 @@ document.getElementById('ba_Action').addEventListener('click', onUpdateContextMe
 // 追加機能
 ['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat'].forEach(function(v, i, a) {
   document.getElementById('current_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow:true});
+    onCopyTabs(i, {currentWindow:true}, null);
   });
   document.getElementById('all_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {});
+    onCopyTabs(i, {}, null);
   });
 });

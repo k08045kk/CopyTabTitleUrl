@@ -17,13 +17,13 @@ function onTabCopyComplete() {
 }
 ['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat'].forEach(function(v, i, a) {
   document.getElementById('item_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow:true, active:true}, onTabCopyComplete);
+    onCopyTabs(i, {currentWindow:true, active:true}, null, onTabCopyComplete);
   });
   document.getElementById('current_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {currentWindow:true}, onTabCopyComplete);
+    onCopyTabs(i, {currentWindow:true}, null, onTabCopyComplete);
   });
   document.getElementById('all_'+v).addEventListener('click', function() {
-    onCopyTabs(i, {}, onTabCopyComplete);
+    onCopyTabs(i, {}, null, onTabCopyComplete);
   });
 });
 
@@ -42,7 +42,7 @@ getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     document.querySelector('.action p').innerText = msg;
     document.querySelector('.action').style.display = 'block';
     document.querySelector('.panel').style.display = 'none';
-    copyTabs(type, query, valueSet, function() {
+    onCopyTabs(type, query, valueSet, function() {
       setTimeout(onTabCopyComplete, 1000);
     });
   }

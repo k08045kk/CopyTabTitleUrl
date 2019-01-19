@@ -21,7 +21,7 @@ chrome.browserAction.onClicked.addListener(function(info, tab) {
     let type = actionSet[valueSet.action_action];
     let query = targetSet[valueSet.action_target];
     
-    copyTabs(type, query, valueSet, function() {});
+    onCopyTabs(type, query, valueSet);
   });
 });
 
@@ -45,11 +45,8 @@ if (!isMobile()) {
     });
   }
   chrome.commands.onCommand.addListener(function(command) {
-    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-      if (command == 'shortcut_action') {
-        copyTabs(3, {currentWindow:true, active:true}, valueSet, function() {});
-        //console.log('shortcut_action');
-      }
-    });
+    if (command == 'shortcut_action') {
+      onCopyTabs(3, {currentWindow:true, active:true}, null);
+    }
   });
 }

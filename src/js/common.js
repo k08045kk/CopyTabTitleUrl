@@ -71,7 +71,7 @@ function createCommand(valueSet, type) {
   let command = {
     enter: valueSet.format_enter, 
     html: valueSet.format_html, 
-    pin: valueSet.format_pin,
+    pin: valueSet.format_pin, 
     ex: valueSet.format_extension
   };
   command.format = ['${title}${enter}${url}', '${title}', '${url}', valueSet.format_CopyTabFormat][type];
@@ -79,18 +79,40 @@ function createCommand(valueSet, type) {
 }
 
 // クリップボードにコピー
-function copyToClipboard(text, command) {
+function copyToClipboard(command, tabs) {
+  // コピー文字列作成
+  let temp = [];
+  let enter = getEnterCode();
+  for (let i=0; i<tabs.length; i++) {
+    let format = command.format;
+    if (command.ex) {
+      format = format.replace(/\${index}/ig, i+1)
+                     .replace(/\${tab}/ig, '\t')
+                     .replace(/\${cr}/ig,  '\r')
+                     .replace(/\${lf}/ig,  '\n');
+    }
+    format = format.replace(/\${title}/ig, tabs[i].title)
+                 .replace(/\${url}/ig, tabs[i].url)
+                 .replace(/\${enter}/ig, enter);
+    temp.push(format);
+  }
+  let text = temp.join(command.enter? enter: '');
+  
+  // クリップボードコピー
   if (isMobile() && page == 'background') {
-    // Firefox63+ Clipboard API
-    // Android Firefoxのバッググランドでは、execCommand('copy')が動作しない。
+    // Android Firefox バックグラウンド限定処理
+    // 補足
+    // Android Firefox　バッググランドでは、execCommand('copy')が動作しない。
     // そのため、対象環境のみClicpboard APIを使用する。
     // なので、HTMLコピーできない。HTMLコピーには、about:configの設定が必要となる。
+    // Clipboard API(Firefox63+実装)
     navigator.clipboard.writeText(text).then(function() {
       /* success */
     }, function() {
       /* failure */
     });
   } else {
+    // 通常のクリップボードコピー処理
     function oncopy(event) {
       document.removeEventListener('copy', oncopy, true);
       event.stopImmediatePropagation();
@@ -108,24 +130,17 @@ function copyToClipboard(text, command) {
   }
 }
 
-function createCopyTabText(command, tab, index) {
-  let format = command.format;
-  if (command.ex) {
-    format = format.replace(/\${index}/ig, index)
-                   .replace(/\${tab}/ig, '\t')
-                   .replace(/\${cr}/ig,  '\r')
-                   .replace(/\${lf}/ig,  '\n');
-  }
-  return format.replace(/\${title}/ig, tab.title)
-               .replace(/\${url}/ig, tab.url)
-               .replace(/\${enter}/ig, getEnterCode());
-}
-
 // タブをクリップボードにコピー
-function copyTabs(type, query, valueSet, callback) {
-  let command = createCommand(valueSet, type);
+function onCopyTabs(type, query, valueSet, callback) {
+  if (valueSet == null) {
+    // valueSet未取得なら再起呼び出し(valueSetの2重取りはできない)
+    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+      onCopyTabs(type, query, valueSet, callback);
+    });
+    return;
+  }
   
-  let enter = getEnterCode();
+  let command = createCommand(valueSet, type);
   if (command.ex && command.pin) {
     query.pinned = false;
   }
@@ -134,44 +149,32 @@ function copyTabs(type, query, valueSet, callback) {
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
   chrome.tabs.query(query, function(tabs) {
-    let temp = [];
-    for (let i=0; i<tabs.length; i++) {
-      temp.push(createCopyTabText(command, tabs[i], i+1));
-    }
-    copyToClipboard(temp.join(command.enter? enter: ''), command);
+    copyToClipboard(command, tabs);
     if (callback) {
       // 処理完了通知
       callback();
     }
   });
 }
-function onCopyTabs(type, query, callback) {
-  if (type == 3) {
-    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-      copyTabs(type, query, valueSet, callback);
-    });
-  } else {
-    copyTabs(type, query, defaultStorageValueSet, callback);
-  }
-}
 
 function onContextMenus(info, tab) {
   let type = 0;
   switch (info.menuItemId) {
-  case 'contextMenu_CopyTabFormat':type++;
-  case 'contextMenu_CopyTabUrl':   type++;
-  case 'contextMenu_CopyTabTitle': type++;
+  case 'contextMenu_CopyTabFormat':     type++;
+  case 'contextMenu_CopyTabUrl':        type++;
+  case 'contextMenu_CopyTabTitle':      type++;
   case 'contextMenu_CopyTabTitleUrl':
     getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-      let command = createCommand(valueSet, type);
-      copyToClipboard(createCopyTabText(command, tab, 1), command);
+      // タブコンテキストメニューは、メニューを開いたタブの情報をコピーする
+      // カレントタブではない
+      copyToClipboard(createCommand(valueSet, type), [tab]);
     });
     break;
-  case 'contextMenu_CopyTabAllFormat':type++;
-  case 'contextMenu_CopyTabAllUrl':   type++;
-  case 'contextMenu_CopyTabAllTitle': type++;
+  case 'contextMenu_CopyTabAllFormat':  type++;
+  case 'contextMenu_CopyTabAllUrl':     type++;
+  case 'contextMenu_CopyTabAllTitle':   type++;
   case 'contextMenu_CopyTabAllTitleUrl':
-    onCopyTabs(type, {currentWindow:true});
+    onCopyTabs(type, {currentWindow:true}, null);
     break;
   }
 }
