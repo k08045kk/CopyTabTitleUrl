@@ -8,35 +8,35 @@
     "message":    "クリップボードへタブのタイトルとURLをコピーします。",
     "description":"拡張機能の説明"
   },
-  "contextMenu_CopyTabTitleUrl": {
+  "CopyTabTitleUrl": {
     "message":    "タブのタイトルとURLをコピー",
     "description":"タブのタイトルとURLをコピー"
   },
-  "contextMenu_CopyTabTitle": {
+  "CopyTabTitle": {
     "message":    "タブのタイトルをコピー",
     "description":"タブのタイトルをコピー"
   },
-  "contextMenu_CopyTabUrl": {
+  "CopyTabUrl": {
     "message":    "タブのURLをコピー",
     "description":"タブのURLをコピー"
   },
-  "contextMenu_CopyTabFormat": {
+  "CopyTabFormat": {
     "message":    "タブのフォーマットをコピー",
     "description":"タブのフォーマットをコピー"
   },
-  "contextMenu_CopyTabAllTitleUrl": {
+  "CopyWindowTabsTitleUrl": {
     "message":    "すべてのタブのタイトルとURLをコピー",
     "description":"すべてのタブのタイトルとURLをコピー"
   },
-  "contextMenu_CopyTabAllTitle": {
+  "CopyWindowTabsTitle": {
     "message":    "すべてのタブのタイトルをコピー",
     "description":"すべてのタブのタイトルをコピー"
   },
-  "contextMenu_CopyTabAllUrl": {
+  "CopyWindowTabsUrl": {
     "message":    "すべてのタブのURLをコピー",
     "description":"すべてのタブのURLをコピー"
   },
-  "contextMenu_CopyTabAllFormat": {
+  "CopyWindowTabsFormat": {
     "message":    "すべてのタブのフォーマットをコピー",
     "description":"すべてのタブのフォーマットをコピー"
   },

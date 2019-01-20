@@ -160,20 +160,20 @@ function onCopyTabs(type, query, valueSet, callback) {
 function onContextMenus(info, tab) {
   let type = 0;
   switch (info.menuItemId) {
-  case 'contextMenu_CopyTabFormat':     type++;
-  case 'contextMenu_CopyTabUrl':        type++;
-  case 'contextMenu_CopyTabTitle':      type++;
-  case 'contextMenu_CopyTabTitleUrl':
+  case 'CopyTabFormat':         type++;
+  case 'CopyTabUrl':            type++;
+  case 'CopyTabTitle':          type++;
+  case 'CopyTabTitleUrl':
     getStorageArea().get(defaultStorageValueSet, function(valueSet) {
       // タブコンテキストメニューは、メニューを開いたタブの情報をコピーする
       // カレントタブではない
       copyToClipboard(createCommand(valueSet, type), [tab]);
     });
     break;
-  case 'contextMenu_CopyTabAllFormat':  type++;
-  case 'contextMenu_CopyTabAllUrl':     type++;
-  case 'contextMenu_CopyTabAllTitle':   type++;
-  case 'contextMenu_CopyTabAllTitleUrl':
+  case 'CopyWindowTabsFormat':  type++;
+  case 'CopyWindowTabsUrl':     type++;
+  case 'CopyWindowTabsTitle':   type++;
+  case 'CopyWindowTabsTitleUrl':
     onCopyTabs(type, {currentWindow:true}, null);
     break;
   }
@@ -196,12 +196,12 @@ function updateContextMenus() {
       if (contexts.length != 0) {
         [
           'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 
-          'CopyTabAllTitleUrl', 'CopyTabAllTitle', 'CopyTabAllUrl', 'CopyTabAllFormat'
+          'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat'
         ].forEach(function(v, i, a) {
           if (valueSet['item_'+v]) {
             chrome.contextMenus.create({
-              id: 'contextMenu_'+v,
-              title: chrome.i18n.getMessage('contextMenu_'+v),
+              id: v,
+              title: chrome.i18n.getMessage(v),
               contexts: contexts
             });
           }
