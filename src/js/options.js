@@ -7,7 +7,13 @@ if (isMobile()) {
   document.getElementById('format_pin_').classList.add('hide');
   document.getElementById('shortcut').classList.add('hide');
 }
-
+if (isChrome()) {
+  // Chromeのオプション画面の最小サイズを指定する
+  // FirefoxAndroid版を考慮してCSSでの指定は行わない
+  // ChromeAndroid版はない
+  // Chromeの拡張機能画面は600px程度で固定画面のため、オプション画面が600px固定でも問題ない
+  document.body.style.width = '600px';
+}
 
 function getRadioCheckItem(name) {
   let elements = document.getElementsByName(name);
