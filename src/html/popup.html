@@ -5,72 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 body {
-	width: 320px;
-    line-height: 1.25;
-    font-size: 16px;
-	color: #3b3c40;
+  width: 160px;
+  font-size: 16px;
+  color: #000;
+  pading: 0;
+  margin: 0;
+  user-select: none;
 }
-a {
-    margin: 3px 0 3px 1.5em;
-    display: inline-block;
-    text-decoration: none;
-    color: #217ac0;
+.top {
+  border-top: 1px solid #aaa;
 }
-a:hover {
-    background-color: #217ac0;
-    color: #fff;
+.title {
+  font-size: 12px;
+  text-align: center;
+  padding: .25em 0;
 }
-a:active {
-    background-color: silver;
-    color: #fff;
+.box {
+  border-bottom: 1px solid #aaa;
 }
-.panel, 
-.action {
-    margin: 0 4px 1em 4px;
+.copy {
+  padding: .5em 1.5em;
 }
-.panel-section {
-    display: flex;
-    flex-direction: row;
+.target {
+  width: 50%;
+  text-align: center;
+  padding: .5em 0;
+  float: left;
 }
-.panel-section-header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 1em 1em 0.5em 1em;
+.item:hover {
+  background: #b995c5;
+  color: #fff;
 }
-.panel-section-header > .text-section-header {
-    align-self: center;
-    font-size: 18px;
-    font-weight: lighter;
-}
+#target_win:checked ~ label .item.win, 
+#target_all:checked ~ label .item.all,
+#target_win:checked ~ .title, 
+#target_all:checked ~ .title,
+.title.top, 
+.item:active {
+  background: #A374B3;
+  color: #fff;
+} 
     </style>
-</head>
-<body>
-    <div class="action" style="display:none;"><p style="text-align:center;"></p></div>
-    <div class="panel">
-        <div class="panel-section panel-section-header">
-            <div class="text-section-header" data-label="optionsPage_CurrentTabSettingsTitle"></div>
-        </div>
-        <a href="#" id="item_CopyTabTitleUrl" data-label="CopyTabTitleUrl"></a><br>
-        <a href="#" id="item_CopyTabTitle" data-label="CopyTabTitle"></a><br>
-        <a href="#" id="item_CopyTabUrl" data-label="CopyTabUrl"></a><br>
-        <a href="#" id="item_CopyTabFormat" data-label="CopyTabFormat"></a><br>
-		
-        <div class="panel-section panel-section-header">
-            <div class="text-section-header" data-label="optionsPage_CurrentWindowSettingsTitle"></div>
-        </div>
-        <a href="#" id="current_CopyTabTitleUrl" data-label="CopyWindowTabsTitleUrl"></a><br>
-        <a href="#" id="current_CopyTabTitle" data-label="CopyWindowTabsTitle"></a><br>
-        <a href="#" id="current_CopyTabUrl" data-label="CopyWindowTabsUrl"></a><br>
-        <a href="#" id="current_CopyTabFormat" data-label="CopyWindowTabsFormat"></a><br>
-		
-        <div class="panel-section panel-section-header">
-            <div class="text-section-header" data-label="optionsPage_AllWindowSettingsTitle"></div>
-        </div>
-        <a href="#" id="all_CopyTabTitleUrl" data-label="CopyWindowTabsTitleUrl"></a><br>
-        <a href="#" id="all_CopyTabTitle" data-label="CopyWindowTabsTitle"></a><br>
-        <a href="#" id="all_CopyTabUrl" data-label="CopyWindowTabsUrl"></a><br>
-        <a href="#" id="all_CopyTabFormat" data-label="CopyWindowTabsFormat"></a><br>
-    </div>
     <script src="/js/common.js"></script>
     <script src="/js/popup.js"></script>
+</head>
+<body>
+    <div id="action" style="display:none;"><p style="text-align:center;">Done</p></div>
+    <div id="panel" style="display:none;">
+        <div class="box title top"><span>CopyTabTitleUrl</span></div>
+        <div class="box item copy" id="item_CopyTabTitleUrl"><span>Title<br>URL</span></div>
+        <div class="box item copy" id="item_CopyTabTitle"><span>Title</span></div>
+        <div class="box item copy" id="item_CopyTabUrl"><span>URL</span></div>
+        <div class="box item copy" id="item_CopyTabFormat"><span>Format</span></div>
+		<div class="box">
+            <input type='checkbox' style="display:none;" id="target_win">
+            <input type='checkbox' style="display:none;" id="target_all">
+			<label for="target_win" id="target_win_label"><div class="item target win"><span>Current</span></div></label>
+			<label for="target_all" id="target_all_label"><div class="item target all"><span>All</span></div></label>
+			<div style="clear:both;"></div>
+			<div class="title"><span>window</span></div>
+		</div>
+    </div>
 </body>
 </html>
