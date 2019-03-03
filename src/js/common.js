@@ -198,7 +198,7 @@ function updateContextMenus() {
           'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 
           'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat'
         ].forEach(function(v, i, a) {
-          if (valueSet['item_'+v]) {
+          if (valueSet['item_'+v.replace('WindowTabs', 'TabAll')]) {
             chrome.contextMenus.create({
               id: v,
               title: chrome.i18n.getMessage(v),
