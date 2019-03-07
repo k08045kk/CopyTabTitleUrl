@@ -46,12 +46,11 @@ var defaultStorageValueSet = {
   item_CopyTabAllFormat2: false,
   action: 'Popup',
   action_target: 'CurrentTab',
-  action_action: 'CopyTabTitleUrl',
   browser_ShowPopup: false,
   shortcut_command: 'Alt+C',
   shortcut_command2: '',
   format_CopyTabFormat: '[${title}](${url})',
-  format_CopyTabFormat2:'[${title}](${url})',
+  format_CopyTabFormat2:'<a href="${url}">${title}</a>',
   format_enter: true,
   format_html: false,
   format_pin: false,
@@ -70,6 +69,15 @@ function getEnterCode() {
   return getEnterCode.code;
 }
 getEnterCode.code = isWindows()? '\r\n': '\n';
+
+// ブラウザアクションクエリー
+function getBrowserActionQuery(valueSet) {
+  return {
+    CurrentTab: {currentWindow:true, active:true}, 
+    CurrentWindow: {currentWindow:true}, 
+    AllWindow: {}
+  }[valueSet.action_target];
+}
 
 // コマンド作成
 function createCommand(valueSet, type) {

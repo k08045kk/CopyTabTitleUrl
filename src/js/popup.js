@@ -47,14 +47,7 @@ function onInit() {
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     if (valueSet.action == 'Action') {
       // アクションのみ(完了通知を表示する)
-      let targetSet = {CurrentTab: {currentWindow:true, active:true}, 
-                        CurrentWindow: {currentWindow:true}, 
-                        AllWindow: {}};
-      let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
-      let type = actionSet[valueSet.action_action];
-      let query = targetSet[valueSet.action_target];
-      
-      onCopyTabs(type, query, valueSet, function() {
+      onCopyTabs(3, getBrowserActionQuery(valueSet), valueSet, function() {
         setTimeout(onTabCopyComplete, 1000);
       });
       document.getElementById('action').style.display = '';

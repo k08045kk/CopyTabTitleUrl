@@ -13,15 +13,7 @@ getStorageArea().get(defaultStorageValueSet, function(valueSet) {
 });
 chrome.browserAction.onClicked.addListener(function(info, tab) {
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-    // アクションを実行
-    let targetSet = {CurrentTab: {currentWindow:true, active:true}, 
-                      CurrentWindow: {currentWindow:true}, 
-                      AllWindow: {}};
-    let actionSet = {CopyTabTitleUrl:0, CopyTabTitle:1, CopyTabUrl:2, CopyTabFormat:3};
-    let type = actionSet[valueSet.action_action];
-    let query = targetSet[valueSet.action_target];
-    
-    onCopyTabs(type, query, valueSet);
+    onCopyTabs(3, getBrowserActionQuery(valueSet), valueSet);
   });
 });
 
