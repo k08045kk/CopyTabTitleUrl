@@ -7,6 +7,9 @@
 body {
     padding: 0.5em;
 }
+hr {
+    border-top: 1px solid #b1b1b1;
+}
 fieldset {
     margin: 0 0 1em 0;
     border: 1px solid #b1b1b1;
@@ -49,6 +52,7 @@ input[type="text"] {
 		<legend data-label="optionsPage_Menu"></legend>
 		<p><input id="menu_all" type="checkbox"/> <label for="menu_all" data-label="optionsPage_ContextMenuCheckbox"></label></p>
 		<p><input id="menu_page" type="checkbox"/> <label for="menu_page" data-label="optionsPage_PageContextMenuCheckbox"></label></p>
+		<p><input id="menu_browser_action" type="checkbox"/> <label for="menu_browser_action" data-label="optionsPage_BrowserActionContextMenuCheckbox"></label></p>
 		<p><input id="menu_tab" type="checkbox"/> <label for="menu_tab" data-label="optionsPage_TabContextMenuCheckbox"></label></p>
 	    <fieldset id='item'>
 			<legend data-label="optionsPage_MenuItem"></legend>
@@ -62,6 +66,7 @@ input[type="text"] {
 				<label for="item_CopyTabFormat" data-label="CopyTabFormat"></label></p>
 			<p class="extension format2"><input id="item_CopyTabFormat2" type="checkbox"/>
 				<label for="item_CopyTabFormat2" data-label="CopyTabFormat2"></label></p>
+			<hr>
 			<p><input id="item_CopyTabAllTitleUrl" type="checkbox"/>
 				<label for="item_CopyTabAllTitleUrl" data-label="CopyWindowTabsTitleUrl"></label></p>
 			<p><input id="item_CopyTabAllTitle" type="checkbox"/>
@@ -82,6 +87,7 @@ input[type="text"] {
 			<label for="ba_Action" data-label="optionsPage_Action"></label><span id="browser_option" data-label="optionsPage_ReStart"></span></p>
 		<p style="margin-left:1em;"><input id="browser_ShowPopup" type="checkbox"/><label for="browser_ShowPopup" data-label="optionsPage_ShowPopup"></label></p>
 	    <fieldset id="bat" style="display:none;">
+			<legend data-label="optionsPage_ActionTarget"></legend>
 			<p><input id="bat_CurrentTab" type="radio" name="bat" value="CurrentTab"/>
 				<label for="bat_CurrentTab" data-label="optionsPage_CurrentTabSettingsTitle"></label></p>
 			<p><input id="bat_CurrentWindow" type="radio" name="bat" value="CurrentWindow"/>

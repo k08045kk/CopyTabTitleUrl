@@ -33,6 +33,7 @@ function isWindows() {
 var defaultStorageValueSet = {
   menu_all: false,
   menu_page: false,
+  menu_browser_action: true,
   menu_tab: true,       // Firefox only
   item_CopyTabTitleUrl: true,
   item_CopyTabTitle: true,
@@ -210,6 +211,7 @@ function updateContextMenus() {
       let contexts = [];
       if (valueSet.menu_all) {  contexts.push('all'); }
       if (valueSet.menu_page) { contexts.push('page');}
+      if (valueSet.menu_browser_action) { contexts.push('browser_action');}
       if (valueSet.menu_tab && isFirefox()) {
         contexts.push('tab');
       }

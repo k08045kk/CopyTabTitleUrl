@@ -72,6 +72,10 @@
     "message":    "ページコンテキストメニュー",
     "description":"ページコンテキストメニュー"
   },
+  "optionsPage_BrowserActionContextMenuCheckbox": {
+    "message":    "ブラウザアクションコンテキストメニュー",
+    "description":"ブラウザアクションコンテキストメニュー"
+  },
   "optionsPage_TabContextMenuCheckbox": {
     "message":    "タブコンテキストメニュー",
     "description":"タブコンテキストメニュー"
