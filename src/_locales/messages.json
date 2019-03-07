@@ -57,7 +57,7 @@
     "description":"メニューアイテム"
   },
   "optionsPage_BrowserAction": {
-    "message":    "ツールチップ(ブラウザアクション)",
+    "message":    "ブラウザアクション",
     "description":"ブラウザアクション"
   },
   "optionsPage_Format": {
