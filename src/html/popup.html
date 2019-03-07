@@ -40,7 +40,7 @@ body {
 #target_all:checked ~ label .item.all,
 #target_win:checked ~ .title, 
 #target_all:checked ~ .title,
-.title.top, 
+.title, 
 .item:active {
   background: #A374B3;
   color: #fff;
@@ -50,16 +50,17 @@ body {
     <script src="/js/popup.js"></script>
 </head>
 <body>
-    <div id="action" style="display:none;"><p style="text-align:center;">Done</p></div>
+    <div id="action" style="display:none;"><p style="text-align:center;">Completed</p></div>
     <div id="panel" style="display:none;">
         <div class="box title top"><span>CopyTabTitleUrl</span></div>
         <div class="box item copy" id="item_CopyTabTitleUrl"><span>Title<br>URL</span></div>
         <div class="box item copy" id="item_CopyTabTitle"><span>Title</span></div>
         <div class="box item copy" id="item_CopyTabUrl"><span>URL</span></div>
         <div class="box item copy" id="item_CopyTabFormat"><span>Format</span></div>
+        <div class="box item copy" id="item_CopyTabFormat2" style="display:none;"><span>Format2</span></div>
 		<div class="box">
-            <input type='checkbox' style="display:none;" id="target_win">
-            <input type='checkbox' style="display:none;" id="target_all">
+            <input type="checkbox" style="display:none;" id="target_win">
+            <input type="checkbox" style="display:none;" id="target_all">
 			<label for="target_win" id="target_win_label"><div class="item target win"><span>Current</span></div></label>
 			<label for="target_all" id="target_all_label"><div class="item target all"><span>All</span></div></label>
 			<div style="clear:both;"></div>

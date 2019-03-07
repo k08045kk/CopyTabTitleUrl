@@ -26,7 +26,8 @@ p {
 input[type="text"] {
     margin:0.5em;
 }
-#format_CopyTabFormat {
+#format_CopyTabFormat, 
+#format_CopyTabFormat2 {
 	width: 80%;
 }
 .hide {
@@ -38,6 +39,7 @@ input[type="text"] {
 	font-size:12px;
 	color:#B36675;
 }
+
     </style>
 </head>
 <body>
@@ -56,6 +58,8 @@ input[type="text"] {
 				<label for="item_CopyTabUrl" data-label="CopyTabUrl"></label></p>
 			<p><input id="item_CopyTabFormat" type="checkbox"/>
 				<label for="item_CopyTabFormat" data-label="CopyTabFormat"></label></p>
+			<p class="extension format2"><input id="item_CopyTabFormat2" type="checkbox"/>
+				<label for="item_CopyTabFormat2" data-label="CopyTabFormat2"></label></p>
 			<p><input id="item_CopyTabAllTitleUrl" type="checkbox"/>
 				<label for="item_CopyTabAllTitleUrl" data-label="CopyWindowTabsTitleUrl"></label></p>
 			<p><input id="item_CopyTabAllTitle" type="checkbox"/>
@@ -64,6 +68,8 @@ input[type="text"] {
 				<label for="item_CopyTabAllUrl" data-label="CopyWindowTabsUrl"></label></p>
 			<p><input id="item_CopyTabAllFormat" type="checkbox"/>
 				<label for="item_CopyTabAllFormat" data-label="CopyWindowTabsFormat"></label></p>
+			<p class="extension format2"><input id="item_CopyTabAllFormat2" type="checkbox"/>
+				<label for="item_CopyTabAllFormat2" data-label="CopyWindowTabsFormat2"></label></p>
 	    </fieldset>
     </fieldset>
     <fieldset id="browser_action"><!-- ブラウザアクション -->
@@ -97,29 +103,16 @@ input[type="text"] {
     <fieldset id="format"><!-- フォーマット -->
 		<legend data-label="optionsPage_Format"></legend>
 		<p id="format_FormatMessage"></p>
-		<p><input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
+		<p>format<span class="extension format2">1</span>: <input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
+		<p class="extension format2">format2: <input type="text" id="format_CopyTabFormat2" maxlength="100" /></p>
 		<p class="extension"><input id="format_enter" type="checkbox"/> <label for="format_enter">(All tabs) Separate by newline.</label></p>
 		<p class="extension"><input id="format_html" type="checkbox"/> <label for="format_html">Copy in HTML format. - example: &lt;a href=&quot;${url}&quot;&gt;${title}&lt;/a&gt;&lt;br/&gt;</label></p>
 		<p id="format_pin_" class="extension"><input id="format_pin" type="checkbox"/> <label for="format_pin">Except tabs with pinned.</label></p>
-		<p id="shortcut"><span id="shortcut_message">shortcut: </span><input type="text" id="shortcut_command" maxlength="100" /></p>
+		<p class="extension"><input id="format_format2" type="checkbox"/> <label for="format_format2">Enable Format 2.</label></p>
+		<p id="shortcut_message" style="display:none;">You can change the shortcut command from the standard setting. &lt;chrome://extensions/shortcuts&gt;</p>
+		<p id="shortcut">shortcut<span class="extension format2">1</span>: <input type="text" id="shortcut_command" maxlength="100" /></p>
+		<p id="shortcut2" class="extension format2">shortcut2: <input type="text" id="shortcut_command2" maxlength="100" /></p>
 		<p><input id="format_extension" type="checkbox"/> <label for="format_extension">Extended mode (beta)</label></p>
-    </fieldset>
-    <fieldset id="functions"><!-- 追加機能 -->
-		<legend data-label="optionsPage_AdditionalFunctionsSettingsTitle"></legend>
-	    <fieldset>
-			<legend data-label="optionsPage_CurrentWindowSettingsTitle"></legend>
-		    <button id="current_CopyTabTitleUrl" data-label="CopyWindowTabsTitleUrl"></button>
-		    <button id="current_CopyTabTitle" data-label="CopyWindowTabsTitle"></button>
-		    <button id="current_CopyTabUrl" data-label="CopyWindowTabsUrl"></button>
-		    <button id="current_CopyTabFormat" data-label="CopyWindowTabsFormat"></button>
-	    </fieldset>
-	    <fieldset>
-			<legend data-label="optionsPage_AllWindowSettingsTitle"></legend>
-		    <button id="all_CopyTabTitleUrl" data-label="CopyWindowTabsTitleUrl"></button>
-		    <button id="all_CopyTabTitle" data-label="CopyWindowTabsTitle"></button>
-		    <button id="all_CopyTabUrl" data-label="CopyWindowTabsUrl"></button>
-		    <button id="all_CopyTabFormat" data-label="CopyWindowTabsFormat"></button>
-	    </fieldset>
     </fieldset>
     <script src="/js/common.js"></script>
     <script src="/js/options.js"></script>

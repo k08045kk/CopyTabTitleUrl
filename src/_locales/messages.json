@@ -24,6 +24,10 @@
     "message":    "タブのフォーマットをコピー",
     "description":"タブのフォーマットをコピー"
   },
+  "CopyTabFormat2": {
+    "message":    "タブのフォーマット2をコピー",
+    "description":"タブのフォーマット2をコピー"
+  },
   "CopyWindowTabsTitleUrl": {
     "message":    "すべてのタブのタイトルとURLをコピー",
     "description":"すべてのタブのタイトルとURLをコピー"
@@ -39,6 +43,10 @@
   "CopyWindowTabsFormat": {
     "message":    "すべてのタブのフォーマットをコピー",
     "description":"すべてのタブのフォーマットをコピー"
+  },
+  "CopyWindowTabsFormat2": {
+    "message":    "すべてのタブのフォーマット2をコピー",
+    "description":"すべてのタブのフォーマット2をコピー"
   },
   "optionsPage_Menu": {
     "message":    "コンテキストメニュー",
@@ -69,16 +77,16 @@
     "description":"タブコンテキストメニュー"
   },
   "optionsPage_Popup": {
-    "message":    "ポップアップメニューを表示する。",
-    "description":"ポップアップメニューを表示する。"
+    "message":    "ポップアップメニューを表示する",
+    "description":"ポップアップメニューを表示する"
   },
   "optionsPage_Action": {
-    "message":    "アクションを実行する。",
-    "description":"アクションを実行する。"
+    "message":    "アクションを実行する",
+    "description":"アクションを実行する"
   },
   "optionsPage_ShowPopup": {
-    "message":    "コピー完了通知を表示する。",
-    "description":"コピー完了通知を表示する。"
+    "message":    "コピー完了通知を表示する",
+    "description":"コピー完了通知を表示する"
   },
   "optionsPage_ActionTarget": {
     "message":    "対象範囲",

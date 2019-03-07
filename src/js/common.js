@@ -38,19 +38,24 @@ var defaultStorageValueSet = {
   item_CopyTabTitle: true,
   item_CopyTabUrl: true,
   item_CopyTabFormat: false,
+  item_CopyTabFormat2: false,
   item_CopyTabAllTitleUrl: false,
   item_CopyTabAllTitle: false,
   item_CopyTabAllUrl: false,
   item_CopyTabAllFormat: false,
+  item_CopyTabAllFormat2: false,
   action: 'Popup',
   action_target: 'CurrentTab',
   action_action: 'CopyTabTitleUrl',
   browser_ShowPopup: false,
   shortcut_command: 'Alt+C',
+  shortcut_command2: '',
   format_CopyTabFormat: '[${title}](${url})',
+  format_CopyTabFormat2:'[${title}](${url})',
   format_enter: true,
   format_html: false,
   format_pin: false,
+  format_format2: false,
   format_extension: false
 };
 
@@ -74,7 +79,13 @@ function createCommand(valueSet, type) {
     pin: valueSet.format_pin, 
     ex: valueSet.format_extension
   };
-  command.format = ['${title}${enter}${url}', '${title}', '${url}', valueSet.format_CopyTabFormat][type];
+  command.format = [
+    '${title}${enter}${url}', 
+    '${title}', 
+    '${url}', 
+    valueSet.format_CopyTabFormat,
+    valueSet.format_CopyTabFormat2
+  ][type];
   return command;
 }
 
@@ -160,6 +171,7 @@ function onCopyTabs(type, query, valueSet, callback) {
 function onContextMenus(info, tab) {
   let type = 0;
   switch (info.menuItemId) {
+  case 'CopyTabFormat2':        type++;
   case 'CopyTabFormat':         type++;
   case 'CopyTabUrl':            type++;
   case 'CopyTabTitle':          type++;
@@ -170,6 +182,7 @@ function onContextMenus(info, tab) {
       copyToClipboard(createCommand(valueSet, type), [tab]);
     });
     break;
+  case 'CopyWindowTabsFormat2': type++;
   case 'CopyWindowTabsFormat':  type++;
   case 'CopyWindowTabsUrl':     type++;
   case 'CopyWindowTabsTitle':   type++;
@@ -195,10 +208,13 @@ function updateContextMenus() {
       
       if (contexts.length != 0) {
         [
-          'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 
-          'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat'
+          'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
+          'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2'
         ].forEach(function(v, i, a) {
-          if (valueSet['item_'+v.replace('WindowTabs', 'TabAll')]) {
+          let id = 'item_'+v.replace('WindowTabs', 'TabAll');
+          if (id.endsWith('2') && !(valueSet.format_extension && valueSet.format_format2)) {
+          } else if (!valueSet[id]) {
+          } else {
             chrome.contextMenus.create({
               id: v,
               title: chrome.i18n.getMessage(v),

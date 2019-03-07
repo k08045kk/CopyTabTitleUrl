@@ -44,7 +44,10 @@
   
   "commands": {
     "shortcut_action": {
-      "description": "shortcut action."
+      "description": "Format1"
+    },
+    "shortcut_action2": {
+      "description": "Format2"
     }
   },
   

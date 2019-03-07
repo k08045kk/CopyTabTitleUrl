@@ -30,7 +30,8 @@ function onInit() {
   document.getElementById('target_all_label').addEventListener('click', onClickCheckbox);
   
   // コピーイベント設定
-  ['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat'].forEach(function(v, i, a) {
+  ['CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2']
+  .forEach(function(v, i, a) {
     document.getElementById('item_'+v).addEventListener('click', function() {
       let win = document.getElementById('target_win');
       let all = document.getElementById('target_all');
@@ -58,6 +59,9 @@ function onInit() {
       });
       document.getElementById('action').style.display = '';
     } else {
+      if (valueSet.format_extension && valueSet.format_format2) {
+        document.getElementById('item_CopyTabFormat2').style.display = '';
+      }
       // ポップアップを表示する
       document.getElementById('panel').style.display = '';
     }

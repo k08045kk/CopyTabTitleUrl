@@ -42,11 +42,24 @@ if (!isMobile()) {
           'shortcut': valueSet.shortcut_command
         });
       }
+      if (valueSet.shortcut_command2 != '') {
+        chrome.commands.update({
+          'name': 'shortcut_action2',
+          'shortcut': valueSet.shortcut_command2
+        });
+      }
     });
   }
   chrome.commands.onCommand.addListener(function(command) {
     if (command == 'shortcut_action') {
       onCopyTabs(3, {currentWindow:true, active:true}, null);
+    }
+    if (command == 'shortcut_action2') {
+      getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+        if (valueSet.format_extension && valueSet.format_format2) {
+          onCopyTabs(4, {currentWindow:true, active:true}, null);
+        }
+      });
     }
   });
 }
