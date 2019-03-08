@@ -166,7 +166,7 @@ function onCopyTabs(type, query, valueSet, callback) {
   if (command.ex && command.pin) {
     query.pinned = false;
   }
-  if (type >= 3 && command.ex && command.selected) {
+  if (type >= 3 && command.ex && command.selected && query.active) {
     query.highlighted = true;
     delete query.active;
   }
