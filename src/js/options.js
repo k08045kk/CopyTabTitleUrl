@@ -33,7 +33,7 @@ function updateMenu() {
   let menu = document.getElementById('menu_all').checked
           || document.getElementById('menu_page').checked
           || document.getElementById('menu_browser_action').checked
-          || document.getElementById('menu_tab').checked;
+          || (isFirefox() && document.getElementById('menu_tab').checked);
   document.getElementById('item').style.display = menu? '': 'none';
   
   // フォーマット拡張モード選択時
@@ -51,7 +51,7 @@ function updateMenu() {
   }
   
   // ショートカット2の有効と無効
-  if (isFirefox()) {
+  if (isFirefox() && !isMobile()) {
     if (extension && format2) {
       onUpdateCommand.bind(document.getElementById('shortcut_command2'))();
     } else {
@@ -147,11 +147,9 @@ function setPageValues(valueSet) {
   document.getElementById('bat_'+valueSet.action_target).checked = true;
   if (!isMobile()) {
     if (isFirefox()) {
-      document.getElementById('shortcut_command').value = valueSet.shortcut_command;
+      document.getElementById('shortcut_command').value  = valueSet.shortcut_command;
       document.getElementById('shortcut_command2').value = valueSet.shortcut_command2;
     } else {
-      document.getElementById('shortcut').classList.add('hide');
-      document.getElementById('shortcut2').classList.add('hide');
       document.getElementById('shortcut_message').style.display = '';
       chrome.commands.getAll(function(commands) {
         let text = '';
@@ -190,8 +188,7 @@ function onReset() {
       onStop();
     } else {
       // カウントダウン
-      element.textContent = document.getElementById('optionsPage_ConfirmReset').textContent 
-                            + '(' + onReset.delay + ')';
+      element.textContent = document.getElementById('optionsPage_ConfirmReset').textContent;
     }
   }
   if (onReset.delay == 0) {
@@ -231,9 +228,11 @@ function onInit() {
     // Chromeの拡張機能画面は600px程度で固定画面のため、オプション画面が600px固定でも問題ない
     document.body.style.width = '600px';
     
-    // タブコンテキストメニュー(Chrome非対応)
+    // タブコンテキストメニュー&ショートカット(Chrome非対応)
     getStorageArea().set({menu_tab: false});
-    document.getElementById('menu_tab').parentNode.style.display = 'none';
+    document.getElementById('menu_tab_').classList.add('hide');
+    document.getElementById('shortcut').classList.add('hide');
+    document.getElementById('shortcut2').classList.add('hide');
   }
   
   // テキスト読込み(国際化)
