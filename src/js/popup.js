@@ -53,7 +53,9 @@ function onInit() {
       document.getElementById('action').style.display = '';
     } else {
       if (valueSet.format_extension && valueSet.format_format2) {
-        document.getElementById('item_CopyTabFormat2').style.display = '';
+        document.querySelectorAll('.format2:not(.hide)').forEach(function(v, i, a) {
+          v.style.display = '';
+        });
       }
       // ポップアップを表示する
       document.getElementById('panel').style.display = '';
