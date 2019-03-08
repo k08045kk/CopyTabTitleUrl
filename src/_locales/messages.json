@@ -124,6 +124,14 @@
     "message":    "再起動",
     "description":"再起動"
   },
+  "optionsPage_Reset": {
+    "message":    "初期設定に戻す",
+    "description":"初期設定に戻す"
+  },
+  "optionsPage_ConfirmReset": {
+    "message":    "本当に初期設定に戻す？",
+    "description":"本当に初期設定に戻す？"
+  },
   "dummyDummyDummy": {
     "translate":  false,
     "message":    "dummy",

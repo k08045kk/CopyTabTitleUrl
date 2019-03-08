@@ -132,6 +132,89 @@ function onUpdateCommand() {
   }
 }
 
+function setPageValues(valueSet) {
+  // ストレージ内の値で初期化
+  Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
+    if (v.startsWith('menu_') || v.startsWith('item_') || v.startsWith('browser_')) {
+      document.getElementById(v).checked = valueSet[v];
+    } else if (v.startsWith('format_') && !v.startsWith('format_CopyTabFormat')) {
+      document.getElementById(v).checked = valueSet[v];
+    }
+  });
+  document.getElementById('format_CopyTabFormat').value  = valueSet.format_CopyTabFormat;
+  document.getElementById('format_CopyTabFormat2').value = valueSet.format_CopyTabFormat2;
+  document.getElementById('ba_'+valueSet.action).checked = true;
+  document.getElementById('bat_'+valueSet.action_target).checked = true;
+  if (!isMobile()) {
+    if (isFirefox()) {
+      document.getElementById('shortcut_command').value = valueSet.shortcut_command;
+      document.getElementById('shortcut_command2').value = valueSet.shortcut_command2;
+    } else {
+      document.getElementById('shortcut').classList.add('hide');
+      document.getElementById('shortcut2').classList.add('hide');
+      document.getElementById('shortcut_message').style.display = '';
+      chrome.commands.getAll(function(commands) {
+        let text = '';
+        for (let i=0; i<commands.length; i++) {
+          if (commands[i].shortcut != '') {
+            text = text + commands[i].description + ': ' + commands[i].shortcut + '\n';
+          }
+        }
+        document.getElementById('shortcut_commands').innerText = text;
+      });
+    }
+  } else if (!(valueSet.action == 'Popup' || valueSet.browser_ShowPopup)) {
+    // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
+    // そのため、設定反映には再起動が必要
+    chrome.browserAction.getPopup({}, function(url) {
+      if (!(url == null || url == '')) {
+        document.getElementById('browser_option').style.display = '';
+      }
+    });
+  }
+}
+
+function onReset() {
+  let element = this;
+  // ボタンを元に戻す
+  function onStop() {
+    onReset.delay = 0;
+    clearInterval(onReset.id);
+    element.textContent = document.getElementById('optionsPage_Reset').textContent;
+  }
+  // 2段階確認待ち
+  function onDelay() {
+    onReset.delay--;
+    if (onReset.delay == 0) {
+      // タイムアウト(元に戻す)
+      onStop();
+    } else {
+      // カウントダウン
+      element.textContent = document.getElementById('optionsPage_ConfirmReset').textContent 
+                            + '(' + onReset.delay + ')';
+    }
+  }
+  if (onReset.delay == 0) {
+    // 2段階確認開始
+    onReset.delay = 10;
+    clearInterval(onReset.id);
+    onReset.id = setInterval(onDelay, 1000, 1000);
+    onDelay();
+  } else {
+    // 2段階確認の決定
+    onStop();
+    getStorageArea().set(defaultStorageValueSet, function() {
+      setPageValues(defaultStorageValueSet);
+      updateMenu();
+      if (!isMobile()) {
+        updateContextMenus();
+      }
+    });
+  }
+}
+onReset.id = 0;
+onReset.delay = 0;
+
 // ページ初期化
 function onInit() {
   if (isMobile()) {
@@ -158,47 +241,7 @@ function onInit() {
   });
   
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-    // ストレージ内の値で初期化
-    Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-      if (v.startsWith('menu_') || v.startsWith('item_') || v.startsWith('browser_')) {
-        document.getElementById(v).checked = valueSet[v];
-      } else if (v.startsWith('format_') && !v.startsWith('format_CopyTabFormat')) {
-        document.getElementById(v).checked = valueSet[v];
-      }
-    });
-    document.getElementById('format_CopyTabFormat').value  = valueSet.format_CopyTabFormat;
-    document.getElementById('format_CopyTabFormat2').value = valueSet.format_CopyTabFormat2;
-    document.getElementById('ba_'+valueSet.action).checked = true;
-    document.getElementById('bat_'+valueSet.action_target).checked = true;
-    if (!isMobile()) {
-      if (isFirefox()) {
-        document.getElementById('shortcut_command').value = valueSet.shortcut_command;
-        document.getElementById('shortcut_command2').value = valueSet.shortcut_command2;
-      } else {
-        document.getElementById('shortcut').classList.add('hide');
-        document.getElementById('shortcut2').classList.add('hide');
-        document.getElementById('shortcut_message').style.display = '';
-        chrome.commands.getAll(function(commands) {
-          for (let i=commands.length-1; i>=0; i--) {
-            if (commands[i].shortcut != '') {
-              document.getElementById('shortcut_message').innerText = ''
-                + commands[i].description+': '+commands[i].shortcut + '\n'
-                + document.getElementById('shortcut_message').innerText;
-            }
-          }
-        });
-      }
-    } else if (!(valueSet.action == 'Popup' || valueSet.browser_ShowPopup)) {
-      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
-      // そのため、設定反映には再起動が必要
-      chrome.browserAction.getPopup({}, function(url) {
-        if (!(url == null || url == '')) {
-          document.getElementById('browser_option').style.display = '';
-        }
-      });
-    }
-    
-    // メニュー更新
+    setPageValues(valueSet);
     updateMenu();
   });
   
@@ -218,6 +261,7 @@ function onInit() {
   ['CurrentTab', 'CurrentWindow', 'AllWindow'].forEach(function(v, i, a) {
     document.getElementById('bat_'+v).addEventListener('click', onUpdateContextMenu);
   });
+  document.getElementById('reset').addEventListener('click', onReset);
 }
 
 (function main() {

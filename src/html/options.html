@@ -8,6 +8,10 @@ body {
     padding: 0.5em;
 }
 hr {
+	height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
     border-top: 1px solid #b1b1b1;
 }
 fieldset {
@@ -106,10 +110,16 @@ input[type="text"] {
 		<p class="extension"><input id="format_html" type="checkbox"/> <label for="format_html">Copy in HTML format. - example: &lt;a href=&quot;${url}&quot;&gt;${title}&lt;/a&gt;&lt;br/&gt;</label></p>
 		<p id="format_pin_" class="extension"><input id="format_pin" type="checkbox"/> <label for="format_pin">Except tabs with pinned.</label></p>
 		<p class="extension"><input id="format_format2" type="checkbox"/> <label for="format_format2">Enable Format 2.</label></p>
-		<p id="shortcut_message" style="display:none;">You can change the shortcut command from the standard setting. <br>&lt;chrome://extensions/shortcuts&gt;</p>
+		<p id="shortcut_message" style="display:none;"><span id="shortcut_commands"></span>You can change the shortcut command from the standard setting. <br>&lt;chrome://extensions/shortcuts&gt;</p>
 		<p id="shortcut">shortcut<span class="extension format2">1</span>: <input type="text" id="shortcut_command" maxlength="100" /></p>
 		<p id="shortcut2" class="extension format2">shortcut2: <input type="text" id="shortcut_command2" maxlength="100" /></p>
 		<p><input id="format_extension" type="checkbox"/> <label for="format_extension">Extended mode (beta)</label></p>
     </fieldset>
+	<p><button id="reset" data-label="optionsPage_Reset"></button></p>
+
+	<div style="display:none;"><!-- 翻訳文字列置き場 -->
+		<p id="optionsPage_Reset" data-label="optionsPage_Reset"></p>
+		<p id="optionsPage_ConfirmReset" data-label="optionsPage_ConfirmReset"></p>
+	</div>
 </body>
 </html>
