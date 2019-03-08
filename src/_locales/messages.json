@@ -2,139 +2,158 @@
   "extensionName": {
     "translate":  false,
     "message":    "CopyTabTitleUrl",
-    "description":"拡張機能の名称"
+    "translation":"CopyTabTitleUrl",
+    "description":"CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message":    "クリップボードへタブのタイトルとURLをコピーします。",
-    "description":"拡張機能の説明"
+    "message":    "Copy the tab title and URL to the clipboard.",
+    "translation":"タブのタイトルとURLをクリップボードにコピーします。",
+    "description":"タブのタイトルとURLをクリップボードにコピーします。"
   },
   "CopyTabTitleUrl": {
-    "message":    "タブのタイトルとURLをコピー",
+    "message":    "Copy tab title and URL",
+    "translation":"タブのタイトルとURLをコピーする",
     "description":"タブのタイトルとURLをコピー"
   },
   "CopyTabTitle": {
-    "message":    "タブのタイトルをコピー",
+    "message":    "Copy tab title",
+    "translation":"タブのタイトルをコピー",
     "description":"タブのタイトルをコピー"
   },
   "CopyTabUrl": {
-    "message":    "タブのURLをコピー",
+    "message":    "Copy tab URL",
+    "translation":"タブのURLをコピー",
     "description":"タブのURLをコピー"
   },
   "CopyTabFormat": {
-    "message":    "タブのフォーマットをコピー",
+    "message":    "Copy tab format",
+    "translation":"タブフォーマットをコピー",
     "description":"タブのフォーマットをコピー"
   },
   "CopyTabFormat2": {
-    "message":    "タブのフォーマット2をコピー",
+    "message":    "Copy tab format2",
+    "translation":"タブフォーマットのコピー2",
     "description":"タブのフォーマット2をコピー"
   },
   "CopyWindowTabsTitleUrl": {
-    "message":    "すべてのタブのタイトルとURLをコピー",
+    "message":    "Copy the title and URL of all tabs",
+    "translation":"すべてのタブのタイトルとURLをコピーする",
     "description":"すべてのタブのタイトルとURLをコピー"
   },
   "CopyWindowTabsTitle": {
-    "message":    "すべてのタブのタイトルをコピー",
+    "message":    "Copy title of all tabs",
+    "translation":"すべてのタブのタイトルをコピーする",
     "description":"すべてのタブのタイトルをコピー"
   },
   "CopyWindowTabsUrl": {
-    "message":    "すべてのタブのURLをコピー",
+    "message":    "Copy URL of all tabs",
+    "translation":"すべてのタブのURLをコピーする",
     "description":"すべてのタブのURLをコピー"
   },
   "CopyWindowTabsFormat": {
-    "message":    "すべてのタブのフォーマットをコピー",
+    "message":    "Copy tab format of all tabs",
+    "translation":"すべてのタブのタブフォーマットをコピーする",
     "description":"すべてのタブのフォーマットをコピー"
   },
   "CopyWindowTabsFormat2": {
-    "message":    "すべてのタブのフォーマット2をコピー",
+    "message":    "Copy tab format2 of all tabs",
+    "translation":"すべてのタブのタブフォーマット2をコピー",
     "description":"すべてのタブのフォーマット2をコピー"
   },
   "optionsPage_Menu": {
-    "message":    "コンテキストメニュー",
+    "message":    "Contextmenu",
+    "translation":"コンテキストメニュー",
     "description":"コンテキストメニュー"
   },
   "optionsPage_MenuItem": {
-    "message":    "メニューアイテム",
+    "message":    "Menu item",
+    "translation":"メニュー項目",
     "description":"メニューアイテム"
   },
   "optionsPage_BrowserAction": {
-    "message":    "ブラウザアクション",
+    "message":    "Browser action",
+    "translation":"ブラウザアクション",
     "description":"ブラウザアクション"
   },
   "optionsPage_Format": {
-    "message":    "フォーマット",
+    "message":    "Format",
+    "translation":"フォーマット",
     "description":"フォーマット"
   },
   "optionsPage_ContextMenuCheckbox": {
-    "message":    "コンテキストメニュー",
+    "message":    "Contextmenu",
+    "translation":"コンテキストメニュー",
     "description":"コンテキストメニュー"
   },
   "optionsPage_PageContextMenuCheckbox": {
-    "message":    "ページコンテキストメニュー",
+    "message":    "Page contextmenu",
+    "translation":"ページコンテキストメニュー",
     "description":"ページコンテキストメニュー"
   },
   "optionsPage_BrowserActionContextMenuCheckbox": {
-    "message":    "ブラウザアクションコンテキストメニュー",
+    "message":    "Browser action contextmenu",
+    "translation":"ブラウザアクションコンテキストメニュー",
     "description":"ブラウザアクションコンテキストメニュー"
   },
   "optionsPage_TabContextMenuCheckbox": {
-    "message":    "タブコンテキストメニュー",
+    "message":    "Tab contextmenu",
+    "translation":"タブのコンテキストメニュー",
     "description":"タブコンテキストメニュー"
   },
   "optionsPage_Popup": {
-    "message":    "ポップアップメニューを表示する",
+    "message":    "Display popup menu",
+    "translation":"ポップアップメニューを表示する",
     "description":"ポップアップメニューを表示する"
   },
   "optionsPage_Action": {
-    "message":    "アクションを実行する",
+    "message":    "Execute an action",
+    "translation":"アクションを実行する",
     "description":"アクションを実行する"
   },
   "optionsPage_ShowPopup": {
-    "message":    "コピー完了通知を表示する",
+    "message":    "Display copy completion notification",
+    "translation":"コピー完了通知を表示する",
     "description":"コピー完了通知を表示する"
   },
   "optionsPage_ActionTarget": {
-    "message":    "対象範囲",
-    "description":"対象範囲"
-  },
-  "optionsPage_ActionItem": {
-    "message":    "アクション",
-    "description":"アクション"
-  },
-  "optionsPage_AdditionalFunctionsSettingsTitle": {
-    "message":    "追加機能",
-    "description":"追加機能"
+    "message":    "Target",
+    "translation":"ターゲット",
+    "description":"ターゲット"
   },
   "optionsPage_CurrentTabSettingsTitle": {
-    "message":    "カレントタブ",
+    "message":    "Current tab",
+    "translation":"現在のタブ",
     "description":"カレントタブ"
   },
   "optionsPage_CurrentWindowSettingsTitle": {
-    "message":    "カレントウィンドウ",
+    "message":    "Current window",
+    "translation":"現在のウィンドウ",
     "description":"カレントウィンドウ"
   },
   "optionsPage_AllWindowSettingsTitle": {
-    "message":    "すべてのウィンドウ",
+    "message":    "All window",
+    "translation":"全ウィンドウ",
     "description":"すべてのウィンドウ"
   },
-  "optionsPage_CopyComplated": {
-    "message":    "コピー完了",
-    "description":"コピー完了"
-  },
-  "optionsPage_ReStart": {
-    "message":    "再起動",
+  "optionsPage_Restart": {
+    "message":    "Restart",
+    "translation":"再起動",
     "description":"再起動"
   },
   "optionsPage_Reset": {
-    "message":    "初期設定に戻す",
+    "message":    "Restore default settings",
+    "translation":"デフォルト設定に戻す",
     "description":"初期設定に戻す"
   },
   "optionsPage_ConfirmReset": {
-    "message":    "本当に初期設定に戻す？",
-    "description":"本当に初期設定に戻す？"
+    "message":    "Really reset to default settings?",
+    "translation":"本当にデフォルト設定にリセットしますか？",
+    "description":"本当に初期設定に戻しますか？"
   },
   "dummyDummyDummy": {
     "translate":  false,
     "message":    "dummy",
+    "translation":"dummy",
     "description":"dummy"
   }
 }
