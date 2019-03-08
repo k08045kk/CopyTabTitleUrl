@@ -55,6 +55,7 @@ var defaultStorageValueSet = {
   format_enter: true,
   format_html: false,
   format_pin: false,
+  format_selected: false,
   format_format2: false,
   format_extension: false
 };
@@ -86,6 +87,7 @@ function createCommand(valueSet, type) {
     enter: valueSet.format_enter, 
     html: valueSet.format_html, 
     pin: valueSet.format_pin, 
+    selected: valueSet.format_selected, 
     ex: valueSet.format_extension
   };
   command.format = [
@@ -164,9 +166,14 @@ function onCopyTabs(type, query, valueSet, callback) {
   if (command.ex && command.pin) {
     query.pinned = false;
   }
+  if (type >= 3 && command.ex && command.selected) {
+    query.highlighted = true;
+    delete query.active;
+  }
   
   // すべてのタブ: {}
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
+  // カレントウィンドウの選択中のタブ: {currentWindow:true, highlighted:true}
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
   chrome.tabs.query(query, function(tabs) {
     copyToClipboard(command, tabs);
@@ -188,7 +195,24 @@ function onContextMenus(info, tab) {
     getStorageArea().get(defaultStorageValueSet, function(valueSet) {
       // タブコンテキストメニューは、メニューを開いたタブの情報をコピーする
       // カレントタブではない
-      copyToClipboard(createCommand(valueSet, type), [tab]);
+      if (type >= 3 && valueSet.format_extension && valueSet.format_selected) {
+        chrome.tabs.query({currentWindow:true, highlighted:true}, function(tabs) {
+          let check = true;
+          for (var i=0; i<tabs.length; i++) {
+            if (tabs[i].id == tab.id) {
+              check = false;
+              break;
+            }
+          }
+          if (check) {
+            // 未選択のタブをクリックした場合、複数の選択タブとして扱わない
+            tabs = [tab];
+          }
+          copyToClipboard(createCommand(valueSet, type), tabs);
+        });
+      } else {
+        copyToClipboard(createCommand(valueSet, type), [tab]);
+      }
     });
     break;
   case 'CopyWindowTabsFormat2': type++;
