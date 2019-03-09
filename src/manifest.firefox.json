@@ -53,9 +53,8 @@
   
   "permissions": [
     "clipboardWrite",
-    "tabs",
     "contextMenus",
-    "commands",
-    "storage"
+    "storage",
+    "tabs"
   ]
 }
