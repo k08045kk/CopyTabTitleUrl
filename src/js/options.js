@@ -14,6 +14,7 @@ function getRadioCheckItem(name) {
 }
 
 // オプション画面の更新
+// 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
   // ALL選択時は、PAGEを無効化
   document.getElementById('menu_page').disabled = 
@@ -62,19 +63,20 @@ function updateOptionPage() {
   // ブラウザアクションの更新
   let action = getRadioCheckItem('ba');
   if (action == 'Popup' || document.getElementById('browser_ShowPopup').checked) {
-    document.querySelector('#browser_option').style.display = 'none';
+    document.getElementById('browser_option').style.display = 'none';
   } else if (isMobile()) {
     // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
     // そのため、設定反映には再起動が必要
-    document.querySelector('#browser_option').style.display = '';
+    chrome.browserAction.getPopup({}, function(url) {
+      if (!(url == null || url == '')) {
+        document.getElementById('browser_option').style.display = '';
+      }
+    });
   }
 }
 
 // コンテキストメニュー変更イベント
 function onUpdateContextMenu() {
-  // メニュー更新
-  updateOptionPage();
-  
   // 設定を作成
   let valueSet = {};
   Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
@@ -93,6 +95,8 @@ function onUpdateContextMenu() {
     if (!isMobile()) {
       updateContextMenus();
     }
+    // メニュー更新
+    updateOptionPage();
   });
 }
 function onUpdateFormat() {
@@ -161,14 +165,6 @@ function setPageValues(valueSet) {
         document.getElementById('shortcut_commands').innerText = text;
       });
     }
-  } else if (!(valueSet.action == 'Popup' || valueSet.browser_ShowPopup)) {
-    // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
-    // そのため、設定反映には再起動が必要
-    chrome.browserAction.getPopup({}, function(url) {
-      if (!(url == null || url == '')) {
-        document.getElementById('browser_option').style.display = '';
-      }
-    });
   }
 }
 
@@ -202,11 +198,11 @@ function onReset() {
     onStop();
     getStorageArea().set(defaultStorageValueSet, function() {
       setPageValues(defaultStorageValueSet);
-      updateOptionPage();
       updateBrowserAction();
       if (!isMobile()) {
         updateContextMenus();
       }
+      updateOptionPage();
     });
   }
 }
