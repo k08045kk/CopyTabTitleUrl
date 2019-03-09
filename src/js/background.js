@@ -1,7 +1,6 @@
 ﻿/**
  * バックグラウンド処理
  */
-page = 'background';
 
 // ブラウザアクション
 chrome.browserAction.onClicked.addListener(function(info, tab) {
