@@ -4,7 +4,14 @@
 
 // コピー完了イベント
 function onTabCopyComplete() {
-  window.close();
+  if (isMobile()) {
+    document.getElementById('action').style.display = '';
+    setTimeout(function() {
+      document.getElementById('action').style.display = 'none';
+    }, 1000);
+  } else {
+    window.close();
+  }
 }
 
 // ページ読み込み完了イベント
