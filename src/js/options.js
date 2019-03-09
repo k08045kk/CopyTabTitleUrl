@@ -51,15 +51,6 @@ function updateOptionPage() {
     });
   }
   
-  // ショートカット2の有効と無効
-  if (isFirefox() && !isMobile()) {
-    if (extension && format2) {
-      onUpdateCommand.bind(document.getElementById('shortcut_command2'))();
-    } else {
-      chrome.commands.reset('shortcut_action2');
-    }
-  }
-  
   // ブラウザアクションの更新
   let action = getRadioCheckItem('ba');
   if (action == 'Popup' || document.getElementById('browser_ShowPopup').checked) {
@@ -72,6 +63,20 @@ function updateOptionPage() {
         document.getElementById('browser_option').style.display = '';
       }
     });
+  }
+}
+
+// ショートカットを更新
+function updateShortcut() {
+  // ショートカット2の有効と無効
+  if (isFirefox() && !isMobile()) {
+    let extension = document.getElementById('format_extension').checked;
+    let format2 = document.getElementById('format_format2').checked;
+    if (extension && format2) {
+      onUpdateCommand.bind(document.getElementById('shortcut_command2'))();
+    } else {
+      chrome.commands.reset('shortcut_action2');
+    }
   }
 }
 
@@ -91,6 +96,7 @@ function onUpdateContextMenu() {
   
   // ストレージへ設定を保存
   getStorageArea().set(valueSet, function() {
+    updateShortcut();
     updateBrowserAction();
     if (!isMobile()) {
       updateContextMenus();
@@ -99,6 +105,8 @@ function onUpdateContextMenu() {
     updateOptionPage();
   });
 }
+
+// フォーマット文字列の更新イベント
 function onUpdateFormat() {
   // ストレージへ設定を保存
   getStorageArea().set({
@@ -106,6 +114,8 @@ function onUpdateFormat() {
     format_CopyTabFormat2: document.getElementById('format_CopyTabFormat2').value
   }, function() {});
 }
+
+// コマンド文字列の更新イベント
 function onUpdateCommand() {
   if (isFirefox() && !isMobile()) {
     const id = this.id;
@@ -136,7 +146,8 @@ function onUpdateCommand() {
   }
 }
 
-function setPageValues(valueSet) {
+// オプション画面に値を設定する
+function setOptionPageValues(valueSet) {
   // ストレージ内の値で初期化
   Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
     if (v.startsWith('menu_') || v.startsWith('item_') || v.startsWith('browser_')) {
@@ -154,7 +165,6 @@ function setPageValues(valueSet) {
       document.getElementById('shortcut_command').value  = valueSet.shortcut_command;
       document.getElementById('shortcut_command2').value = valueSet.shortcut_command2;
     } else {
-      document.getElementById('shortcut_message').style.display = '';
       chrome.commands.getAll(function(commands) {
         let text = '';
         for (let i=0; i<commands.length; i++) {
@@ -162,12 +172,15 @@ function setPageValues(valueSet) {
             text = text + commands[i].description + ': ' + commands[i].shortcut + '\n';
           }
         }
+        // '\n'改行を挿入するため、innerTextとする
         document.getElementById('shortcut_commands').innerText = text;
       });
+      document.getElementById('shortcut_message').style.display = '';
     }
   }
 }
 
+// 初期化ボタンイベント
 function onReset() {
   let element = this;
   // ボタンを元に戻す
@@ -197,7 +210,8 @@ function onReset() {
     // 2段階確認の決定
     onStop();
     getStorageArea().set(defaultStorageValueSet, function() {
-      setPageValues(defaultStorageValueSet);
+      setOptionPageValues(defaultStorageValueSet);
+      updateShortcut();
       updateBrowserAction();
       if (!isMobile()) {
         updateContextMenus();
@@ -237,8 +251,9 @@ function onInit() {
     v.textContent = chrome.i18n.getMessage(v.dataset.label);
   });
   
+  // (storage内の)初期値を設定
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-    setPageValues(valueSet);
+    setOptionPageValues(valueSet);
     updateOptionPage();
   });
   

@@ -114,8 +114,8 @@ function copyToClipboard(command, tabs) {
                      .replace(/\${lf}/ig,  '\n');
     }
     format = format.replace(/\${title}/ig, tabs[i].title)
-                 .replace(/\${url}/ig, tabs[i].url)
-                 .replace(/\${enter}/ig, enter);
+                   .replace(/\${url}/ig, tabs[i].url)
+                   .replace(/\${enter}/ig, enter);
     temp.push(format);
   }
   let text = temp.join(command.enter? enter: '');
@@ -184,6 +184,7 @@ function onCopyTabs(type, query, valueSet, callback) {
   });
 }
 
+// コンテキストメニューイベント
 function onContextMenus(info, tab) {
   let type = 0;
   switch (info.menuItemId) {
@@ -197,18 +198,15 @@ function onContextMenus(info, tab) {
       // カレントタブではない
       if (type >= 3 && valueSet.format_extension && valueSet.format_selected) {
         chrome.tabs.query({currentWindow:true, highlighted:true}, function(tabs) {
-          let check = true;
-          for (var i=0; i<tabs.length; i++) {
+          // 未選択のタブをクリックした場合、複数の選択タブとして扱わない
+          let temp = [tab];
+          for (let i=0; i<tabs.length; i++) {
             if (tabs[i].id == tab.id) {
-              check = false;
+              temp = tabs;
               break;
             }
           }
-          if (check) {
-            // 未選択のタブをクリックした場合、複数の選択タブとして扱わない
-            tabs = [tab];
-          }
-          copyToClipboard(createCommand(valueSet, type), tabs);
+          copyToClipboard(createCommand(valueSet, type), temp);
         });
       } else {
         copyToClipboard(createCommand(valueSet, type), [tab]);

@@ -106,9 +106,9 @@
     "description":"ポップアップメニューを表示する"
   },
   "optionsPage_Action": {
-    "message":    "Execute an action",
-    "translation":"アクションを実行する",
-    "description":"アクションを実行する"
+    "message":    "Execute format action",
+    "translation":"フォーマットアクションを実行",
+    "description":"フォーマットアクションを実行する"
   },
   "optionsPage_ShowPopup": {
     "message":    "Display copy completion notification",
