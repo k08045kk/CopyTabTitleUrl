@@ -13,8 +13,8 @@ function getRadioCheckItem(name) {
   return '';
 }
 
-// メニュー更新
-function updateMenu() {
+// オプション画面の更新
+function updateOptionPage() {
   // ALL選択時は、PAGEを無効化
   document.getElementById('menu_page').disabled = 
       document.getElementById('menu_all').checked;
@@ -58,12 +58,22 @@ function updateMenu() {
       chrome.commands.reset('shortcut_action2');
     }
   }
+  
+  // ブラウザアクションの更新
+  let action = getRadioCheckItem('ba');
+  if (action == 'Popup' || document.getElementById('browser_ShowPopup').checked) {
+    document.querySelector('#browser_option').style.display = 'none';
+  } else if (isMobile()) {
+    // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
+    // そのため、設定反映には再起動が必要
+    document.querySelector('#browser_option').style.display = '';
+  }
 }
 
 // コンテキストメニュー変更イベント
 function onUpdateContextMenu() {
   // メニュー更新
-  updateMenu();
+  updateOptionPage();
   
   // 設定を作成
   let valueSet = {};
@@ -76,20 +86,10 @@ function onUpdateContextMenu() {
   });
   valueSet.action = getRadioCheckItem('ba');
   valueSet.action_target = getRadioCheckItem('bat');
-  if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
-    chrome.browserAction.setPopup({popup: '/html/popup.html'});
-    document.querySelector('#browser_option').style.display = 'none';
-  } else {
-    chrome.browserAction.setPopup({popup: ''});
-    if (isMobile()) {
-      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
-      // そのため、設定反映には再起動が必要
-      document.querySelector('#browser_option').style.display = '';
-    }
-  }
   
   // ストレージへ設定を保存
   getStorageArea().set(valueSet, function() {
+    updateBrowserAction();
     if (!isMobile()) {
       updateContextMenus();
     }
@@ -202,7 +202,8 @@ function onReset() {
     onStop();
     getStorageArea().set(defaultStorageValueSet, function() {
       setPageValues(defaultStorageValueSet);
-      updateMenu();
+      updateOptionPage();
+      updateBrowserAction();
       if (!isMobile()) {
         updateContextMenus();
       }
@@ -242,7 +243,7 @@ function onInit() {
   
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
     setPageValues(valueSet);
-    updateMenu();
+    updateOptionPage();
   });
   
   // イベント設定

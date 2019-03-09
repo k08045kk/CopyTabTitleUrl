@@ -261,3 +261,14 @@ function updateContextMenus() {
     });
   });
 }
+
+// ブラウザアクションの更新
+function updateBrowserAction() {
+  getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+    if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
+      chrome.browserAction.setPopup({popup: '/html/popup.html'});
+    } else {
+      chrome.browserAction.setPopup({popup: ''});
+    }
+  });
+}
