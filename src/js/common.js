@@ -1,6 +1,7 @@
 ﻿/**
  * 共通処理
  */
+var page = 'common';
 
 // ブラウザ判定
 function isFirefox() {
@@ -61,6 +62,7 @@ var defaultStorageValueSet = {
   format_pin: false,
   format_selected: false,
   format_format2: false,
+  format_language: false,
   format_extension: false
 };
 
@@ -126,9 +128,9 @@ function copyToClipboard(command, tabs) {
   let text = temp.join(command.enter? enter: '');
   
   // クリップボードコピー
-  if (isMobile()) {
+  if (isMobile() && page == 'background') {
     // Clipboard API(Firefox63+実装)
-    // Android Firefoxは、execCommand('copy')が動作しない。
+    // Android Firefoxのバックグラウンドは、execCommand('copy')が動作しない。
     // そのため、対象環境のみClicpboard APIを使用する。
     navigator.clipboard.writeText(text).then(function() {
       /* success */
@@ -248,6 +250,12 @@ function updateContextMenus() {
       }
       
       if (contexts.length != 0) {
+        const isEnglish = valueSet.format_extension && valueSet.format_language;
+        const titles = [
+          'Copy tab title and URL', 'Copy tab title', 'Copy tab URL', 'Copy tab format', 'Copy tab format2',
+          'Copy the title and URL of a window tabs', 'Copy title of a window tabs', 'Copy URL of a window tabs', 'Copy tab format of a window tabs', 'Copy tab format2 of a window tabs',
+          'Copy the title and URL of all tabs', 'Copy title of all tabs', 'Copy URL of all tabs', 'Copy tab format of all tabs', 'Copy tab format2 of all tabs'
+        ];
         [
           'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
           'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2',
@@ -259,7 +267,7 @@ function updateContextMenus() {
           } else {
             chrome.contextMenus.create({
               id: v,
-              title: chrome.i18n.getMessage(v),
+              title: (isEnglish? titles[i]: chrome.i18n.getMessage(v)),
               contexts: contexts
             });
           }

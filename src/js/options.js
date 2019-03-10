@@ -16,6 +16,17 @@ function getRadioCheckItem(name) {
 // オプション画面の更新
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
+  let extension = document.getElementById('format_extension').checked;
+  if (extension && document.getElementById('format_language').checked) {
+    document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
+      v.textContent = v.dataset.english;
+    });
+  } else {
+    document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
+      v.textContent = chrome.i18n.getMessage(v.dataset.label);
+    });
+  }
+  
   // ALL選択時は、PAGEを無効化
   document.getElementById('menu_page').disabled = 
       document.getElementById('menu_all').checked;
@@ -38,7 +49,6 @@ function updateOptionPage() {
   document.getElementById('item').style.display = menu? '': 'none';
   
   // フォーマット拡張モード選択時
-  let extension = document.getElementById('format_extension').checked;
   let format2 = document.getElementById('format_format2').checked;
   document.getElementById('format_FormatMessage').style.display = extension? 'none': '';
   document.querySelectorAll('.extension:not(.hide)').forEach(function(v, i, a) {
@@ -227,7 +237,6 @@ onReset.delay = 0;
 function onInit() {
   if (isMobile()) {
     document.getElementById('context_menu').classList.add('hide');
-    document.getElementById('format_html_').classList.add('hide');
     document.getElementById('format_pin_').classList.add('hide');
     document.getElementById('format_selected_').classList.add('hide');
     document.getElementById('shortcut').classList.add('hide');
@@ -248,9 +257,9 @@ function onInit() {
   }
   
   // テキスト読込み(国際化)
-  document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
-    v.textContent = chrome.i18n.getMessage(v.dataset.label);
-  });
+  if (chrome.i18n.getUILanguage().startsWith('en')) {
+    document.getElementById('format_language_').classList.add('hide');
+  }
   
   // (storage内の)初期値を設定
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
