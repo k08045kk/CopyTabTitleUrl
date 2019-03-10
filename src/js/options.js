@@ -16,6 +16,16 @@ function getRadioCheckItem(name) {
 // オプション画面の更新
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
+  if (document.getElementById('format_language').checked) {
+    document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
+      v.textContent = v.dataset.english;
+    });
+  } else {
+    document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
+      v.textContent = chrome.i18n.getMessage(v.dataset.label);
+    });
+  }
+  
   // ALL選択時は、PAGEを無効化
   document.getElementById('menu_page').disabled = 
       document.getElementById('menu_all').checked;
@@ -247,9 +257,9 @@ function onInit() {
   }
   
   // テキスト読込み(国際化)
-  document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
-    v.textContent = chrome.i18n.getMessage(v.dataset.label);
-  });
+  if (chrome.i18n.getUILanguage().startsWith('en')) {
+    document.getElementById('format_language_').classList.add('hide');
+  }
   
   // (storage内の)初期値を設定
   getStorageArea().get(defaultStorageValueSet, function(valueSet) {
