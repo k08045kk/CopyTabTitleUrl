@@ -83,6 +83,7 @@ function getBrowserActionQuery(valueSet) {
 // コマンド作成
 function createCommand(valueSet, type) {
   let command = {
+    type: type, 
     enter: valueSet.format_enter, 
     html: valueSet.format_html, 
     pin: valueSet.format_pin, 
@@ -136,7 +137,8 @@ function copyToClipboard(command, tabs) {
       event.stopImmediatePropagation();
       
       event.preventDefault();
-      if (command.ex && command.html) {
+      if (command.ex && command.html && command.type >= 3) {
+        // フォーマット以外でHTML形式でコピーする必要性はまったくない
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
@@ -161,7 +163,7 @@ function onCopyTabs(type, query, valueSet, callback) {
   if (command.ex && command.pin) {
     query.pinned = false;
   }
-  if (type >= 3 && command.ex && command.selected && query.active) {
+  if (command.ex && command.selected && query.active) {
     query.highlighted = true;
     delete query.active;
   }
@@ -191,7 +193,7 @@ function onContextMenus(info, tab) {
     getStorageArea().get(defaultStorageValueSet, function(valueSet) {
       // タブコンテキストメニューは、メニューを開いたタブの情報をコピーする
       // カレントタブではない
-      if (type >= 3 && valueSet.format_extension && valueSet.format_selected) {
+      if (valueSet.format_extension && valueSet.format_selected) {
         chrome.tabs.query({currentWindow:true, highlighted:true}, function(tabs) {
           // 未選択のタブをクリックした場合、複数の選択タブとして扱わない
           let temp = [tab];
