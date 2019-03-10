@@ -138,9 +138,8 @@ function copyToClipboard(command, tabs) {
       event.preventDefault();
       if (command.ex && command.html) {
         event.clipboardData.setData('text/html', text);
-      } else {
-        event.clipboardData.setData('text/plain', text);
       }
+      event.clipboardData.setData('text/plain', text);
     }
     document.addEventListener('copy', oncopy, true);
     
