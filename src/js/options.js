@@ -16,7 +16,8 @@ function getRadioCheckItem(name) {
 // オプション画面の更新
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
-  if (document.getElementById('format_language').checked) {
+  let extension = document.getElementById('format_extension').checked;
+  if (extension && document.getElementById('format_language').checked) {
     document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
       v.textContent = v.dataset.english;
     });
@@ -48,7 +49,6 @@ function updateOptionPage() {
   document.getElementById('item').style.display = menu? '': 'none';
   
   // フォーマット拡張モード選択時
-  let extension = document.getElementById('format_extension').checked;
   let format2 = document.getElementById('format_format2').checked;
   document.getElementById('format_FormatMessage').style.display = extension? 'none': '';
   document.querySelectorAll('.extension:not(.hide)').forEach(function(v, i, a) {
