@@ -15,6 +15,12 @@ You can execute the following actions (copy to clipboard).
 + Copy tab URL
 + Copy tab format
 
+You can perform actions on the following objects.
++ Current tab
++ Multiple selected tabs
++ Current window
++ All window
+
 You can perform actions from the following operations.
 + Context menu (page, browser action, tab)
 + Browser action (popup menu, click)
