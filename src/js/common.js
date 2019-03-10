@@ -1,6 +1,7 @@
 ﻿/**
  * 共通処理
  */
+var page = 'common';
 
 // ブラウザ判定
 function isFirefox() {
@@ -126,9 +127,9 @@ function copyToClipboard(command, tabs) {
   let text = temp.join(command.enter? enter: '');
   
   // クリップボードコピー
-  if (isMobile()) {
+  if (isMobile() && page == 'background') {
     // Clipboard API(Firefox63+実装)
-    // Android Firefoxは、execCommand('copy')が動作しない。
+    // Android Firefoxのバックグラウンドは、execCommand('copy')が動作しない。
     // そのため、対象環境のみClicpboard APIを使用する。
     navigator.clipboard.writeText(text).then(function() {
       /* success */
