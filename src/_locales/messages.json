@@ -36,26 +36,51 @@
     "description":"タブのフォーマット2をコピー"
   },
   "CopyWindowTabsTitleUrl": {
+    "message":    "Copy the title and URL of a window tabs",
+    "translation":"ウィンドウタブのタイトルとURLをコピーする",
+    "description":"ウィンドウのタブのタイトルとURLをコピー"
+  },
+  "CopyWindowTabsTitle": {
+    "message":    "Copy title of a window tabs",
+    "translation":"ウィンドウタブのタイトルをコピーする",
+    "description":"ウィンドウのタブのタイトルをコピー"
+  },
+  "CopyWindowTabsUrl": {
+    "message":    "Copy URL of a window tabs",
+    "translation":"ウィンドウタブのURLをコピーする",
+    "description":"ウィンドウのタブのURLをコピー"
+  },
+  "CopyWindowTabsFormat": {
+    "message":    "Copy tab format of a window tabs",
+    "translation":"ウィンドウタブのタブフォーマットをコピーする",
+    "description":"ウィンドウのタブのフォーマットをコピー"
+  },
+  "CopyWindowTabsFormat2": {
+    "message":    "Copy tab format2 of a window tabs",
+    "translation":"ウィンドウタブのタブフォーマット2をコピーする",
+    "description":"ウィンドウのタブのフォーマット2をコピー"
+  },
+  "CopyWindowTabs2TitleUrl": {
     "message":    "Copy the title and URL of all tabs",
     "translation":"すべてのタブのタイトルとURLをコピーする",
     "description":"すべてのタブのタイトルとURLをコピー"
   },
-  "CopyWindowTabsTitle": {
+  "CopyWindowTabs2Title": {
     "message":    "Copy title of all tabs",
     "translation":"すべてのタブのタイトルをコピーする",
     "description":"すべてのタブのタイトルをコピー"
   },
-  "CopyWindowTabsUrl": {
+  "CopyWindowTabs2Url": {
     "message":    "Copy URL of all tabs",
     "translation":"すべてのタブのURLをコピーする",
     "description":"すべてのタブのURLをコピー"
   },
-  "CopyWindowTabsFormat": {
+  "CopyWindowTabs2Format": {
     "message":    "Copy tab format of all tabs",
     "translation":"すべてのタブのタブフォーマットをコピーする",
     "description":"すべてのタブのフォーマットをコピー"
   },
-  "CopyWindowTabsFormat2": {
+  "CopyWindowTabs2Format2": {
     "message":    "Copy tab format2 of all tabs",
     "translation":"すべてのタブのタブフォーマット2をコピー",
     "description":"すべてのタブのフォーマット2をコピー"

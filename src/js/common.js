@@ -44,6 +44,11 @@ var defaultStorageValueSet = {
   item_CopyTabAllUrl: false,
   item_CopyTabAllFormat: false,
   item_CopyTabAllFormat2: false,
+  item_CopyTabAll2TitleUrl: false,
+  item_CopyTabAll2Title: false,
+  item_CopyTabAll2Url: false,
+  item_CopyTabAll2Format: false,
+  item_CopyTabAll2Format2: false,
   action: 'Popup',
   action_target: 'CurrentTab',
   browser_ShowPopup: false,
@@ -217,6 +222,13 @@ function onContextMenus(info, tab) {
   case 'CopyWindowTabsTitleUrl':
     onCopyTabs(type, {currentWindow:true}, null);
     break;
+  case 'CopyWindowTabs2Format2': type++;
+  case 'CopyWindowTabs2Format':  type++;
+  case 'CopyWindowTabs2Url':     type++;
+  case 'CopyWindowTabs2Title':   type++;
+  case 'CopyWindowTabs2TitleUrl':
+    onCopyTabs(type, {}, null);
+    break;
   }
 }
 
@@ -238,7 +250,8 @@ function updateContextMenus() {
       if (contexts.length != 0) {
         [
           'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
-          'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2'
+          'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2',
+          'CopyWindowTabs2TitleUrl', 'CopyWindowTabs2Title', 'CopyWindowTabs2Url', 'CopyWindowTabs2Format', 'CopyWindowTabs2Format2'
         ].forEach(function(v, i, a) {
           let id = 'item_'+v.replace('WindowTabs', 'TabAll');
           if (id.endsWith('2') && !(valueSet.format_extension && valueSet.format_format2)) {
