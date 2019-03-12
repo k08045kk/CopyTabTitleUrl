@@ -105,6 +105,11 @@
     "translation":"フォーマット",
     "description":"フォーマット"
   },
+  "optionsPage_Other": {
+    "message":    "Other",
+    "translation":"その他の",
+    "description":"その他"
+  },
   "optionsPage_ContextMenuCheckbox": {
     "message":    "Contextmenu",
     "translation":"コンテキストメニュー",
