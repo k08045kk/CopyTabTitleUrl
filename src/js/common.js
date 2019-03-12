@@ -116,17 +116,27 @@ function copyToClipboard(command, tabs) {
   let enter = getEnterCode();
   for (let i=0; i<tabs.length; i++) {
     let format = command.format;
-    if (command.ex) {
-      format = format.replace(/\${index}/ig, i+1)
-                     .replace(/\${tab}/ig, '\t')
-                     .replace(/\${cr}/ig,  '\r')
-                     .replace(/\${lf}/ig,  '\n');
-    }
     // URLのデコード（ピュニコード変換は未対応）
     let url = command.decode? decodeURIComponent(tabs[i].url): tabs[i].url;
     format = format.replace(/\${title}/ig, tabs[i].title)
                    .replace(/\${url}/ig, url)
                    .replace(/\${enter}/ig, enter);
+    if (command.ex) {
+      format = format.replace(/\${index}/ig, i+1)
+                     .replace(/\${tab}/ig, '\t')
+                     .replace(/\${cr}/ig,  '\r')
+                     .replace(/\${lf}/ig,  '\n');
+      // tabs.Tabのプロパティを置換する
+      (function propReplace(prefix, prop) {
+        Object.keys(prop).forEach(function(key) {
+          if (Object.prototype.toString.call(prop[key]) === '[object Object]') {
+            propReplace(prefix+key+'.', prop[key]);
+          } else {
+            format = format.replace(new RegExp('\\${'+prefix+key+'}', 'ig'), prop[key]);
+          }
+        });
+      })('tab.', tabs[i]);
+    }
     temp.push(format);
   }
   let text = temp.join(command.enter? enter: '');
