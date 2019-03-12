@@ -58,6 +58,7 @@ var defaultStorageValueSet = {
   format_CopyTabFormat: '[${title}](${url})',
   format_CopyTabFormat2:'<a href="${url}">${title}</a>',
   format_enter: true,
+  format_decode: false,
   format_html: false,
   format_pin: false,
   format_selected: false,
@@ -92,6 +93,7 @@ function createCommand(valueSet, type) {
   let command = {
     type: type, 
     enter: valueSet.format_enter, 
+    decode: valueSet.format_decode,
     html: valueSet.format_html, 
     pin: valueSet.format_pin, 
     selected: valueSet.format_selected, 
@@ -120,8 +122,10 @@ function copyToClipboard(command, tabs) {
                      .replace(/\${cr}/ig,  '\r')
                      .replace(/\${lf}/ig,  '\n');
     }
+    // URLのデコード（ピュニコード変換は未対応）
+    let url = command.decode? decodeURIComponent(tabs[i].url): tabs[i].url;
     format = format.replace(/\${title}/ig, tabs[i].title)
-                   .replace(/\${url}/ig, tabs[i].url)
+                   .replace(/\${url}/ig, url)
                    .replace(/\${enter}/ig, enter);
     temp.push(format);
   }
