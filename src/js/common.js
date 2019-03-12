@@ -184,7 +184,7 @@ function onCopyTabs(type, query, valueSet, callback) {
   if (command.ex && command.pin) {
     query.pinned = false;
   }
-  if (command.ex && command.selected && query.active) {
+  if (command.selected && query.active) {
     query.highlighted = true;
     delete query.active;
   }
@@ -214,7 +214,7 @@ function onContextMenus(info, tab) {
     getStorageArea().get(defaultStorageValueSet, function(valueSet) {
       // タブコンテキストメニューは、メニューを開いたタブの情報をコピーする
       // カレントタブではない
-      if (valueSet.format_extension && valueSet.format_selected) {
+      if (valueSet.format_selected) {
         chrome.tabs.query({currentWindow:true, highlighted:true}, function(tabs) {
           // 未選択のタブをクリックした場合、複数の選択タブとして扱わない
           let temp = [tab];
