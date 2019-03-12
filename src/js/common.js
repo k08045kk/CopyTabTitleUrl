@@ -264,7 +264,7 @@ function updateContextMenus() {
       }
       
       if (contexts.length != 0) {
-        const isEnglish = valueSet.format_extension && valueSet.format_language;
+        const isEnglish = valueSet.format_language;
         const titles = [
           'Copy tab title and URL', 'Copy tab title', 'Copy tab URL', 'Copy tab format', 'Copy tab format2',
           'Copy the title and URL of a window tabs', 'Copy title of a window tabs', 'Copy URL of a window tabs', 'Copy tab format of a window tabs', 'Copy tab format2 of a window tabs',

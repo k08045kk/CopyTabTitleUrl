@@ -17,7 +17,7 @@ function getRadioCheckItem(name) {
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
   let extension = document.getElementById('format_extension').checked;
-  if (extension && document.getElementById('format_language').checked) {
+  if (document.getElementById('format_language').checked) {
     document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
       v.textContent = v.dataset.english;
     });
