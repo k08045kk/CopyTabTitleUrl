@@ -124,8 +124,11 @@ function copyToClipboard(command, tabs) {
     if (command.ex) {
       format = format.replace(/\${index}/ig, i+1)
                      .replace(/\${tab}/ig, '\t')
+                     .replace(/\${\\t}/ig, '\t')
                      .replace(/\${cr}/ig,  '\r')
-                     .replace(/\${lf}/ig,  '\n');
+                     .replace(/\${\\r}/ig, '\r')
+                     .replace(/\${lf}/ig,  '\n')
+                     .replace(/\${\\n}/ig, '\n');
       // tabs.Tabのプロパティを置換する
       (function propReplace(prefix, prop) {
         Object.keys(prop).forEach(function(key) {
