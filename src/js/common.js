@@ -159,7 +159,7 @@ function copyToClipboard(command, tabs) {
       
       event.preventDefault();
       if (command.ex && command.html && command.type >= 3) {
-        // フォーマット以外でHTML形式でコピーする必要性はまったくない
+        // フォーマット以外は、HTML形式でコピーする必要性はまったくない
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
