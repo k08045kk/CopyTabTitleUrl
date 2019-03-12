@@ -165,6 +165,11 @@
     "translation":"全ウィンドウ",
     "description":"すべてのウィンドウ"
   },
+  "optionsPage_ShortcutMessage": {
+    "message":    "Shortcut commands can be changed from the standard settings.",
+    "translation":"ショートカットコマンドは、標準設定から変更することができます。",
+    "description":"ショートカットコマンドは、標準設定から変更することができます。"
+  },
   "optionsPage_Restart": {
     "message":    "Restart",
     "translation":"再起動",
