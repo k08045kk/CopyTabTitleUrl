@@ -179,7 +179,7 @@ function setOptionPageValues(valueSet) {
         let text = '';
         for (let i=0; i<commands.length; i++) {
           if (commands[i].shortcut != '') {
-            text = text + commands[i].description + ': ' + commands[i].shortcut + '\n';
+            text = text + '\n' + commands[i].description + ': ' + commands[i].shortcut;
           }
         }
         // '\n'改行を挿入するため、innerTextとする

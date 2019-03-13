@@ -166,9 +166,49 @@
     "description":"すべてのウィンドウ"
   },
   "optionsPage_ShortcutMessage": {
-    "message":    "Shortcut commands can be changed from the standard settings.",
-    "translation":"ショートカットコマンドは、標準設定から変更することができます。",
-    "description":"ショートカットコマンドは、標準設定から変更することができます。"
+    "message":    "Please change the shortcut command from the standard setting.",
+    "translation":"ショートカットコマンドを標準設定から変更してください。",
+    "description":"ショートカットコマンドは、標準設定から変更してください。"
+  },
+  "optionsPage_Format2": {
+    "message":    "Enable Format 2.",
+    "translation":"フォーマット2を有効にします。",
+    "description":"フォーマット2を有効にします。"
+  },
+  "optionsPage_FormatDecode": {
+    "message":    "Decode the URL.",
+    "translation":"URLをデコードします。",
+    "description":"URLをデコードします。"
+  },
+  "optionsPage_FormatCopyHTML": {
+    "message":    "Copy in HTML format.",
+    "translation":"HTML形式でコピーします。",
+    "description":"HTML形式でコピーします。"
+  },
+  "optionsPage_SeparateMultipleNewLine": {
+    "message":    "Separate multiple tabs with a newline.",
+    "translation":"複数のタブを改行で区切ります。",
+    "description":"複数のタブを改行で区切ります。"
+  },
+  "optionsPage_ExcludePinned": {
+    "message":    "Except tabs with pinned.",
+    "translation":"ピン留めされたタブを除く。",
+    "description":"ピン留めされたタブを除外します。"
+  },
+  "optionsPage_MultipleSelectionTabs": {
+    "message":    "Enable multiple selection tabs.",
+    "translation":"複数選択タブを有効にします。",
+    "description":"複数の選択したタブを有効にします。"
+  },
+  "optionsPage_UseEnglish": {
+    "message":    "Use English as the standard language.",
+    "translation":"標準言語として英語を使用してください。",
+    "description":"標準言語として英語を使用します。"
+  },
+  "optionsPage_ExtendedMode": {
+    "message":    "Extended mode (beta)",
+    "translation":"拡張モード（ベータ版）",
+    "description":"拡張モード（ベータ版）"
   },
   "optionsPage_Restart": {
     "message":    "Restart",
