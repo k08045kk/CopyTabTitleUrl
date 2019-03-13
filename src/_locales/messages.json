@@ -120,6 +120,11 @@
     "translation":"ページコンテキストメニュー",
     "description":"ページコンテキストメニュー"
   },
+  "optionsPage_SelectionContextMenuCheckbox": {
+    "message":    "Selection contextmenu",
+    "translation":"選択コンテキストメニュー",
+    "description":"選択コンテキストメニュー"
+  },
   "optionsPage_BrowserActionContextMenuCheckbox": {
     "message":    "Browser action contextmenu",
     "translation":"ブラウザアクションコンテキストメニュー",

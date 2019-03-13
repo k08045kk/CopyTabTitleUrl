@@ -33,6 +33,7 @@ function isWindows() {
 var defaultStorageValueSet = {
   menu_all: false,
   menu_page: false,
+  menu_selection: false,
   menu_browser_action: true,
   menu_tab: true,       // Firefox only
   item_CopyTabTitleUrl: true,
@@ -110,7 +111,7 @@ function createCommand(valueSet, type) {
 }
 
 // クリップボードにコピー
-function copyToClipboard(command, tabs) {
+function copyToClipboard(command, tabs, info) {
   // コピー文字列作成
   let temp = [];
   let enter = getEnterCode();
@@ -122,16 +123,12 @@ function copyToClipboard(command, tabs) {
                    .replace(/\${url}/ig, url)
                    .replace(/\${enter}/ig, enter);
     if (command.ex) {
+      let stext = (tabs.length==1 && info && info.selectionText)? info.selectionText: tabs[i].title;
       format = format.replace(/\${index}/ig, i+1)
-                     .replace(/\${tab}/ig, '\t')
-                     .replace(/\${\\t}/ig, '\t')
-                     .replace(/\${t}/ig, '\t')
-                     .replace(/\${cr}/ig,  '\r')
-                     .replace(/\${\\r}/ig, '\r')
-                     .replace(/\${r}/ig, '\r')
-                     .replace(/\${lf}/ig,  '\n')
-                     .replace(/\${\\n}/ig, '\n')
-                     .replace(/\${n}/ig, '\n')
+                     .replace(/\${(tab|\\t|t)}/ig, '\t')
+                     .replace(/\${(cr|\\r|r)}/ig,  '\r')
+                     .replace(/\${(lf|\\n|n)}/ig,  '\n')
+                     .replace(/\${text}/ig, stext)
                      .replace(/\${e}/ig, enter);
       // tabs.Tabのプロパティを置換する
       (function propReplace(prefix, prop) {
@@ -231,10 +228,10 @@ function onContextMenus(info, tab) {
               break;
             }
           }
-          copyToClipboard(createCommand(valueSet, type), temp);
+          copyToClipboard(createCommand(valueSet, type), temp, info);
         });
       } else {
-        copyToClipboard(createCommand(valueSet, type), [tab]);
+        copyToClipboard(createCommand(valueSet, type), [tab], info);
       }
     });
     break;
@@ -264,8 +261,9 @@ function updateContextMenus() {
       // メニュー追加
       let contexts = [];
       if (valueSet.menu_all) {  contexts.push('all'); }
-      if (valueSet.menu_page) { contexts.push('page');}
-      if (valueSet.menu_browser_action) { contexts.push('browser_action');}
+      if (valueSet.menu_page) { contexts.push('page'); }
+      if (valueSet.menu_selection) { contexts.push('selection'); }
+      if (valueSet.menu_browser_action) { contexts.push('browser_action'); }
       if (valueSet.menu_tab && isFirefox()) {
         contexts.push('tab');
       }

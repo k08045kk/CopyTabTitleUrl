@@ -54,6 +54,7 @@ input[type="text"] {
     <legend data-label="optionsPage_Menu" data-english="Contextmenu"></legend>
     <p><input id="menu_all" type="checkbox"/> <label for="menu_all" data-label="optionsPage_ContextMenuCheckbox" data-english="Contextmenu"></label></p>
     <p><input id="menu_page" type="checkbox"/> <label for="menu_page" data-label="optionsPage_PageContextMenuCheckbox" data-english="Page contextmenu"></label></p>
+    <p><input id="menu_selection" type="checkbox"/> <label for="menu_selection" data-label="optionsPage_SelectionContextMenuCheckbox" data-english="Selection contextmenu"></label></p>
     <p><input id="menu_browser_action" type="checkbox"/> <label for="menu_browser_action" data-label="optionsPage_BrowserActionContextMenuCheckbox" data-english="Browser action contextmenu"></label></p>
     <p id="menu_tab_"><input id="menu_tab" type="checkbox"/> <label for="menu_tab" data-label="optionsPage_TabContextMenuCheckbox" data-english="Tab contextmenu"></label></p>
     <fieldset id='item'>
@@ -112,7 +113,7 @@ input[type="text"] {
   <fieldset id="format"><!-- フォーマット -->
     <legend data-label="optionsPage_Format" data-english="Format"></legend>
     <p id="format_FormatMessage">${title}, ${url}, ${enter}.</p>
-    <p class="extension">${title}, ${url}, ${enter}, ${t}, ${r}, ${n}, ${tab.id}, ${tab.index}, ${tab.windowId}.</p>
+    <p class="extension">${title}, ${url}, ${text}, ${enter}, ${t}, ${r}, ${n}, ${tab.index}.</p>
     <p>format<span class="extension format2">1</span>: <input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
     <p class="extension format2">format2: <input type="text" id="format_CopyTabFormat2" maxlength="100" /></p>
     <p id="shortcut_message" style="display:none;"><span data-label="optionsPage_ShortcutMessage" data-english="Shortcut commands can be changed from the standard settings."></span><br><span>&lt;chrome://extensions/shortcuts&gt;</span><span id="shortcut_commands"></span></p>

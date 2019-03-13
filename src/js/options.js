@@ -28,10 +28,10 @@ function updateOptionPage() {
   }
   
   // ALL選択時は、PAGEを無効化
-  document.getElementById('menu_page').disabled = 
-      document.getElementById('menu_all').checked;
-  document.getElementById('menu_browser_action').disabled = 
-      document.getElementById('menu_all').checked;
+  let all = document.getElementById('menu_all').checked;
+  document.getElementById('menu_page').disabled = all;
+  document.getElementById('menu_selection').disabled = all;
+  document.getElementById('menu_browser_action').disabled = all;
   
   // コピー完了通知
   document.getElementById('browser_ShowPopup').disabled = 
