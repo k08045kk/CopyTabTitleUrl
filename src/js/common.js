@@ -124,22 +124,12 @@ function copyToClipboard(command, tabs, info) {
                    .replace(/\${enter}/ig, enter);
     if (command.ex) {
       let stext = (tabs.length==1 && info && info.selectionText)? info.selectionText: tabs[i].title;
-      format = format.replace(/\${index}/ig, i+1)
-                     .replace(/\${(tab|\\t|t)}/ig, '\t')
+      format = format.replace(/\${(tab|\\t|t)}/ig, '\t')
                      .replace(/\${(cr|\\r|r)}/ig,  '\r')
                      .replace(/\${(lf|\\n|n)}/ig,  '\n')
-                     .replace(/\${text}/ig, stext)
-                     .replace(/\${e}/ig, enter);
-      // tabs.Tabのプロパティを置換する
-      (function propReplace(prefix, prop) {
-        Object.keys(prop).forEach(function(key) {
-          if (Object.prototype.toString.call(prop[key]) === '[object Object]') {
-            propReplace(prefix+key+'.', prop[key]);
-          } else {
-            format = format.replace(new RegExp('\\${'+prefix+key+'}', 'ig'), prop[key]);
-          }
-        });
-      })('tab.', tabs[i]);
+                     .replace(/\${text}/ig, stext);
+      format = format.replace(/\${index}/ig, tabs[i].index)
+                     .replace(/\${id}/ig, tabs[i].id);
     }
     temp.push(format);
   }
