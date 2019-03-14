@@ -174,6 +174,7 @@ function setOptionPageValues(valueSet) {
     if (isFirefox()) {
       document.getElementById('shortcut_command').value  = valueSet.shortcut_command;
       document.getElementById('shortcut_command2').value = valueSet.shortcut_command2;
+      document.getElementById('shortcut_message').textContent = 'Example: Key(only function key) or Modifier+Key or Modifier+Modifier+Key. Modifiers are Ctrl, Alt, Command, MacCtrl, Shift(secondary modifier only).';
     } else {
       chrome.commands.getAll(function(commands) {
         let text = '';
@@ -185,8 +186,8 @@ function setOptionPageValues(valueSet) {
         // '\n'改行を挿入するため、innerTextとする
         document.getElementById('shortcut_commands').innerText = text;
       });
-      document.getElementById('shortcut_message').style.display = '';
     }
+    document.getElementById('shortcut_message').style.display = '';
   }
 }
 
