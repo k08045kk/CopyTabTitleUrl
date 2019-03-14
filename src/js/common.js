@@ -244,47 +244,49 @@ function onContextMenus(info, tab) {
 
 // コンテキストメニュー更新
 function updateContextMenus() {
-  // メニュー削除
-  chrome.contextMenus.removeAll(function() {
-    // ストレージ取得
-    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-      // メニュー追加
-      let contexts = [];
-      if (valueSet.menu_all) {  contexts.push('all'); }
-      if (valueSet.menu_page) { contexts.push('page'); }
-      if (valueSet.menu_selection) { contexts.push('selection'); }
-      if (valueSet.menu_browser_action) { contexts.push('browser_action'); }
-      if (valueSet.menu_tab && isFirefox()) {
-        contexts.push('tab');
-      }
-      
-      if (contexts.length != 0) {
-        const isEnglish = valueSet.format_language;
-        const titles = [
-          'Copy tab title and URL', 'Copy tab title', 'Copy tab URL', 'Copy tab format', 'Copy tab format2',
-          'Copy the title and URL of a window tabs', 'Copy title of a window tabs', 'Copy URL of a window tabs', 'Copy tab format of a window tabs', 'Copy tab format2 of a window tabs',
-          'Copy the title and URL of all tabs', 'Copy title of all tabs', 'Copy URL of all tabs', 'Copy tab format of all tabs', 'Copy tab format2 of all tabs'
-        ];
-        [
-          'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
-          'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2',
-          'CopyWindowTabs2TitleUrl', 'CopyWindowTabs2Title', 'CopyWindowTabs2Url', 'CopyWindowTabs2Format', 'CopyWindowTabs2Format2'
-        ].forEach(function(v, i, a) {
-          let id = 'item_'+v.replace('WindowTabs', 'TabAll');
-          if (id.endsWith('2') && !(valueSet.format_extension && valueSet.format_format2)) {
-          } else if (!valueSet[id]) {
-          } else {
-            chrome.contextMenus.create({
-              id: v,
-              title: (isEnglish? titles[i]: chrome.i18n.getMessage(v)),
-              contexts: contexts
-            });
-          }
-        });
-        chrome.contextMenus.onClicked.addListener(onContextMenus);
-      }
+  function onUpdateContextMenus(valueSet) {
+    // メニュー追加
+    let contexts = [];
+    if (valueSet.menu_all) {  contexts.push('all'); }
+    if (valueSet.menu_page) { contexts.push('page'); }
+    if (valueSet.menu_selection) { contexts.push('selection'); }
+    if (valueSet.menu_browser_action) { contexts.push('browser_action'); }
+    if (valueSet.menu_tab && isFirefox()) {
+      contexts.push('tab');
+    }
+    
+    if (contexts.length != 0) {
+      const isEnglish = valueSet.format_language;
+      const titles = [
+        'Copy tab title and URL', 'Copy tab title', 'Copy tab URL', 'Copy tab format', 'Copy tab format2',
+        'Copy the title and URL of a window tabs', 'Copy title of a window tabs', 'Copy URL of a window tabs', 'Copy tab format of a window tabs', 'Copy tab format2 of a window tabs',
+        'Copy the title and URL of all tabs', 'Copy title of all tabs', 'Copy URL of all tabs', 'Copy tab format of all tabs', 'Copy tab format2 of all tabs'
+      ];
+      [
+        'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
+        'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2',
+        'CopyWindowTabs2TitleUrl', 'CopyWindowTabs2Title', 'CopyWindowTabs2Url', 'CopyWindowTabs2Format', 'CopyWindowTabs2Format2'
+      ].forEach(function(v, i, a) {
+        let id = 'item_'+v.replace('WindowTabs', 'TabAll');
+        if (id.endsWith('2') && !(valueSet.format_extension && valueSet.format_format2)) {
+        } else if (!valueSet[id]) {
+        } else {
+          chrome.contextMenus.create({
+            id: v,
+            title: (isEnglish? titles[i]: chrome.i18n.getMessage(v)),
+            contexts: contexts
+          });
+        }
+      });
+      chrome.contextMenus.onClicked.addListener(onContextMenus);
+    }
+  }
+  // モバイル以外 && メニュー削除 && ストレージ取得
+  if (!isMobile()) {
+    chrome.contextMenus.removeAll(function() {
+      getStorageArea().get(defaultStorageValueSet, onUpdateContextMenus);
     });
-  });
+  }
 }
 
 // ブラウザアクションの更新

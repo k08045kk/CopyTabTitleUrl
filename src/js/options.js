@@ -16,16 +16,11 @@ function getRadioCheckItem(name) {
 // オプション画面の更新
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
-  let extension = document.getElementById('format_extension').checked;
-  if (document.getElementById('format_language').checked) {
-    document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
-      v.textContent = v.dataset.english;
-    });
-  } else {
-    document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
-      v.textContent = chrome.i18n.getMessage(v.dataset.label);
-    });
-  }
+  // 翻訳
+  let lang = document.getElementById('format_language').checked;
+  document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
+    v.textContent = lang? v.dataset.english: chrome.i18n.getMessage(v.dataset.label);
+  });
   
   // ALL選択時は、PAGEを無効化
   let all = document.getElementById('menu_all').checked;
@@ -34,12 +29,11 @@ function updateOptionPage() {
   document.getElementById('menu_browser_action').disabled = all;
   
   // コピー完了通知
-  document.getElementById('browser_ShowPopup').disabled = 
-      !document.getElementById('ba_Action').checked;
+  let baction = document.getElementById('ba_Action').checked;
+  document.getElementById('browser_ShowPopup').disabled = !baction;
   
   // BrowserActionのAction選択時のみアクション一覧表示
-  document.getElementById('bat').style.display = 
-      document.getElementById('ba_Action').checked? '': 'none';
+  document.getElementById('bat').style.display = baction? '': 'none';
   
   // コンテキストメニュー選択時
   let menu = document.getElementById('menu_all').checked
@@ -49,30 +43,34 @@ function updateOptionPage() {
   document.getElementById('item').style.display = menu? '': 'none';
   
   // フォーマット拡張モード選択時
-  let format2 = document.getElementById('format_format2').checked;
-  document.getElementById('format_FormatMessage').style.display = extension? 'none': '';
+  let extension = document.getElementById('format_extension').checked;
+  document.querySelectorAll('.normal:not(.hide)').forEach(function(v, i, a) {
+    v.style.display = !extension? '': 'none';
+  });
   document.querySelectorAll('.extension:not(.hide)').forEach(function(v, i, a) {
     v.style.display = extension? '': 'none';
   });
   if (extension) {
     // フォーマット2選択時
+    let format2 = document.getElementById('format_format2').checked;
     document.querySelectorAll('.format2:not(.hide)').forEach(function(v, i, a) {
       v.style.display = format2? '': 'none';
     });
   }
   
   // ブラウザアクションの更新
-  let action = getRadioCheckItem('ba');
-  if (action == 'Popup' || document.getElementById('browser_ShowPopup').checked) {
-    document.getElementById('browser_option').style.display = 'none';
-  } else if (isMobile()) {
-    // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
-    // そのため、設定反映には再起動が必要
-    chrome.browserAction.getPopup({}, function(url) {
-      if (!(url == null || url == '')) {
-        document.getElementById('browser_option').style.display = '';
-      }
-    });
+  if (isMobile()) {
+    if (baction && !document.getElementById('browser_ShowPopup').checked) {
+      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
+      // そのため、設定反映には再起動が必要
+      chrome.browserAction.getPopup({}, function(url) {
+        if (!(url == null || url == '')) {
+          document.getElementById('browser_option').style.display = '';
+        }
+      });
+    } else {
+      document.getElementById('browser_option').style.display = 'none';
+    }
   }
 }
 
@@ -108,9 +106,7 @@ function onUpdateContextMenu() {
   getStorageArea().set(valueSet, function() {
     updateShortcut();
     updateBrowserAction();
-    if (!isMobile()) {
-      updateContextMenus();
-    }
+    updateContextMenus();
     // メニュー更新
     updateOptionPage();
   });
@@ -224,9 +220,7 @@ function onReset() {
       setOptionPageValues(defaultStorageValueSet);
       updateShortcut();
       updateBrowserAction();
-      if (!isMobile()) {
-        updateContextMenus();
-      }
+      updateContextMenus();
       updateOptionPage();
     });
   }
