@@ -235,7 +235,6 @@ function onInit() {
     document.getElementById('format_pin_').classList.add('hide');
     document.getElementById('format_selected_').classList.add('hide');
     document.getElementById('shortcut').classList.add('hide');
-    document.getElementById('shortcut2').classList.add('hide');
   }
   if (isChrome()) {
     // Chromeのオプション画面の最小サイズを指定する
@@ -247,7 +246,7 @@ function onInit() {
     // タブコンテキストメニュー&ショートカット(Chrome非対応)
     getStorageArea().set({menu_tab: false});
     document.getElementById('menu_tab_').classList.add('hide');
-    document.getElementById('shortcut').classList.add('hide');
+    document.getElementById('shortcut1').classList.add('hide');
     document.getElementById('shortcut2').classList.add('hide');
   }
   
