@@ -105,6 +105,16 @@
     "translation":"フォーマット",
     "description":"フォーマット"
   },
+  "optionsPage_Shortcut": {
+    "message":    "Shortcut",
+    "translation":"ショートカット",
+    "description":"ショートカット"
+  },
+  "optionsPage_Other": {
+    "message":    "Other",
+    "translation":"その他の",
+    "description":"その他"
+  },
   "optionsPage_ContextMenuCheckbox": {
     "message":    "Contextmenu",
     "translation":"コンテキストメニュー",
@@ -114,6 +124,11 @@
     "message":    "Page contextmenu",
     "translation":"ページコンテキストメニュー",
     "description":"ページコンテキストメニュー"
+  },
+  "optionsPage_SelectionContextMenuCheckbox": {
+    "message":    "Selection contextmenu",
+    "translation":"選択コンテキストメニュー",
+    "description":"選択コンテキストメニュー"
   },
   "optionsPage_BrowserActionContextMenuCheckbox": {
     "message":    "Browser action contextmenu",
@@ -126,19 +141,19 @@
     "description":"タブコンテキストメニュー"
   },
   "optionsPage_Popup": {
-    "message":    "Display popup menu",
-    "translation":"ポップアップメニューを表示する",
-    "description":"ポップアップメニューを表示する"
+    "message":    "Display popup menu.",
+    "translation":"ポップアップメニューを表示します。",
+    "description":"ポップアップメニューを表示する。"
   },
   "optionsPage_Action": {
-    "message":    "Execute format action",
-    "translation":"フォーマットアクションを実行",
-    "description":"フォーマットアクションを実行する"
+    "message":    "Execute format action.",
+    "translation":"フォーマットアクションを実行します。",
+    "description":"フォーマットアクションを実行する。"
   },
   "optionsPage_ShowPopup": {
-    "message":    "Display copy completion notification",
-    "translation":"コピー完了通知を表示する",
-    "description":"コピー完了通知を表示する"
+    "message":    "Display copy completion notification.",
+    "translation":"コピー完了通知を表示します。",
+    "description":"コピー完了通知を表示する。"
   },
   "optionsPage_ActionTarget": {
     "message":    "Target",
@@ -159,6 +174,51 @@
     "message":    "All window",
     "translation":"全ウィンドウ",
     "description":"すべてのウィンドウ"
+  },
+  "optionsPage_ShortcutMessage": {
+    "message":    "Please change from the standard setting of the shortcut.",
+    "translation":"ショートカットの標準設定から変更してください。",
+    "description":"ショートカットの標準設定から変更してください。"
+  },
+  "optionsPage_Format2": {
+    "message":    "Enable Format 2.",
+    "translation":"フォーマット2を有効にします。",
+    "description":"フォーマット2を有効にする。"
+  },
+  "optionsPage_FormatDecode": {
+    "message":    "Decode the URL.",
+    "translation":"URLをデコードします。",
+    "description":"URLをデコードする。"
+  },
+  "optionsPage_FormatCopyHTML": {
+    "message":    "Copy in HTML format.",
+    "translation":"HTML形式でコピーします。",
+    "description":"HTML形式でコピーする。"
+  },
+  "optionsPage_SeparateMultipleNewLine": {
+    "message":    "Separate multiple tabs with a newline.",
+    "translation":"複数のタブを改行で区切ります。",
+    "description":"複数のタブを改行で区切る。"
+  },
+  "optionsPage_ExcludePinned": {
+    "message":    "Except tabs with pinned.",
+    "translation":"ピン留めされたタブを除く。",
+    "description":"ピン留めされたタブを除外する。"
+  },
+  "optionsPage_MultipleSelectionTabs": {
+    "message":    "Enable multiple selection tabs.",
+    "translation":"複数選択タブを有効にします。",
+    "description":"複数の選択したタブを有効にする。"
+  },
+  "optionsPage_UseEnglish": {
+    "message":    "Use English as the standard language.",
+    "translation":"標準言語として英語を使用してください。",
+    "description":"標準言語として英語を使用する。"
+  },
+  "optionsPage_ExtendedMode": {
+    "message":    "Extended mode (beta)",
+    "translation":"拡張モード（ベータ版）",
+    "description":"拡張モード（ベータ版）"
   },
   "optionsPage_Restart": {
     "message":    "Restart",

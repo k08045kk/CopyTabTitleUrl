@@ -44,14 +44,23 @@ body {
 .item:active {
   background: #A374B3;
   color: #fff;
-} 
+}
+#footer::after {
+  content: 'tab';
+}
+#target_win:hover ~ #footer::after, 
+#target_all:hover ~ #footer::after,
+#target_win:checked ~ #footer::after, 
+#target_all:checked ~ #footer::after {
+  content: 'window';
+}
   </style>
   <script src="/js/common.js"></script>
   <script src="/js/popup.js"></script>
 </head>
 <body>
   <div id="panel" style="display:none;">
-    <div class="box title top"><span>CopyTabTitleUrl</span></div>
+    <div class="box title top" id="header"><span>CopyTabTitleUrl</span></div>
     <div class="box item copy" id="item_CopyTabTitleUrl"><span>Title<br>URL</span></div>
     <div class="box item copy" id="item_CopyTabTitle"><span>Title</span></div>
     <div class="box item copy" id="item_CopyTabUrl"><span>URL</span></div>
@@ -63,7 +72,7 @@ body {
       <label for="target_win" id="target_win_label"><div class="item target win"><span>Current</span></div></label>
       <label for="target_all" id="target_all_label"><div class="item target all"><span>All</span></div></label>
       <div style="clear:both;"></div>
-      <div class="title"><span>window</span></div>
+      <div class="title" id="footer"></div>
     </div>
   </div>
   <div id="action" style="display:none;"><p style="text-align:center;">Completed</p></div>

@@ -33,6 +33,7 @@ function isWindows() {
 var defaultStorageValueSet = {
   menu_all: false,
   menu_page: false,
+  menu_selection: false,
   menu_browser_action: true,
   menu_tab: true,       // Firefox only
   item_CopyTabTitleUrl: true,
@@ -58,6 +59,7 @@ var defaultStorageValueSet = {
   format_CopyTabFormat: '[${title}](${url})',
   format_CopyTabFormat2:'<a href="${url}">${title}</a>',
   format_enter: true,
+  format_decode: false,
   format_html: false,
   format_pin: false,
   format_selected: false,
@@ -92,6 +94,7 @@ function createCommand(valueSet, type) {
   let command = {
     type: type, 
     enter: valueSet.format_enter, 
+    decode: valueSet.format_decode,
     html: valueSet.format_html, 
     pin: valueSet.format_pin, 
     selected: valueSet.format_selected, 
@@ -108,21 +111,26 @@ function createCommand(valueSet, type) {
 }
 
 // クリップボードにコピー
-function copyToClipboard(command, tabs) {
+function copyToClipboard(command, tabs, info) {
   // コピー文字列作成
   let temp = [];
   let enter = getEnterCode();
   for (let i=0; i<tabs.length; i++) {
     let format = command.format;
-    if (command.ex) {
-      format = format.replace(/\${index}/ig, i+1)
-                     .replace(/\${tab}/ig, '\t')
-                     .replace(/\${cr}/ig,  '\r')
-                     .replace(/\${lf}/ig,  '\n');
-    }
+    // URLのデコード（ピュニコード変換は未対応）
+    let url = command.decode? decodeURIComponent(tabs[i].url): tabs[i].url;
     format = format.replace(/\${title}/ig, tabs[i].title)
-                   .replace(/\${url}/ig, tabs[i].url)
+                   .replace(/\${url}/ig, url)
                    .replace(/\${enter}/ig, enter);
+    if (command.ex) {
+      let stext = (tabs.length==1 && info && info.selectionText)? info.selectionText: tabs[i].title;
+      format = format.replace(/\${(tab|\\t|t)}/ig, '\t')
+                     .replace(/\${(cr|\\r|r)}/ig,  '\r')
+                     .replace(/\${(lf|\\n|n)}/ig,  '\n')
+                     .replace(/\${text}/ig, stext);
+      format = format.replace(/\${index}/ig, tabs[i].index)
+                     .replace(/\${id}/ig, tabs[i].id);
+    }
     temp.push(format);
   }
   let text = temp.join(command.enter? enter: '');
@@ -145,7 +153,7 @@ function copyToClipboard(command, tabs) {
       
       event.preventDefault();
       if (command.ex && command.html && command.type >= 3) {
-        // フォーマット以外でHTML形式でコピーする必要性はまったくない
+        // フォーマット以外は、HTML形式でコピーする必要性はまったくない
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
@@ -170,7 +178,7 @@ function onCopyTabs(type, query, valueSet, callback) {
   if (command.ex && command.pin) {
     query.pinned = false;
   }
-  if (command.ex && command.selected && query.active) {
+  if (command.selected && query.active) {
     query.highlighted = true;
     delete query.active;
   }
@@ -200,7 +208,7 @@ function onContextMenus(info, tab) {
     getStorageArea().get(defaultStorageValueSet, function(valueSet) {
       // タブコンテキストメニューは、メニューを開いたタブの情報をコピーする
       // カレントタブではない
-      if (valueSet.format_extension && valueSet.format_selected) {
+      if (valueSet.format_selected) {
         chrome.tabs.query({currentWindow:true, highlighted:true}, function(tabs) {
           // 未選択のタブをクリックした場合、複数の選択タブとして扱わない
           let temp = [tab];
@@ -210,10 +218,10 @@ function onContextMenus(info, tab) {
               break;
             }
           }
-          copyToClipboard(createCommand(valueSet, type), temp);
+          copyToClipboard(createCommand(valueSet, type), temp, info);
         });
       } else {
-        copyToClipboard(createCommand(valueSet, type), [tab]);
+        copyToClipboard(createCommand(valueSet, type), [tab], info);
       }
     });
     break;
@@ -236,46 +244,49 @@ function onContextMenus(info, tab) {
 
 // コンテキストメニュー更新
 function updateContextMenus() {
-  // メニュー削除
-  chrome.contextMenus.removeAll(function() {
-    // ストレージ取得
-    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-      // メニュー追加
-      let contexts = [];
-      if (valueSet.menu_all) {  contexts.push('all'); }
-      if (valueSet.menu_page) { contexts.push('page');}
-      if (valueSet.menu_browser_action) { contexts.push('browser_action');}
-      if (valueSet.menu_tab && isFirefox()) {
-        contexts.push('tab');
-      }
-      
-      if (contexts.length != 0) {
-        const isEnglish = valueSet.format_extension && valueSet.format_language;
-        const titles = [
-          'Copy tab title and URL', 'Copy tab title', 'Copy tab URL', 'Copy tab format', 'Copy tab format2',
-          'Copy the title and URL of a window tabs', 'Copy title of a window tabs', 'Copy URL of a window tabs', 'Copy tab format of a window tabs', 'Copy tab format2 of a window tabs',
-          'Copy the title and URL of all tabs', 'Copy title of all tabs', 'Copy URL of all tabs', 'Copy tab format of all tabs', 'Copy tab format2 of all tabs'
-        ];
-        [
-          'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
-          'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2',
-          'CopyWindowTabs2TitleUrl', 'CopyWindowTabs2Title', 'CopyWindowTabs2Url', 'CopyWindowTabs2Format', 'CopyWindowTabs2Format2'
-        ].forEach(function(v, i, a) {
-          let id = 'item_'+v.replace('WindowTabs', 'TabAll');
-          if (id.endsWith('2') && !(valueSet.format_extension && valueSet.format_format2)) {
-          } else if (!valueSet[id]) {
-          } else {
-            chrome.contextMenus.create({
-              id: v,
-              title: (isEnglish? titles[i]: chrome.i18n.getMessage(v)),
-              contexts: contexts
-            });
-          }
-        });
-        chrome.contextMenus.onClicked.addListener(onContextMenus);
-      }
+  function onUpdateContextMenus(valueSet) {
+    // メニュー追加
+    let contexts = [];
+    if (valueSet.menu_all) {  contexts.push('all'); }
+    if (valueSet.menu_page) { contexts.push('page'); }
+    if (valueSet.menu_selection) { contexts.push('selection'); }
+    if (valueSet.menu_browser_action) { contexts.push('browser_action'); }
+    if (valueSet.menu_tab && isFirefox()) {
+      contexts.push('tab');
+    }
+    
+    if (contexts.length != 0) {
+      const isEnglish = valueSet.format_language;
+      const titles = [
+        'Copy tab title and URL', 'Copy tab title', 'Copy tab URL', 'Copy tab format', 'Copy tab format2',
+        'Copy the title and URL of a window tabs', 'Copy title of a window tabs', 'Copy URL of a window tabs', 'Copy tab format of a window tabs', 'Copy tab format2 of a window tabs',
+        'Copy the title and URL of all tabs', 'Copy title of all tabs', 'Copy URL of all tabs', 'Copy tab format of all tabs', 'Copy tab format2 of all tabs'
+      ];
+      [
+        'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
+        'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2',
+        'CopyWindowTabs2TitleUrl', 'CopyWindowTabs2Title', 'CopyWindowTabs2Url', 'CopyWindowTabs2Format', 'CopyWindowTabs2Format2'
+      ].forEach(function(v, i, a) {
+        let id = 'item_'+v.replace('WindowTabs', 'TabAll');
+        if (id.endsWith('2') && !(valueSet.format_extension && valueSet.format_format2)) {
+        } else if (!valueSet[id]) {
+        } else {
+          chrome.contextMenus.create({
+            id: v,
+            title: (isEnglish? titles[i]: chrome.i18n.getMessage(v)),
+            contexts: contexts
+          });
+        }
+      });
+      chrome.contextMenus.onClicked.addListener(onContextMenus);
+    }
+  }
+  // モバイル以外 && メニュー削除 && ストレージ取得
+  if (!isMobile()) {
+    chrome.contextMenus.removeAll(function() {
+      getStorageArea().get(defaultStorageValueSet, onUpdateContextMenus);
     });
-  });
+  }
 }
 
 // ブラウザアクションの更新

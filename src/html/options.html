@@ -54,6 +54,7 @@ input[type="text"] {
     <legend data-label="optionsPage_Menu" data-english="Contextmenu"></legend>
     <p><input id="menu_all" type="checkbox"/> <label for="menu_all" data-label="optionsPage_ContextMenuCheckbox" data-english="Contextmenu"></label></p>
     <p><input id="menu_page" type="checkbox"/> <label for="menu_page" data-label="optionsPage_PageContextMenuCheckbox" data-english="Page contextmenu"></label></p>
+    <p><input id="menu_selection" type="checkbox"/> <label for="menu_selection" data-label="optionsPage_SelectionContextMenuCheckbox" data-english="Selection contextmenu"></label></p>
     <p><input id="menu_browser_action" type="checkbox"/> <label for="menu_browser_action" data-label="optionsPage_BrowserActionContextMenuCheckbox" data-english="Browser action contextmenu"></label></p>
     <p id="menu_tab_"><input id="menu_tab" type="checkbox"/> <label for="menu_tab" data-label="optionsPage_TabContextMenuCheckbox" data-english="Tab contextmenu"></label></p>
     <fieldset id='item'>
@@ -95,10 +96,10 @@ input[type="text"] {
   <fieldset id="browser_action"><!-- ブラウザアクション -->
     <legend data-label="optionsPage_BrowserAction" data-english="Browser action"></legend>
     <p><input id="ba_Popup" type="radio" name="ba" value="Popup"/>
-      <label for="ba_Popup" data-label="optionsPage_Popup" data-english="Display popup menu"></label></p>
+      <label for="ba_Popup" data-label="optionsPage_Popup" data-english="Display popup menu."></label></p>
     <p><input id="ba_Action" type="radio" name="ba" value="Action"/>
-      <label for="ba_Action" data-label="optionsPage_Action" data-english="Execute format action"></label><span id="browser_option" data-label="optionsPage_Restart" data-english="Restart" style="display:none;"></span></p>
-    <p style="margin-left:1em;"><input id="browser_ShowPopup" type="checkbox"/><label for="browser_ShowPopup" data-label="optionsPage_ShowPopup" data-english="Display copy completion notification"></label></p>
+      <label for="ba_Action" data-label="optionsPage_Action" data-english="Execute format action."></label><span id="browser_option" data-label="optionsPage_Restart" data-english="Restart" style="display:none;"></span></p>
+    <p style="margin-left:1em;"><input id="browser_ShowPopup" type="checkbox"/><label for="browser_ShowPopup" data-label="optionsPage_ShowPopup" data-english="Display copy completion notification."></label></p>
     <fieldset id="bat" style="display:none;">
       <legend data-label="optionsPage_ActionTarget" data-english="Target"></legend>
       <p><input id="bat_CurrentTab" type="radio" name="bat" value="CurrentTab"/>
@@ -111,20 +112,28 @@ input[type="text"] {
   </fieldset>
   <fieldset id="format"><!-- フォーマット -->
     <legend data-label="optionsPage_Format" data-english="Format"></legend>
-    <p id="format_FormatMessage">${title}, ${url}.<br/>example: [${title}](${url})</p>
-    <p class="extension">${title}, ${url}, ${index}, ${tab}, ${enter}, ${CR}, ${LF}.<br/>example: [${title}](${url})</p>
+    <p class="normal" id="format_FormatMessage">${title}, ${url}, ${enter}.</p>
+    <p class="extension">${title}, ${url}, ${text}, ${tab}, ${enter}, ${r}, ${n}, ${index}, ${id}.</p>
     <p>format<span class="extension format2">1</span>: <input type="text" id="format_CopyTabFormat" maxlength="100" /></p>
     <p class="extension format2">format2: <input type="text" id="format_CopyTabFormat2" maxlength="100" /></p>
-    <p class="extension"><input id="format_enter" type="checkbox"/> <label for="format_enter">(All tabs) Separate by newline.</label></p>
-    <p class="extension"><input id="format_html" type="checkbox"/> <label for="format_html">Copy in HTML format.</label></p>
-    <p id="format_pin_" class="extension"><input id="format_pin" type="checkbox"/> <label for="format_pin">Except tabs with pinned.</label></p>
-    <p id="format_selected_" class="extension"><input id="format_selected" type="checkbox"/> <label for="format_selected">Enable multiple selection tabs.</label></p>
-    <p class="extension"><input id="format_format2" type="checkbox"/> <label for="format_format2">Enable Format 2.</label></p>
-    <p id="shortcut_message" style="display:none;"><span id="shortcut_commands"></span>You can change the shortcut command from the standard setting. <br>&lt;chrome://extensions/shortcuts&gt;</p>
-    <p id="shortcut">shortcut<span class="extension format2">1</span>: <input type="text" id="shortcut_command" maxlength="100" /></p>
+  </fieldset>
+  <fieldset id="shortcut"><!-- ショートカット -->
+    <legend data-label="optionsPage_Shortcut" data-english="Shortcut"></legend>
+    <p id="shortcut_message1" style="display:none;"><span data-label="optionsPage_ShortcutMessage" data-english="Please change from the standard setting of the shortcut."></span><br><span>&lt;chrome://extensions/shortcuts&gt;</span><span id="shortcut_commands"></span></p>
+    <p id="shortcut_message2" style="display:none;">Example: Key(function key only) or Modifier+Key or Modifier+Modifier+Key.<br>Modifiers are Ctrl, Alt, Command, MacCtrl, Shift(secondary modifier only).</p>
+    <p id="shortcut1">shortcut<span class="extension format2">1</span>: <input type="text" id="shortcut_command" maxlength="100" /></p>
     <p id="shortcut2" class="extension format2">shortcut2: <input type="text" id="shortcut_command2" maxlength="100" /></p>
-    <p id="format_language_" class="extension"><input id="format_language" type="checkbox"/> <label for="format_language">Use English as the standard language.</label></p>
-    <p><input id="format_extension" type="checkbox"/> <label for="format_extension">Extended mode (beta)</label></p>
+  </fieldset>
+  <fieldset><!-- その他 -->
+    <legend data-label="optionsPage_Other" data-english="Other"></legend>
+    <p class="extension"><input id="format_format2" type="checkbox"/> <label for="format_format2" data-label="optionsPage_Format2" data-english="Enable Format 2."></label></p>
+    <p class="extension"><input id="format_decode" type="checkbox"/> <label for="format_decode" data-label="optionsPage_FormatDecode" data-english="Decode the URL."></label></p>
+    <p class="extension"><input id="format_html" type="checkbox"/> <label for="format_html" data-label="optionsPage_FormatCopyHTML" data-english="Copy in HTML format."></label></p>
+    <p class="extension"><input id="format_enter" type="checkbox"/> <label for="format_enter" data-label="optionsPage_SeparateMultipleNewLine" data-english="Separate multiple tabs with a newline."></label></p>
+    <p id="format_pin_" class="extension"><input id="format_pin" type="checkbox"/> <label for="format_pin" data-label="optionsPage_ExcludePinned" data-english="Except tabs with pinned."></label></p>
+    <p id="format_selected_"><input id="format_selected" type="checkbox"/> <label for="format_selected" data-label="optionsPage_MultipleSelectionTabs" data-english="Enable multiple selection tabs."></label></p>
+    <p id="format_language_"><input id="format_language" type="checkbox"/> <label for="format_language" data-label="optionsPage_UseEnglish" data-english="Use English as the standard language."></label></p>
+    <p><input id="format_extension" type="checkbox"/> <label for="format_extension" data-label="optionsPage_ExtendedMode" data-english="Extended mode (beta)"></label></p>
   </fieldset>
   <p><button id="reset" data-label="optionsPage_Reset" data-english="Restore default settings"></button></p>
 

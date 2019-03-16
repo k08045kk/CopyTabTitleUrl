@@ -12,10 +12,7 @@ chrome.browserAction.onClicked.addListener(function(info, tab) {
 updateBrowserAction();
 
 // コンテキストメニュー更新
-if (!isMobile()) {
-  updateContextMenus();
-}
-
+updateContextMenus();
 
 // ショートカットアクション
 if (!isMobile()) {
