@@ -21,6 +21,11 @@ function onInit() {
   //  v.textContent = chrome.i18n.getMessage(v.dataset.label);
   //});
   
+  // オプション画面を表示する（右クリックメニューから表示できるため、不要では？）
+  //document.getElementById('header').addEventListener('click', function() {
+  //  chrome.runtime.openOptionsPage();
+  //});
+  
   // チェックボックスイベント設定
   function onClickCheckbox() {
     let win = document.getElementById('target_win');
