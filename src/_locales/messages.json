@@ -176,9 +176,9 @@
     "description":"すべてのウィンドウ"
   },
   "optionsPage_ShortcutMessage": {
-    "message":    "Please change the shortcut command from the standard setting.",
-    "translation":"ショートカットコマンドを標準設定から変更してください。",
-    "description":"ショートカットコマンドは、標準設定から変更してください。"
+    "message":    "Please change from the standard setting of the shortcut.",
+    "translation":"ショートカットの標準設定から変更してください。",
+    "description":"ショートカットの標準設定から変更してください。"
   },
   "optionsPage_Format2": {
     "message":    "Enable Format 2.",
