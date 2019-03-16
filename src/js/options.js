@@ -170,9 +170,9 @@ function setOptionPageValues(valueSet) {
       document.getElementById('shortcut_message2').style.display = '';
     } else {
       chrome.commands.getAll(function(commands) {
-        let text = '';
+        let text = '\n';
         for (let i=0; i<commands.length; i++) {
-          if (commands[i].shortcut != '') {
+          if (commands[i].description.startsWith('Format') && commands[i].shortcut != '') {
             text = text + '\n' + commands[i].description + ': ' + commands[i].shortcut;
           }
         }
