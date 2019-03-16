@@ -61,7 +61,7 @@ function updateOptionPage() {
   // ブラウザアクションの更新
   if (isMobile()) {
     if (baction && !document.getElementById('browser_ShowPopup').checked) {
-      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない。
+      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない
       // そのため、設定反映には再起動が必要
       chrome.browserAction.getPopup({}, function(url) {
         if (!(url == null || url == '')) {
@@ -107,14 +107,12 @@ function onUpdateContextMenu() {
     updateShortcut();
     updateBrowserAction();
     updateContextMenus();
-    // メニュー更新
     updateOptionPage();
   });
 }
 
 // フォーマット文字列の更新イベント
 function onUpdateFormat() {
-  // ストレージへ設定を保存
   getStorageArea().set({
     format_CopyTabFormat:  document.getElementById('format_CopyTabFormat').value,
     format_CopyTabFormat2: document.getElementById('format_CopyTabFormat2').value
@@ -124,12 +122,11 @@ function onUpdateFormat() {
 // コマンド文字列の更新イベント
 function onUpdateCommand() {
   if (isFirefox() && !isMobile()) {
-    const id = this.id;
-    const name = this.id.replace('command', 'action');
-    const cmd = this.value;
+    const id   = this.id;
+    const name = id.replace('command', 'action');
     try {
-      if (cmd != '') {
-        chrome.commands.update({name:name,shortcut:cmd});
+      if (this.value != '') {
+        chrome.commands.update({name:name,shortcut:this.value});
       } else {
         chrome.commands.reset(name);
       }
@@ -170,7 +167,7 @@ function setOptionPageValues(valueSet) {
     if (isFirefox()) {
       document.getElementById('shortcut_command').value  = valueSet.shortcut_command;
       document.getElementById('shortcut_command2').value = valueSet.shortcut_command2;
-      document.getElementById('shortcut_message').textContent = 'Example: Key(only function key) or Modifier+Key or Modifier+Modifier+Key. Modifiers are Ctrl, Alt, Command, MacCtrl, Shift(secondary modifier only).';
+      document.getElementById('shortcut_message2').style.display = '';
     } else {
       chrome.commands.getAll(function(commands) {
         let text = '';
@@ -182,8 +179,8 @@ function setOptionPageValues(valueSet) {
         // '\n'改行を挿入するため、innerTextとする
         document.getElementById('shortcut_commands').innerText = text;
       });
+      document.getElementById('shortcut_message1').style.display = '';
     }
-    document.getElementById('shortcut_message').style.display = '';
   }
 }
 
@@ -200,10 +197,8 @@ function onReset() {
   function onDelay() {
     onReset.delay--;
     if (onReset.delay == 0) {
-      // タイムアウト(元に戻す)
       onStop();
     } else {
-      // カウントダウン
       element.textContent = document.getElementById('optionsPage_ConfirmReset').textContent;
     }
   }
