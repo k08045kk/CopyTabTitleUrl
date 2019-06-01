@@ -8,6 +8,8 @@ https://addons.mozilla.org/firefox/addon/copytabtitleurl/
 CopyTabTitleUrl - Chrome Web Store  
 https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgjpaohjfeapp
 
+
+
 ## Features
 You can execute the following actions (copy to clipboard).
 + Copy tab title and URL
@@ -26,7 +28,9 @@ You can perform actions from the following operations.
 + Browser action (popup menu, click)
 + Shortcut
 
+
+
 ## Copyright
-Copyright (c) 2018 toshi (https://www.bugbugnow.net/)  
+Copyright (c) 2018 toshi (https://www.bugbugnow.net/p/profile.html)  
 Released under the MIT license.  
 see https://opensource.org/licenses/MIT
