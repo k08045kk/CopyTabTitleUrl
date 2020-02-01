@@ -1,4 +1,6 @@
-﻿# CopyTabTitleUrl
+﻿CopyTabTitleUrl
+===============
+
 It is an extension of WebExtension format of browser.  
 You can download from the site below.
 
@@ -30,7 +32,10 @@ You can perform actions from the following operations.
 
 
 
-## Copyright
-Copyright (c) 2018 toshi (https://www.bugbugnow.net/p/profile.html)  
-Released under the MIT license.  
-see https://opensource.org/licenses/MIT
+## License
+[MIT](https://github.com/k08045kk/CopyTabTitleUrl/blob/master/LICENSE)
+
+
+
+## Author
+[toshi](https://www.bugbugnow.net/p/profile.html)
