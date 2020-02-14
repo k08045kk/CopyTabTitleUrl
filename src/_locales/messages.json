@@ -126,9 +126,9 @@
     "description":"ページコンテキストメニュー"
   },
   "optionsPage_SelectionContextMenuCheckbox": {
-    "message":    "Selection contextmenu",
-    "translation":"選択コンテキストメニュー",
-    "description":"選択コンテキストメニュー"
+    "message":    "Text selection contextmenu",
+    "translation":"テキスト選択コンテキストメニュー",
+    "description":"テキスト選択コンテキストメニュー"
   },
   "optionsPage_BrowserActionContextMenuCheckbox": {
     "message":    "Browser action contextmenu",
