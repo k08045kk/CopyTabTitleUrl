@@ -38,6 +38,7 @@ function updateOptionPage() {
   // コンテキストメニュー選択時
   let menu = document.getElementById('menu_all').checked
           || document.getElementById('menu_page').checked
+          || document.getElementById('menu_selection').checked
           || document.getElementById('menu_browser_action').checked
           || (isFirefox() && document.getElementById('menu_tab').checked);
   document.getElementById('item').style.display = menu? '': 'none';
