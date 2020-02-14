@@ -110,6 +110,45 @@ function createCommand(valueSet, type) {
   return command;
 }
 
+function _dateFormat(format, opt_date, opt_prefix, opt_suffix) {
+  var pre = (opt_prefix != null)? opt_prefix: '';
+  var suf = (opt_suffix != null)? opt_suffix: '';
+  var fmt = {};
+  fmt[pre+'yyyy'+suf] = function(date) { return ''  + date.getFullYear(); };
+  fmt[pre+'MM'+suf]   = function(date) { return('0' +(date.getMonth() + 1)).slice(-2); };
+  fmt[pre+'dd'+suf]   = function(date) { return('0' + date.getDate()).slice(-2); };
+  fmt[pre+'hh'+suf]   = function(date) { return('0' +(date.getHours() % 12)).slice(-2); };
+  fmt[pre+'HH'+suf]   = function(date) { return('0' + date.getHours()).slice(-2); };
+  fmt[pre+'mm'+suf]   = function(date) { return('0' + date.getMinutes()).slice(-2); };
+  fmt[pre+'ss'+suf]   = function(date) { return('0' + date.getSeconds()).slice(-2); };
+  fmt[pre+'SSS'+suf]  = function(date) { return('00'+ date.getMilliseconds()).slice(-3); };
+  fmt[pre+'yy'+suf]   = function(date) { return(''  + date.getFullYear()).slice(-2); };
+  fmt[pre+'M'+suf]    = function(date) { return ''  +(date.getMonth() + 1); };
+  fmt[pre+'d'+suf]    = function(date) { return ''  + date.getDate(); };
+  fmt[pre+'h'+suf]    = function(date) { return ''  +(date.getHours() % 12); };
+  fmt[pre+'H'+suf]    = function(date) { return ''  + date.getHours(); };
+  fmt[pre+'m'+suf]    = function(date) { return ''  + date.getMinutes(); };
+  fmt[pre+'s'+suf]    = function(date) { return ''  + date.getSeconds(); };
+  fmt[pre+'S'+suf]    = function(date) { return ''  + date.getMilliseconds(); };
+  
+  var date = opt_date;
+  if (date == null) {
+    date = new Date();
+  } else if (typeof date === 'number' && isFinite(date) && Math.floor(date) === date) {
+    date = new Date(date);
+  } else if (Object.prototype.toString.call(date) === '[object String]') {
+    date = new Date(date);
+  }
+  
+  var result = format;
+  for (var key in fmt) {
+    if (fmt.hasOwnProperty(key)) {
+      result = result.replace(key, fmt[key](date));
+    }
+  }
+  return result;
+};
+
 // クリップボードにコピー
 function copyToClipboard(command, tabs, info) {
   // コピー文字列作成
@@ -130,6 +169,7 @@ function copyToClipboard(command, tabs, info) {
                      .replace(/\${text}/ig, stext);
       format = format.replace(/\${index}/ig, tabs[i].index)
                      .replace(/\${id}/ig, tabs[i].id);
+      format = _dateFormat(format, new Date(), '${', '}');
     }
     temp.push(format.replace(/\${\$}/ig, '$'));
   }
