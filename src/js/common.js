@@ -131,7 +131,7 @@ function copyToClipboard(command, tabs, info) {
       format = format.replace(/\${index}/ig, tabs[i].index)
                      .replace(/\${id}/ig, tabs[i].id);
     }
-    temp.push(format);
+    temp.push(format.replace(/\${\$}/ig, '$'));
   }
   let text = temp.join(command.enter? enter: '');
   
