@@ -1,1 +1,146 @@
-﻿{"extensionName":{"message":"CopyTabTitleUrl"},"extensionDescription":{"message":"Скопируйте заголовок вкладки и URL в буфер обмена."},"CopyTabTitleUrl":{"message":"Скопируйте заголовок вкладки и URL"},"CopyTabTitle":{"message":"Скопировать заголовок вкладки"},"CopyTabUrl":{"message":"Скопировать URL вкладки"},"CopyTabFormat":{"message":"Скопировать формат вкладки"},"CopyTabFormat2":{"message":"Скопировать вкладку format2"},"CopyWindowTabsTitleUrl":{"message":"Скопируйте заголовок и URL окна вкладки"},"CopyWindowTabsTitle":{"message":"Скопировать заголовок окна вкладки"},"CopyWindowTabsUrl":{"message":"Скопировать URL окна вкладки"},"CopyWindowTabsFormat":{"message":"Скопировать вкладки в формат окна вкладок"},"CopyWindowTabsFormat2":{"message":"Скопировать вкладку format2 из окна вкладок"},"optionsPage_Menu":{"message":"Контекстное меню"},"optionsPage_MenuItem":{"message":"Пункт меню"},"optionsPage_BrowserAction":{"message":"Действие браузера"},"optionsPage_Format":{"message":"Формат"},"optionsPage_ContextMenuCheckbox":{"message":"Контекстное меню"},"optionsPage_PageContextMenuCheckbox":{"message":"Контекстное меню страницы"},"optionsPage_BrowserActionContextMenuCheckbox":{"message":"Контекстное меню действий браузера"},"optionsPage_TabContextMenuCheckbox":{"message":"Tab contextmenu"},"optionsPage_Popup":{"message":"Показать всплывающее меню."},"optionsPage_Action":{"message":"Выполнить действие формата."},"optionsPage_ShowPopup":{"message":"Показать уведомление о завершении копирования."},"optionsPage_ActionTarget":{"message":"цель"},"optionsPage_CurrentTabSettingsTitle":{"message":"Текущая вкладка"},"optionsPage_CurrentWindowSettingsTitle":{"message":"Текущее окно"},"optionsPage_AllWindowSettingsTitle":{"message":"Все окна"},"optionsPage_Reset":{"message":"Восстановить настройки по умолчанию"},"optionsPage_ConfirmReset":{"message":"Действительно сбросить настройки по умолчанию?"},"dummyDummyDummy":{"message":"dummy"},"optionsPage_Restart":{"message":"Запустить снова"},"CopyWindowTabs2TitleUrl":{"message":"Скопируйте заголовок и URL всех вкладок"},"CopyWindowTabs2Title":{"message":"Скопировать заголовок всех вкладок"},"CopyWindowTabs2Url":{"message":"Скопировать URL всех вкладок"},"CopyWindowTabs2Format":{"message":"Скопировать формат вкладки всех вкладок"},"CopyWindowTabs2Format2":{"message":"Скопировать вкладку format2 всех вкладок"},"optionsPage_Other":{"message":"Другой"},"optionsPage_ShortcutMessage":{"message":"Пожалуйста, измените стандартную настройку ярлыка."},"optionsPage_Format2":{"message":"Включить формат 2."},"optionsPage_FormatDecode":{"message":"Расшифруйте URL."},"optionsPage_FormatCopyHTML":{"message":"Скопируйте в формате HTML."},"optionsPage_SeparateMultipleNewLine":{"message":"Разделите несколько вкладок с помощью новой строки."},"optionsPage_MultipleSelectionTabs":{"message":"Включить несколько вкладок выбора."},"optionsPage_UseEnglish":{"message":"Используйте английский в качестве стандартного языка."},"optionsPage_ExtendedMode":{"message":"Расширенный режим (бета)"},"optionsPage_ExcludePinned":{"message":"За исключением вкладок с закрепленным."},"optionsPage_SelectionContextMenuCheckbox":{"message":"Контекстное меню выбора текста"},"optionsPage_Shortcut":{"message":"кратчайший путь"}}
+﻿{
+  "extensionName": {
+    "message": "CopyTabTitleUrl"
+  },
+  "extensionDescription": {
+    "message": "Скопируйте заголовок вкладки и URL в буфер обмена."
+  },
+  "CopyTabTitleUrl": {
+    "message": "Скопируйте заголовок вкладки и URL"
+  },
+  "CopyTabTitle": {
+    "message": "Скопировать заголовок вкладки"
+  },
+  "CopyTabUrl": {
+    "message": "Скопировать URL вкладки"
+  },
+  "CopyTabFormat": {
+    "message": "Скопировать формат вкладки"
+  },
+  "CopyTabFormat2": {
+    "message": "Скопировать вкладку format2"
+  },
+  "CopyWindowTabsTitleUrl": {
+    "message": "Скопируйте заголовок и URL окна вкладки"
+  },
+  "CopyWindowTabsTitle": {
+    "message": "Скопировать заголовок окна вкладки"
+  },
+  "CopyWindowTabsUrl": {
+    "message": "Скопировать URL окна вкладки"
+  },
+  "CopyWindowTabsFormat": {
+    "message": "Скопировать вкладки в формат окна вкладок"
+  },
+  "CopyWindowTabsFormat2": {
+    "message": "Скопировать вкладку format2 из окна вкладок"
+  },
+  "optionsPage_Menu": {
+    "message": "Контекстное меню"
+  },
+  "optionsPage_MenuItem": {
+    "message": "Пункт меню"
+  },
+  "optionsPage_BrowserAction": {
+    "message": "Действие браузера"
+  },
+  "optionsPage_Format": {
+    "message": "Формат"
+  },
+  "optionsPage_ContextMenuCheckbox": {
+    "message": "Контекстное меню"
+  },
+  "optionsPage_PageContextMenuCheckbox": {
+    "message": "Контекстное меню страницы"
+  },
+  "optionsPage_BrowserActionContextMenuCheckbox": {
+    "message": "Контекстное меню действий браузера"
+  },
+  "optionsPage_TabContextMenuCheckbox": {
+    "message": "Tab contextmenu"
+  },
+  "optionsPage_Popup": {
+    "message": "Показать всплывающее меню."
+  },
+  "optionsPage_Action": {
+    "message": "Выполнить действие формата."
+  },
+  "optionsPage_ShowPopup": {
+    "message": "Показать уведомление о завершении копирования."
+  },
+  "optionsPage_ActionTarget": {
+    "message": "цель"
+  },
+  "optionsPage_CurrentTabSettingsTitle": {
+    "message": "Текущая вкладка"
+  },
+  "optionsPage_CurrentWindowSettingsTitle": {
+    "message": "Текущее окно"
+  },
+  "optionsPage_AllWindowSettingsTitle": {
+    "message": "Все окна"
+  },
+  "optionsPage_Reset": {
+    "message": "Восстановить настройки по умолчанию"
+  },
+  "optionsPage_ConfirmReset": {
+    "message": "Действительно сбросить настройки по умолчанию?"
+  },
+  "dummyDummyDummy": {
+    "message": "dummy"
+  },
+  "optionsPage_Restart": {
+    "message": "Запустить снова"
+  },
+  "CopyWindowTabs2TitleUrl": {
+    "message": "Скопируйте заголовок и URL всех вкладок"
+  },
+  "CopyWindowTabs2Title": {
+    "message": "Скопировать заголовок всех вкладок"
+  },
+  "CopyWindowTabs2Url": {
+    "message": "Скопировать URL всех вкладок"
+  },
+  "CopyWindowTabs2Format": {
+    "message": "Скопировать формат вкладки всех вкладок"
+  },
+  "CopyWindowTabs2Format2": {
+    "message": "Скопировать вкладку format2 всех вкладок"
+  },
+  "optionsPage_Other": {
+    "message": "Другой"
+  },
+  "optionsPage_ShortcutMessage": {
+    "message": "Пожалуйста, измените стандартную настройку ярлыка."
+  },
+  "optionsPage_Format2": {
+    "message": "Включить формат 2."
+  },
+  "optionsPage_FormatDecode": {
+    "message": "Расшифруйте URL."
+  },
+  "optionsPage_FormatCopyHTML": {
+    "message": "Скопируйте в формате HTML."
+  },
+  "optionsPage_SeparateMultipleNewLine": {
+    "message": "Разделите несколько вкладок с помощью новой строки."
+  },
+  "optionsPage_MultipleSelectionTabs": {
+    "message": "Включить несколько вкладок выбора."
+  },
+  "optionsPage_UseEnglish": {
+    "message": "Используйте английский в качестве стандартного языка."
+  },
+  "optionsPage_ExtendedMode": {
+    "message": "Расширенный режим (бета)"
+  },
+  "optionsPage_ExcludePinned": {
+    "message": "За исключением вкладок с закрепленным."
+  },
+  "optionsPage_SelectionContextMenuCheckbox": {
+    "message": "Контекстное меню выбора текста"
+  },
+  "optionsPage_Shortcut": {
+    "message": "кратчайший путь"
+  }
+}

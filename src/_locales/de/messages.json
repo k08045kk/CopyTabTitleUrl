@@ -1,1 +1,146 @@
-﻿{"extensionName":{"message":"CopyTabTitleUrl"},"extensionDescription":{"message":"Kopieren Sie den Tab-Titel und die URL in die Zwischenablage."},"CopyTabTitleUrl":{"message":"Tab-Titel und URL kopieren"},"CopyTabTitle":{"message":"Tabulatortitel kopieren"},"CopyTabUrl":{"message":"Tab-URL kopieren"},"CopyTabFormat":{"message":"Tab-Format kopieren"},"CopyTabFormat2":{"message":"Tab format2 kopieren"},"CopyWindowTabsTitleUrl":{"message":"Kopieren Sie den Titel und die URL einer Fensterregisterkarte"},"CopyWindowTabsTitle":{"message":"Kopieren Sie den Titel eines Fensters"},"CopyWindowTabsUrl":{"message":"URL einer Fensterregisterkarte kopieren"},"CopyWindowTabsFormat":{"message":"Kopieren Sie das Tab-Format eines Fensters"},"CopyWindowTabsFormat2":{"message":"Kopieren Sie die Registerkarte format2 einer Fensterregisterkarte"},"optionsPage_Menu":{"message":"Kontextmenü"},"optionsPage_MenuItem":{"message":"Menüpunkt"},"optionsPage_BrowserAction":{"message":"Browseraktion"},"optionsPage_Format":{"message":"Format"},"optionsPage_ContextMenuCheckbox":{"message":"Kontextmenü"},"optionsPage_PageContextMenuCheckbox":{"message":"Kontextmenü"},"optionsPage_BrowserActionContextMenuCheckbox":{"message":"Browser-Aktionskontextmenü"},"optionsPage_TabContextMenuCheckbox":{"message":"Tab Kontextmenü"},"optionsPage_Popup":{"message":"Popup-Menü anzeigen."},"optionsPage_Action":{"message":"Formataktion ausführen"},"optionsPage_ShowPopup":{"message":"Kopierbenachrichtigung anzeigen."},"optionsPage_ActionTarget":{"message":"Ziel"},"optionsPage_CurrentTabSettingsTitle":{"message":"Aktuelle Registerkarte"},"optionsPage_CurrentWindowSettingsTitle":{"message":"Aktuelles Fenster"},"optionsPage_AllWindowSettingsTitle":{"message":"Alle Fenster"},"optionsPage_Reset":{"message":"Standardeinstellungen wiederherstellen"},"optionsPage_ConfirmReset":{"message":"Auf die Standardeinstellungen zurücksetzen?"},"dummyDummyDummy":{"message":"dummy"},"optionsPage_Restart":{"message":"Neustart"},"CopyWindowTabs2TitleUrl":{"message":"Kopieren Sie den Titel und die URL aller Registerkarten"},"CopyWindowTabs2Title":{"message":"Titel aller Tabs kopieren"},"CopyWindowTabs2Url":{"message":"URL aller Tabs kopieren"},"CopyWindowTabs2Format":{"message":"Kopieren Sie das Tab-Format aller Tabs"},"CopyWindowTabs2Format2":{"message":"Kopieren Sie das Registerformat2 aller Registerkarten"},"optionsPage_Other":{"message":"Andere"},"optionsPage_ShortcutMessage":{"message":"Bitte ändern Sie die Standardeinstellung der Verknüpfung."},"optionsPage_Format2":{"message":"Format aktivieren 2."},"optionsPage_FormatDecode":{"message":"Dekodieren Sie die URL."},"optionsPage_FormatCopyHTML":{"message":"Kopieren Sie im HTML-Format."},"optionsPage_SeparateMultipleNewLine":{"message":"Trennen Sie mehrere Registerkarten durch eine neue Zeile."},"optionsPage_MultipleSelectionTabs":{"message":"Aktivieren Sie mehrere Auswahlregisterkarten."},"optionsPage_UseEnglish":{"message":"Verwenden Sie Englisch als Standardsprache."},"optionsPage_ExtendedMode":{"message":"Erweiterter Modus (Beta)"},"optionsPage_ExcludePinned":{"message":"Mit Ausnahme der Registerkarten, die festgesteckt sind."},"optionsPage_SelectionContextMenuCheckbox":{"message":"Kontextmenü zur Textauswahl"},"optionsPage_Shortcut":{"message":"Abkürzung"}}
+﻿{
+  "extensionName": {
+    "message": "CopyTabTitleUrl"
+  },
+  "extensionDescription": {
+    "message": "Kopieren Sie den Tab-Titel und die URL in die Zwischenablage."
+  },
+  "CopyTabTitleUrl": {
+    "message": "Tab-Titel und URL kopieren"
+  },
+  "CopyTabTitle": {
+    "message": "Tabulatortitel kopieren"
+  },
+  "CopyTabUrl": {
+    "message": "Tab-URL kopieren"
+  },
+  "CopyTabFormat": {
+    "message": "Tab-Format kopieren"
+  },
+  "CopyTabFormat2": {
+    "message": "Tab format2 kopieren"
+  },
+  "CopyWindowTabsTitleUrl": {
+    "message": "Kopieren Sie den Titel und die URL einer Fensterregisterkarte"
+  },
+  "CopyWindowTabsTitle": {
+    "message": "Kopieren Sie den Titel eines Fensters"
+  },
+  "CopyWindowTabsUrl": {
+    "message": "URL einer Fensterregisterkarte kopieren"
+  },
+  "CopyWindowTabsFormat": {
+    "message": "Kopieren Sie das Tab-Format eines Fensters"
+  },
+  "CopyWindowTabsFormat2": {
+    "message": "Kopieren Sie die Registerkarte format2 einer Fensterregisterkarte"
+  },
+  "optionsPage_Menu": {
+    "message": "Kontextmenü"
+  },
+  "optionsPage_MenuItem": {
+    "message": "Menüpunkt"
+  },
+  "optionsPage_BrowserAction": {
+    "message": "Browseraktion"
+  },
+  "optionsPage_Format": {
+    "message": "Format"
+  },
+  "optionsPage_ContextMenuCheckbox": {
+    "message": "Kontextmenü"
+  },
+  "optionsPage_PageContextMenuCheckbox": {
+    "message": "Kontextmenü"
+  },
+  "optionsPage_BrowserActionContextMenuCheckbox": {
+    "message": "Browser-Aktionskontextmenü"
+  },
+  "optionsPage_TabContextMenuCheckbox": {
+    "message": "Tab Kontextmenü"
+  },
+  "optionsPage_Popup": {
+    "message": "Popup-Menü anzeigen."
+  },
+  "optionsPage_Action": {
+    "message": "Formataktion ausführen"
+  },
+  "optionsPage_ShowPopup": {
+    "message": "Kopierbenachrichtigung anzeigen."
+  },
+  "optionsPage_ActionTarget": {
+    "message": "Ziel"
+  },
+  "optionsPage_CurrentTabSettingsTitle": {
+    "message": "Aktuelle Registerkarte"
+  },
+  "optionsPage_CurrentWindowSettingsTitle": {
+    "message": "Aktuelles Fenster"
+  },
+  "optionsPage_AllWindowSettingsTitle": {
+    "message": "Alle Fenster"
+  },
+  "optionsPage_Reset": {
+    "message": "Standardeinstellungen wiederherstellen"
+  },
+  "optionsPage_ConfirmReset": {
+    "message": "Auf die Standardeinstellungen zurücksetzen?"
+  },
+  "dummyDummyDummy": {
+    "message": "dummy"
+  },
+  "optionsPage_Restart": {
+    "message": "Neustart"
+  },
+  "CopyWindowTabs2TitleUrl": {
+    "message": "Kopieren Sie den Titel und die URL aller Registerkarten"
+  },
+  "CopyWindowTabs2Title": {
+    "message": "Titel aller Tabs kopieren"
+  },
+  "CopyWindowTabs2Url": {
+    "message": "URL aller Tabs kopieren"
+  },
+  "CopyWindowTabs2Format": {
+    "message": "Kopieren Sie das Tab-Format aller Tabs"
+  },
+  "CopyWindowTabs2Format2": {
+    "message": "Kopieren Sie das Registerformat2 aller Registerkarten"
+  },
+  "optionsPage_Other": {
+    "message": "Andere"
+  },
+  "optionsPage_ShortcutMessage": {
+    "message": "Bitte ändern Sie die Standardeinstellung der Verknüpfung."
+  },
+  "optionsPage_Format2": {
+    "message": "Format aktivieren 2."
+  },
+  "optionsPage_FormatDecode": {
+    "message": "Dekodieren Sie die URL."
+  },
+  "optionsPage_FormatCopyHTML": {
+    "message": "Kopieren Sie im HTML-Format."
+  },
+  "optionsPage_SeparateMultipleNewLine": {
+    "message": "Trennen Sie mehrere Registerkarten durch eine neue Zeile."
+  },
+  "optionsPage_MultipleSelectionTabs": {
+    "message": "Aktivieren Sie mehrere Auswahlregisterkarten."
+  },
+  "optionsPage_UseEnglish": {
+    "message": "Verwenden Sie Englisch als Standardsprache."
+  },
+  "optionsPage_ExtendedMode": {
+    "message": "Erweiterter Modus (Beta)"
+  },
+  "optionsPage_ExcludePinned": {
+    "message": "Mit Ausnahme der Registerkarten, die festgesteckt sind."
+  },
+  "optionsPage_SelectionContextMenuCheckbox": {
+    "message": "Kontextmenü zur Textauswahl"
+  },
+  "optionsPage_Shortcut": {
+    "message": "Abkürzung"
+  }
+}
