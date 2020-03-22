@@ -317,9 +317,9 @@ function updateContextMenus() {
     if (contexts.length != 0) {
       const isEnglish = valueSet.format_language;
       const titles = [
-        'Copy tab title and URL', 'Copy tab title', 'Copy tab URL', 'Copy tab format', 'Copy tab format2',
-        'Copy the title and URL of a window tabs', 'Copy title of a window tabs', 'Copy URL of a window tabs', 'Copy tab format of a window tabs', 'Copy tab format2 of a window tabs',
-        'Copy the title and URL of all tabs', 'Copy title of all tabs', 'Copy URL of all tabs', 'Copy tab format of all tabs', 'Copy tab format2 of all tabs'
+        'Copy the title and URL of the tab', 'Copy the title of the tab', 'Copy the URL of the tab', 'Copy the format of the tab', 'Copy the format 2 of the tab',
+        'Copy the title and URL of the window tabs', 'Copy the title of the window tabs', 'Copy the URL of the window tabs', 'Copy the format of the window tabs', 'Copy the format 2 of the window tabs',
+        'Copy the title and URL of the all tabs', 'Copy the title of the all tabs', 'Copy the URL of the all tabs', 'Copy the format of the all tabs', 'Copy the format 2 of the all tabs'
       ];
       [
         'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
