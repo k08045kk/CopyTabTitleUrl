@@ -143,7 +143,7 @@ function _dateFormat(format, opt_date, opt_prefix, opt_suffix) {
   var result = format;
   for (var key in fmt) {
     if (fmt.hasOwnProperty(key)) {
-      result = result.replace(key, fmt[key](date));
+      result = result.split(key).join(fmt[key](date));
     }
   }
   return result;
