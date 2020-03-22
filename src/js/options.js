@@ -237,7 +237,7 @@ function onInit() {
     // FirefoxAndroid版を考慮してCSSでの指定は行わない
     // ChromeAndroid版はない
     // Chromeの拡張機能画面は600px程度で固定画面のため、オプション画面が600px固定でも問題ない
-    document.body.style.width = '600px';
+    //document.body.style.width = '600px';
     
     // タブコンテキストメニュー&ショートカット(Chrome非対応)
     getStorageArea().set({menu_tab: false});
