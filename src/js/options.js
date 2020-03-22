@@ -249,6 +249,7 @@ function onInit() {
   // テキスト読込み(国際化)
   if (chrome.i18n.getUILanguage().startsWith('en')) {
     document.getElementById('format_language_').classList.add('hide');
+    //document.getElementById('format_language').checked = false;
   }
   
   // (storage内の)初期値を設定
