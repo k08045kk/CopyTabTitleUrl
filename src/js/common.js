@@ -149,16 +149,19 @@ function _dateFormat(format, opt_date, opt_prefix, opt_suffix) {
   return result;
 };
 
-function _urlFormat(format, url) {
+function _urlFormat(format, url, command) {
+  function decode(text) {
+    return command.decode ? decodeURIComponent(text) : text;
+  };
   const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
   for (let i=0; i<properties.length; i++) {
     const key = properties[i];
-    format = format.replace(new RegExp('\\${'+key+'}', 'g'), url[key]);
+    format = format.replace(new RegExp('\\${'+key+'}', 'g'), decode(url[key]));
   }
-  format = format.replace(/\${username:password@}/g, url.username + (url.username != '' && url.password != '' ? ':' : '') + url.password + (url.username != '' || url.password != '' ? '@' : ''));
-  format = format.replace(/\${username@}/g, url.username != '' ? url.username+'@' : '');
-  format = format.replace(/\${password@}/g, url.password != '' ? url.password+'@' : '');
-  format = format.replace(/\${:port}/g, url.port != '' ? ':'+url.port : '');
+  format = format.replace(/\${username:password@}/g, decode(url.username) + (url.username != '' && url.password != '' ? ':' : '') + decode(url.password) + (url.username != '' || url.password != '' ? '@' : ''));
+  format = format.replace(/\${username@}/g, url.username != '' ? decode(url.username)+'@' : '');
+  format = format.replace(/\${password@}/g, url.password != '' ? decode(url.password)+'@' : '');
+  format = format.replace(/\${:port}/g, url.port != '' ? ':'+decode(url.port) : '');
   return format;
   // ${hash} ${host} ${hostname} ${href} ${origin} ${password} ${pathname} ${port} ${protocol} ${search} ${username}
   // ${protocol}//${username:password@}${hostname}${:port}${pathname}${search}${hash}
@@ -188,7 +191,7 @@ function copyToClipboard(command, tabs, info) {
       format = format.replace(/\${index}/ig, tabs[i].index)
                      .replace(/\${id}/ig, tabs[i].id);
       format = _dateFormat(format, new Date(), '${', '}');
-      format = _urlFormat(format, new URL(tabs[i].url));
+      format = _urlFormat(format, new URL(tabs[i].url), command);
     }
     temp.push(format.replace(/\${\$}/ig, '$'));
   }
