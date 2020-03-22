@@ -155,10 +155,15 @@ function _urlFormat(format, url) {
     const key = properties[i];
     format = format.replace(new RegExp('\\${'+key+'}', 'g'), url[key]);
   }
+  format = format.replace(/\${username:password@}/g, url.username + (url.username != '' && url.password != '' ? ':' : '') + url.password + (url.username != '' || url.password != '' ? '@' : ''));
+  format = format.replace(/\${username@}/g, url.username != '' ? url.username+'@' : '');
+  format = format.replace(/\${password@}/g, url.password != '' ? url.password+'@' : '');
+  format = format.replace(/\${:port}/g, url.port != '' ? ':'+url.port : '');
   return format;
   // ${hash} ${host} ${hostname} ${href} ${origin} ${password} ${pathname} ${port} ${protocol} ${search} ${username}
-  // https://username:password@www.domain.com2:80/path/file?param2=data2&param=data#hash
-  // #hash www.domain.com2:80 www.domain.com2 https://username:password@www.domain.com2:80/path/file?param2=data2&param=data#hash https://www.domain.com2:80 password /path/file 80 https: ?param2=data2&param=data username
+  // ${protocol}//${username:password@}${hostname}${:port}${pathname}${search}${hash}
+  // https://username:password@example.com:80/path/file?param1=data1&param2=data2#hash
+
 };
 
 
