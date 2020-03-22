@@ -149,6 +149,19 @@ function _dateFormat(format, opt_date, opt_prefix, opt_suffix) {
   return result;
 };
 
+function _urlFormat(format, url) {
+  const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
+  for (let i=0; i<properties.length; i++) {
+    const key = properties[i];
+    format = format.replace(new RegExp('\\${'+key+'}', 'g'), url[key]);
+  }
+  return format;
+  // ${hash} ${host} ${hostname} ${href} ${origin} ${password} ${pathname} ${port} ${protocol} ${search} ${username}
+  // https://username:password@www.domain.com2:80/path/file?param2=data2&param=data#hash
+  // #hash www.domain.com2:80 www.domain.com2 https://username:password@www.domain.com2:80/path/file?param2=data2&param=data#hash https://www.domain.com2:80 password /path/file 80 https: ?param2=data2&param=data username
+};
+
+
 // クリップボードにコピー
 function copyToClipboard(command, tabs, info) {
   // コピー文字列作成
@@ -170,6 +183,7 @@ function copyToClipboard(command, tabs, info) {
       format = format.replace(/\${index}/ig, tabs[i].index)
                      .replace(/\${id}/ig, tabs[i].id);
       format = _dateFormat(format, new Date(), '${', '}');
+      format = _urlFormat(format, new URL(tabs[i].url));
     }
     temp.push(format.replace(/\${\$}/ig, '$'));
   }
