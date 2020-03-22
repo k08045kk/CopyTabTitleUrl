@@ -3,37 +3,37 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "탭 제목과 URL을 클립 보드로 복사하십시오."
+    "message": "탭의 제목과 URL을 클립 보드에 복사하십시오."
   },
   "CopyTabTitleUrl": {
-    "message": "탭 제목 및 URL 복사"
+    "message": "탭의 제목과 URL을 복사하십시오."
   },
   "CopyTabTitle": {
-    "message": "탭 제목 복사"
+    "message": "탭의 제목을 복사"
   },
   "CopyTabUrl": {
-    "message": "탭 URL 복사"
+    "message": "탭의 URL을 복사"
   },
   "CopyTabFormat": {
-    "message": "탭 형식 복사"
+    "message": "탭의 형식을 복사"
   },
   "CopyTabFormat2": {
-    "message": "탭 형식 복사 2"
+    "message": "탭의 형식 2를 복사하십시오."
   },
   "CopyWindowTabsTitleUrl": {
-    "message": "창 탭의 제목과 URL 복사"
+    "message": "창 탭의 제목과 URL을 복사하십시오."
   },
   "CopyWindowTabsTitle": {
-    "message": "창 제목 복사"
+    "message": "창 탭의 제목을 복사"
   },
   "CopyWindowTabsUrl": {
-    "message": "창 탭의 URL 복사"
+    "message": "창 탭의 URL을 복사하십시오."
   },
   "CopyWindowTabsFormat": {
-    "message": "창 탭의 복사 탭 형식"
+    "message": "창 탭의 형식을 복사"
   },
   "CopyWindowTabsFormat2": {
-    "message": "창 탭의 복사 탭 형식 2"
+    "message": "창 탭의 형식 2를 복사하십시오."
   },
   "optionsPage_Menu": {
     "message": "상황에 맞는 메뉴"
@@ -93,19 +93,19 @@
     "message": "재시작"
   },
   "CopyWindowTabs2TitleUrl": {
-    "message": "모든 탭의 제목 및 URL 복사"
+    "message": "모든 탭의 제목과 URL을 복사하십시오."
   },
   "CopyWindowTabs2Title": {
-    "message": "모든 탭의 제목 복사"
+    "message": "모든 탭의 제목을 복사"
   },
   "CopyWindowTabs2Url": {
-    "message": "모든 탭의 URL 복사"
+    "message": "모든 탭의 URL을 복사하십시오."
   },
   "CopyWindowTabs2Format": {
-    "message": "모든 탭의 탭 형식 복사"
+    "message": "모든 탭의 형식을 복사"
   },
   "CopyWindowTabs2Format2": {
-    "message": "모든 탭의 탭 형식 2 복사"
+    "message": "모든 탭의 형식 2를 복사하십시오."
   },
   "optionsPage_Other": {
     "message": "다른"

@@ -3,22 +3,22 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "將選項卡標題和URL複製到剪貼板。"
+    "message": "將選項卡的標題和URL複製到剪貼板。"
   },
   "CopyTabTitleUrl": {
-    "message": "複製標籤標題和網址"
+    "message": "複製標籤的標題和URL"
   },
   "CopyTabTitle": {
-    "message": "複製標籤標題"
+    "message": "複製標籤的標題"
   },
   "CopyTabUrl": {
-    "message": "複製標籤網址"
+    "message": "複製標籤的網址"
   },
   "CopyTabFormat": {
-    "message": "複製標籤格式"
+    "message": "複製標籤的格式"
   },
   "CopyTabFormat2": {
-    "message": "複製標籤格式2"
+    "message": "複製標籤的格式2"
   },
   "CopyWindowTabsTitleUrl": {
     "message": "複製窗口選項卡的標題和URL"
@@ -30,10 +30,10 @@
     "message": "複製窗口選項卡的URL"
   },
   "CopyWindowTabsFormat": {
-    "message": "複製窗口選項卡的選項卡格式"
+    "message": "複製窗口標籤的格式"
   },
   "CopyWindowTabsFormat2": {
-    "message": "複製窗口選項卡的選項卡格式2"
+    "message": "複製窗口選項卡的格式2"
   },
   "optionsPage_Menu": {
     "message": "上下文菜單"
@@ -93,19 +93,19 @@
     "message": "重新開始"
   },
   "CopyWindowTabs2TitleUrl": {
-    "message": "複製所有選項卡的標題和URL"
+    "message": "複製所有標籤的標題和URL"
   },
   "CopyWindowTabs2Title": {
     "message": "複製所有標籤的標題"
   },
   "CopyWindowTabs2Url": {
-    "message": "複製所有選項卡的URL"
+    "message": "複製所有標籤的網址"
   },
   "CopyWindowTabs2Format": {
-    "message": "複製所有選項卡的選項卡格式"
+    "message": "複製所有標籤的格式"
   },
   "CopyWindowTabs2Format2": {
-    "message": "複製所有選項卡的選項卡格式2"
+    "message": "複製所有標籤的格式2"
   },
   "optionsPage_Other": {
     "message": "其他"

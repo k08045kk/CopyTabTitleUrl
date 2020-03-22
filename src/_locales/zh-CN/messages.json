@@ -3,22 +3,22 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "将选项卡标题和URL复制到剪贴板。"
+    "message": "将选项卡的标题和URL复制到剪贴板。"
   },
   "CopyTabTitleUrl": {
-    "message": "复制标签标题和网址"
+    "message": "复制标签的标题和URL"
   },
   "CopyTabTitle": {
-    "message": "复制标签标题"
+    "message": "复制标签的标题"
   },
   "CopyTabUrl": {
-    "message": "复制标签网址"
+    "message": "复制标签的网址"
   },
   "CopyTabFormat": {
-    "message": "复制标签格式"
+    "message": "复制标签的格式"
   },
   "CopyTabFormat2": {
-    "message": "复制标签格式2"
+    "message": "复制标签的格式2"
   },
   "CopyWindowTabsTitleUrl": {
     "message": "复制窗口选项卡的标题和URL"
@@ -30,10 +30,10 @@
     "message": "复制窗口选项卡的URL"
   },
   "CopyWindowTabsFormat": {
-    "message": "复制窗口选项卡的选项卡格式"
+    "message": "复制窗口标签的格式"
   },
   "CopyWindowTabsFormat2": {
-    "message": "复制窗口选项卡的选项卡格式2"
+    "message": "复制窗口选项卡的格式2"
   },
   "optionsPage_Menu": {
     "message": "上下文菜单"
@@ -93,19 +93,19 @@
     "message": "重新开始"
   },
   "CopyWindowTabs2TitleUrl": {
-    "message": "复制所有选项卡的标题和URL"
+    "message": "复制所有标签的标题和URL"
   },
   "CopyWindowTabs2Title": {
     "message": "复制所有标签的标题"
   },
   "CopyWindowTabs2Url": {
-    "message": "复制所有选项卡的URL"
+    "message": "复制所有标签的网址"
   },
   "CopyWindowTabs2Format": {
-    "message": "复制所有选项卡的选项卡格式"
+    "message": "复制所有标签的格式"
   },
   "CopyWindowTabs2Format2": {
-    "message": "复制所有选项卡的选项卡格式2"
+    "message": "复制所有标签的格式2"
   },
   "optionsPage_Other": {
     "message": "其他"

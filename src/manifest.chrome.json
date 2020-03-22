@@ -38,10 +38,10 @@
       "suggested_key": {
         "default": "Alt+C"
       },
-      "description": "Format1"
+      "description": "format1"
     },
     "shortcut_action2": {
-      "description": "Format2"
+      "description": "format2"
     }
   },
   

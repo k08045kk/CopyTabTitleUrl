@@ -3,37 +3,37 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Copie o título da guia e o URL para a área de transferência."
+    "message": "Copie o título e o URL da guia para a área de transferência."
   },
   "CopyTabTitleUrl": {
-    "message": "Copiar título e URL da guia"
+    "message": "Copie o título e o URL da guia"
   },
   "CopyTabTitle": {
-    "message": "Copiar título da guia"
+    "message": "Copie o título da guia"
   },
   "CopyTabUrl": {
-    "message": "Copiar URL da guia"
+    "message": "Copie o URL da guia"
   },
   "CopyTabFormat": {
-    "message": "Copiar formato de tabulação"
+    "message": "Copie o formato da guia"
   },
   "CopyTabFormat2": {
-    "message": "Copiar tab format2"
+    "message": "Copie o formato 2 da guia"
   },
   "CopyWindowTabsTitleUrl": {
-    "message": "Copie o título e o URL de uma guia de janela"
+    "message": "Copie o título e o URL das guias da janela"
   },
   "CopyWindowTabsTitle": {
-    "message": "Copiar título de uma janela"
+    "message": "Copie o título das guias da janela"
   },
   "CopyWindowTabsUrl": {
-    "message": "Copiar URL de uma guia de janela"
+    "message": "Copie o URL das guias da janela"
   },
   "CopyWindowTabsFormat": {
-    "message": "Copiar o formato da guia de uma janela"
+    "message": "Copie o formato das guias da janela"
   },
   "CopyWindowTabsFormat2": {
-    "message": "Copiar tab format2 de uma janela tabs"
+    "message": "Copie o formato 2 das guias da janela"
   },
   "optionsPage_Menu": {
     "message": "Menu contextual"
@@ -99,13 +99,13 @@
     "message": "Copie o título de todas as guias"
   },
   "CopyWindowTabs2Url": {
-    "message": "Copiar URL de todas as guias"
+    "message": "Copie o URL de todas as guias"
   },
   "CopyWindowTabs2Format": {
-    "message": "Copiar o formato da guia de todas as guias"
+    "message": "Copie o formato de todas as guias"
   },
   "CopyWindowTabs2Format2": {
-    "message": "Copiar tab format2 de todas as guias"
+    "message": "Copie o formato 2 de todas as guias"
   },
   "optionsPage_Other": {
     "message": "De outros"

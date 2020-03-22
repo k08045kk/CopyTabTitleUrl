@@ -3,37 +3,37 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Copiez le titre de l'onglet et l'URL dans le presse-papiers."
+    "message": "Copiez le titre et l'URL de l'onglet dans le presse-papiers."
   },
   "CopyTabTitleUrl": {
-    "message": "Copier le titre et l'URL de l'onglet"
+    "message": "Copiez le titre et l'URL de l'onglet"
   },
   "CopyTabTitle": {
-    "message": "Copier le titre de l'onglet"
+    "message": "Copiez le titre de l'onglet"
   },
   "CopyTabUrl": {
-    "message": "Copier l'URL de l'onglet"
+    "message": "Copiez l'URL de l'onglet"
   },
   "CopyTabFormat": {
-    "message": "Format de l'onglet Copier"
+    "message": "Copiez le format de l'onglet"
   },
   "CopyTabFormat2": {
-    "message": "Onglet Copier format2"
+    "message": "Copiez le format 2 de l'onglet"
   },
   "CopyWindowTabsTitleUrl": {
-    "message": "Copier le titre et l'URL d'une fenêtre"
+    "message": "Copiez le titre et l'URL des onglets de la fenêtre"
   },
   "CopyWindowTabsTitle": {
-    "message": "Copier le titre d'une fenêtre"
+    "message": "Copiez le titre des onglets de la fenêtre"
   },
   "CopyWindowTabsUrl": {
-    "message": "Copier l'URL d'une fenêtre"
+    "message": "Copiez l'URL des onglets de la fenêtre"
   },
   "CopyWindowTabsFormat": {
-    "message": "Copier le format d'onglet d'une fenêtre"
+    "message": "Copiez le format des onglets de la fenêtre"
   },
   "CopyWindowTabsFormat2": {
-    "message": "Copier onglet format2 d'une fenêtre"
+    "message": "Copiez le format 2 des onglets de la fenêtre"
   },
   "optionsPage_Menu": {
     "message": "Menu contextuel"
@@ -96,16 +96,16 @@
     "message": "Copiez le titre et l'URL de tous les onglets"
   },
   "CopyWindowTabs2Title": {
-    "message": "Copier le titre de tous les onglets"
+    "message": "Copiez le titre de tous les onglets"
   },
   "CopyWindowTabs2Url": {
-    "message": "Copier l'URL de tous les onglets"
+    "message": "Copiez l'URL de tous les onglets"
   },
   "CopyWindowTabs2Format": {
-    "message": "Copier le format d'onglet de tous les onglets"
+    "message": "Copiez le format de tous les onglets"
   },
   "CopyWindowTabs2Format2": {
-    "message": "Copier l'onglet format2 de tous les onglets"
+    "message": "Copiez le format 2 de tous les onglets"
   },
   "optionsPage_Other": {
     "message": "Autre"

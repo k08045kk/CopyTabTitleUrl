@@ -3,37 +3,37 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Скопируйте заголовок вкладки и URL в буфер обмена."
+    "message": "Скопируйте заголовок и URL вкладки в буфер обмена."
   },
   "CopyTabTitleUrl": {
-    "message": "Скопируйте заголовок вкладки и URL"
+    "message": "Скопируйте заголовок и URL вкладки"
   },
   "CopyTabTitle": {
-    "message": "Скопировать заголовок вкладки"
+    "message": "Скопируйте заголовок вкладки"
   },
   "CopyTabUrl": {
-    "message": "Скопировать URL вкладки"
+    "message": "Скопируйте URL вкладки"
   },
   "CopyTabFormat": {
-    "message": "Скопировать формат вкладки"
+    "message": "Скопируйте формат вкладки"
   },
   "CopyTabFormat2": {
-    "message": "Скопировать вкладку format2"
+    "message": "Скопируйте формат 2 вкладки"
   },
   "CopyWindowTabsTitleUrl": {
-    "message": "Скопируйте заголовок и URL окна вкладки"
+    "message": "Скопируйте заголовок и URL вкладок окна"
   },
   "CopyWindowTabsTitle": {
-    "message": "Скопировать заголовок окна вкладки"
+    "message": "Скопируйте заголовок вкладок окна"
   },
   "CopyWindowTabsUrl": {
-    "message": "Скопировать URL окна вкладки"
+    "message": "Скопируйте URL вкладок окна"
   },
   "CopyWindowTabsFormat": {
-    "message": "Скопировать вкладки в формат окна вкладок"
+    "message": "Скопируйте формат вкладок окна"
   },
   "CopyWindowTabsFormat2": {
-    "message": "Скопировать вкладку format2 из окна вкладок"
+    "message": "Скопируйте формат 2 из окон вкладок"
   },
   "optionsPage_Menu": {
     "message": "Контекстное меню"
@@ -93,19 +93,19 @@
     "message": "Запустить снова"
   },
   "CopyWindowTabs2TitleUrl": {
-    "message": "Скопируйте заголовок и URL всех вкладок"
+    "message": "Скопируйте заголовок и URL-адрес всех вкладок"
   },
   "CopyWindowTabs2Title": {
-    "message": "Скопировать заголовок всех вкладок"
+    "message": "Скопируйте заголовок всех вкладок"
   },
   "CopyWindowTabs2Url": {
-    "message": "Скопировать URL всех вкладок"
+    "message": "Скопируйте URL всех вкладок"
   },
   "CopyWindowTabs2Format": {
-    "message": "Скопировать формат вкладки всех вкладок"
+    "message": "Скопируйте формат всех вкладок"
   },
   "CopyWindowTabs2Format2": {
-    "message": "Скопировать вкладку format2 всех вкладок"
+    "message": "Скопируйте формат 2 из всех вкладок"
   },
   "optionsPage_Other": {
     "message": "Другой"

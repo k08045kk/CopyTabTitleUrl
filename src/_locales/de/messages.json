@@ -3,37 +3,37 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Kopieren Sie den Tab-Titel und die URL in die Zwischenablage."
+    "message": "Kopieren Sie den Titel und die URL der Registerkarte in die Zwischenablage."
   },
   "CopyTabTitleUrl": {
-    "message": "Tab-Titel und URL kopieren"
+    "message": "Kopieren Sie den Titel und die URL der Registerkarte"
   },
   "CopyTabTitle": {
-    "message": "Tabulatortitel kopieren"
+    "message": "Kopieren Sie den Titel der Registerkarte"
   },
   "CopyTabUrl": {
-    "message": "Tab-URL kopieren"
+    "message": "Kopieren Sie die URL der Registerkarte"
   },
   "CopyTabFormat": {
-    "message": "Tab-Format kopieren"
+    "message": "Kopieren Sie das Format der Registerkarte"
   },
   "CopyTabFormat2": {
-    "message": "Tab format2 kopieren"
+    "message": "Kopieren Sie das Format 2 der Registerkarte"
   },
   "CopyWindowTabsTitleUrl": {
-    "message": "Kopieren Sie den Titel und die URL einer Fensterregisterkarte"
+    "message": "Kopieren Sie den Titel und die URL der Fensterregisterkarten"
   },
   "CopyWindowTabsTitle": {
-    "message": "Kopieren Sie den Titel eines Fensters"
+    "message": "Kopieren Sie den Titel der Fensterregisterkarten"
   },
   "CopyWindowTabsUrl": {
-    "message": "URL einer Fensterregisterkarte kopieren"
+    "message": "Kopieren Sie die URL der Fensterregisterkarten"
   },
   "CopyWindowTabsFormat": {
-    "message": "Kopieren Sie das Tab-Format eines Fensters"
+    "message": "Kopieren Sie das Format der Fensterregisterkarten"
   },
   "CopyWindowTabsFormat2": {
-    "message": "Kopieren Sie die Registerkarte format2 einer Fensterregisterkarte"
+    "message": "Kopieren Sie das Format 2 der Fensterregisterkarten"
   },
   "optionsPage_Menu": {
     "message": "Kontextmenü"
@@ -96,16 +96,16 @@
     "message": "Kopieren Sie den Titel und die URL aller Registerkarten"
   },
   "CopyWindowTabs2Title": {
-    "message": "Titel aller Tabs kopieren"
+    "message": "Kopieren Sie den Titel aller Registerkarten"
   },
   "CopyWindowTabs2Url": {
-    "message": "URL aller Tabs kopieren"
+    "message": "Kopieren Sie die URL aller Registerkarten"
   },
   "CopyWindowTabs2Format": {
-    "message": "Kopieren Sie das Tab-Format aller Tabs"
+    "message": "Kopieren Sie das Format aller Registerkarten"
   },
   "CopyWindowTabs2Format2": {
-    "message": "Kopieren Sie das Registerformat2 aller Registerkarten"
+    "message": "Kopieren Sie das Format 2 aller Registerkarten"
   },
   "optionsPage_Other": {
     "message": "Andere"

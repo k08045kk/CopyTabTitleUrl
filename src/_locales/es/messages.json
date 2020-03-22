@@ -3,37 +3,37 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Copia el título de la pestaña y la URL al portapapeles."
+    "message": "Copie el título y la URL de la pestaña en el portapapeles."
   },
   "CopyTabTitleUrl": {
-    "message": "Copiar título de la pestaña y URL"
+    "message": "Copie el título y la URL de la pestaña"
   },
   "CopyTabTitle": {
-    "message": "Copiar título de la pestaña"
+    "message": "Copie el título de la pestaña"
   },
   "CopyTabUrl": {
-    "message": "Copiar URL de la pestaña"
+    "message": "Copie la URL de la pestaña"
   },
   "CopyTabFormat": {
-    "message": "Copiar formato de tabulación"
+    "message": "Copie el formato de la pestaña"
   },
   "CopyTabFormat2": {
-    "message": "Copiar ficha formato2"
+    "message": "Copie el formato 2 de la pestaña"
   },
   "CopyWindowTabsTitleUrl": {
-    "message": "Copia el título y la URL de las pestañas de una ventana."
+    "message": "Copie el título y la URL de las pestañas de la ventana"
   },
   "CopyWindowTabsTitle": {
-    "message": "Copiar el título de las pestañas de una ventana."
+    "message": "Copie el título de las pestañas de la ventana"
   },
   "CopyWindowTabsUrl": {
-    "message": "Copiar la URL de las pestañas de una ventana"
+    "message": "Copie la URL de las pestañas de la ventana"
   },
   "CopyWindowTabsFormat": {
-    "message": "Copiar el formato de la pestaña de una ventana de pestañas"
+    "message": "Copie el formato de las pestañas de la ventana"
   },
   "CopyWindowTabsFormat2": {
-    "message": "Copia tabulador formato2 de una ventana pestañas"
+    "message": "Copie el formato 2 de las pestañas de la ventana"
   },
   "optionsPage_Menu": {
     "message": "Menú de contexto"
@@ -93,19 +93,19 @@
     "message": "Reiniciar"
   },
   "CopyWindowTabs2TitleUrl": {
-    "message": "Copia el título y la URL de todas las pestañas."
+    "message": "Copie el título y la URL de todas las pestañas"
   },
   "CopyWindowTabs2Title": {
-    "message": "Copiar el título de todas las pestañas"
+    "message": "Copie el título de todas las pestañas"
   },
   "CopyWindowTabs2Url": {
-    "message": "Copiar la URL de todas las pestañas"
+    "message": "Copie la URL de todas las pestañas"
   },
   "CopyWindowTabs2Format": {
-    "message": "Copiar formato de pestaña de todas las pestañas"
+    "message": "Copie el formato de todas las pestañas"
   },
   "CopyWindowTabs2Format2": {
-    "message": "Copiar formato de tabulación 2 de todas las pestañas"
+    "message": "Copie el formato 2 de todas las pestañas"
   },
   "optionsPage_Other": {
     "message": "Otra"
