@@ -60,6 +60,7 @@ var defaultStorageValueSet = {
   format_CopyTabFormat2:'<a href="${url}">${title}</a>',
   format_enter: true,
   format_decode: false,
+  format_punycode: false,
   format_html: false,
   format_pin: false,
   format_selected: false,
@@ -95,6 +96,7 @@ function createCommand(valueSet, type) {
     type: type, 
     enter: valueSet.format_enter, 
     decode: valueSet.format_decode,
+    punycode: valueSet.format_punycode,
     html: valueSet.format_html, 
     pin: valueSet.format_pin, 
     selected: valueSet.format_selected, 
@@ -154,6 +156,12 @@ function _urlFormat(format, url, command) {
     return command.decode ? decodeURIComponent(text) : text;
   };
   const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
+  if (command.punycode && url.hostname.substring(0, 4) == 'xn--') {
+    format = format.replace(new RegExp('\\${href}', 'g'), '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
+                   .replace(new RegExp('\\${origin}', 'g'), '${protocol}//${username:password@}${host}')
+                   .replace(new RegExp('\\${host}', 'g'), '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''))
+                   .replace(new RegExp('\\${hostname}', 'g'), punycode.toUnicode(url.hostname));
+  }
   for (let i=0; i<properties.length; i++) {
     const key = properties[i];
     format = format.replace(new RegExp('\\${'+key+'}', 'g'), decode(url[key]));
@@ -179,6 +187,9 @@ function copyToClipboard(command, tabs, info) {
     let format = command.format;
     // URLのデコード（ピュニコード変換は未対応）
     let url = command.decode? decodeURIComponent(tabs[i].url): tabs[i].url;
+    if (command.ex && command.punycode) {
+      url = '${href}';
+    }
     format = format.replace(/\${title}/ig, tabs[i].title)
                    .replace(/\${url}/ig, url)
                    .replace(/\${enter}/ig, enter);

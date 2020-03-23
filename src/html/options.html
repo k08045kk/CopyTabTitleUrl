@@ -46,6 +46,7 @@ input[type="text"] {
   color:#B36675;
 }
   </style>
+  <script src="/lib/punycode.js/punycode.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/options.js"></script>
 </head>
@@ -128,6 +129,7 @@ input[type="text"] {
     <legend data-label="optionsPage_Other" data-english="Other"></legend>
     <p class="extension"><input id="format_format2" type="checkbox"/> <label for="format_format2" data-label="optionsPage_Format2" data-english="Enable Format 2."></label></p>
     <p class="extension"><input id="format_decode" type="checkbox"/> <label for="format_decode" data-label="optionsPage_FormatDecode" data-english="Decode the URL."></label></p>
+    <p class="extension"><input id="format_punycode" type="checkbox"/> <label for="format_punycode" data-label="optionsPage_FormatPunycode" data-english="Decode the punycode."></label></p>
     <p class="extension"><input id="format_html" type="checkbox"/> <label for="format_html" data-label="optionsPage_FormatCopyHTML" data-english="Copy in HTML format."></label></p>
     <p class="extension"><input id="format_enter" type="checkbox"/> <label for="format_enter" data-label="optionsPage_SeparateMultipleNewLine" data-english="Separate multiple tabs with a newline."></label></p>
     <p id="format_pin_" class="extension"><input id="format_pin" type="checkbox"/> <label for="format_pin" data-label="optionsPage_ExcludePinned" data-english="Except tabs with pinned."></label></p>

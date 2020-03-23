@@ -10,6 +10,7 @@
   
   "background": {
     "scripts": [
+      "/lib/punycode.js/punycode.js",
       "/js/common.js",
       "/js/background.js"
     ]

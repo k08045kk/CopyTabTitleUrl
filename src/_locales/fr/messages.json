@@ -142,5 +142,8 @@
   },
   "optionsPage_Shortcut": {
     "message": "Raccourcie（女性）"
+  },
+  "optionsPage_FormatPunycode": {
+    "message": "Décodez le punycode."
   }
 }

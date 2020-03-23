@@ -190,6 +190,11 @@
     "translation":"URLをデコードします。",
     "description":"URLをデコードする。"
   },
+  "optionsPage_FormatPunycode": {
+    "message":    "Decode the punycode.",
+    "translation":"ピュニコードをデコードします。",
+    "description":"ピュニコードをデコードする。"
+  },
   "optionsPage_FormatCopyHTML": {
     "message":    "Copy in HTML format.",
     "translation":"HTML形式でコピーします。",

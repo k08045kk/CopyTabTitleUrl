@@ -9,7 +9,7 @@
   "homepage_url": "https://www.bugbugnow.net/",
   "developer": {
     "name": "toshi",
-    "url": "https://www.bugbugnow.net/"
+    "url": "https://github.com/k08045kk"
   },
   "applications": {
     "gecko": {
@@ -19,6 +19,7 @@
   
   "background": {
     "scripts": [
+      "/lib/punycode.js/punycode.js",
       "/js/common.js",
       "/js/background.js"
     ]
