@@ -185,7 +185,7 @@ function copyToClipboard(command, tabs, info) {
   let enter = getEnterCode();
   for (let i=0; i<tabs.length; i++) {
     let format = command.format;
-    // URLのデコード（ピュニコード変換は未対応）
+    // URLのデコード
     let url = command.decode? decodeURIComponent(tabs[i].url): tabs[i].url;
     if (command.ex && command.punycode) {
       url = '${href}';
@@ -226,7 +226,7 @@ function copyToClipboard(command, tabs, info) {
       
       event.preventDefault();
       if (command.ex && command.html && command.type >= 3) {
-        // フォーマット以外は、HTML形式でコピーする必要性はまったくない
+        // フォーマット以外は、HTML形式でコピーする必要性はない
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
