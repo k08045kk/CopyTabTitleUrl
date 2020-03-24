@@ -156,7 +156,7 @@ function _urlFormat(format, url, command) {
     return command.decode ? decodeURIComponent(text) : text;
   };
   const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
-  if (command.punycode && url.hostname.substring(0, 4) == 'xn--') {
+  if (command.punycode) {
     format = format.replace(new RegExp('\\${href}', 'g'), '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
                    .replace(new RegExp('\\${origin}', 'g'), '${protocol}//${username:password@}${host}')
                    .replace(new RegExp('\\${host}', 'g'), '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''))
