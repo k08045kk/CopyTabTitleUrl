@@ -157,10 +157,14 @@ function _urlFormat(format, url, command) {
   };
   const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
   if (command.punycode) {
-    format = format.replace(new RegExp('\\${href}', 'g'), '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
-                   .replace(new RegExp('\\${origin}', 'g'), '${protocol}//${username:password@}${host}')
-                   .replace(new RegExp('\\${host}', 'g'), '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''))
-                   .replace(new RegExp('\\${hostname}', 'g'), punycode.toUnicode(url.hostname));
+    format = format.replace(/\${href}/g, '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
+                   .replace(/\${origin}/g, '${protocol}//${username:password@}${host}')
+                   .replace(/\${host}/g, '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''));
+    try {
+      format = format.replace(/\${hostname}/g, punycode.toUnicode(url.hostname));
+    } catch (e) {
+      format = format.replace(/\${hostname}/g, url.hostname);
+    }
   }
   for (let i=0; i<properties.length; i++) {
     const key = properties[i];
