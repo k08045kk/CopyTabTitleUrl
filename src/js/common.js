@@ -204,7 +204,8 @@ function copyToClipboard(command, tabs, info) {
                      .replace(/\${(lf|\\n|n)}/ig,  '\n')
                      .replace(/\${text}/ig, stext);
       format = format.replace(/\${index}/ig, tabs[i].index)
-                     .replace(/\${id}/ig, tabs[i].id);
+                     .replace(/\${id}/ig, tabs[i].id)
+                     .replace(/\${favIconUrl}/g, tabs[i].favIconUrl != '' ? tabs[i].favIconUrl : void 0);
       format = _dateFormat(format, new Date(), '${', '}');
       format = _urlFormat(format, new URL(tabs[i].url), command);
     }
