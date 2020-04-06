@@ -185,8 +185,9 @@ function _urlFormat(format, url, command) {
 // クリップボードにコピー
 function copyToClipboard(command, tabs, info) {
   // コピー文字列作成
-  let temp = [];
-  let enter = getEnterCode();
+  const temp = [];
+  const enter = getEnterCode();
+  const now = new Date();
   for (let i=0; i<tabs.length; i++) {
     let format = command.format;
     // URLのデコード
@@ -206,12 +207,12 @@ function copyToClipboard(command, tabs, info) {
       format = format.replace(/\${index}/ig, tabs[i].index)
                      .replace(/\${id}/ig, tabs[i].id)
                      .replace(/\${favIconUrl}/g, tabs[i].favIconUrl != '' ? tabs[i].favIconUrl : void 0);
-      format = _dateFormat(format, new Date(), '${', '}');
+      format = _dateFormat(format, now, '${', '}');
       format = _urlFormat(format, new URL(tabs[i].url), command);
     }
     temp.push(format.replace(/\${\$}/ig, '$'));
   }
-  let text = temp.join(command.enter? enter: '');
+  let text = temp.join(command.enter ? enter : '');
   
   // クリップボードコピー
   if (isMobile() && page == 'background') {
