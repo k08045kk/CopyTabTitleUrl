@@ -93,7 +93,7 @@ ${host}         | hostname(:port)
 ${hostname}     | hostname
 ${port}         | (port)
 ${:port}        | (:port)
-${pathname}     | /(pathname)
+${pathname}     | /pathname
 ${search}       | (?param)
 ${hash}         | (#hash)
 ${origin}       | URL origin
