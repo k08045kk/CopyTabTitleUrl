@@ -19,11 +19,11 @@ You can perform the following actions (copy to the clipboard).
 + Copy the URL
 + Copy the format
 
-You can perform actions on the following targets.
+You can perform actions on the following tab.
 + Current tab
-+ Multiple selected tabs
-+ Current window
-+ All window
++ Multiple selected tabs (Option must be enabled)
++ Current window tabs
++ All window tabs
 
 You can perform an action by doing the following.
 + Context menu (all, page, text selection, browser action, tab)
