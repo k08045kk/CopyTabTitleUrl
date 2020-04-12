@@ -17,11 +17,11 @@ function isChrome() {
 
 // モバイル判定
 function isMobile() {
-  let ua = window.navigator.userAgent.toLowerCase();
-  return ua.indexOf('android') > 0
-      || ua.indexOf('mobile') > 0
-      || ua.indexOf('iphone') > 0
-      || ua.indexOf('ipod') > 0;
+  const ua = window.navigator.userAgent.toLowerCase();
+  return ua.indexOf('android') != -1
+      || ua.indexOf('mobile') != -1
+      || ua.indexOf('iphone') != -1
+      || ua.indexOf('ipod') != -1;
 }
 
 // Windows判定
@@ -157,10 +157,14 @@ function _urlFormat(format, url, command) {
   };
   const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
   if (command.punycode) {
-    format = format.replace(new RegExp('\\${href}', 'g'), '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
-                   .replace(new RegExp('\\${origin}', 'g'), '${protocol}//${username:password@}${host}')
-                   .replace(new RegExp('\\${host}', 'g'), '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''))
-                   .replace(new RegExp('\\${hostname}', 'g'), punycode.toUnicode(url.hostname));
+    format = format.replace(/\${href}/g, '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
+                   .replace(/\${origin}/g, '${protocol}//${username:password@}${host}')
+                   .replace(/\${host}/g, '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''));
+    try {
+      format = format.replace(/\${hostname}/g, punycode.toUnicode(url.hostname));
+    } catch (e) {
+      format = format.replace(/\${hostname}/g, url.hostname);
+    }
   }
   for (let i=0; i<properties.length; i++) {
     const key = properties[i];
@@ -181,8 +185,9 @@ function _urlFormat(format, url, command) {
 // クリップボードにコピー
 function copyToClipboard(command, tabs, info) {
   // コピー文字列作成
-  let temp = [];
-  let enter = getEnterCode();
+  const temp = [];
+  const enter = getEnterCode();
+  const now = new Date();
   for (let i=0; i<tabs.length; i++) {
     let format = command.format;
     // URLのデコード
@@ -200,13 +205,14 @@ function copyToClipboard(command, tabs, info) {
                      .replace(/\${(lf|\\n|n)}/ig,  '\n')
                      .replace(/\${text}/ig, stext);
       format = format.replace(/\${index}/ig, tabs[i].index)
-                     .replace(/\${id}/ig, tabs[i].id);
-      format = _dateFormat(format, new Date(), '${', '}');
+                     .replace(/\${id}/ig, tabs[i].id)
+                     .replace(/\${favIconUrl}/g, tabs[i].favIconUrl != '' ? tabs[i].favIconUrl : void 0);
+      format = _dateFormat(format, now, '${', '}');
       format = _urlFormat(format, new URL(tabs[i].url), command);
     }
     temp.push(format.replace(/\${\$}/ig, '$'));
   }
-  let text = temp.join(command.enter? enter: '');
+  let text = temp.join(command.enter ? enter : '');
   
   // クリップボードコピー
   if (isMobile() && page == 'background') {
