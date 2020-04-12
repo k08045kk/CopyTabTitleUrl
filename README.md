@@ -47,7 +47,7 @@ ${index}  | Serial number from 0 per window
 ${id}     | Tab ID
 ${$}      | $
 
----
+<br/>
 
 format          | description
 ---             | ---
@@ -55,31 +55,24 @@ ${favIconUrl}   | Favicon URL (※1)
 
 ※1: If it does not exist, output `undefined`.
 
----
+<br/>
 
-format    | description
----       | ---
-${yyyy}   | 4-digit year
-${yy}     | 2-digit year
-${MM}     | month
-${M}      | month
-${dd}     | day
-${d}      | day
-${HH}     | hours (24 hours)
-${H}      | hours (24 hours)
-${hh}     | hours (12 hours)
-${h}      | hours (12 hours)
-${mm}     | minutes
-${m}      | minutes
-${ss}     | seconds
-${s}      | seconds
-${SSS}    | milliseconds
-${S}      | milliseconds
+format          | description
+---             | ---
+${yyyy}         | 4-digit year
+${yy}           | 2-digit year
+${MM}, ${M}     | month
+${dd}, ${d}     | day
+${HH}, ${H}     | hours (24 hours)
+${hh}, ${h}     | hours (12 hours)
+${mm}, ${m}     | minutes
+${ss}, ${s}     | seconds
+${SSS}, ${S}    | milliseconds
 
 ※`${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}`  
 　`2020-04-03T00:48:23.456`
 
----
+<br/>
 
 format          | description
 ---             | ---
