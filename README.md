@@ -92,7 +92,7 @@ ${hash}         | (#hash)
 ${origin}       | URL origin
 ${href}         | URL
 
-※[window.URL - Web API | MDN](https://developer.mozilla.org/docs/Web/API/Window/URL)
+※[window.URL - Web API | MDN](https://developer.mozilla.org/docs/Web/API/URL)
 
 
 
