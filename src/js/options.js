@@ -1,208 +1,273 @@
 ﻿/**
  * オプションページ処理
+ * chrome-extension://fpfdaednnjcmaofiihhjmkmicdfndblk/html/options.html
  */
 
-// ラジオボタンの選択値
-function getRadioCheckItem(name) {
-  let elements = document.getElementsByName(name);
-  for (let i=0; i<elements.length; i++) {
-    if (elements[i].checked) {
-      return elements[i].value;
-    }
+function checkbox(id, bool) {
+  const element = document.getElementById(id);
+  if (!element) {
+    return false;
+  } else if (typeof bool === 'boolean') {
+    return element.checked = bool;
+  } else {
+    return element.checked;
   }
-  return '';
-}
+};
+
+function radio(name, valueSet) {
+  const elements = document.getElementsByName(name);
+  if (!elements.length) {
+    return 'radio__error__error';
+  } else if (valueSet) {
+    const value = valueSet['select__'+name];
+    for (var i=0; i<elements.length; i++) {
+      if (elements[i].value == value) {
+        elements[i].checked = true;
+        break;
+      }
+    }
+  } else {
+    for (var i=0; i<elements.length; i++) {
+      if (elements[i].checked) {
+        return elements[i].value;
+      }
+    }
+    return elements[0].value;
+  }
+};
 
 // オプション画面の更新
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
   // 翻訳
-  let lang = document.getElementById('format_language').checked;
-  document.querySelectorAll('*[data-label]').forEach(function(v, i, a) {
-    v.textContent = lang? v.dataset.english: chrome.i18n.getMessage(v.dataset.label);
+  const lang = checkbox('checkbox__others_language');
+  document.querySelectorAll('*[data-i18n]').forEach((v, i, a) => {
+    v.textContent = lang ? v.dataset.english : chrome.i18n.getMessage(v.dataset.i18n);
   });
   
   // ALL選択時は、PAGEを無効化
-  let all = document.getElementById('menu_all').checked;
-  document.getElementById('menu_page').disabled = all;
-  document.getElementById('menu_selection').disabled = all;
-  document.getElementById('menu_browser_action').disabled = all;
+  const all = checkbox('checkbox__menus_contexts_all');
+  document.getElementById('checkbox__menus_contexts_page').disabled = all;
+  document.getElementById('checkbox__menus_contexts_selection').disabled = all;
+  document.getElementById('checkbox__menus_contexts_browser_action').disabled = all;
   
   // コピー完了通知
-  let baction = document.getElementById('ba_Action').checked;
-  document.getElementById('browser_ShowPopup').disabled = !baction;
+  const action = document.getElementById('select__browser_action__action').checked;
+  document.getElementById('checkbox__popup_comlate').disabled = !action;
   
   // BrowserActionのAction選択時のみアクション一覧表示
-  document.getElementById('bat').style.display = baction? '': 'none';
+  document.getElementById('browser_action_target').hidden = !action;
   
   // コンテキストメニュー選択時
-  let menu = document.getElementById('menu_all').checked
-          || document.getElementById('menu_page').checked
-          || document.getElementById('menu_selection').checked
-          || document.getElementById('menu_browser_action').checked
-          || (isFirefox() && document.getElementById('menu_tab').checked);
-  document.getElementById('item').style.display = menu? '': 'none';
+  const contexts = checkbox('checkbox__menus_contexts_all')
+                || checkbox('checkbox__menus_contexts_page')
+                || checkbox('checkbox__menus_contexts_selection')
+                || checkbox('checkbox__menus_contexts_browser_action')
+                || (isFirefox() && checkbox('checkbox__menus_contexts_tab'));
+  document.getElementById('menu_item').hidden = !contexts;
   
-  // フォーマット拡張モード選択時
-  let extension = document.getElementById('format_extension').checked;
-  document.querySelectorAll('.normal:not(.hide)').forEach(function(v, i, a) {
-    v.style.display = !extension? '': 'none';
+  // 拡張モード選択時
+  const extension = checkbox('checkbox__others_extension');
+  document.querySelectorAll('.normal:not(.hide)').forEach((v, i, a) => {
+    v.hidden = extension;
   });
-  document.querySelectorAll('.extension:not(.hide)').forEach(function(v, i, a) {
-    v.style.display = extension? '': 'none';
+  document.querySelectorAll('.extension:not(.hide)').forEach((v, i, a) => {
+    v.hidden = !extension;
   });
-  if (extension) {
-    // フォーマット2選択時
-    let format2 = document.getElementById('format_format2').checked;
-    document.querySelectorAll('.format2:not(.hide)').forEach(function(v, i, a) {
-      v.style.display = format2? '': 'none';
-    });
-  }
+  // フォーマット2
+  const format2 = checkbox('checkbox__others_format2');
+  document.querySelectorAll('.format2:not(.hide)').forEach((v, i, a) => {
+    v.hidden = !(extension && format2);
+  });
+  // 拡張メニュー
+  const exmenus = format2 && checkbox('checkbox__others_extend_menus');
+  document.getElementById('checkbox__others_extend_menus').disabled = !format2;
+  document.querySelectorAll('.extend_menus:not(.hide)').forEach((v, i, a) => {
+    v.hidden = !(extension && exmenus);
+  });
+  // タイトル編集
+  const edit = checkbox('checkbox__others_edit_menu_title');
+  document.querySelectorAll('.menu_label').forEach((element) => {
+    element.hidden = extension && edit;
+  });
+  document.querySelectorAll('.menu_title').forEach((element) => {
+    element.hidden = !(extension && edit);
+  });
   
   // ブラウザアクションの更新
   if (isMobile()) {
-    if (baction && !document.getElementById('browser_ShowPopup').checked) {
+    if (action && !checkbox('checkbox__popup_comlate')) {
       // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない
       // そのため、設定反映には再起動が必要
-      chrome.browserAction.getPopup({}, function(url) {
+      chrome.browserAction.getPopup({}, (url) => {
         if (!(url == null || url == '')) {
-          document.getElementById('browser_option').style.display = '';
+          document.getElementById('browser_option').hidden = false;
         }
       });
     } else {
-      document.getElementById('browser_option').style.display = 'none';
+      document.getElementById('browser_option').hidden = true;
     }
   }
-}
+};
 
 // ショートカットを更新
 function updateShortcut() {
   // ショートカット2の有効と無効
   if (isFirefox() && !isMobile()) {
-    let extension = document.getElementById('format_extension').checked;
-    let format2 = document.getElementById('format_format2').checked;
+    let extension = checkbox('checkbox__others_extension');
+    let format2 = checkbox('checkbox__others_format2');
     if (extension && format2) {
-      onUpdateCommand.bind(document.getElementById('shortcut_command2'))();
+      onUpdateShortcut.bind(document.getElementById('shortcut4'))();
     } else {
       chrome.commands.reset('shortcut_action2');
     }
   }
-}
+};
 
 // コンテキストメニュー変更イベント
-function onUpdateContextMenu() {
-  // 設定を作成
-  let valueSet = {};
-  Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-    if (v.startsWith('menu_') || v.startsWith('item_') || v.startsWith('browser_')) {
-      valueSet[v] = document.getElementById(v).checked;
-    } else if (v.startsWith('format_') && !v.startsWith('format_CopyTabFormat')) {
-      valueSet[v] = document.getElementById(v).checked;
+function onUpdateOptions() {
+  getStorageArea().get(defaultStorageValueSet, (valueSet) => {
+    Object.keys(valueSet).forEach((v, i, a) => {
+      if (v.startsWith('checkbox__')) {
+        valueSet[v] = checkbox(v);
+      } else if (v.startsWith('select__')) {
+        
+      } else {
+        delete valueSet[v];
+      }
+    });
+    valueSet['select__browser_action'] = radio('browser_action');
+    valueSet['select__browser_action_target'] = radio('browser_action_target');
+    
+    // ストレージへ設定を保存
+    getStorageArea().set(valueSet, () => {
+      updateShortcut();
+      updateBrowserAction();
+      updateContextMenus();
+      updateOptionPage();
+    });
+  });
+};
+
+// コンテキストメニューの更新イベント
+function onUpdateMenus() {
+  getStorageArea().get(['menus'], (valueSet) => {
+    for (var i=0; i<valueSet.menus.length; i++) {
+      valueSet.menus[i].enable = document.getElementById('menu'+i).checked;
+      valueSet.menus[i].title = document.getElementById('menu'+i+'_title').value;
+      if (valueSet.menus[i].format >= 5) {
+        valueSet.menus[i].target = document.getElementById('menu'+i+'_target').value;
+        //document.getElementById('format'+valueSet.menus[i].format+'_title').textContent = valueSet.menus[i].title;
+      }
     }
+    getStorageArea().set(valueSet, () => {
+      updateContextMenus();
+    });
   });
-  valueSet.action = getRadioCheckItem('ba');
-  valueSet.action_target = getRadioCheckItem('bat');
-  
-  // ストレージへ設定を保存
-  getStorageArea().set(valueSet, function() {
-    updateShortcut();
-    updateBrowserAction();
-    updateContextMenus();
-    updateOptionPage();
-  });
-}
+};
 
 // フォーマット文字列の更新イベント
 function onUpdateFormat() {
-  getStorageArea().set({
-    format_CopyTabFormat:  document.getElementById('format_CopyTabFormat').value,
-    format_CopyTabFormat2: document.getElementById('format_CopyTabFormat2').value
-  }, function() {});
-}
+  getStorageArea().get(['formats'], (valueSet) => {
+    for (var i=3; i<valueSet.formats.length; i++) {
+      valueSet.formats[i].format = document.getElementById('format'+i).value;
+    }
+    getStorageArea().set(valueSet, () => {});
+  });
+};
 
 // コマンド文字列の更新イベント
-function onUpdateCommand() {
+function onUpdateShortcut() {
+  const element = this;
   if (isFirefox() && !isMobile()) {
-    const id   = this.id;
-    const name = id.replace('command', 'action');
-    try {
-      if (this.value != '') {
-        chrome.commands.update({name:name,shortcut:this.value});
-      } else {
-        chrome.commands.reset(name);
-      }
-      getStorageArea().set({
-        shortcut_command:  document.getElementById('shortcut_command').value,
-        shortcut_command2: document.getElementById('shortcut_command2').value
-      }, function() {});
-      this.style.background = '';
-    } catch (e) {
-      // 直前の成功状態に戻す
-      getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-        if (valueSet[id] != '') {
-          chrome.commands.update({name:name,shortcut:valueSet[id]});
+    getStorageArea().get(['formats'], (oldValueSet) => {
+      const newValueSet = {formats:JSON.parse(JSON.stringify(oldValueSet.formats))};
+      const index = element.id.match(/\d+$/)[0];
+      const name = 'shortcut_action'+(index>3 ? (index-2)+'': '');
+      try {
+        newValueSet.formats[index].shortcut = element.value;
+        if (element.value != '') {
+          chrome.commands.update({name:name, shortcut:element.value});
         } else {
           chrome.commands.reset(name);
         }
-      });
-      this.style.background = '#ffeaee';
-    }
+        getStorageArea().set(newValueSet, () => {});
+        element.style.background = '';
+      } catch (e) {
+        // 直前の成功状態に戻す
+        if (oldValueSet.formats[index].shortcut != '') {
+          chrome.commands.update({name:name, shortcut:oldValueSet.formats[index].shortcut});
+        } else {
+          chrome.commands.reset(name);
+        }
+        element.style.background = '#ffeaee';
+      }
+    });
   }
-}
+};
 
 // オプション画面に値を設定する
 function setOptionPageValues(valueSet) {
   // ストレージ内の値で初期化
-  Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-    if (v.startsWith('menu_') || v.startsWith('item_') || v.startsWith('browser_')) {
-      document.getElementById(v).checked = valueSet[v];
-    } else if (v.startsWith('format_') && !v.startsWith('format_CopyTabFormat')) {
-      document.getElementById(v).checked = valueSet[v];
+  Object.keys(defaultStorageValueSet).forEach((v, i, a) => {
+    if (v.startsWith('checkbox__')) {
+      checkbox(v, valueSet[v]);
     }
   });
-  document.getElementById('format_CopyTabFormat').value  = valueSet.format_CopyTabFormat;
-  document.getElementById('format_CopyTabFormat2').value = valueSet.format_CopyTabFormat2;
-  document.getElementById('ba_'+valueSet.action).checked = true;
-  document.getElementById('bat_'+valueSet.action_target).checked = true;
-  if (!isMobile()) {
-    if (isFirefox()) {
-      document.getElementById('shortcut_command').value  = valueSet.shortcut_command;
-      document.getElementById('shortcut_command2').value = valueSet.shortcut_command2;
-      document.getElementById('shortcut_message2').style.display = '';
-    } else {
-      chrome.commands.getAll(function(commands) {
-        let text = '\n';
-        for (let i=0; i<commands.length; i++) {
-          if (commands[i].description.startsWith('Format') && commands[i].shortcut != '') {
-            text = text + '\n' + commands[i].description + ': ' + commands[i].shortcut;
-          }
-        }
-        // '\n'改行を挿入するため、innerTextとする
-        document.getElementById('shortcut_commands').innerText = text;
-      });
-      document.getElementById('shortcut_message1').style.display = '';
+  radio('browser_action', valueSet);
+  radio('browser_action_target', valueSet);
+  
+  for (let i=0; i<valueSet.menus.length; i++) {
+    document.getElementById('menu'+i).checked  = !!valueSet.menus[i].enable;
+    document.getElementById('menu'+i+'_title').value = valueSet.menus[i].title;
+    if (valueSet.menus[i].format >= 5) {
+      document.getElementById('menu'+i+'_target').value = valueSet.menus[i].target;
+      //document.getElementById('format'+valueSet.menus[i].format+'_title').textContent = valueSet.menus[i].title;
     }
   }
-}
+  for (let i=3; i<valueSet.formats.length; i++) {
+    document.getElementById('format'+i).value  = valueSet.formats[i].format;
+  }
+  if (!isMobile()) {
+    if (isFirefox()) {
+      for (let i=3; i<=6; i++) {
+        document.getElementById('shortcut'+i).value  = valueSet.formats[i].shortcut;
+      }
+    } else {
+      chrome.commands.getAll((commands) => {
+        const shortcuts = [];
+        for (let i=0; i<commands.length; i++) {
+          if (commands[i].description.startsWith('format') && commands[i].shortcut != '') {
+            shortcuts.push(commands[i].description + ': ' + commands[i].shortcut);
+          }
+        }
+        if (shortcuts.length) {
+          // '\n'改行を挿入するため、innerTextとする
+          document.getElementById('shortcut_commands').innerText = '\n\n'+shortcuts.join('\n');
+        }
+      });
+    }
+  }
+};
 
 // 初期化ボタンイベント
 function onReset() {
-  let element = this;
+  const element = this;
   // ボタンを元に戻す
   function onStop() {
     onReset.delay = 0;
     clearInterval(onReset.id);
-    element.textContent = document.getElementById('optionsPage_Reset').textContent;
-  }
+    element.textContent = document.getElementById('optionPage_Reset').textContent;
+  };
   // 2段階確認待ち
   function onDelay() {
     onReset.delay--;
     if (onReset.delay == 0) {
       onStop();
     } else {
-      element.textContent = document.getElementById('optionsPage_ConfirmReset').textContent;
+      element.textContent = document.getElementById('optionPage_ConfirmReset').textContent;
     }
-  }
+  };
   if (onReset.delay == 0) {
     // 2段階確認開始
     onReset.delay = 10;
@@ -212,71 +277,96 @@ function onReset() {
   } else {
     // 2段階確認の決定
     onStop();
-    getStorageArea().set(defaultStorageValueSet, function() {
-      setOptionPageValues(defaultStorageValueSet);
-      updateShortcut();
-      updateBrowserAction();
-      updateContextMenus();
-      updateOptionPage();
+    getStorageArea().clear(() => {
+      getStorageArea().set(defaultStorageValueSet, () => {
+        setOptionPageValues(defaultStorageValueSet);
+        updateShortcut();
+        updateBrowserAction();
+        updateContextMenus();
+        updateOptionPage();
+      });
     });
   }
-}
+};
 onReset.id = 0;
 onReset.delay = 0;
 
 // ページ初期化
 function onInit() {
+  // 初期化ボタンの設定（最優先で設定する）
+  document.getElementById('reset').addEventListener('click', onReset);
+  
   if (isMobile()) {
-    document.getElementById('context_menu').classList.add('hide');
-    document.getElementById('format_pin_').classList.add('hide');
-    document.getElementById('format_selected_').classList.add('hide');
-    document.getElementById('shortcut').classList.add('hide');
+    // AndroidFirefox非対応
+    // コンテキストメニュー
+    // キーボードショートカット
+    // ピン留めタブ
+    // 選択タブ
+    document.querySelectorAll('.desktop').forEach((v, i, a) => {
+      v.classList.add('hide');
+    });
   }
   if (isChrome()) {
-    // Chromeのオプション画面の最小サイズを指定する
-    // FirefoxAndroid版を考慮してCSSでの指定は行わない
-    // ChromeAndroid版はない
-    // Chromeの拡張機能画面は600px程度で固定画面のため、オプション画面が600px固定でも問題ない
-    //document.body.style.width = '600px';
-    
-    // タブコンテキストメニュー&ショートカット(Chrome非対応)
-    getStorageArea().set({menu_tab: false});
-    document.getElementById('menu_tab_').classList.add('hide');
-    document.getElementById('shortcut1').classList.add('hide');
-    document.getElementById('shortcut2').classList.add('hide');
+    // Chrome非対応
+    // タブコンテキストメニュー
+    // キーボードショートカット（拡張機能による設定）
+    document.querySelectorAll('.firefox').forEach((v, i, a) => {
+      v.classList.add('hide');
+    });
   }
-  
-  // テキスト読込み(国際化)
-  if (chrome.i18n.getUILanguage().startsWith('en')) {
-    document.getElementById('format_language_').classList.add('hide');
-    //document.getElementById('format_language').checked = false;
+  if (isFirefox()) {
+    // Firefox非対応
+    // キーボードショートカット（標準機能による設定）
+    document.querySelectorAll('.chrome').forEach((v, i, a) => {
+      v.classList.add('hide');
+    });
   }
-  
   // (storage内の)初期値を設定
-  getStorageArea().get(defaultStorageValueSet, function(valueSet) {
+  getStorageArea().get(defaultStorageValueSet, (valueSet) => {
     setOptionPageValues(valueSet);
     updateOptionPage();
   });
   
   // イベント設定
-  Object.keys(defaultStorageValueSet).forEach(function(v, i, a) {
-    if (v.startsWith('format_CopyTabFormat')) {
-      document.getElementById(v).addEventListener('input', onUpdateFormat);
-    } else if (v.startsWith('shortcut_command')) {
-      document.getElementById(v).addEventListener('input', onUpdateCommand);
-    } else if (v == 'action' || v == 'action_target') {
-    } else {
-      document.getElementById(v).addEventListener('click', onUpdateContextMenu);
-    }
+  document.querySelectorAll('[type="checkbox"]:not(.menu)').forEach((element) => {
+    element.addEventListener('click', onUpdateOptions);
   });
-  document.getElementById('ba_Popup').addEventListener('click', onUpdateContextMenu);
-  document.getElementById('ba_Action').addEventListener('click', onUpdateContextMenu);
-  ['CurrentTab', 'CurrentWindow', 'AllWindow'].forEach(function(v, i, a) {
-    document.getElementById('bat_'+v).addEventListener('click', onUpdateContextMenu);
+  document.querySelectorAll('[type="radio"]').forEach((element) => {
+    element.addEventListener('click', onUpdateOptions);
   });
-  document.getElementById('reset').addEventListener('click', onReset);
-}
+  document.querySelectorAll('.menu').forEach((element) => {
+    element.addEventListener('input', onUpdateMenus);
+  });
+  document.querySelectorAll('.menu_title').forEach((element) => {
+    element.addEventListener('input', onUpdateMenus);
+  });
+  document.querySelectorAll('.menu_target').forEach((element) => {
+    element.addEventListener('change', onUpdateMenus);
+  });
+  document.querySelectorAll('.format').forEach((element) => {
+    element.addEventListener('input', onUpdateFormat);
+  });
+  document.querySelectorAll('.shortcut').forEach((element) => {
+    element.addEventListener('input', onUpdateShortcut);
+  });
+  // 開発者用
+  if (false) {
+    document.getElementById('setting').hidden = false;
+    document.getElementById('setting_get').addEventListener('click', () => {
+      getStorageArea().get(null, (valueSet) => {
+        document.getElementById('setting_json').value = JSON.stringify(valueSet, null, 2);
+      });
+    });
+    document.getElementById('setting_set').addEventListener('click', () => {
+      const json = JSON.parse(document.getElementById('setting_json').value);
+      getStorageArea().clear(() => {
+        getStorageArea().set(json, () => {});
+      });
+    });
+  }
+};
 
 (function main() {
-  document.addEventListener("DOMContentLoaded", onInit);
+  //document.addEventListener("DOMContentLoaded", onInit);
+  onInit();
 })();

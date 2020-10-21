@@ -3,147 +3,72 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Copie el título y la URL de la pestaña en el portapapeles."
-  },
-  "CopyTabTitleUrl": {
-    "message": "Copie el título y la URL de la pestaña"
-  },
-  "CopyTabTitle": {
-    "message": "Copie el título de la pestaña"
-  },
-  "CopyTabUrl": {
-    "message": "Copie la URL de la pestaña"
-  },
-  "CopyTabFormat": {
-    "message": "Copie el formato de la pestaña"
-  },
-  "CopyTabFormat2": {
-    "message": "Copie el formato 2 de la pestaña"
-  },
-  "CopyWindowTabsTitleUrl": {
-    "message": "Copie el título y la URL de las pestañas de la ventana"
-  },
-  "CopyWindowTabsTitle": {
-    "message": "Copie el título de las pestañas de la ventana"
-  },
-  "CopyWindowTabsUrl": {
-    "message": "Copie la URL de las pestañas de la ventana"
-  },
-  "CopyWindowTabsFormat": {
-    "message": "Copie el formato de las pestañas de la ventana"
-  },
-  "CopyWindowTabsFormat2": {
-    "message": "Copie el formato 2 de las pestañas de la ventana"
-  },
-  "optionsPage_Menu": {
-    "message": "Menú de contexto"
-  },
-  "optionsPage_MenuItem": {
-    "message": "Opción del menú"
-  },
-  "optionsPage_BrowserAction": {
-    "message": "Acción del navegador"
-  },
-  "optionsPage_Format": {
-    "message": "Formato"
-  },
-  "optionsPage_ContextMenuCheckbox": {
-    "message": "Menú de contexto"
-  },
-  "optionsPage_PageContextMenuCheckbox": {
-    "message": "Page contextmenu"
-  },
-  "optionsPage_BrowserActionContextMenuCheckbox": {
-    "message": "Menú de contexto de acción del navegador"
-  },
-  "optionsPage_TabContextMenuCheckbox": {
-    "message": "Menú contextual de la pestaña"
-  },
-  "optionsPage_Popup": {
-    "message": "Mostrar el menú emergente."
-  },
-  "optionsPage_Action": {
-    "message": "Ejecutar acción de formato."
-  },
-  "optionsPage_ShowPopup": {
-    "message": "Mostrar notificación de finalización de copia."
-  },
-  "optionsPage_ActionTarget": {
-    "message": "Objetivo"
-  },
-  "optionsPage_CurrentTabSettingsTitle": {
-    "message": "Pestaña actual"
-  },
-  "optionsPage_CurrentWindowSettingsTitle": {
-    "message": "Ventana actual"
-  },
-  "optionsPage_AllWindowSettingsTitle": {
-    "message": "Toda ventana"
-  },
-  "optionsPage_Reset": {
-    "message": "Restaurar la configuración predeterminada"
-  },
-  "optionsPage_ConfirmReset": {
-    "message": "Realmente restablecer a la configuración predeterminada?"
+    "message": "Copie el título y la URL en el portapapeles."
   },
   "dummyDummyDummy": {
     "message": "dummy"
   },
-  "optionsPage_Restart": {
+  "optionsPage_Complate": {
+    "message": "Mostrar notificación de finalización de copia"
+  },
+  "optionsPage_ExtendMenus": {
+    "message": "Habilitar extender menús"
+  },
+  "optionsPage_EditMenuTitle": {
+    "message": "Habilitar título del menú"
+  },
+  "optionPage_Popup": {
+    "message": "Mostrar menú emergente"
+  },
+  "optionPage_Action": {
+    "message": "Ejecutar acción de formato"
+  },
+  "optionPage_Complate": {
+    "message": "Mostrar notificación de finalización de copia"
+  },
+  "optionPage_Restart": {
     "message": "Reiniciar"
   },
-  "CopyWindowTabs2TitleUrl": {
-    "message": "Copie el título y la URL de todas las pestañas"
+  "optionPage_KeyboardShortcutMessage": {
+    "message": "Cambie la configuración estándar."
   },
-  "CopyWindowTabs2Title": {
-    "message": "Copie el título de todas las pestañas"
+  "optionPage_Format2": {
+    "message": "Habilitar formato 2"
   },
-  "CopyWindowTabs2Url": {
-    "message": "Copie la URL de todas las pestañas"
+  "optionPage_ExtendMenus": {
+    "message": "Habilitar el menú contextual extendido"
   },
-  "CopyWindowTabs2Format": {
-    "message": "Copie el formato de todas las pestañas"
+  "optionPage_EditMenuTitle": {
+    "message": "Edite el título del menú contextual"
   },
-  "CopyWindowTabs2Format2": {
-    "message": "Copie el formato 2 de todas las pestañas"
+  "optionPage_FormatDecode": {
+    "message": "Decodificar la URL"
   },
-  "optionsPage_Other": {
-    "message": "Otra"
+  "optionPage_FormatPunycode": {
+    "message": "Decodificar el código puny"
   },
-  "optionsPage_ShortcutMessage": {
-    "message": "Por favor cambie desde la configuración estándar del acceso directo."
+  "optionPage_FormatCopyHTML": {
+    "message": "Copiar en formato HTML"
   },
-  "optionsPage_Format2": {
-    "message": "Habilitar formato 2."
+  "optionPage_SeparateMultipleNewLine": {
+    "message": "Separe varias pestañas con una nueva línea"
   },
-  "optionsPage_FormatDecode": {
-    "message": "Decodificar la URL."
+  "optionPage_ExcludePinned": {
+    "message": "Excluir pestañas fijadas"
   },
-  "optionsPage_FormatCopyHTML": {
-    "message": "Copiar en formato HTML."
+  "optionPage_MultipleSelectionTabs": {
+    "message": "Habilitar varias pestañas de selección"
   },
-  "optionsPage_SeparateMultipleNewLine": {
-    "message": "Separa las pestañas múltiples con una nueva línea."
+  "optionPage_ExtendedMode": {
+    "message": "Modo extendido"
   },
-  "optionsPage_MultipleSelectionTabs": {
-    "message": "Habilitar las pestañas de selección múltiple."
+  "optionPage_Reset": {
+    "message": "Restaurar la configuración predeterminada"
   },
-  "optionsPage_UseEnglish": {
-    "message": "Usa el inglés como idioma estándar."
+  "optionPage_ConfirmReset": {
+    "message": "¿Realmente restablecer la configuración predeterminada?"
   },
-  "optionsPage_ExtendedMode": {
-    "message": "Modo extendido (beta)"
-  },
-  "optionsPage_ExcludePinned": {
-    "message": "Excepto las pestañas con clavado."
-  },
-  "optionsPage_SelectionContextMenuCheckbox": {
-    "message": "Menú contextual de selección de texto"
-  },
-  "optionsPage_Shortcut": {
-    "message": "Atajo"
-  },
-  "optionsPage_FormatPunycode": {
-    "message": "Decodifica el punycode."
+  "optionPage_ClipboardAPI": {
+    "message": "Usar la API del portapapeles"
   }
 }

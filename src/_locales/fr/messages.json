@@ -3,147 +3,72 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Copiez le titre et l'URL de l'onglet dans le presse-papiers."
-  },
-  "CopyTabTitleUrl": {
-    "message": "Copiez le titre et l'URL de l'onglet"
-  },
-  "CopyTabTitle": {
-    "message": "Copiez le titre de l'onglet"
-  },
-  "CopyTabUrl": {
-    "message": "Copiez l'URL de l'onglet"
-  },
-  "CopyTabFormat": {
-    "message": "Copiez le format de l'onglet"
-  },
-  "CopyTabFormat2": {
-    "message": "Copiez le format 2 de l'onglet"
-  },
-  "CopyWindowTabsTitleUrl": {
-    "message": "Copiez le titre et l'URL des onglets de la fenêtre"
-  },
-  "CopyWindowTabsTitle": {
-    "message": "Copiez le titre des onglets de la fenêtre"
-  },
-  "CopyWindowTabsUrl": {
-    "message": "Copiez l'URL des onglets de la fenêtre"
-  },
-  "CopyWindowTabsFormat": {
-    "message": "Copiez le format des onglets de la fenêtre"
-  },
-  "CopyWindowTabsFormat2": {
-    "message": "Copiez le format 2 des onglets de la fenêtre"
-  },
-  "optionsPage_Menu": {
-    "message": "Menu contextuel"
-  },
-  "optionsPage_MenuItem": {
-    "message": "Élément du menu"
-  },
-  "optionsPage_BrowserAction": {
-    "message": "Action du navigateur"
-  },
-  "optionsPage_Format": {
-    "message": "Format"
-  },
-  "optionsPage_ContextMenuCheckbox": {
-    "message": "Menu contextuel"
-  },
-  "optionsPage_PageContextMenuCheckbox": {
-    "message": "Menu contextuel de la page"
-  },
-  "optionsPage_BrowserActionContextMenuCheckbox": {
-    "message": "Menu contextuel de l'action du navigateur"
-  },
-  "optionsPage_TabContextMenuCheckbox": {
-    "message": "Onglet menu contextuel"
-  },
-  "optionsPage_Popup": {
-    "message": "Afficher le menu contextuel."
-  },
-  "optionsPage_Action": {
-    "message": "Exécuter l'action de formatage."
-  },
-  "optionsPage_ShowPopup": {
-    "message": "Afficher la notification d'achèvement de la copie."
-  },
-  "optionsPage_ActionTarget": {
-    "message": "Cible"
-  },
-  "optionsPage_CurrentTabSettingsTitle": {
-    "message": "Onglet actuel"
-  },
-  "optionsPage_CurrentWindowSettingsTitle": {
-    "message": "Fenêtre actuelle"
-  },
-  "optionsPage_AllWindowSettingsTitle": {
-    "message": "Toutes les fenêtres"
-  },
-  "optionsPage_Reset": {
-    "message": "Restaurer les réglages par défaut"
-  },
-  "optionsPage_ConfirmReset": {
-    "message": "Vraiment réinitialiser les paramètres par défaut?"
+    "message": "Copiez le titre et l'URL dans le presse-papiers."
   },
   "dummyDummyDummy": {
     "message": "dummy"
   },
-  "optionsPage_Restart": {
+  "optionsPage_Complate": {
+    "message": "Afficher la notification de fin de copie"
+  },
+  "optionsPage_ExtendMenus": {
+    "message": "Activer les menus étendus"
+  },
+  "optionsPage_EditMenuTitle": {
+    "message": "Activer le titre du menu"
+  },
+  "optionPage_Popup": {
+    "message": "Afficher le menu contextuel"
+  },
+  "optionPage_Action": {
+    "message": "Exécuter l'action de format"
+  },
+  "optionPage_Complate": {
+    "message": "Afficher la notification de fin de copie"
+  },
+  "optionPage_Restart": {
     "message": "Redémarrer"
   },
-  "CopyWindowTabs2TitleUrl": {
-    "message": "Copiez le titre et l'URL de tous les onglets"
+  "optionPage_KeyboardShortcutMessage": {
+    "message": "Veuillez modifier le réglage standard."
   },
-  "CopyWindowTabs2Title": {
-    "message": "Copiez le titre de tous les onglets"
+  "optionPage_Format2": {
+    "message": "Activer le format 2"
   },
-  "CopyWindowTabs2Url": {
-    "message": "Copiez l'URL de tous les onglets"
+  "optionPage_ExtendMenus": {
+    "message": "Activer le menu contextuel étendu"
   },
-  "CopyWindowTabs2Format": {
-    "message": "Copiez le format de tous les onglets"
+  "optionPage_EditMenuTitle": {
+    "message": "Modifier le titre du menu contextuel"
   },
-  "CopyWindowTabs2Format2": {
-    "message": "Copiez le format 2 de tous les onglets"
+  "optionPage_FormatDecode": {
+    "message": "Décoder l'URL"
   },
-  "optionsPage_Other": {
-    "message": "Autre"
+  "optionPage_FormatPunycode": {
+    "message": "Décoder le punycode"
   },
-  "optionsPage_ShortcutMessage": {
-    "message": "Veuillez modifier le paramètre standard du raccourci."
+  "optionPage_FormatCopyHTML": {
+    "message": "Copier au format HTML"
   },
-  "optionsPage_Format2": {
-    "message": "Activer le format 2."
+  "optionPage_SeparateMultipleNewLine": {
+    "message": "Séparez plusieurs onglets par une nouvelle ligne"
   },
-  "optionsPage_FormatDecode": {
-    "message": "Décoder l'URL."
+  "optionPage_ExcludePinned": {
+    "message": "Exclure les onglets épinglés"
   },
-  "optionsPage_FormatCopyHTML": {
-    "message": "Copier au format HTML."
+  "optionPage_MultipleSelectionTabs": {
+    "message": "Activer plusieurs onglets de sélection"
   },
-  "optionsPage_SeparateMultipleNewLine": {
-    "message": "Séparez plusieurs onglets avec une nouvelle ligne."
+  "optionPage_ExtendedMode": {
+    "message": "Mode étendu"
   },
-  "optionsPage_MultipleSelectionTabs": {
-    "message": "Activer plusieurs onglets de sélection."
+  "optionPage_Reset": {
+    "message": "Restaurer les réglages par défaut"
   },
-  "optionsPage_UseEnglish": {
-    "message": "Utilisez l'anglais comme langue standard."
+  "optionPage_ConfirmReset": {
+    "message": "Vraiment réinitialisé aux paramètres par défaut?"
   },
-  "optionsPage_ExtendedMode": {
-    "message": "Mode étendu (beta)"
-  },
-  "optionsPage_ExcludePinned": {
-    "message": "Sauf les onglets épinglés."
-  },
-  "optionsPage_SelectionContextMenuCheckbox": {
-    "message": "Menu contextuel de sélection de texte"
-  },
-  "optionsPage_Shortcut": {
-    "message": "Raccourcie（女性）"
-  },
-  "optionsPage_FormatPunycode": {
-    "message": "Décodez le punycode."
+  "optionPage_ClipboardAPI": {
+    "message": "Utiliser l'API Clipboard"
   }
 }

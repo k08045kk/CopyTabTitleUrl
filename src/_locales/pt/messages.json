@@ -3,147 +3,63 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Copie o título e o URL da guia para a área de transferência."
-  },
-  "CopyTabTitleUrl": {
-    "message": "Copie o título e o URL da guia"
-  },
-  "CopyTabTitle": {
-    "message": "Copie o título da guia"
-  },
-  "CopyTabUrl": {
-    "message": "Copie o URL da guia"
-  },
-  "CopyTabFormat": {
-    "message": "Copie o formato da guia"
-  },
-  "CopyTabFormat2": {
-    "message": "Copie o formato 2 da guia"
-  },
-  "CopyWindowTabsTitleUrl": {
-    "message": "Copie o título e o URL das guias da janela"
-  },
-  "CopyWindowTabsTitle": {
-    "message": "Copie o título das guias da janela"
-  },
-  "CopyWindowTabsUrl": {
-    "message": "Copie o URL das guias da janela"
-  },
-  "CopyWindowTabsFormat": {
-    "message": "Copie o formato das guias da janela"
-  },
-  "CopyWindowTabsFormat2": {
-    "message": "Copie o formato 2 das guias da janela"
-  },
-  "optionsPage_Menu": {
-    "message": "Menu contextual"
-  },
-  "optionsPage_MenuItem": {
-    "message": "Item do menu"
-  },
-  "optionsPage_BrowserAction": {
-    "message": "Ação do navegador"
-  },
-  "optionsPage_Format": {
-    "message": "Formato"
-  },
-  "optionsPage_ContextMenuCheckbox": {
-    "message": "Menu contextual"
-  },
-  "optionsPage_PageContextMenuCheckbox": {
-    "message": "Contexto de página"
-  },
-  "optionsPage_BrowserActionContextMenuCheckbox": {
-    "message": "Menu de contexto de ação do navegador"
-  },
-  "optionsPage_TabContextMenuCheckbox": {
-    "message": "Tabulação contextmenu"
-  },
-  "optionsPage_Popup": {
-    "message": "Exibir o menu pop-up."
-  },
-  "optionsPage_Action": {
-    "message": "Execute a ação de formatação."
-  },
-  "optionsPage_ShowPopup": {
-    "message": "Exibir a notificação de conclusão de cópia."
-  },
-  "optionsPage_ActionTarget": {
-    "message": "Alvo"
-  },
-  "optionsPage_CurrentTabSettingsTitle": {
-    "message": "Guia atual"
-  },
-  "optionsPage_CurrentWindowSettingsTitle": {
-    "message": "Janela atual"
-  },
-  "optionsPage_AllWindowSettingsTitle": {
-    "message": "Tudo janela"
-  },
-  "optionsPage_Reset": {
-    "message": "Restaurar a configuração original"
-  },
-  "optionsPage_ConfirmReset": {
-    "message": "Realmente redefinir para as configurações padrão?"
+    "message": "Copie o título e o URL para a área de transferência."
   },
   "dummyDummyDummy": {
     "message": "dummy"
   },
-  "optionsPage_Restart": {
+  "optionPage_Popup": {
+    "message": "Exibir menu pop-up"
+  },
+  "optionPage_Action": {
+    "message": "Executar ação de formatação"
+  },
+  "optionPage_Complate": {
+    "message": "Exibir notificação de conclusão de cópia"
+  },
+  "optionPage_Restart": {
     "message": "Reiniciar"
   },
-  "CopyWindowTabs2TitleUrl": {
-    "message": "Copie o título e o URL de todas as guias"
+  "optionPage_KeyboardShortcutMessage": {
+    "message": "Altere a configuração padrão."
   },
-  "CopyWindowTabs2Title": {
-    "message": "Copie o título de todas as guias"
+  "optionPage_Format2": {
+    "message": "Habilitar Formato 2"
   },
-  "CopyWindowTabs2Url": {
-    "message": "Copie o URL de todas as guias"
+  "optionPage_ExtendMenus": {
+    "message": "Habilitar menu de contexto estendido"
   },
-  "CopyWindowTabs2Format": {
-    "message": "Copie o formato de todas as guias"
+  "optionPage_EditMenuTitle": {
+    "message": "Edite o título do menu de contexto"
   },
-  "CopyWindowTabs2Format2": {
-    "message": "Copie o formato 2 de todas as guias"
+  "optionPage_FormatDecode": {
+    "message": "Decodifique o URL"
   },
-  "optionsPage_Other": {
-    "message": "De outros"
+  "optionPage_FormatPunycode": {
+    "message": "Decodifique o punycode"
   },
-  "optionsPage_ShortcutMessage": {
-    "message": "Por favor, mude a configuração padrão do atalho."
+  "optionPage_FormatCopyHTML": {
+    "message": "Copiar em formato HTML"
   },
-  "optionsPage_Format2": {
-    "message": "Ativar formato 2."
+  "optionPage_SeparateMultipleNewLine": {
+    "message": "Separe várias guias com uma nova linha"
   },
-  "optionsPage_FormatDecode": {
-    "message": "Decodifique o URL."
+  "optionPage_ExcludePinned": {
+    "message": "Excluir guias fixadas"
   },
-  "optionsPage_FormatCopyHTML": {
-    "message": "Copie no formato HTML."
+  "optionPage_MultipleSelectionTabs": {
+    "message": "Habilitar várias guias de seleção"
   },
-  "optionsPage_SeparateMultipleNewLine": {
-    "message": "Separe várias guias com uma nova linha."
+  "optionPage_ExtendedMode": {
+    "message": "Modo estendido"
   },
-  "optionsPage_MultipleSelectionTabs": {
-    "message": "Ative várias guias de seleção."
+  "optionPage_Reset": {
+    "message": "Restaurar definições originais"
   },
-  "optionsPage_UseEnglish": {
-    "message": "Use o inglês como o idioma padrão."
+  "optionPage_ConfirmReset": {
+    "message": "Deseja realmente redefinir para as configurações padrão?"
   },
-  "optionsPage_ExtendedMode": {
-    "message": "Modo estendido (beta)"
-  },
-  "optionsPage_ExcludePinned": {
-    "message": "Exceto guias com pinagem."
-  },
-  "optionsPage_SelectionContextMenuCheckbox": {
-    "message": "Menu de contexto de seleção de texto"
-  },
-  "optionsPage_Shortcut": {
-    "message": "Atalho"
-  },
-  "optionsPage_FormatPunycode": {
-    "message": "Decodifique o punycode."
+  "optionPage_ClipboardAPI": {
+    "message": "Use Clipboard API"
   }
 }
