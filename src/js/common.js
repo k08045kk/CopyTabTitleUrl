@@ -372,7 +372,8 @@ function updateContextMenus() {
       menus.splice(15, 0, {type:'separator', format:-1, enable:true});
       menus.splice(10, 0, {type:'separator', format:-1, enable:true});
       menus.splice( 5, 0, {type:'separator', format:-1, enable:true});
-      if (!extension(valueSet, 'others_extend_menus', true)) {
+      if (!extension(valueSet, 'others_format2', true) 
+       || !extension(valueSet, 'others_extend_menus', true)) {
         menus = menus.filter((v) => {
           return v.format < 5;
         });
