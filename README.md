@@ -21,14 +21,14 @@ You can perform the following actions (copy to the clipboard).
 
 You can perform actions on the following tab.
 + Current tab
-+ Multiple selected tabs (Option must be enabled)
++ Multiple selected tabs
 + Current window tabs
 + All window tabs
 
 You can perform an action by doing the following.
 + Context menu (all, page, text selection, browser action, tab)
 + Browser action (popup, click)
-+ Shortcut
++ Keyboard shortcuts
 
 
 
