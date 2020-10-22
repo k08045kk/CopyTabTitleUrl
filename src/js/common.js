@@ -316,8 +316,8 @@ function onCopyTab(command, callback) {
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
   chrome.tabs.query(query, (tabs) => {
     let temp = tabs;
-    if (query.highlighted && command.tab) {
-      // 未選択タブのタブコンテキストメニューは、複数の選択タブとして扱わない
+    if (command.tab) {
+      // 未選択タブのタブコンテキストメニューは、カレントタブとして扱わない
       temp = [command.tab];
       for (let i=0; i<tabs.length; i++) {
         if (tabs[i].id == command.tab.id) {
