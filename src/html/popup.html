@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+* {
+  box-sizing: border-box;
+}
 body {
   width: 160px;
   font-size: 16px;
@@ -12,6 +15,19 @@ body {
   margin: auto;
   user-select: none;
 }
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.hide, 
+[hidden] {
+  display: none !important;
+}
+#action {
+  text-align: center;
+}
+
 .top {
   border-top: 1px solid #aaa;
 }
@@ -36,8 +52,11 @@ body {
   background: #b995c5;
   color: #fff;
 }
-#target_win:checked ~ label .item.win, 
-#target_all:checked ~ label .item.all,
+#target_win_label_div {
+  border-right: 1px solid #aaa;
+}
+#target_win:checked ~ .box .item.win, 
+#target_all:checked ~ .box .item.all,
 #target_win:checked ~ .title, 
 #target_all:checked ~ .title,
 .title, 
@@ -52,30 +71,41 @@ body {
 #target_all:hover ~ #footer::after,
 #target_win:checked ~ #footer::after, 
 #target_all:checked ~ #footer::after {
-  content: 'window';
+  content: 'tabs';
 }
   </style>
-  <script src="/lib/punycode.js/punycode.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/js/popup.js"></script>
+  <script defer="" src="/lib/punycode.js/punycode.js"></script>
+  <script defer="" src="/js/common.js"></script>
+  <script defer="" src="/js/popup.js"></script>
 </head>
 <body>
-  <div id="panel" style="display:none;">
-    <div class="box title top" id="header"><span>CopyTabTitleUrl</span></div>
-    <div class="box item copy" id="item_CopyTabTitleUrl"><span>Title<br>URL</span></div>
-    <div class="box item copy" id="item_CopyTabTitle"><span>Title</span></div>
-    <div class="box item copy" id="item_CopyTabUrl"><span>URL</span></div>
-    <div class="box item copy" id="item_CopyTabFormat"><span>Format</span><span class="format2" style="display:none;">1</span></div>
-    <div class="box item copy format2" id="item_CopyTabFormat2" style="display:none;"><span>Format2</span></div>
-    <div class="box">
-      <input type="checkbox" style="display:none;" id="target_win">
-      <input type="checkbox" style="display:none;" id="target_all">
-      <label for="target_win" id="target_win_label"><div class="item target win"><span>Current</span></div></label>
-      <label for="target_all" id="target_all_label"><div class="item target all"><span>All</span></div></label>
-      <div style="clear:both;"></div>
-      <div class="title" id="footer"></div>
+  <div id="panel" hidden="">
+    <div class="box title top">CopyTabTitleUrl</div>
+    <div class="box item copy" id="format0">title<br/>URL</div>
+    <div class="box item copy" id="format1">title</div>
+    <div class="box item copy" id="format2">URL</div>
+    <div class="box item copy" id="format3">format<span class="format2" hidden="">1</span></div>
+    <div class="box item copy format2" id="format4" hidden="">format2</div>
+    <div class="box item copy extend_menus" id="format5" data-menu="menu15" hidden="">format3</div>
+    <div class="box item copy extend_menus" id="format6" data-menu="menu16" hidden="">format4</div>
+    <div class="box item copy extend_menus" id="format7" data-menu="menu17" hidden="">format5</div>
+    <div class="box item copy extend_menus" id="format8" data-menu="menu18" hidden="">format6</div>
+    <div class="box item copy extend_menus" id="format9" data-menu="menu19" hidden="">format7</div>
+    <div class="box item copy extend_menus" id="format10" data-menu="menu20" hidden="">format8</div>
+    <div class="box item copy extend_menus" id="format11" data-menu="menu21" hidden="">format9</div>
+    
+    <input class="hide" id="target_win" type="checkbox"/>
+    <input class="hide" id="target_all" type="checkbox"/>
+    <div class="box clearfix">
+      <label id="target_win_label" for="target_win"><div class="item target win" id="target_win_label_div">Window</div></label>
+      <label id="target_all_label" for="target_all"><div class="item target all">All</div></label>
     </div>
+    <div class="title" id="footer"></div>
   </div>
-  <div id="action" style="display:none;"><p style="text-align:center;">Completed</p></div>
+  <div id="action" hidden="">
+    <div class="title"></div>
+    <p style="text-align:center;">Completed</p>
+    <div class="title"></div>
+  </div>
 </body>
 </html>

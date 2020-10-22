@@ -3,147 +3,72 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Kopieren Sie den Titel und die URL der Registerkarte in die Zwischenablage."
-  },
-  "CopyTabTitleUrl": {
-    "message": "Kopieren Sie den Titel und die URL der Registerkarte"
-  },
-  "CopyTabTitle": {
-    "message": "Kopieren Sie den Titel der Registerkarte"
-  },
-  "CopyTabUrl": {
-    "message": "Kopieren Sie die URL der Registerkarte"
-  },
-  "CopyTabFormat": {
-    "message": "Kopieren Sie das Format der Registerkarte"
-  },
-  "CopyTabFormat2": {
-    "message": "Kopieren Sie das Format 2 der Registerkarte"
-  },
-  "CopyWindowTabsTitleUrl": {
-    "message": "Kopieren Sie den Titel und die URL der Fensterregisterkarten"
-  },
-  "CopyWindowTabsTitle": {
-    "message": "Kopieren Sie den Titel der Fensterregisterkarten"
-  },
-  "CopyWindowTabsUrl": {
-    "message": "Kopieren Sie die URL der Fensterregisterkarten"
-  },
-  "CopyWindowTabsFormat": {
-    "message": "Kopieren Sie das Format der Fensterregisterkarten"
-  },
-  "CopyWindowTabsFormat2": {
-    "message": "Kopieren Sie das Format 2 der Fensterregisterkarten"
-  },
-  "optionsPage_Menu": {
-    "message": "Kontextmenü"
-  },
-  "optionsPage_MenuItem": {
-    "message": "Menüpunkt"
-  },
-  "optionsPage_BrowserAction": {
-    "message": "Browseraktion"
-  },
-  "optionsPage_Format": {
-    "message": "Format"
-  },
-  "optionsPage_ContextMenuCheckbox": {
-    "message": "Kontextmenü"
-  },
-  "optionsPage_PageContextMenuCheckbox": {
-    "message": "Kontextmenü"
-  },
-  "optionsPage_BrowserActionContextMenuCheckbox": {
-    "message": "Browser-Aktionskontextmenü"
-  },
-  "optionsPage_TabContextMenuCheckbox": {
-    "message": "Tab Kontextmenü"
-  },
-  "optionsPage_Popup": {
-    "message": "Popup-Menü anzeigen."
-  },
-  "optionsPage_Action": {
-    "message": "Formataktion ausführen"
-  },
-  "optionsPage_ShowPopup": {
-    "message": "Kopierbenachrichtigung anzeigen."
-  },
-  "optionsPage_ActionTarget": {
-    "message": "Ziel"
-  },
-  "optionsPage_CurrentTabSettingsTitle": {
-    "message": "Aktuelle Registerkarte"
-  },
-  "optionsPage_CurrentWindowSettingsTitle": {
-    "message": "Aktuelles Fenster"
-  },
-  "optionsPage_AllWindowSettingsTitle": {
-    "message": "Alle Fenster"
-  },
-  "optionsPage_Reset": {
-    "message": "Standardeinstellungen wiederherstellen"
-  },
-  "optionsPage_ConfirmReset": {
-    "message": "Auf die Standardeinstellungen zurücksetzen?"
+    "message": "Kopieren Sie den Titel und die URL in die Zwischenablage."
   },
   "dummyDummyDummy": {
     "message": "dummy"
   },
-  "optionsPage_Restart": {
-    "message": "Neustart"
+  "optionsPage_Complate": {
+    "message": "Benachrichtigung über den Abschluss der Kopie anzeigen"
   },
-  "CopyWindowTabs2TitleUrl": {
-    "message": "Kopieren Sie den Titel und die URL aller Registerkarten"
+  "optionsPage_ExtendMenus": {
+    "message": "Aktivieren Sie Erweiterungsmenüs"
   },
-  "CopyWindowTabs2Title": {
-    "message": "Kopieren Sie den Titel aller Registerkarten"
+  "optionsPage_EditMenuTitle": {
+    "message": "Menütitel aktivieren"
   },
-  "CopyWindowTabs2Url": {
-    "message": "Kopieren Sie die URL aller Registerkarten"
+  "optionPage_Popup": {
+    "message": "Popup-Menü anzeigen"
   },
-  "CopyWindowTabs2Format": {
-    "message": "Kopieren Sie das Format aller Registerkarten"
+  "optionPage_Action": {
+    "message": "Formataktion ausführen"
   },
-  "CopyWindowTabs2Format2": {
-    "message": "Kopieren Sie das Format 2 aller Registerkarten"
+  "optionPage_Complate": {
+    "message": "Benachrichtigung über den Abschluss der Kopie anzeigen"
   },
-  "optionsPage_Other": {
-    "message": "Andere"
+  "optionPage_Restart": {
+    "message": "Neu starten"
   },
-  "optionsPage_ShortcutMessage": {
-    "message": "Bitte ändern Sie die Standardeinstellung der Verknüpfung."
+  "optionPage_KeyboardShortcutMessage": {
+    "message": "Bitte ändern Sie die Standardeinstellung."
   },
-  "optionsPage_Format2": {
-    "message": "Format aktivieren 2."
+  "optionPage_Format2": {
+    "message": "Aktivieren Sie Format 2"
   },
-  "optionsPage_FormatDecode": {
-    "message": "Dekodieren Sie die URL."
+  "optionPage_ExtendMenus": {
+    "message": "Aktivieren Sie das erweiterte Kontextmenü"
   },
-  "optionsPage_FormatCopyHTML": {
-    "message": "Kopieren Sie im HTML-Format."
+  "optionPage_EditMenuTitle": {
+    "message": "Bearbeiten Sie den Titel des Kontextmenüs"
   },
-  "optionsPage_SeparateMultipleNewLine": {
-    "message": "Trennen Sie mehrere Registerkarten durch eine neue Zeile."
+  "optionPage_FormatDecode": {
+    "message": "Dekodieren Sie die URL"
   },
-  "optionsPage_MultipleSelectionTabs": {
-    "message": "Aktivieren Sie mehrere Auswahlregisterkarten."
+  "optionPage_FormatPunycode": {
+    "message": "Dekodiere den Punycode"
   },
-  "optionsPage_UseEnglish": {
-    "message": "Verwenden Sie Englisch als Standardsprache."
+  "optionPage_FormatCopyHTML": {
+    "message": "Im HTML-Format kopieren"
   },
-  "optionsPage_ExtendedMode": {
-    "message": "Erweiterter Modus (Beta)"
+  "optionPage_SeparateMultipleNewLine": {
+    "message": "Trennen Sie mehrere Registerkarten mit einem Zeilenumbruch"
   },
-  "optionsPage_ExcludePinned": {
-    "message": "Mit Ausnahme der Registerkarten, die festgesteckt sind."
+  "optionPage_ExcludePinned": {
+    "message": "Fixierte Tabs ausschließen"
   },
-  "optionsPage_SelectionContextMenuCheckbox": {
-    "message": "Kontextmenü zur Textauswahl"
+  "optionPage_MultipleSelectionTabs": {
+    "message": "Aktivieren Sie mehrere Auswahlregisterkarten"
   },
-  "optionsPage_Shortcut": {
-    "message": "Abkürzung"
+  "optionPage_ExtendedMode": {
+    "message": "Erweiterter Modus"
   },
-  "optionsPage_FormatPunycode": {
-    "message": "Dekodiere den Punycode."
+  "optionPage_Reset": {
+    "message": "Standardeinstellungen wiederherstellen"
+  },
+  "optionPage_ConfirmReset": {
+    "message": "Wirklich auf die Standardeinstellungen zurücksetzen?"
+  },
+  "optionPage_ClipboardAPI": {
+    "message": "Verwenden Sie die Zwischenablage-API"
   }
 }

@@ -3,147 +3,63 @@
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "Copy the title and URL of the tab to the clipboard."
-  },
-  "CopyTabTitleUrl": {
-    "message": "Copy the title and URL of the tab"
-  },
-  "CopyTabTitle": {
-    "message": "Copy the title of the tab"
-  },
-  "CopyTabUrl": {
-    "message": "Copy the URL of the tab"
-  },
-  "CopyTabFormat": {
-    "message": "Copy the format of the tab"
-  },
-  "CopyTabFormat2": {
-    "message": "Copy the format 2 of the tab"
-  },
-  "CopyWindowTabsTitleUrl": {
-    "message": "Copy the title and URL of the window tabs"
-  },
-  "CopyWindowTabsTitle": {
-    "message": "Copy the title of the window tabs"
-  },
-  "CopyWindowTabsUrl": {
-    "message": "Copy the URL of the window tabs"
-  },
-  "CopyWindowTabsFormat": {
-    "message": "Copy the format of the window tabs"
-  },
-  "CopyWindowTabsFormat2": {
-    "message": "Copy the format 2 of the window tabs"
-  },
-  "optionsPage_Menu": {
-    "message": "Contextmenu"
-  },
-  "optionsPage_MenuItem": {
-    "message": "Menu item"
-  },
-  "optionsPage_BrowserAction": {
-    "message": "Browser action"
-  },
-  "optionsPage_Format": {
-    "message": "Format"
-  },
-  "optionsPage_ContextMenuCheckbox": {
-    "message": "Contextmenu"
-  },
-  "optionsPage_PageContextMenuCheckbox": {
-    "message": "Page contextmenu"
-  },
-  "optionsPage_BrowserActionContextMenuCheckbox": {
-    "message": "Browser action contextmenu"
-  },
-  "optionsPage_TabContextMenuCheckbox": {
-    "message": "Tab contextmenu"
-  },
-  "optionsPage_Popup": {
-    "message": "Display popup menu."
-  },
-  "optionsPage_Action": {
-    "message": "Execute format action."
-  },
-  "optionsPage_ShowPopup": {
-    "message": "Display copy completion notification."
-  },
-  "optionsPage_ActionTarget": {
-    "message": "Target"
-  },
-  "optionsPage_CurrentTabSettingsTitle": {
-    "message": "Current tab"
-  },
-  "optionsPage_CurrentWindowSettingsTitle": {
-    "message": "Current window"
-  },
-  "optionsPage_AllWindowSettingsTitle": {
-    "message": "All window"
-  },
-  "optionsPage_Reset": {
-    "message": "Restore default settings"
-  },
-  "optionsPage_ConfirmReset": {
-    "message": "Really reset to default settings?"
+    "message": "Copy the title and URL to the clipboard."
   },
   "dummyDummyDummy": {
     "message": "dummy"
   },
-  "optionsPage_Restart": {
+  "optionPage_Popup": {
+    "message": "Display popup menu"
+  },
+  "optionPage_Action": {
+    "message": "Execute format action"
+  },
+  "optionPage_Complate": {
+    "message": "Display copy completion notification"
+  },
+  "optionPage_Restart": {
     "message": "Restart"
   },
-  "CopyWindowTabs2TitleUrl": {
-    "message": "Copy the title and URL of the all tabs"
+  "optionPage_KeyboardShortcutMessage": {
+    "message": "Please change from the standard setting."
   },
-  "CopyWindowTabs2Title": {
-    "message": "Copy the title of the all tabs"
+  "optionPage_Format2": {
+    "message": "Enable Format 2"
   },
-  "CopyWindowTabs2Url": {
-    "message": "Copy the URL of the all tabs"
+  "optionPage_ExtendMenus": {
+    "message": "Enable extended context menu"
   },
-  "CopyWindowTabs2Format": {
-    "message": "Copy the format of the all tabs"
+  "optionPage_EditMenuTitle": {
+    "message": "Edit the context menu title"
   },
-  "CopyWindowTabs2Format2": {
-    "message": "Copy the format 2 of the all tabs"
+  "optionPage_FormatDecode": {
+    "message": "Decode the URL"
   },
-  "optionsPage_Other": {
-    "message": "Other"
+  "optionPage_FormatPunycode": {
+    "message": "Decode the punycode"
   },
-  "optionsPage_ShortcutMessage": {
-    "message": "Please change from the standard setting of the shortcut."
+  "optionPage_FormatCopyHTML": {
+    "message": "Copy in HTML format"
   },
-  "optionsPage_Format2": {
-    "message": "Enable Format 2."
+  "optionPage_SeparateMultipleNewLine": {
+    "message": "Separate multiple tabs with a newline character"
   },
-  "optionsPage_FormatDecode": {
-    "message": "Decode the URL."
+  "optionPage_ExcludePinned": {
+    "message": "Exclude pinned tabs"
   },
-  "optionsPage_FormatCopyHTML": {
-    "message": "Copy in HTML format."
+  "optionPage_MultipleSelectionTabs": {
+    "message": "Enable multiple selection tabs"
   },
-  "optionsPage_SeparateMultipleNewLine": {
-    "message": "Separate multiple tabs with a newline."
+  "optionPage_ExtendedMode": {
+    "message": "Extended mode"
   },
-  "optionsPage_MultipleSelectionTabs": {
-    "message": "Enable multiple selection tabs."
+  "optionPage_Reset": {
+    "message": "Restore default settings"
   },
-  "optionsPage_UseEnglish": {
-    "message": "Use English as the standard language."
+  "optionPage_ConfirmReset": {
+    "message": "Really reset to default settings?"
   },
-  "optionsPage_ExtendedMode": {
-    "message": "Extended mode (beta)"
-  },
-  "optionsPage_ExcludePinned": {
-    "message": "Except tabs with pinned."
-  },
-  "optionsPage_SelectionContextMenuCheckbox": {
-    "message": "Text selection contextmenu"
-  },
-  "optionsPage_Shortcut": {
-    "message": "Shortcut"
-  },
-  "optionsPage_FormatPunycode": {
-    "message": "Decode the punycode."
+  "optionPage_ClipboardAPI": {
+    "message": "Use Clipboard API"
   }
 }

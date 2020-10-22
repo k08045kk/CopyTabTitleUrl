@@ -5,15 +5,14 @@ var page = 'common';
 
 // ブラウザ判定
 function isFirefox() {
-  try {
-    browser;
-    return true;
-  } catch (e) {}
-  return false;
-}
+  return 'browser' in window;
+};
+function isEdge() {
+  return 'edge' in window;
+};
 function isChrome() {
-  return !(isFirefox());
-}
+  return !isFirefox();
+};
 
 // モバイル判定
 function isMobile() {
@@ -22,99 +21,148 @@ function isMobile() {
       || ua.indexOf('mobile') != -1
       || ua.indexOf('iphone') != -1
       || ua.indexOf('ipod') != -1;
-}
+};
 
 // Windows判定
 function isWindows() {
-  return (window.navigator.platform.indexOf('Win') == 0);
-}
-
-// ストレージの初期値
-var defaultStorageValueSet = {
-  menu_all: false,
-  menu_page: false,
-  menu_selection: false,
-  menu_browser_action: true,
-  menu_tab: true,       // Firefox only
-  item_CopyTabTitleUrl: true,
-  item_CopyTabTitle: true,
-  item_CopyTabUrl: true,
-  item_CopyTabFormat: false,
-  item_CopyTabFormat2: false,
-  item_CopyTabAllTitleUrl: false,
-  item_CopyTabAllTitle: false,
-  item_CopyTabAllUrl: false,
-  item_CopyTabAllFormat: false,
-  item_CopyTabAllFormat2: false,
-  item_CopyTabAll2TitleUrl: false,
-  item_CopyTabAll2Title: false,
-  item_CopyTabAll2Url: false,
-  item_CopyTabAll2Format: false,
-  item_CopyTabAll2Format2: false,
-  action: 'Popup',
-  action_target: 'CurrentTab',
-  browser_ShowPopup: false,
-  shortcut_command: 'Alt+C',
-  shortcut_command2: '',
-  format_CopyTabFormat: '[${title}](${url})',
-  format_CopyTabFormat2:'<a href="${url}">${title}</a>',
-  format_enter: true,
-  format_decode: false,
-  format_punycode: false,
-  format_html: false,
-  format_pin: false,
-  format_selected: false,
-  format_format2: false,
-  format_language: false,
-  format_extension: false
+  return window.navigator.platform.indexOf('Win') == 0;
 };
 
 // ストレージの取得
 function getStorageArea() {
   //return (chrome.storage.sync ? chrome.storage.sync : chrome.storage.local);
   return chrome.storage.local;
-}
+};
 
 // 改行文字を取得
 function getEnterCode() {
-  return getEnterCode.code;
-}
-getEnterCode.code = isWindows()? '\r\n': '\n';
+  return isWindows() ? '\r\n' : '\n';
+};
 
-// ブラウザアクションクエリー
-function getBrowserActionQuery(valueSet) {
-  return {
-    CurrentTab: {currentWindow:true, active:true}, 
-    CurrentWindow: {currentWindow:true}, 
-    AllWindow: {}
-  }[valueSet.action_target];
-}
+function extension(valueSet, name, opt_extension) {
+  return !!opt_extension 
+          ? valueSet.checkbox__others_extension && valueSet['checkbox__'+name]
+          : valueSet['checkbox__'+name];
+};
 
-// コマンド作成
-function createCommand(valueSet, type) {
-  let command = {
-    type: type, 
-    enter: valueSet.format_enter, 
-    decode: valueSet.format_decode,
-    punycode: valueSet.format_punycode,
-    html: valueSet.format_html, 
-    pin: valueSet.format_pin, 
-    selected: valueSet.format_selected, 
-    ex: valueSet.format_extension
-  };
-  command.format = [
-    '${title}${enter}${url}', 
-    '${title}', 
-    '${url}', 
-    valueSet.format_CopyTabFormat,
-    valueSet.format_CopyTabFormat2
-  ][type];
-  return command;
-}
+
+
+// ストレージの初期値
+const defaultStorageValueSetVersion1 = {
+  menu_all: false,                      // v0.0.5+
+  menu_page: false,                     // v0.0.5+
+  menu_selection: false,                // v1.5.2+
+  menu_browser_action: true,            // v1.5.1+
+  menu_tab: true,                       // v0.0.5+ Firefox only
+  item_CopyTabTitleUrl: true,           // v0.0.5+
+  item_CopyTabTitle: true,              // v0.0.5+
+  item_CopyTabUrl: true,                // v0.0.5+
+  item_CopyTabFormat: false,            // v0.0.7+
+  item_CopyTabFormat2: false,           // v1.5.0+
+  item_CopyTabAllTitleUrl: false,       // v0.0.5+
+  item_CopyTabAllTitle: false,          // v0.0.5+
+  item_CopyTabAllUrl: false,            // v0.0.5+
+  item_CopyTabAllFormat: false,         // v0.0.7+
+  item_CopyTabAllFormat2: false,        // v1.5.0+
+  item_CopyTabAll2TitleUrl: false,      // v1.5.1+
+  item_CopyTabAll2Title: false,         // v1.5.1+
+  item_CopyTabAll2Url: false,           // v1.5.1+
+  item_CopyTabAll2Format: false,        // v1.5.1+
+  item_CopyTabAll2Format2: false,       // v1.5.1+
+  action: 'Popup',                      // v0.0.9+ Popup or Action
+  action_target: 'CurrentTab',          // v0.0.9+ CurrentTab or CurrentWindow or AllWindow
+  browser_ShowPopup: false,             // v1.4.0+
+  shortcut_command: 'Alt+C',            // v1.3.0+
+  shortcut_command2: '',                // v1.5.0+
+  format_CopyTabFormat: '[${title}](${url})',             // v0.0.7+
+  format_CopyTabFormat2:'<a href="${url}">${title}</a>',  // v1.5.0+
+  format_enter: true,                   // v0.0.9+
+  format_decode: false,                 // v1.5.2+
+  format_punycode: false,               // v1.5.6+
+  format_html: false,                   // v0.0.9+
+  format_pin: false,                    // v1.1.0+
+  format_selected: false,               // v1.5.1+
+  format_format2: false,                // v1.5.0+
+  format_language: false,               // v1.5.1+
+  format_extension: false               // v0.0.9+
+};
+//{"menu_all":false,"menu_page":false,"menu_selection":false,"menu_browser_action":true,"menu_tab":true,"item_CopyTabTitleUrl":true,"item_CopyTabTitle":true,"item_CopyTabUrl":true,"item_CopyTabFormat":false,"item_CopyTabFormat2":false,"item_CopyTabAllTitleUrl":false,"item_CopyTabAllTitle":false,"item_CopyTabAllUrl":false,"item_CopyTabAllFormat":false,"item_CopyTabAllFormat2":false,"item_CopyTabAll2TitleUrl":false,"item_CopyTabAll2Title":false,"item_CopyTabAll2Url":false,"item_CopyTabAll2Format":false,"item_CopyTabAll2Format2":false,"action":"Popup","action_target":"CurrentTab","browser_ShowPopup":false,"shortcut_command":"Alt+C","shortcut_command2":"","format_CopyTabFormat":"[${title}](${url})","format_CopyTabFormat2":"<a href=\"${url}\">${title}</a>","format_enter":true,"format_decode":false,"format_punycode":false,"format_html":false,"format_pin":false,"format_selected":false,"format_format2":false,"format_language":false,"format_extension":false}
+//{"menu_all":true,"menu_page":true,"menu_selection":true,"menu_browser_action":false,"menu_tab":false,"item_CopyTabTitleUrl":false,"item_CopyTabTitle":false,"item_CopyTabUrl":false,"item_CopyTabFormat":true,"item_CopyTabFormat2":true,"item_CopyTabAllTitleUrl":true,"item_CopyTabAllTitle":true,"item_CopyTabAllUrl":true,"item_CopyTabAllFormat":true,"item_CopyTabAllFormat2":true,"item_CopyTabAll2TitleUrl":true,"item_CopyTabAll2Title":true,"item_CopyTabAll2Url":true,"item_CopyTabAll2Format":true,"item_CopyTabAll2Format2":true,"action":"Action","action_target":"AllWindow","browser_ShowPopup":true,"shortcut_command":"","shortcut_command2":"Shift+A","format_CopyTabFormat":"<a href=\"${url}\">${title}</a>","format_CopyTabFormat2":"[${title}](${url})","format_enter":false,"format_decode":true,"format_punycode":true,"format_html":true,"format_pin":true,"format_selected":true,"format_format2":true,"format_language":true,"format_extension":true}
+const defaultStorageValueSetVersion2 = {
+  version: 2,                           // v2.0.0+
+  // format
+  // target
+  // selectionText
+  // tab
+  checkbox__menus_contexts_all: false,
+  checkbox__menus_contexts_page: false,
+  checkbox__menus_contexts_selection: false,
+  checkbox__menus_contexts_browser_action: true,
+  checkbox__menus_contexts_tab: true,   // Firefox only
+  checkbox__popup_comlate: false,
+  //checkbox__others_clipboard_api: false,
+  checkbox__others_format2: false,
+  checkbox__others_extend_menus: false, // v2.0.0+
+  checkbox__others_edit_menu_title: false,      // v2.0.0+
+  checkbox__others_decode: false,
+  checkbox__others_punycode: false,
+  checkbox__others_html: false,
+  checkbox__others_enter: true,
+  checkbox__others_pin: false,
+  checkbox__others_selected: true,      // v2.0.0から初期値変更
+  checkbox__others_language: false,
+  checkbox__others_extension: false,
+  select__browser_action: 'popup',
+  select__browser_action_target: 'tab',
+  menus: [                              // v2.0.0+
+    {id:0, title:'title and URL', target:'tab', format:0, enable:true},
+    {id:1, title:'title', target:'tab', format:1, enable:true},
+    {id:2, title:'URL', target:'tab', format:2, enable:true},
+    {id:3, title:'format', target:'tab', format:3},
+    {id:4, title:'format2', target:'tab', format:4},
+    
+    {id:5, title:'title and URL (window tabs)', target:'window', format:0},
+    {id:6, title:'title (window tabs)', target:'window', format:1},
+    {id:7, title:'URL (window tabs)', target:'window', format:2},
+    {id:8, title:'format (window tabs)', target:'window', format:3},
+    {id:9, title:'format2 (window tabs)', target:'window', format:4},
+    
+    {id:10, title:'title and URL (all tabs)', target:'all', format:0},
+    {id:11, title:'title (all tabs)', target:'all', format:1},
+    {id:12, title:'URL (all tabs)', target:'all', format:2},
+    {id:13, title:'format (all tabs)', target:'all', format:3},
+    {id:14, title:'format2 (all tabs)', target:'all', format:4},
+    
+    {id:15, title:'format3', target:'tab', format:5},
+    {id:16, title:'format4', target:'tab', format:6},
+    {id:17, title:'format5', target:'tab', format:7},
+    {id:18, title:'format6', target:'tab', format:8},
+    {id:19, title:'format7', target:'tab', format:9},
+    {id:20, title:'format8', target:'tab', format:10},
+    {id:21, title:'format9', target:'tab', format:11},
+  ],
+  formats: [                            // v2.0.0+
+    {id:0, title:'title and URL', format:'${title}${enter}${url}'}, 
+    {id:1, title:'title', format:'${title}'}, 
+    {id:2, title:'URL', format:'${url}'}, 
+    {id:3, title:'format1', format:'[${title}](${url})', shortcut:'Alt+C'}, 
+    {id:4, title:'format2', format:'<a href="${url}">${title}</a>', shortcut:''}, 
+    {id:5, title:'format3', format:'', shortcut:''}, 
+    {id:6, title:'format4', format:'', shortcut:''}, 
+    {id:7, title:'format5', format:''}, 
+    {id:8, title:'format6', format:''}, 
+    {id:9, title:'format7', format:''}, 
+    {id:10, title:'format8', format:''}, 
+    {id:11, title:'format9', format:''}, 
+  ]
+};
+const defaultStorageValueSet = defaultStorageValueSetVersion2;
+
+
 
 function _dateFormat(format, opt_date, opt_prefix, opt_suffix) {
-  var pre = (opt_prefix != null)? opt_prefix: '';
-  var suf = (opt_suffix != null)? opt_suffix: '';
+  var pre = (opt_prefix != null) ? opt_prefix : '';
+  var suf = (opt_suffix != null) ? opt_suffix : '';
   var fmt = {};
   fmt[pre+'yyyy'+suf] = function(date) { return ''  + date.getFullYear(); };
   fmt[pre+'MM'+suf]   = function(date) { return('0' +(date.getMonth() + 1)).slice(-2); };
@@ -151,12 +199,12 @@ function _dateFormat(format, opt_date, opt_prefix, opt_suffix) {
   return result;
 };
 
-function _urlFormat(format, url, command) {
+function _urlFormat(format, url, isDecode, isPunycode) {
   function decode(text) {
-    return command.decode ? decodeURIComponent(text) : text;
+    return isDecode ? decodeURIComponent(text) : text;
   };
   const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
-  if (command.punycode) {
+  if (isPunycode) {
     format = format.replace(/\${href}/g, '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
                    .replace(/\${origin}/g, '${protocol}//${username:password@}${host}')
                    .replace(/\${host}/g, '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''));
@@ -183,23 +231,22 @@ function _urlFormat(format, url, command) {
 
 
 // クリップボードにコピー
-function copyToClipboard(command, tabs, info) {
+function copyToClipboard(command, tabs) {
   // コピー文字列作成
   const temp = [];
   const enter = getEnterCode();
   const now = new Date();
   for (let i=0; i<tabs.length; i++) {
     let format = command.format;
-    // URLのデコード
-    let url = command.decode? decodeURIComponent(tabs[i].url): tabs[i].url;
-    if (command.ex && command.punycode) {
+    let url = tabs[i].url;
+    if (extension(command, 'others_decode', true) || extension(command, 'others_punycode', true)) {
       url = '${href}';
     }
     format = format.replace(/\${title}/ig, tabs[i].title)
                    .replace(/\${url}/ig, url)
                    .replace(/\${enter}/ig, enter);
-    if (command.ex) {
-      let stext = (tabs.length==1 && info && info.selectionText)? info.selectionText: tabs[i].title;
+    if (command.checkbox__others_extension) {
+      const stext = (tabs.length == 1 && command.selectionText) ? command.selectionText : tabs[i].title;
       format = format.replace(/\${(tab|\\t|t)}/ig, '\t')
                      .replace(/\${(cr|\\r|r)}/ig,  '\r')
                      .replace(/\${(lf|\\n|n)}/ig,  '\n')
@@ -208,20 +255,25 @@ function copyToClipboard(command, tabs, info) {
                      .replace(/\${id}/ig, tabs[i].id)
                      .replace(/\${favIconUrl}/g, tabs[i].favIconUrl != '' ? tabs[i].favIconUrl : void 0);
       format = _dateFormat(format, now, '${', '}');
-      format = _urlFormat(format, new URL(tabs[i].url), command);
+      format = _urlFormat(format, new URL(tabs[i].url), 
+                          command.checkbox__others_decode, 
+                          command.checkbox__others_punycode);
     }
     temp.push(format.replace(/\${\$}/ig, '$'));
   }
-  let text = temp.join(command.enter ? enter : '');
+  const text = temp.join((!command.checkbox__others_extension || command.checkbox__others_enter)
+                          ? enter 
+                          : '');
   
   // クリップボードコピー
   if (isMobile() && page == 'background') {
     // Clipboard API(Firefox63+実装)
+    // Firefox63+ dom.events.asyncClipboard.dataTransfer=true が必須
     // Android Firefoxのバックグラウンドは、execCommand('copy')が動作しない。
     // そのため、対象環境のみClicpboard APIを使用する。
-    navigator.clipboard.writeText(text).then(function() {
+    navigator.clipboard.writeText(text).then(() => {
       /* success */
-    }, function() {
+    }, () => {
       /* failure */
     });
   } else {
@@ -229,35 +281,31 @@ function copyToClipboard(command, tabs, info) {
     function oncopy(event) {
       document.removeEventListener('copy', oncopy, true);
       event.stopImmediatePropagation();
-      
       event.preventDefault();
-      if (command.ex && command.html && command.type >= 3) {
-        // フォーマット以外は、HTML形式でコピーする必要性はない
+      
+      if (extension(command, 'others_html', true)) {
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
-    }
+    };
     document.addEventListener('copy', oncopy, true);
     
     document.execCommand('copy');
   }
-}
+};
 
 // タブをクリップボードにコピー
-function onCopyTabs(type, query, valueSet, callback) {
-  if (valueSet == null) {
-    // valueSet未取得なら再起呼び出し(valueSetの2重取りはできない)
-    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-      onCopyTabs(type, query, valueSet, callback);
-    });
-    return;
-  }
+function onCopyTab(command, callback) {
+  const query = {
+    'tab': {currentWindow:true, active:true}, 
+    'window': {currentWindow:true}, 
+    'all': {},
+  }[command.target];
   
-  let command = createCommand(valueSet, type);
-  if (command.ex && command.pin) {
+  if (extension(command, 'others_pin', true)) {
     query.pinned = false;
   }
-  if (command.selected && query.active) {
+  if (extension(command, 'others_selected', false) && query.active) {
     query.highlighted = true;
     delete query.active;
   }
@@ -266,115 +314,132 @@ function onCopyTabs(type, query, valueSet, callback) {
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
   // カレントウィンドウの選択中のタブ: {currentWindow:true, highlighted:true}
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
-  chrome.tabs.query(query, function(tabs) {
-    copyToClipboard(command, tabs);
+  chrome.tabs.query(query, (tabs) => {
+    let temp = tabs;
+    if (query.highlighted && command.tab) {
+      // 未選択タブのタブコンテキストメニューは、複数の選択タブとして扱わない
+      temp = [command.tab];
+      for (let i=0; i<tabs.length; i++) {
+        if (tabs[i].id == command.tab.id) {
+          temp = tabs;
+          break;
+        }
+      }
+    }
+    copyToClipboard(command, temp);
     if (callback) {
       // 処理完了通知
       callback();
     }
   });
-}
+};
 
 // コンテキストメニューイベント
 function onContextMenus(info, tab) {
-  let type = 0;
-  switch (info.menuItemId) {
-  case 'CopyTabFormat2':        type++;
-  case 'CopyTabFormat':         type++;
-  case 'CopyTabUrl':            type++;
-  case 'CopyTabTitle':          type++;
-  case 'CopyTabTitleUrl':
-    getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-      // タブコンテキストメニューは、メニューを開いたタブの情報をコピーする
-      // カレントタブではない
-      if (valueSet.format_selected) {
-        chrome.tabs.query({currentWindow:true, highlighted:true}, function(tabs) {
-          // 未選択のタブをクリックした場合、複数の選択タブとして扱わない
-          let temp = [tab];
-          for (let i=0; i<tabs.length; i++) {
-            if (tabs[i].id == tab.id) {
-              temp = tabs;
-              break;
-            }
-          }
-          copyToClipboard(createCommand(valueSet, type), temp, info);
-        });
-      } else {
-        copyToClipboard(createCommand(valueSet, type), [tab], info);
-      }
+  const id = info.menuItemId.match(/\d+$/)[0];
+  getStorageArea().get(defaultStorageValueSet, (valueSet) => {
+    const menu = valueSet.menus.find((v) => {
+      return v.id == id;
     });
-    break;
-  case 'CopyWindowTabsFormat2': type++;
-  case 'CopyWindowTabsFormat':  type++;
-  case 'CopyWindowTabsUrl':     type++;
-  case 'CopyWindowTabsTitle':   type++;
-  case 'CopyWindowTabsTitleUrl':
-    onCopyTabs(type, {currentWindow:true}, null);
-    break;
-  case 'CopyWindowTabs2Format2': type++;
-  case 'CopyWindowTabs2Format':  type++;
-  case 'CopyWindowTabs2Url':     type++;
-  case 'CopyWindowTabs2Title':   type++;
-  case 'CopyWindowTabs2TitleUrl':
-    onCopyTabs(type, {}, null);
-    break;
-  }
-}
+    valueSet.format = valueSet.formats.find((v) => v.id == menu.format).format;
+    //valueSet.format = valueSet.formats.find((v) => v.id == menu.format);
+    //valueSet.format.checkbox__others_html = true; // みたいな？
+    valueSet.target = menu.target;
+    valueSet.selectionText = info.selectionText;
+    valueSet.tab = tab;
+    onCopyTab(valueSet, null);
+  });
+};
 
 // コンテキストメニュー更新
 function updateContextMenus() {
   function onUpdateContextMenus(valueSet) {
     // メニュー追加
-    let contexts = [];
-    if (valueSet.menu_all) {  contexts.push('all'); }
-    if (valueSet.menu_page) { contexts.push('page'); }
-    if (valueSet.menu_selection) { contexts.push('selection'); }
-    if (valueSet.menu_browser_action) { contexts.push('browser_action'); }
-    if (valueSet.menu_tab && isFirefox()) {
-      contexts.push('tab');
-    }
+    const contexts = [];
+    if (valueSet.checkbox__menus_contexts_all) {  contexts.push('all'); }
+    if (valueSet.checkbox__menus_contexts_page) { contexts.push('page'); }
+    if (valueSet.checkbox__menus_contexts_selection) { contexts.push('selection'); }
+    if (valueSet.checkbox__menus_contexts_browser_action) { contexts.push('browser_action'); }
+    if (isFirefox() && valueSet.checkbox__menus_contexts_tab) { contexts.push('tab'); }
     
-    if (contexts.length != 0) {
-      const isEnglish = valueSet.format_language;
-      const titles = [
-        'Copy the title and URL of the tab', 'Copy the title of the tab', 'Copy the URL of the tab', 'Copy the format of the tab', 'Copy the format 2 of the tab',
-        'Copy the title and URL of the window tabs', 'Copy the title of the window tabs', 'Copy the URL of the window tabs', 'Copy the format of the window tabs', 'Copy the format 2 of the window tabs',
-        'Copy the title and URL of the all tabs', 'Copy the title of the all tabs', 'Copy the URL of the all tabs', 'Copy the format of the all tabs', 'Copy the format 2 of the all tabs'
-      ];
-      [
-        'CopyTabTitleUrl', 'CopyTabTitle', 'CopyTabUrl', 'CopyTabFormat', 'CopyTabFormat2', 
-        'CopyWindowTabsTitleUrl', 'CopyWindowTabsTitle', 'CopyWindowTabsUrl', 'CopyWindowTabsFormat', 'CopyWindowTabsFormat2',
-        'CopyWindowTabs2TitleUrl', 'CopyWindowTabs2Title', 'CopyWindowTabs2Url', 'CopyWindowTabs2Format', 'CopyWindowTabs2Format2'
-      ].forEach(function(v, i, a) {
-        let id = 'item_'+v.replace('WindowTabs', 'TabAll');
-        if (id.endsWith('2') && !(valueSet.format_extension && valueSet.format_format2)) {
-        } else if (!valueSet[id]) {
+    if (contexts.length) {
+      let menus = JSON.parse(JSON.stringify(valueSet.menus));
+      if (!extension(valueSet, 'others_edit_menu_title', true)) {
+        for (let i=0; i<menus.length; i++) {
+          menus[i].title = defaultStorageValueSet.menus[i].title;
+        }
+      }
+      menus.splice(15, 0, {type:'separator', format:-1, enable:true});
+      menus.splice(10, 0, {type:'separator', format:-1, enable:true});
+      menus.splice( 5, 0, {type:'separator', format:-1, enable:true});
+      if (!extension(valueSet, 'others_format2', true) 
+       || !extension(valueSet, 'others_extend_menus', true)) {
+        menus = menus.filter((v) => {
+          return v.format < 5;
+        });
+      }
+      if (!extension(valueSet, 'others_format2', true)) {
+        menus = menus.filter((v) => {
+          return v.format != 4;
+        });
+      }
+      let flag = true;
+      for (let i=menus.length-1; i>=0; i--) {
+        if (menus[i].type == 'separator') {
+          if (flag) {
+            menus.splice(i, 1);
+          } else {
+            flag = true;
+          }
+        } else if (!menus[i].enable) {
+          menus.splice(i, 1);
+        } else {
+          flag = false;
+        }
+      }
+      for (let i=0; i<menus.length; i++) {
+        if (menus[i].type == 'separator') {
+          // ブラウザアクションは、6個制限があるため、セパレータなし
+          if (menus.length > 6 && !(contexts.length == 1 && contexts[0] == 'browser_action')) {
+            chrome.contextMenus.create({
+              type: menus[i].type,
+              contexts: contexts.filter((v) => v != 'browser_action'),
+            });
+          } else if (menus.length <= 6) {
+            chrome.contextMenus.create({
+              type: menus[i].type,
+              contexts: contexts,
+            });
+          }
         } else {
           chrome.contextMenus.create({
-            id: v,
-            title: (isEnglish? titles[i]: chrome.i18n.getMessage(v)),
-            contexts: contexts
+            id: 'menu'+menus[i].id,
+            title: menus[i].title,
+            contexts: contexts,
           });
         }
-      });
-      chrome.contextMenus.onClicked.addListener(onContextMenus);
+      }
+      if (menus.length) {
+        chrome.contextMenus.onClicked.addListener(onContextMenus);
+      }
     }
-  }
+  };
+  
   // モバイル以外 && メニュー削除 && ストレージ取得
   if (!isMobile()) {
-    chrome.contextMenus.removeAll(function() {
+    chrome.contextMenus.removeAll(() => {
       getStorageArea().get(defaultStorageValueSet, onUpdateContextMenus);
     });
   }
-}
+};
 
 // ブラウザアクションの更新
 function updateBrowserAction() {
-  getStorageArea().get(defaultStorageValueSet, function(valueSet) {
-    if (valueSet.action == 'Popup' || valueSet.browser_ShowPopup) {
+  getStorageArea().get(defaultStorageValueSet, (valueSet) => {
+    if (valueSet.select__browser_action == 'popup' || valueSet.checkbox__popup_comlate) {
       chrome.browserAction.setPopup({popup: '/html/popup.html'});
     } else {
       chrome.browserAction.setPopup({popup: ''});
     }
   });
-}
+};

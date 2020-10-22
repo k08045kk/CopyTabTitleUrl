@@ -2,248 +2,89 @@
   "extensionName": {
     "translate":  false,
     "message":    "CopyTabTitleUrl",
-    "translation":"CopyTabTitleUrl",
     "description":"CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message":    "Copy the title and URL of the tab to the clipboard.",
-    "translation":"タブのタイトルとURLをクリップボードにコピーします。",
-    "description":"タブのタイトルとURLをクリップボードにコピーします。"
+    "message":    "Copy the title and URL to the clipboard.",
+    "description":"タイトルとURLをクリップボードにコピーします。"
   },
-  "CopyTabTitleUrl": {
-    "message":    "Copy the title and URL of the tab",
-    "translation":"タブのタイトルとURLをコピー",
-    "description":"タブのタイトルとURLをコピー"
+  
+  "optionPage_Popup": {
+    "message":    "Display popup menu",
+    "description":"ポップアップメニューを表示する"
   },
-  "CopyTabTitle": {
-    "message":    "Copy the title of the tab",
-    "translation":"タブのタイトルをコピー",
-    "description":"タブのタイトルをコピー"
+  "optionPage_Action": {
+    "message":    "Execute format action",
+    "description":"フォーマットアクションを実行する"
   },
-  "CopyTabUrl": {
-    "message":    "Copy the URL of the tab",
-    "translation":"タブのURLをコピー",
-    "description":"タブのURLをコピー"
+  "optionPage_Complate": {
+    "message":    "Display copy completion notification",
+    "description":"コピー完了通知を表示する"
   },
-  "CopyTabFormat": {
-    "message":    "Copy the format of the tab",
-    "translation":"タブのフォーマットをコピー",
-    "description":"タブのフォーマットをコピー"
-  },
-  "CopyTabFormat2": {
-    "message":    "Copy the format 2 of the tab",
-    "translation":"タブのフォーマット2をコピー",
-    "description":"タブのフォーマット2をコピー"
-  },
-  "CopyWindowTabsTitleUrl": {
-    "message":    "Copy the title and URL of the window tabs",
-    "translation":"ウィンドウタブのタイトルとURLをコピーします。",
-    "description":"ウィンドウのタブのタイトルとURLをコピー"
-  },
-  "CopyWindowTabsTitle": {
-    "message":    "Copy the title of the window tabs",
-    "translation":"ウィンドウタブのタイトルをコピーする",
-    "description":"ウィンドウのタブのタイトルをコピー"
-  },
-  "CopyWindowTabsUrl": {
-    "message":    "Copy the URL of the window tabs",
-    "translation":"ウィンドウタブのURLをコピーする",
-    "description":"ウィンドウのタブのURLをコピー"
-  },
-  "CopyWindowTabsFormat": {
-    "message":    "Copy the format of the window tabs",
-    "translation":"ウィンドウタブのタブフォーマットをコピーする",
-    "description":"ウィンドウのタブのフォーマットをコピー"
-  },
-  "CopyWindowTabsFormat2": {
-    "message":    "Copy the format 2 of the window tabs",
-    "translation":"ウィンドウタブのタブフォーマット2をコピーする",
-    "description":"ウィンドウのタブのフォーマット2をコピー"
-  },
-  "CopyWindowTabs2TitleUrl": {
-    "message":    "Copy the title and URL of the all tabs",
-    "translation":"すべてのタブのタイトルとURLをコピーする",
-    "description":"すべてのタブのタイトルとURLをコピー"
-  },
-  "CopyWindowTabs2Title": {
-    "message":    "Copy the title of the all tabs",
-    "translation":"すべてのタブのタイトルをコピーする",
-    "description":"すべてのタブのタイトルをコピー"
-  },
-  "CopyWindowTabs2Url": {
-    "message":    "Copy the URL of the all tabs",
-    "translation":"すべてのタブのURLをコピーする",
-    "description":"すべてのタブのURLをコピー"
-  },
-  "CopyWindowTabs2Format": {
-    "message":    "Copy the format of the all tabs",
-    "translation":"すべてのタブのタブフォーマットをコピーする",
-    "description":"すべてのタブのフォーマットをコピー"
-  },
-  "CopyWindowTabs2Format2": {
-    "message":    "Copy the format 2 of the all tabs",
-    "translation":"すべてのタブのタブフォーマット2をコピー",
-    "description":"すべてのタブのフォーマット2をコピー"
-  },
-  "optionsPage_Menu": {
-    "message":    "Contextmenu",
-    "translation":"コンテキストメニュー",
-    "description":"コンテキストメニュー"
-  },
-  "optionsPage_MenuItem": {
-    "message":    "Menu item",
-    "translation":"メニュー項目",
-    "description":"メニューアイテム"
-  },
-  "optionsPage_BrowserAction": {
-    "message":    "Browser action",
-    "translation":"ブラウザアクション",
-    "description":"ブラウザアクション"
-  },
-  "optionsPage_Format": {
-    "message":    "Format",
-    "translation":"フォーマット",
-    "description":"フォーマット"
-  },
-  "optionsPage_Shortcut": {
-    "message":    "Shortcut",
-    "translation":"ショートカット",
-    "description":"ショートカット"
-  },
-  "optionsPage_Other": {
-    "message":    "Other",
-    "translation":"その他の",
-    "description":"その他"
-  },
-  "optionsPage_ContextMenuCheckbox": {
-    "message":    "Contextmenu",
-    "translation":"コンテキストメニュー",
-    "description":"コンテキストメニュー"
-  },
-  "optionsPage_PageContextMenuCheckbox": {
-    "message":    "Page contextmenu",
-    "translation":"ページコンテキストメニュー",
-    "description":"ページコンテキストメニュー"
-  },
-  "optionsPage_SelectionContextMenuCheckbox": {
-    "message":    "Text selection contextmenu",
-    "translation":"テキスト選択コンテキストメニュー",
-    "description":"テキスト選択コンテキストメニュー"
-  },
-  "optionsPage_BrowserActionContextMenuCheckbox": {
-    "message":    "Browser action contextmenu",
-    "translation":"ブラウザアクションコンテキストメニュー",
-    "description":"ブラウザアクションコンテキストメニュー"
-  },
-  "optionsPage_TabContextMenuCheckbox": {
-    "message":    "Tab contextmenu",
-    "translation":"タブのコンテキストメニュー",
-    "description":"タブコンテキストメニュー"
-  },
-  "optionsPage_Popup": {
-    "message":    "Display popup menu.",
-    "translation":"ポップアップメニューを表示します。",
-    "description":"ポップアップメニューを表示する。"
-  },
-  "optionsPage_Action": {
-    "message":    "Execute format action.",
-    "translation":"フォーマットアクションを実行します。",
-    "description":"フォーマットアクションを実行する。"
-  },
-  "optionsPage_ShowPopup": {
-    "message":    "Display copy completion notification.",
-    "translation":"コピー完了通知を表示します。",
-    "description":"コピー完了通知を表示する。"
-  },
-  "optionsPage_ActionTarget": {
-    "message":    "Target",
-    "translation":"ターゲット",
-    "description":"ターゲット"
-  },
-  "optionsPage_CurrentTabSettingsTitle": {
-    "message":    "Current tab",
-    "translation":"現在のタブ",
-    "description":"カレントタブ"
-  },
-  "optionsPage_CurrentWindowSettingsTitle": {
-    "message":    "Current window",
-    "translation":"現在のウィンドウ",
-    "description":"カレントウィンドウ"
-  },
-  "optionsPage_AllWindowSettingsTitle": {
-    "message":    "All window",
-    "translation":"全ウィンドウ",
-    "description":"すべてのウィンドウ"
-  },
-  "optionsPage_ShortcutMessage": {
-    "message":    "Please change from the standard setting of the shortcut.",
-    "translation":"ショートカットの標準設定から変更してください。",
-    "description":"ショートカットの標準設定から変更してください。"
-  },
-  "optionsPage_Format2": {
-    "message":    "Enable Format 2.",
-    "translation":"フォーマット2を有効にします。",
-    "description":"フォーマット2を有効にする。"
-  },
-  "optionsPage_FormatDecode": {
-    "message":    "Decode the URL.",
-    "translation":"URLをデコードします。",
-    "description":"URLをデコードする。"
-  },
-  "optionsPage_FormatPunycode": {
-    "message":    "Decode the punycode.",
-    "translation":"ピュニコードをデコードします。",
-    "description":"ピュニコードをデコードする。"
-  },
-  "optionsPage_FormatCopyHTML": {
-    "message":    "Copy in HTML format.",
-    "translation":"HTML形式でコピーします。",
-    "description":"HTML形式でコピーする。"
-  },
-  "optionsPage_SeparateMultipleNewLine": {
-    "message":    "Separate multiple tabs with a newline.",
-    "translation":"複数のタブを改行で区切ります。",
-    "description":"複数のタブを改行で区切る。"
-  },
-  "optionsPage_ExcludePinned": {
-    "message":    "Except tabs with pinned.",
-    "translation":"ピン留めされたタブを除く。",
-    "description":"ピン留めされたタブを除外する。"
-  },
-  "optionsPage_MultipleSelectionTabs": {
-    "message":    "Enable multiple selection tabs.",
-    "translation":"複数選択タブを有効にします。",
-    "description":"複数の選択したタブを有効にする。"
-  },
-  "optionsPage_UseEnglish": {
-    "message":    "Use English as the standard language.",
-    "translation":"標準言語として英語を使用してください。",
-    "description":"標準言語として英語を使用する。"
-  },
-  "optionsPage_ExtendedMode": {
-    "message":    "Extended mode (beta)",
-    "translation":"拡張モード（ベータ版）",
-    "description":"拡張モード（ベータ版）"
-  },
-  "optionsPage_Restart": {
+  "optionPage_Restart": {
     "message":    "Restart",
-    "translation":"再起動",
     "description":"再起動"
   },
-  "optionsPage_Reset": {
+  "optionPage_KeyboardShortcutMessage": {
+    "message":    "Please change from the standard setting.",
+    "description":"標準設定から変更してください。"
+  },
+  "optionPage_ClipboardAPI": {
+    "message":    "Use Clipboard API",
+    "description":"ClipBoard APIを使用する"
+  },
+  "optionPage_Format2": {
+    "message":    "Enable Format 2",
+    "description":"フォーマット2を有効にする"
+  },
+  "optionPage_ExtendMenus": {
+    "message":    "Enable extended context menu",
+    "description":"拡張コンテキストメニューを有効にする"
+  },
+  "optionPage_EditMenuTitle": {
+    "message":    "Edit the context menu title",
+    "description":"コンテキストメニューのタイトルを編集する"
+  },
+  "optionPage_FormatDecode": {
+    "message":    "Decode the URL",
+    "description":"URLをデコードする"
+  },
+  "optionPage_FormatPunycode": {
+    "message":    "Decode the punycode",
+    "description":"ピュニコードをデコードする"
+  },
+  "optionPage_FormatCopyHTML": {
+    "message":    "Copy in HTML format",
+    "description":"HTML形式でコピーする"
+  },
+  "optionPage_SeparateMultipleNewLine": {
+    "message":    "Separate multiple tabs with a newline character",
+    "description":"複数タブを改行文字で区切る"
+  },
+  "optionPage_ExcludePinned": {
+    "message":    "Exclude pinned tabs",
+    "description":"ピン留めタブを除外する"
+  },
+  "optionPage_MultipleSelectionTabs": {
+    "message":    "Enable multiple selection tabs",
+    "description":"選択タブを有効にする"
+  },
+  "optionPage_ExtendedMode": {
+    "message":    "Extended mode",
+    "description":"拡張モード"
+  },
+  "optionPage_Reset": {
     "message":    "Restore default settings",
-    "translation":"デフォルト設定に戻す",
     "description":"初期設定に戻す"
   },
-  "optionsPage_ConfirmReset": {
+  "optionPage_ConfirmReset": {
     "message":    "Really reset to default settings?",
-    "translation":"本当にデフォルト設定にリセットしますか？",
     "description":"本当に初期設定に戻しますか？"
   },
+  
   "dummyDummyDummy": {
     "translate":  false,
     "message":    "dummy",
-    "translation":"dummy",
     "description":"dummy"
   }
 }
