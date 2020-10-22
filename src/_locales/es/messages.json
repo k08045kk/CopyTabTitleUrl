@@ -51,7 +51,7 @@
     "message": "Copiar en formato HTML"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "Separe varias pestañas con una nueva línea"
+    "message": "Separe varias pestañas con un carácter de nueva línea"
   },
   "optionPage_ExcludePinned": {
     "message": "Excluir pestañas fijadas"

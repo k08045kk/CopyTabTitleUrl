@@ -51,7 +51,7 @@
     "message": "Copier au format HTML"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "Séparez plusieurs onglets par une nouvelle ligne"
+    "message": "Séparez plusieurs onglets avec un caractère de nouvelle ligne"
   },
   "optionPage_ExcludePinned": {
     "message": "Exclure les onglets épinglés"

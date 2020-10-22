@@ -42,7 +42,7 @@
     "message": "Copy in HTML format"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "Separate multiple tabs with a newline"
+    "message": "Separate multiple tabs with a newline character"
   },
   "optionPage_ExcludePinned": {
     "message": "Exclude pinned tabs"
