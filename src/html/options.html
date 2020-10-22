@@ -43,6 +43,8 @@ input[type="text"] {
   display: block;
   clear: both;
 }
+.link {
+}
 .menu_target {
   float: right;
 }
@@ -273,7 +275,7 @@ input[type="text"] {
       ${title},${text},${url},${enter},${r},${n},${t},${index},${$}.<br/>
       ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}<br/>
       ${protocol}//${host}${pathname}${search}${hash}<br/>
-      https://github.com/k08045kk/CopyTabTitleUrl
+      <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span>
     </p>
     <br/>
     <p>format<span class="extension" hidden="">1</span>: <input class="format" type="text" id="format3" maxlength="256" /></p>
@@ -290,12 +292,16 @@ input[type="text"] {
     <legend>Keyboard shortcut</legend>
     <div class="chrome">
       <p>
-        <span data-i18n="optionPage_KeyboardShortcutMessage" data-english="Please change from the standard setting."></span><br>
-        <span>chrome://extensions/shortcuts</span><span id="shortcut_commands"></span>
+        <span data-i18n="optionPage_KeyboardShortcutMessage" data-english="Please change from the standard setting."></span><br/>
+        <span class="link">chrome://extensions/shortcuts</span>
+        <span id="shortcut_commands"></span>
       </p>
     </div>
     <div class="firefox">
-      <p>Example: Key(function key only) or Modifier+Key or Modifier+Modifier+Key.<br>Modifiers are Ctrl, Alt, Command, MacCtrl, Shift(secondary modifier only).</p>
+      <p>
+        Key(function key only) or Modifier+Key or Modifier+Modifier+Key.<br/>
+        Modifiers are Ctrl, Alt, Command, MacCtrl, Shift(secondary modifier only).
+      </p>
       <br/>
       <p>format<span class="extension format2">1</span>: <input class="shortcut" type="text" id="shortcut3" maxlength="100" /></p>
       <p class="extension format2">format2: <input class="shortcut" type="text" id="shortcut4" maxlength="100" /></p>
