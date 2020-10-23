@@ -309,6 +309,10 @@ function onCopyTab(command, callback) {
     query.highlighted = true;
     delete query.active;
   }
+  if (command.tab && command.target == 'window') {
+    // 回避策：#20 ウィンドウのコピーができないことがある
+    delete query.currentWindow;
+  }
   
   // すべてのタブ: {}
   // カレントウィンドウのすべてのタブ: {currentWindow:true}
@@ -323,6 +327,16 @@ function onCopyTab(command, callback) {
         if (tabs[i].id == command.tab.id) {
           temp = tabs;
           break;
+        }
+      }
+    }
+    if (command.tab && command.target == 'window') {
+      // 回避策：#20 ウィンドウのコピーができないことがある
+      // 全ウィンドウを取得して、windowIdが一致するもののみとする
+      temp = [];
+      for (let i=0; i<tabs.length; i++) {
+        if (tabs[i].windowId == command.tab.windowId) {
+          temp.push(tabs[i]);
         }
       }
     }
