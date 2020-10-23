@@ -305,7 +305,7 @@ function onCopyTab(command, callback) {
   if (extension(command, 'others_pin', true)) {
     query.pinned = false;
   }
-  if (extension(command, 'others_selected', false) && query.active) {
+  if (extension(command, 'others_selected', false) && command.target == 'tab') {
     query.highlighted = true;
     delete query.active;
   }
@@ -316,7 +316,7 @@ function onCopyTab(command, callback) {
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
   chrome.tabs.query(query, (tabs) => {
     let temp = tabs;
-    if (command.tab) {
+    if (command.tab && command.target == 'tab') {
       // 未選択タブのタブコンテキストメニューは、カレントタブとして扱わない
       temp = [command.tab];
       for (let i=0; i<tabs.length; i++) {
