@@ -6,12 +6,14 @@ page = 'background';
 // ストレージバージョン2対応
 function converteStorageVersion2(oldValueSet) {
   let newValueSet;
-  if (oldValueSet.version && oldValueSet.version >= 2) {
+  if (oldValueSet && oldValueSet.version && oldValueSet.version >= 2) {
     newValueSet = oldValueSet;
   } else {
     try {
       const set = JSON.parse(JSON.stringify(defaultStorageValueSetVersion2));
-      const old = oldValueSet;
+      const old = oldValueSet && 'menu_all' in oldValueSet 
+                  ? oldValueSet 
+                  : defaultStorageValueSetVersion1;
       
       set.checkbox__menus_contexts_all = !!old.menu_all;
       set.checkbox__menus_contexts_page = !!old.menu_page;

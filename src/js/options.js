@@ -363,6 +363,10 @@ function onInit() {
         getStorageArea().set(json, () => {});
       });
     });
+    document.getElementById('setting_clear').addEventListener('click', () => {
+      getStorageArea().clear(() => {
+      });
+    });
   }
 };
 
