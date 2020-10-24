@@ -81,7 +81,7 @@ const defaultStorageValueSetVersion1 = {
   format_punycode: false,               // v1.5.6+
   format_html: false,                   // v0.0.9+
   format_pin: false,                    // v1.1.0+
-  format_selected: false,               // v1.5.1+
+  format_selected: true,                // v1.5.1+ v2.0.0+（初期設定をfalse→trueに変更）
   format_format2: false,                // v1.5.0+
   format_language: false,               // v1.5.1+
   format_extension: false               // v0.0.9+
@@ -109,7 +109,7 @@ const defaultStorageValueSetVersion2 = {
   checkbox__others_html: false,
   checkbox__others_enter: true,
   checkbox__others_pin: false,
-  checkbox__others_selected: true,      // v2.0.0から初期値変更
+  checkbox__others_selected: true,
   checkbox__others_language: false,
   checkbox__others_extension: false,
   select__browser_action: 'popup',
