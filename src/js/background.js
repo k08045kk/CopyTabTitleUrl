@@ -121,19 +121,19 @@ function main() {
         }
       });
     });
-    // キーボードショートカット設定反映
-    if (isFirefox()) {
-      getStorageArea().get(defaultStorageValueSet, (valueSet) => {
-        for (let i=3; i<=4; i++) {
-          if (valueSet.formats[i].shortcut != '') {
-            chrome.commands.update({
-              'name': 'shortcut_action'+(i==3 ? '' : (i-2)+''),
-              'shortcut': valueSet.formats[i].shortcut
-            });
-          }
-        }
-      });
-    }
+//    // キーボードショートカット設定反映
+//    if (isFirefox()) {
+//      getStorageArea().get(defaultStorageValueSet, (valueSet) => {
+//        for (let i=3; i<=4; i++) {
+//          if (valueSet.formats[i].shortcut != '') {
+//            chrome.commands.update({
+//              'name': 'shortcut_action'+(i==3 ? '' : (i-2)+''),
+//              'shortcut': valueSet.formats[i].shortcut
+//            });
+//          }
+//        }
+//      });
+//    }
   }
 };
 

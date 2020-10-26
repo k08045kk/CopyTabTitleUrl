@@ -183,7 +183,7 @@ function onUpdateShortcut() {
     getStorageArea().get(['formats'], (oldValueSet) => {
       const newValueSet = {formats:JSON.parse(JSON.stringify(oldValueSet.formats))};
       const index = element.id.match(/\d+$/)[0];
-      const name = 'shortcut_action'+(index>3 ? (index-2)+'': '');
+      const name = 'shortcut_action'+(index>3 ? (index-2)+'' : '');
       try {
         newValueSet.formats[index].shortcut = element.value;
         if (element.value != '') {
@@ -204,6 +204,10 @@ function onUpdateShortcut() {
       }
     });
   }
+  // 制約：オプション画面表示中にショートカット変更画面からショートカットが変更された場合、
+  //       オプション画面の設定には反映されない。
+  //       その場合、オプション画面・ショートカット変更画面のどちらかで最後に設定したものが優先される。
+  // ショートカット変更画面(https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox)
 };
 
 // オプション画面に値を設定する
@@ -230,9 +234,15 @@ function setOptionPageValues(valueSet) {
   }
   if (!isMobile()) {
     if (isFirefox()) {
-      for (let i=3; i<=6; i++) {
-        document.getElementById('shortcut'+i).value  = valueSet.formats[i].shortcut;
-      }
+      const newValueSet = {formats:JSON.parse(JSON.stringify(valueSet.formats))};
+      chrome.commands.getAll((commands) => {
+        for (let i=0; i<commands.length; i++) {
+          const id = commands[i].description.match(/\d+$/)[0]-0+2;
+          document.getElementById('shortcut'+id).value  = commands[i].shortcut;
+          newValueSet.formats[id].shortcut = commands[i].shortcut;
+        }
+        getStorageArea().set(newValueSet, () => {});
+      });
     } else {
       chrome.commands.getAll((commands) => {
         const shortcuts = [];
