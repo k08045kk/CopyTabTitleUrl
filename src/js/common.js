@@ -254,6 +254,13 @@ function copyToClipboard(command, tabs) {
       format = format.replace(/\${index}/ig, tabs[i].index)
                      .replace(/\${id}/ig, tabs[i].id)
                      .replace(/\${favIconUrl}/g, tabs[i].favIconUrl != '' ? tabs[i].favIconUrl : void 0);
+      format = format.replace(/\${markdown}/g, () => {
+        // see https://daringfireball.net/projects/markdown/syntax#backslash
+        // + <> → &lt;&gt;
+        return tabs[i].title.replace(/([\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!])/g, (c) => { return '\\'+c; })
+                            .replace(/</g, '&lt;')
+                            .replace(/>/g, '&gt;');
+      });
       format = _dateFormat(format, now, '${', '}');
       format = _urlFormat(format, new URL(tabs[i].url), 
                           command.checkbox__others_decode, 

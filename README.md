@@ -49,9 +49,10 @@ ${$}      | $
 
 <br/>
 
-format          | description
----             | ---
-${favIconUrl}   | Favicon URL (※1)
+format          | description                   | version
+---             | ---                           | ---
+${favIconUrl}   | Favicon URL (※1)             | v1.6.0
+${markdown}     | ${title} markdown escapes     | v2.1.0
 
 ※1: If it does not exist, output `undefined`.
 
