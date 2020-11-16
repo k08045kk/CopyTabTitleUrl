@@ -13,22 +13,22 @@ https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgj
 
 
 ## Features
-You can perform the following actions (copy to the clipboard).
-+ Copy the title and URL
-+ Copy the title
-+ Copy the URL
-+ Copy the format
+You can perform the following actions.
++ Copy the title and URL to the clipboard
++ Copy the title to the clipboard
++ Copy the URL to the clipboard
++ Copy the format to the clipboard
 
-You can perform actions on the following tab.
+You can perform actions on the following tabs.
 + Current tab
-+ Multiple selected tabs (Option must be enabled)
++ Multiple selected tabs
 + Current window tabs
 + All window tabs
 
-You can perform an action by doing the following.
-+ Context menu (all, page, text selection, browser action, tab)
+You can perform actions from the following operations.
++ Context menu (all, page, selection, link, image, browser action, tab)
 + Browser action (popup, click)
-+ Shortcut
++ Keyboard shortcuts
 
 
 
@@ -39,7 +39,7 @@ format          | description                           | version
 ${title}        | Page title                            | v0.0.7
 ${url}          | Page URL                              | v0.0.7
 ${markdown}     | ${title} markdown escapes             | v2.1.0 🧪
-${text}         | Selection string or page title (※1)  | v1.5.2
+${text}         | Selected text or page title (※1)     | v1.5.2
 ${linkText}     | Link text or page title (※2)         | v2.1.0 (Firefox only)
 ${linkUrl}, ${link}     | Link URL or page URL (※2)    | v2.1.0
 ${src}          | "src" URL or page URL (※3)           | v2.1.0
@@ -48,7 +48,7 @@ ${tabId}, $(id} | Tab ID                                | v2.1.0 🧪, v1.5.2
 ${windowId}     | Tab host window ID                    | v2.1.0 🧪
 ${favIconUrl}   | Favicon URL (※4)                     | v1.6.0 🧪
 
-※1: Used in the selected text context menus.
+※1: Used in the selection context menus.
 ※2: Used in the link context menu.
 ※3: Used in the image context menu.
 ※4: If it does not exist, output `undefined`.
