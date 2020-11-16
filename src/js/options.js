@@ -49,6 +49,8 @@ function updateOptionPage() {
   const all = checkbox('checkbox__menus_contexts_all');
   document.getElementById('checkbox__menus_contexts_page').disabled = all;
   document.getElementById('checkbox__menus_contexts_selection').disabled = all;
+  document.getElementById('checkbox__menus_contexts_link').disabled = all;
+  document.getElementById('checkbox__menus_contexts_image').disabled = all;
   document.getElementById('checkbox__menus_contexts_browser_action').disabled = all;
   
   // コピー完了通知
@@ -62,6 +64,8 @@ function updateOptionPage() {
   const contexts = checkbox('checkbox__menus_contexts_all')
                 || checkbox('checkbox__menus_contexts_page')
                 || checkbox('checkbox__menus_contexts_selection')
+                || checkbox('checkbox__menus_contexts_link')
+                || checkbox('checkbox__menus_contexts_image')
                 || checkbox('checkbox__menus_contexts_browser_action')
                 || (isFirefox() && checkbox('checkbox__menus_contexts_tab'));
   document.getElementById('menu_item').hidden = !contexts;

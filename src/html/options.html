@@ -74,6 +74,14 @@ input[type="text"] {
       <label for="checkbox__menus_contexts_selection">Text selection context menu</label>
     </p>
     <p>
+      <input id="checkbox__menus_contexts_link" type="checkbox"/>
+      <label for="checkbox__menus_contexts_link">Link context menu</label>
+    </p>
+    <p>
+      <input id="checkbox__menus_contexts_image" type="checkbox"/>
+      <label for="checkbox__menus_contexts_image">Image context menu</label>
+    </p>
+    <p>
       <input id="checkbox__menus_contexts_browser_action" type="checkbox"/>
       <label for="checkbox__menus_contexts_browser_action">Browser action context menu</label>
     </p>
@@ -272,7 +280,8 @@ input[type="text"] {
     <legend>Format</legend>
     <p class="normal">${title}, ${url}, ${enter}, ${$}.</p>
     <p class="extension" hidden="">
-      ${title},${text},${url},${enter},${r},${n},${t},${index},${$}.<br/>
+      ${title},${url},${text},${link},${src},${index},${$}.<br/>
+      ${enter},${r},${n},${t},${xXX}.<br/>
       ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}<br/>
       ${protocol}//${host}${pathname}${search}${hash}<br/>
       <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span>

@@ -98,16 +98,21 @@ const defaultStorageValueSetVersion2 = {
   // format
   // target
   // selectionText
+  // linkText
+  // linkUrl
+  // srcUrl
   // tab
   checkbox__menus_contexts_all: false,
   checkbox__menus_contexts_page: false,
   checkbox__menus_contexts_selection: false,
+  checkbox__menus_contexts_link: false,         // v2.1.0+
+  checkbox__menus_contexts_image: false,        // v2.1.0+
   checkbox__menus_contexts_browser_action: true,
-  checkbox__menus_contexts_tab: true,   // Firefox only
+  checkbox__menus_contexts_tab: true,           // Firefox only
   checkbox__popup_comlate: false,
   //checkbox__others_clipboard_api: false,
   checkbox__others_format2: false,
-  checkbox__others_extend_menus: false, // v2.0.0+
+  checkbox__others_extend_menus: false,         // v2.0.0+
   checkbox__others_edit_menu_title: false,      // v2.0.0+
   checkbox__others_decode: false,
   checkbox__others_punycode: false,
@@ -251,13 +256,22 @@ function copyToClipboard(command, tabs) {
                    .replace(/\${url}/ig, url)
                    .replace(/\${enter}/ig, enter);
     if (command.checkbox__others_extension) {
-      const stext = (tabs.length == 1 && command.selectionText) ? command.selectionText : tabs[i].title;
+      const stext = tabs.length == 1 && command.selectionText || tabs[i].title;
+      const ltext = tabs.length == 1 && command.linkText || tabs[i].title;
+      const link  = tabs.length == 1 && command.linkUrl || tabs[i].url;
+      const src   = tabs.length == 1 && command.srcUrl || tabs[i].url;
       format = format.replace(/\${(tab|\\t|t)}/ig, '\t')
                      .replace(/\${(cr|\\r|r)}/ig,  '\r')
                      .replace(/\${(lf|\\n|n)}/ig,  '\n')
-                     .replace(/\${text}/ig, stext);
+                     .replace(/\${text}/ig, stext)
+                     .replace(/\${linkText}/g, ltext)
+                     .replace(/\${(linkUrl|link)}/g, link)
+                     .replace(/\${src}/g, src)
+                     ;
       format = format.replace(/\${index}/ig, tabs[i].index)
                      .replace(/\${id}/ig, tabs[i].id)
+                     .replace(/\${tabId}/g, tabs[i].id)
+                     .replace(/\${windowId}/g, tabs[i].windowId)
                      .replace(/\${favIconUrl}/g, tabs[i].favIconUrl != '' ? tabs[i].favIconUrl : void 0);
       format = format.replace(/\${markdown}/g, () => {
         // see https://daringfireball.net/projects/markdown/syntax#backslash
@@ -265,6 +279,9 @@ function copyToClipboard(command, tabs) {
         return tabs[i].title.replace(/([\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!])/g, (c) => { return '\\'+c; })
                             .replace(/</g, '&lt;')
                             .replace(/>/g, '&gt;');
+      });
+      format = format.replace(/\${x[0-9A-Fa-f][0-9A-Fa-f]}/g, (hex) => {
+        return String.fromCharCode(parseInt(hex.substring(3, hex.length-1), 16));
       });
       format = _dateFormat(format, now, '${', '}');
       format = _urlFormat(format, new URL(tabs[i].url), 
@@ -372,6 +389,9 @@ function onContextMenus(info, tab) {
     //valueSet.format.checkbox__others_html = true; // みたいな？
     valueSet.target = menu.target;
     valueSet.selectionText = info.selectionText;
+    valueSet.linkText = info.linkText;  // Firefox56+(Chromeは、対象外)
+    valueSet.linkUrl = info.linkUrl;
+    valueSet.srcUrl = info.srcUrl;
     valueSet.tab = tab;
     onCopyTab(valueSet, null);
   });
@@ -385,6 +405,8 @@ function updateContextMenus() {
     if (valueSet.checkbox__menus_contexts_all) {  contexts.push('all'); }
     if (valueSet.checkbox__menus_contexts_page) { contexts.push('page'); }
     if (valueSet.checkbox__menus_contexts_selection) { contexts.push('selection'); }
+    if (valueSet.checkbox__menus_contexts_link) { contexts.push('link'); }
+    if (valueSet.checkbox__menus_contexts_image) { contexts.push('image'); }
     if (valueSet.checkbox__menus_contexts_browser_action) { contexts.push('browser_action'); }
     if (isFirefox() && valueSet.checkbox__menus_contexts_tab) { contexts.push('tab'); }
     

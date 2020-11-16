@@ -32,67 +32,75 @@ You can perform an action by doing the following.
 
 
 
-## Usage
-### Format
-format    | description
----       | ---
-${title}  | Page Title.
-${text}   | Selection string, or page title.
-${url}    | Page URL.
-${enter}  | Newline characters (Windows:\r\n, Mac/Linux:\n)
-${r}      | Carriage Return (\r)
-${n}      | Line Feed (\n)
-${t}      | Horizontal Tab (\t)
-${index}  | Serial number from 0 per window
-${id}     | Tab ID
-${$}      | $
+## Format
+### Basic
+format          | description                           | version
+---             | ---                                   | ---
+${title}        | Page title                            | v0.0.7
+${url}          | Page URL                              | v0.0.7
+${markdown}     | ${title} markdown escapes             | v2.1.0 🧪
+${text}         | Selection string or page title (※1)  | v1.5.2
+${linkText}     | Link text or page title (※2)         | v2.1.0 (Firefox only)
+${linkUrl}, ${link}     | Link URL or page URL (※2)    | v2.1.0
+${src}          | "src" URL or page URL (※3)           | v2.1.0
+${index}        | Serial number from 0 per window       | v1.5.2
+${tabId}, $(id} | Tab ID                                | v2.1.0 🧪, v1.5.2
+${windowId}     | Tab host window ID                    | v2.1.0 🧪
+${favIconUrl}   | Favicon URL (※4)                     | v1.6.0 🧪
 
-<br/>
+※1: Used in the selected text context menus.
+※2: Used in the link context menu.
+※3: Used in the image context menu.
+※4: If it does not exist, output `undefined`.
 
-format          | description                   | version
----             | ---                           | ---
-${favIconUrl}   | Favicon URL (※1)             | v1.6.0
-${markdown}     | ${title} markdown escapes     | v2.1.0
 
-※1: If it does not exist, output `undefined`.
+### Character code
+format          | description                           | version
+---             | ---                                   | ---
+${enter}        | Newline characters (Windows:\r\n, Mac/Linux:\n)       | v0.0.9
+${CR}, ${r}     | Carriage Return (\r)                  | v1.1.1, v1.5.2
+${LF}, ${n}     | Line Feed (\n)                        | v1.1.1, v1.5.2
+${tab}, ${t}    | Horizontal Tab (\t)                   | v0.0.9, v1.5.2
+${$}            | $                                     | v1.5.4
+${xXX}          | Specify the character code in hexadecimal of "XX".    | v2.1.0 🧪
 
-<br/>
 
-format          | description
----             | ---
-${yyyy}         | 4-digit year
-${yy}           | 2-digit year
-${MM}, ${M}     | month
-${dd}, ${d}     | day
-${HH}, ${H}     | hours (24 hours)
-${hh}, ${h}     | hours (12 hours)
-${mm}, ${m}     | minutes
-${ss}, ${s}     | seconds
-${SSS}, ${S}    | milliseconds
+### Date
+format          | description                           | version
+---             | ---                                   | ---
+${yyyy}, ${yy}  | year                                  | v1.5.4
+${MM}, ${M}     | month                                 | v1.5.4
+${dd}, ${d}     | day                                   | v1.5.4
+${HH}, ${H}     | hours (24 hours)                      | v1.5.4
+${hh}, ${h}     | hours (12 hours)                      | v1.5.4
+${mm}, ${m}     | minutes                               | v1.5.4
+${ss}, ${s}     | seconds                               | v1.5.4
+${SSS}, ${S}    | milliseconds                          | v1.5.4
 
 ※`${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}`  
 　`2020-04-03T00:48:23.456`
 
-<br/>
 
-format          | description
----             | ---
-${protocol}     | protocol:
-${username}     | (username)
-${username@}    | (username@)
-${password}     | (password)
-${password@}    | (password@)
-${username:password@} | (username:password@)
-${host}         | hostname(:port)
-${hostname}     | hostname
-${port}         | (port)
-${:port}        | (:port)
-${pathname}     | /pathname
-${search}       | (?param)
-${hash}         | (#hash)
-${origin}       | URL origin
-${href}         | URL
+### URL
+format          | description                           | version
+---             | ---                                   | ---
+${protocol}     | protocol:                             | v1.5.6
+${username}     | (username)                            | v1.5.6
+${username@}    | (username@)                           | v1.5.6
+${password}     | (password)                            | v1.5.6
+${password@}    | (password@)                           | v1.5.6
+${username:password@} | (username:password@)            | v1.5.6
+${host}         | hostname(:port)                       | v1.5.6
+${hostname}     | hostname                              | v1.5.6
+${port}         | (port)                                | v1.5.6
+${:port}        | (:port)                               | v1.5.6
+${pathname}     | /pathname                             | v1.5.6
+${search}       | (?param)                              | v1.5.6
+${hash}         | (#hash)                               | v1.5.6
+${origin}       | URL origin                            | v1.5.6
+${href}         | URL                                   | v1.5.6
 
+※If `(data)` does not exist, it is treated as an empty string.
 ※[window.URL - Web API | MDN](https://developer.mozilla.org/docs/Web/API/URL)
 
 
