@@ -2,6 +2,11 @@
  * 共通処理
  */
 var page = 'common';
+var ACTION_MENU_TOP_LEVEL_LIMIT = 6;
+
+try {
+  ACTION_MENU_TOP_LEVEL_LIMIT = chrome.contextMenus.ACTION_MENU_TOP_LEVEL_LIMIT;
+} catch (e) {}
 
 // ブラウザ判定
 function isFirefox() {
@@ -420,13 +425,15 @@ function updateContextMenus() {
       }
       for (let i=0; i<menus.length; i++) {
         if (menus[i].type == 'separator') {
-          // ブラウザアクションは、6個制限があるため、セパレータなし
-          if (menus.length > 6 && !(contexts.length == 1 && contexts[0] == 'browser_action')) {
-            chrome.contextMenus.create({
-              type: menus[i].type,
-              contexts: contexts.filter((v) => v != 'browser_action'),
-            });
-          } else if (menus.length <= 6) {
+          // ブラウザアクションは、6個制限(ACTION_MENU_TOP_LEVEL_LIMIT)があるため、セパレータなし
+          if (menus.length > ACTION_MENU_TOP_LEVEL_LIMIT) {
+            if (!(contexts.length == 1 && contexts[0] == 'browser_action')) {
+              chrome.contextMenus.create({
+                type: menus[i].type,
+                contexts: contexts.filter((v) => v != 'browser_action'),
+              });
+            }
+          } else {
             chrome.contextMenus.create({
               type: menus[i].type,
               contexts: contexts,
