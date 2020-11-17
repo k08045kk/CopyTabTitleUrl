@@ -13,22 +13,29 @@ https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgj
 
 
 ## Features
-You can perform the following actions.
-+ Copy the title and URL to the clipboard
-+ Copy the title to the clipboard
-+ Copy the URL to the clipboard
-+ Copy the format to the clipboard
+You can customize the extension by setting options.
+
+You can perform the following clipboard copy actions.
++ Copy the title and URL
++ Copy the title
++ Copy the URL
++ Copy the format (Example: Markdown, Hyperlink, etc)
 
 You can perform actions on the following tabs.
 + Current tab
 + Multiple selected tabs
 + Current window tabs
-+ All window tabs
++ All tabs
 
 You can perform actions from the following operations.
 + Context menu (all, page, selection, link, image, browser action, tab)
 + Browser action (popup, click)
 + Keyboard shortcuts
+
+You can perform the following auxiliary functions.
++ Decode the URL
++ Decode the punycode
++ Copy in HTML format
 
 
 
