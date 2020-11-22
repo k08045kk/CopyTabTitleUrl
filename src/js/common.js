@@ -369,10 +369,21 @@ function onCopyTab(command, callback) {
         }
       }
     }
-    copyToClipboard(command, temp);
-    if (callback) {
-      // 処理完了通知
-      callback();
+    if (temp.length == 0) {
+      // #24 コピーするタブがない場合、カレントタブをコピーする
+      chrome.tabs.query({currentWindow:true, active:true}, (tabs) => {
+        copyToClipboard(command, tabs);
+        if (callback) {
+          // 処理完了通知
+          callback();
+        }
+      });
+    } else {
+      copyToClipboard(command, temp);
+      if (callback) {
+        // 処理完了通知
+        callback();
+      }
     }
   });
 };
