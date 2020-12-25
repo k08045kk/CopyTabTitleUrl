@@ -92,11 +92,6 @@ ${SSS}, ${S}    | milliseconds                          | v1.5.4
 format          | description                           | version
 ---             | ---                                   | ---
 ${protocol}     | protocol:                             | v1.5.6
-${username}     | (username)                            | v1.5.6
-${username@}    | (username@)                           | v1.5.6
-${password}     | (password)                            | v1.5.6
-${password@}    | (password@)                           | v1.5.6
-${username:password@} | (username:password@)            | v1.5.6
 ${host}         | hostname(:port)                       | v1.5.6
 ${hostname}     | hostname                              | v1.5.6
 ${port}         | (port)                                | v1.5.6
@@ -108,6 +103,8 @@ ${origin}       | URL origin                            | v1.5.6
 ${href}         | URL                                   | v1.5.6
 
 ※If `(data)` does not exist, it is treated as an empty string.
+※${protocol}//${hostname}${:port}${pathname}${search}${hash}
+  `https://example.com:80/path/file?param1=data1&param2=data2#hash`
 ※[window.URL - Web API | MDN](https://developer.mozilla.org/docs/Web/API/URL)
 
 
