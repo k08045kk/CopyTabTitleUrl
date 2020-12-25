@@ -40,6 +40,17 @@ You can perform the following auxiliary functions.
 
 
 ## Format
+### Standard
+format          | description                           | version
+---             | ---                                   | ---
+${title}        | Page title                            | v0.0.7
+${url}          | Page URL                              | v0.0.7
+${enter}        | Newline characters (Windows:\r\n, Mac/Linux:\n)       | v0.0.9
+${$}            | $                                     | v1.5.4
+
+※Non-standard features will not work unless "Extended mode" is enabled.
+
+
 ### Basic
 format          | description                           | version
 ---             | ---                                   | ---
