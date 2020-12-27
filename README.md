@@ -66,9 +66,9 @@ ${tabId}, $(id} | Tab ID                                | v2.1.0 🧪, v1.5.2
 ${windowId}     | Tab host window ID                    | v2.1.0 🧪
 ${favIconUrl}   | Favicon URL (※4)                     | v1.6.0 🧪
 
-※1: Used in the selection context menus.
-※2: Used in the link context menu.
-※3: Used in the image context menu.
+※1: Used in the selection context menus.  
+※2: Used in the link context menu.  
+※3: Used in the image context menu.  
 ※4: If it does not exist, output `undefined`.
 
 
@@ -113,9 +113,9 @@ ${hash}         | (#hash)                               | v1.5.6
 ${origin}       | URL origin                            | v1.5.6
 ${href}         | URL                                   | v1.5.6
 
-※If `(data)` does not exist, it is treated as an empty string.
-※${protocol}//${hostname}${:port}${pathname}${search}${hash}
-  `https://example.com:80/path/file?param1=data1&param2=data2#hash`
+※If `(data)` does not exist, it is treated as an empty string.  
+※${protocol}//${hostname}${:port}${pathname}${search}${hash}  
+　`https://example.com:80/path/file?param1=data1&param2=data2#hash`  
 ※[window.URL - Web API | MDN](https://developer.mozilla.org/docs/Web/API/URL)
 
 
