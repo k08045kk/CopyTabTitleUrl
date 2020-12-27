@@ -71,7 +71,15 @@ input[type="text"] {
     </p>
     <p>
       <input id="checkbox__menus_contexts_selection" type="checkbox"/>
-      <label for="checkbox__menus_contexts_selection">Text selection context menu</label>
+      <label for="checkbox__menus_contexts_selection">Selection context menu</label>
+    </p>
+    <p class="extension">
+      <input id="checkbox__menus_contexts_link" type="checkbox"/>
+      <label for="checkbox__menus_contexts_link">Link context menu</label>
+    </p>
+    <p class="extension">
+      <input id="checkbox__menus_contexts_image" type="checkbox"/>
+      <label for="checkbox__menus_contexts_image">Image context menu</label>
     </p>
     <p>
       <input id="checkbox__menus_contexts_browser_action" type="checkbox"/>
@@ -272,7 +280,8 @@ input[type="text"] {
     <legend>Format</legend>
     <p class="normal">${title}, ${url}, ${enter}, ${$}.</p>
     <p class="extension" hidden="">
-      ${title},${text},${url},${enter},${r},${n},${t},${index},${$}.<br/>
+      ${title},${url},${text},${link},${src},${index},${$}.<br/>
+      ${enter},${r},${n},${t},${xXX}.<br/>
       ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}<br/>
       ${protocol}//${host}${pathname}${search}${hash}<br/>
       <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span>
@@ -280,13 +289,16 @@ input[type="text"] {
     <br/>
     <p>format<span class="extension" hidden="">1</span>: <input class="format" type="text" id="format3" maxlength="256" /></p>
     <p class="extension format2" hidden="">format2: <input class="format" type="text" id="format4" maxlength="256" /></p>
-    <p class="extension extend_menus" hidden=""><span id="format5_title">format3</span>: <input class="format" type="text" id="format5" maxlength="256" /></p>
-    <p class="extension extend_menus" hidden=""><span id="format6_title">format4</span>: <input class="format" type="text" id="format6" maxlength="256" /></p>
-    <p class="extension extend_menus" hidden=""><span id="format7_title">format5</span>: <input class="format" type="text" id="format7" maxlength="256" /></p>
-    <p class="extension extend_menus" hidden=""><span id="format8_title">format6</span>: <input class="format" type="text" id="format8" maxlength="256" /></p>
-    <p class="extension extend_menus" hidden=""><span id="format9_title">format7</span>: <input class="format" type="text" id="format9" maxlength="256" /></p>
-    <p class="extension extend_menus" hidden=""><span id="format10_title">format8</span>: <input class="format" type="text" id="format10" maxlength="256" /></p>
-    <p class="extension extend_menus" hidden=""><span id="format11_title">format9</span>: <input class="format" type="text" id="format11" maxlength="256" /></p>
+    <div class="extension extend_menus" hidden="">
+      <hr/>
+      <p><span id="format5_title">format3</span>: <input class="format" type="text" id="format5" maxlength="256" /></p>
+      <p><span id="format6_title">format4</span>: <input class="format" type="text" id="format6" maxlength="256" /></p>
+      <p><span id="format7_title">format5</span>: <input class="format" type="text" id="format7" maxlength="256" /></p>
+      <p><span id="format8_title">format6</span>: <input class="format" type="text" id="format8" maxlength="256" /></p>
+      <p><span id="format9_title">format7</span>: <input class="format" type="text" id="format9" maxlength="256" /></p>
+      <p><span id="format10_title">format8</span>: <input class="format" type="text" id="format10" maxlength="256" /></p>
+      <p><span id="format11_title">format9</span>: <input class="format" type="text" id="format11" maxlength="256" /></p>
+    </div>
   </fieldset>
   <fieldset class="desktop"><!-- キーボードショートカット -->
     <legend>Keyboard shortcut</legend>
@@ -303,7 +315,7 @@ input[type="text"] {
         Modifiers are Ctrl, Alt, Command, MacCtrl, Shift(secondary modifier only).
       </p>
       <br/>
-      <p>format<span class="extension format2">1</span>: <input class="shortcut" type="text" id="shortcut3" maxlength="100" /></p>
+      <p>format<span class="extension">1</span>: <input class="shortcut" type="text" id="shortcut3" maxlength="100" /></p>
       <p class="extension format2">format2: <input class="shortcut" type="text" id="shortcut4" maxlength="100" /></p>
       <p class="extension extend_menus hide">format3: <input class="shortcut" type="text" id="shortcut5" maxlength="100" /></p>
       <p class="extension extend_menus hide">format4: <input class="shortcut" type="text" id="shortcut6" maxlength="100" /></p>
@@ -328,6 +340,7 @@ input[type="text"] {
       <input id="checkbox__others_edit_menu_title" type="checkbox"/>
       <label for="checkbox__others_edit_menu_title" data-i18n="optionPage_EditMenuTitle" data-english="Edit the context menu title"></label>
     </p>
+    <hr class="extension"/>
     <p class="extension">
       <input id="checkbox__others_decode" type="checkbox"/>
       <label for="checkbox__others_decode" data-i18n="optionPage_FormatDecode" data-english="Decode the URL"></label>
@@ -340,6 +353,7 @@ input[type="text"] {
       <input id="checkbox__others_html" type="checkbox"/>
       <label for="checkbox__others_html" data-i18n="optionPage_FormatCopyHTML" data-english="Copy in HTML format"></label>
     </p>
+    <hr class="extension"/>
     <p class="extension">
       <input id="checkbox__others_enter" type="checkbox"/>
       <label for="checkbox__others_enter" data-i18n="optionPage_SeparateMultipleNewLine" data-english="Separate multiple tabs with a newline character"></label>
