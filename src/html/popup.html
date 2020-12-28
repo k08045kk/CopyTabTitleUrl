@@ -9,10 +9,11 @@
 }
 body {
   width: 160px;
-  font-size: 16px;
+  border: 1px solid #aaa;
   color: #000;
   pading: 0;
   margin: auto;
+  font-size: 16px;
   user-select: none;
 }
 .clearfix::after {
@@ -28,9 +29,6 @@ body {
   text-align: center;
 }
 
-.top {
-  border-top: 1px solid #aaa;
-}
 .title {
   font-size: 12px;
   text-align: center;
@@ -73,6 +71,13 @@ body {
 #target_all:checked ~ #footer::after {
   content: 'tabs';
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #E8EAED;
+    background: #444;
+  }
+}
   </style>
   <script defer="" src="/lib/punycode.js/punycode.js"></script>
   <script defer="" src="/js/common.js"></script>
@@ -80,7 +85,7 @@ body {
 </head>
 <body>
   <div id="panel" hidden="">
-    <div class="box title top">CopyTabTitleUrl</div>
+    <div class="box title">CopyTabTitleUrl</div>
     <div class="box item copy" id="format0">title<br/>URL</div>
     <div class="box item copy" id="format1">title</div>
     <div class="box item copy" id="format2">URL</div>
