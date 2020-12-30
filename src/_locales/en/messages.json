@@ -61,5 +61,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Use Clipboard API"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Exclude hidden tabs"
   }
 }

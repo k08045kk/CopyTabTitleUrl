@@ -61,5 +61,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "클립 보드 API 사용"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "숨겨진 탭 제외"
   }
 }

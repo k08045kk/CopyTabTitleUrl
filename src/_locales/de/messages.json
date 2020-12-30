@@ -70,5 +70,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Verwenden Sie die Zwischenablage-API"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Versteckte Registerkarten ausschließen"
   }
 }

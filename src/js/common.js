@@ -119,6 +119,7 @@ const defaultStorageValueSetVersion2 = {
   checkbox__others_html: false,
   checkbox__others_enter: true,
   checkbox__others_pin: false,
+  checkbox__others_hidden: false,               // v2.1.1+
   checkbox__others_selected: true,
   checkbox__others_language: false,
   checkbox__others_extension: false,
@@ -366,6 +367,13 @@ function onCopyTab(command, callback) {
       for (let i=0; i<tabs.length; i++) {
         if (tabs[i].windowId == command.tab.windowId) {
           temp.push(tabs[i]);
+        }
+      }
+    }
+    if (isFirefox() && extension(command, 'others_hidden', true)) {
+      for (let i=temp.length; --i; ) {
+        if (temp[i].hidden) {
+          temp.splice(i, 1);
         }
       }
     }

@@ -65,6 +65,10 @@
     "message":    "Exclude pinned tabs",
     "description":"ピン留めタブを除外する"
   },
+  "optionPage_ExcludeHidden": {
+    "message":    "Exclude hidden tabs",
+    "description":"非表示のタブを除外する"
+  },
   "optionPage_MultipleSelectionTabs": {
     "message":    "Enable multiple selection tabs",
     "description":"選択タブを有効にする"

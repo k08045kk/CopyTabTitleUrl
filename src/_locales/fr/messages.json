@@ -70,5 +70,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Utiliser l'API Clipboard"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Exclure les onglets masqués"
   }
 }

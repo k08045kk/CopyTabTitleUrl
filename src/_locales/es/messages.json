@@ -70,5 +70,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Usar la API del portapapeles"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Excluir pestañas ocultas"
   }
 }

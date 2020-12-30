@@ -70,5 +70,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "クリップボードAPIを使用する"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "非表示のタブを除外する"
   }
 }

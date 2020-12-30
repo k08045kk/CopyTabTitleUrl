@@ -61,5 +61,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Использовать API буфера обмена"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Исключить скрытые вкладки"
   }
 }

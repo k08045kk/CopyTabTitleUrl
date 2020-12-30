@@ -61,5 +61,8 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "使用剪貼板API"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "排除隱藏的標籤"
   }
 }
