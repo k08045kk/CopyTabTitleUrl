@@ -446,7 +446,7 @@ function updateContextMenus() {
     const contexts = [];
     if (valueSet.checkbox__menus_contexts_all) {  contexts.push('all'); }
     if (valueSet.checkbox__menus_contexts_page) { contexts.push('page'); }
-    if (valueSet.checkbox__menus_contexts_selection) { contexts.push('selection'); }
+    if (extension(valueSet, 'menus_contexts_selection', true)) { contexts.push('selection'); }
     if (extension(valueSet, 'menus_contexts_link', true)) { contexts.push('link'); }
     if (extension(valueSet, 'menus_contexts_image', true)) { contexts.push('image'); }
     if (valueSet.checkbox__menus_contexts_browser_action) { contexts.push('browser_action'); }
