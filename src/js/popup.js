@@ -5,14 +5,7 @@
 
 // コピー完了イベント
 function onTabCopyComplete() {
-  if (isMobile()) {
-    document.getElementById('action').hidden = false;
-    setTimeout(() => {
-      document.getElementById('action').hidden = true;
-    }, 1000);
-  } else {
-    window.close();
-  }
+  window.close();
 };
 
 // ページ読み込み完了イベント

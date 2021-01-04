@@ -1,31 +1,13 @@
 ﻿/**
  * 共通処理
  */
-var page = 'common';
-var ACTION_MENU_TOP_LEVEL_LIMIT = 6;
-
-try {
-  ACTION_MENU_TOP_LEVEL_LIMIT = chrome.contextMenus.ACTION_MENU_TOP_LEVEL_LIMIT;
-} catch (e) {}
 
 // ブラウザ判定
 function isFirefox() {
   return 'browser' in window;
 };
-function isEdge() {
-  return 'edge' in window;
-};
 function isChrome() {
   return !isFirefox();
-};
-
-// モバイル判定
-function isMobile() {
-  const ua = window.navigator.userAgent.toLowerCase();
-  return ua.indexOf('android') != -1
-      || ua.indexOf('mobile') != -1
-      || ua.indexOf('iphone') != -1
-      || ua.indexOf('ipod') != -1;
 };
 
 // Windows判定
@@ -490,7 +472,7 @@ function updateContextMenus() {
       for (let i=0; i<menus.length; i++) {
         if (menus[i].type == 'separator') {
           // ブラウザアクションは、6個制限(ACTION_MENU_TOP_LEVEL_LIMIT)があるため、セパレータなし
-          if (menus.length > ACTION_MENU_TOP_LEVEL_LIMIT) {
+          if (menus.length > chrome.contextMenus.ACTION_MENU_TOP_LEVEL_LIMIT) {
             if (!(contexts.length == 1 && contexts[0] == 'browser_action')) {
               chrome.contextMenus.create({
                 type: menus[i].type,
@@ -517,12 +499,10 @@ function updateContextMenus() {
     }
   };
   
-  // モバイル以外 && メニュー削除 && ストレージ取得
-  if (!isMobile()) {
-    chrome.contextMenus.removeAll(() => {
-      getStorageArea().get(defaultStorageValueSet, onUpdateContextMenus);
-    });
-  }
+  // メニュー削除 && ストレージ取得
+  chrome.contextMenus.removeAll(() => {
+    getStorageArea().get(defaultStorageValueSet, onUpdateContextMenus);
+  });
 };
 
 // ブラウザアクションの更新

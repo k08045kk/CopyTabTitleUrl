@@ -48,11 +48,6 @@ input[type="text"] {
 .menu_target {
   float: right;
 }
-#browser_option {
-  margin-left:0.5em;
-  font-size:12px;
-  color:#B36675;
-}
 
 @media (prefers-color-scheme: dark) {
   body {
@@ -73,7 +68,7 @@ input[type="text"] {
 </head>
 <body>
   
-  <fieldset class="desktop"><!-- コンテキストメニュー -->
+  <fieldset><!-- コンテキストメニュー -->
     <legend>Context menu</legend>
     <p>
       <input id="checkbox__menus_contexts_all" type="checkbox"/>
@@ -267,7 +262,6 @@ input[type="text"] {
     <p>
       <input id="select__browser_action__action" type="radio" name="browser_action" value="action"/>
       <label for="select__browser_action__action" data-i18n="optionPage_Action" data-english="Execute format action"></label>
-      <span id="browser_option" data-i18n="optionPage_Restart" data-english="Restart" hidden=""></span>
     </p>
     <p style="margin-left:1em;">
       <input id="checkbox__popup_comlate" type="checkbox"/>
@@ -314,7 +308,7 @@ input[type="text"] {
       <p><span id="format11_title">format9</span>: <input class="format" type="text" id="format11" maxlength="256" /></p>
     </div>
   </fieldset>
-  <fieldset class="desktop"><!-- キーボードショートカット -->
+  <fieldset><!-- キーボードショートカット -->
     <legend>Keyboard shortcut</legend>
     <div class="chrome">
       <p>
@@ -372,16 +366,16 @@ input[type="text"] {
       <label for="checkbox__others_enter" data-i18n="optionPage_SeparateMultipleNewLine" data-english="Separate multiple tabs with a newline character"></label>
     </p>
     <hr class="extension"/>
-    <p class="desktop extension">
+    <p class="extension">
       <input id="checkbox__others_pin" type="checkbox"/>
       <label for="checkbox__others_pin" data-i18n="optionPage_ExcludePinned" data-english="Exclude pinned tabs"></label>
     </p>
-    <p class="desktop extension firefox">
+    <p class="extension firefox">
       <input id="checkbox__others_hidden" type="checkbox"/>
       <label for="checkbox__others_hidden" data-i18n="optionPage_ExcludeHidden" data-english="Exclude hidden tabs"></label>
     </p>
     <hr class="extension"/>
-    <p class="desktop">
+    <p>
       <input id="checkbox__others_selected" type="checkbox"/>
       <label for="checkbox__others_selected" data-i18n="optionPage_MultipleSelectionTabs" data-english="Enable multiple selection tabs"></label>
     </p>
