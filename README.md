@@ -80,7 +80,6 @@ ${CR}, ${r}     | Carriage Return (\r)                  | v1.1.1, v1.5.2
 ${LF}, ${n}     | Line Feed (\n)                        | v1.1.1, v1.5.2
 ${tab}, ${t}    | Horizontal Tab (\t)                   | v0.0.9, v1.5.2
 ${$}            | $                                     | v1.5.4
-${xXX}          | Specify the character code in hexadecimal of "XX".    | v2.1.0 🧪
 
 
 ### Date
