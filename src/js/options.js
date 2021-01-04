@@ -181,7 +181,7 @@ function onUpdateShortcut() {
           chrome.commands.reset(name);
         }
         getStorageArea().set(newValueSet, () => {});
-        element.style.background = '';
+        element.classList.remove('error');
       } catch (e) {
         // 直前の成功状態に戻す
         if (oldValueSet.formats[index].shortcut != '') {
@@ -189,7 +189,7 @@ function onUpdateShortcut() {
         } else {
           chrome.commands.reset(name);
         }
-        element.style.background = '#ffeaee';
+        element.classList.add('error');
       }
     });
   }
