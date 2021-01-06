@@ -147,7 +147,7 @@ const defaultStorageValueSetVersion2 = {
     {id:8, title:'format6', format:''}, 
     {id:9, title:'format7', format:''}, 
     {id:10, title:'format8', format:''}, 
-    {id:11, title:'format9', format:'[${linkSelectionTitle}](${linkUrl})'}, 
+    {id:11, title:'format9', format:'[${linkSelectionTitle}](${linkSrcUrl})'},  // v2.2.0+
   ]
 };
 const defaultStorageValueSet = defaultStorageValueSetVersion2;
