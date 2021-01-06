@@ -99,6 +99,9 @@ function updateOptionPage() {
   document.querySelectorAll('.menu_title').forEach((element) => {
     element.hidden = !(extension && edit);
   });
+  // ClipBoardAPI
+  const html = checkbox('checkbox__others_html');
+  document.getElementById('checkbox__others_clipboard_api').disabled = html;
 };
 
 // ショートカットを更新

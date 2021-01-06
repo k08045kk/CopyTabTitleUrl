@@ -29,10 +29,6 @@
     "message":    "Please change from the standard setting.",
     "description":"標準設定から変更してください。"
   },
-  "optionPage_ClipboardAPI": {
-    "message":    "Use Clipboard API",
-    "description":"ClipBoard APIを使用する"
-  },
   "optionPage_Format2": {
     "message":    "Enable Format 2",
     "description":"フォーマット2を有効にする"
@@ -60,6 +56,10 @@
   "optionPage_FormatCopyHTML": {
     "message":    "Copy in HTML format",
     "description":"HTML形式でコピーする"
+  },
+  "optionPage_ClipboardAPI": {
+    "message":    "Use Clipboard API",
+    "description":"ClipBoard APIを使用する"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message":    "Separate multiple tabs with a newline character",

@@ -92,7 +92,6 @@ const defaultStorageValueSetVersion2 = {
   checkbox__menus_contexts_browser_action: true,
   checkbox__menus_contexts_tab: true,           // Firefox only
   checkbox__popup_comlate: false,
-  //checkbox__others_clipboard_api: false,
   checkbox__others_format2: false,
   checkbox__others_extend_menus: false,         // v2.0.0+
   checkbox__others_format9: false,              // v2.2.0+
@@ -100,6 +99,7 @@ const defaultStorageValueSetVersion2 = {
   checkbox__others_decode: false,
   checkbox__others_punycode: false,
   checkbox__others_html: false,
+  checkbox__others_clipboard_api: false,        // v2.2.0+ Firefox only
   checkbox__others_enter: true,
   checkbox__others_pin: false,
   checkbox__others_hidden: false,               // v2.1.1+
@@ -324,18 +324,29 @@ function createFormatText(command, tabs) {
 function copyToClipboard(command, tabs) {
   const text = createFormatText(command, tabs);
   
-  // クリップボードコピー（execCommand）
-  document.addEventListener('copy', function oncopy(event) {
-    document.removeEventListener('copy', oncopy, true);
-    event.stopImmediatePropagation();
-    event.preventDefault();
-    
-    if (extension(command, 'others_html', true)) {
-      event.clipboardData.setData('text/html', text);
-    }
-    event.clipboardData.setData('text/plain', text);
-  }, true);
-  document.execCommand('copy');
+  if (isFirefox() 
+   && extension(command, 'others_clipboard_api', true) 
+   && !extension(command, 'others_html', true)) {
+    // クリップボードコピー（ClipboardAPI）
+    navigator.clipboard.writeText(text).then(function() {
+      //console.log('successfully');
+    }, function() {
+      //console.log('failed');
+    });
+  } else {
+    // クリップボードコピー（execCommand）
+    document.addEventListener('copy', function oncopy(event) {
+      document.removeEventListener('copy', oncopy, true);
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      
+      if (extension(command, 'others_html', true)) {
+        event.clipboardData.setData('text/html', text);
+      }
+      event.clipboardData.setData('text/plain', text);
+    }, true);
+    document.execCommand('copy');
+  }
 };
 
 // タブをクリップボードにコピー
