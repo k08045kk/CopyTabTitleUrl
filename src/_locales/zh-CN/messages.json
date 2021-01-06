@@ -64,5 +64,8 @@
   },
   "optionPage_ExcludeHidden": {
     "message": "排除隐藏的标签"
+  },
+  "optionPage_Format9": {
+    "message": "选择，链接，图像在上下文菜单中仅设置format9"
   }
 }

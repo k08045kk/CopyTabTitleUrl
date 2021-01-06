@@ -41,6 +41,10 @@
     "message":    "Enable extended context menu",
     "description":"拡張コンテキストメニューを有効にする"
   },
+  "optionPage_Format9": {
+    "message":    "selection, link, image Set only format9 in the context menu",
+    "description":"選択・リンク・画像コンテキストメニューでformat9のみを設定する"
+  },
   "optionPage_EditMenuTitle": {
     "message":    "Edit the context menu title",
     "description":"コンテキストメニューのタイトルを編集する"

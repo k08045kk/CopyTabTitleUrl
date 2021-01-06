@@ -73,5 +73,8 @@
   },
   "optionPage_ExcludeHidden": {
     "message": "Versteckte Registerkarten ausschließen"
+  },
+  "optionPage_Format9": {
+    "message": "Auswahl, Link, Bild Nur Kontext9 im Kontextmenü einstellen"
   }
 }

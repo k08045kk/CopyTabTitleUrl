@@ -48,9 +48,6 @@ function updateOptionPage() {
   // ALL選択時は、PAGEを無効化
   const all = checkbox('checkbox__menus_contexts_all');
   document.getElementById('checkbox__menus_contexts_page').disabled = all;
-  document.getElementById('checkbox__menus_contexts_selection').disabled = all;
-  document.getElementById('checkbox__menus_contexts_link').disabled = all;
-  document.getElementById('checkbox__menus_contexts_image').disabled = all;
   document.getElementById('checkbox__menus_contexts_browser_action').disabled = all;
   
   // コピー完了通知
@@ -89,6 +86,11 @@ function updateOptionPage() {
   document.querySelectorAll('.extend_menus:not(.hide)').forEach((v, i, a) => {
     v.hidden = !(extension && exmenus);
   });
+  const format9 = checkbox('checkbox__others_format9');
+  document.getElementById('checkbox__others_format9').disabled = !exmenus;
+  document.getElementById('checkbox__menus_contexts_selection').disabled = all || (exmenus && format9);
+  document.getElementById('checkbox__menus_contexts_link').disabled = all || (exmenus && format9);
+  document.getElementById('checkbox__menus_contexts_image').disabled = all || (exmenus && format9);
   // タイトル編集
   const edit = checkbox('checkbox__others_edit_menu_title');
   document.querySelectorAll('.menu_label').forEach((element) => {

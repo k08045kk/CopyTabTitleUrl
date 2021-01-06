@@ -95,6 +95,7 @@ const defaultStorageValueSetVersion2 = {
   //checkbox__others_clipboard_api: false,
   checkbox__others_format2: false,
   checkbox__others_extend_menus: false,         // v2.0.0+
+  checkbox__others_format9: false,              // v2.2.0+
   checkbox__others_edit_menu_title: false,      // v2.0.0+
   checkbox__others_decode: false,
   checkbox__others_punycode: false,
@@ -146,7 +147,7 @@ const defaultStorageValueSetVersion2 = {
     {id:8, title:'format6', format:''}, 
     {id:9, title:'format7', format:''}, 
     {id:10, title:'format8', format:''}, 
-    {id:11, title:'format9', format:''}, 
+    {id:11, title:'format9', format:'[${linkSelectionTitle}](${linkUrl})'}, 
   ]
 };
 const defaultStorageValueSet = defaultStorageValueSetVersion2;
@@ -239,6 +240,7 @@ function createFormatText(command, tabs) {
   const temp = [];
   const isDecode = command.checkbox__others_decode;
   const isPunycode = command.checkbox__others_punycode;
+  const isSingle = tabs.length == 1;
   for (let i=0; i<tabs.length; i++) {
     const tab = tabs[i];
     
@@ -248,13 +250,20 @@ function createFormatText(command, tabs) {
     
     if (command.checkbox__others_extension) {
       // Basic
-      keyset['${text}']     = tabs.length == 1 && command.selectionText || tab.title;
-      keyset['${linkText}'] = tabs.length == 1 && command.linkText || tab.title;
-      keyset['${linkUrl}']  = tabs.length == 1 && command.linkUrl || tab.url;
+      keyset['${text}']     = isSingle && command.selectionText || tab.title;
+      keyset['${linkText}'] = isSingle && command.linkText || tab.title;
+      keyset['${linkUrl}']  = isSingle && command.linkUrl || tab.url;
       keyset['${linkUrl}']  = decodeURL(keyset['${linkUrl}'], isDecode, isPunycode);
       keyset['${link}']     = keyset['${linkUrl}'];
-      keyset['${src}']      = tabs.length == 1 && command.srcUrl || tab.url;
+      keyset['${src}']      = isSingle && command.srcUrl || tab.url;
       keyset['${src}']      = decodeURL(keyset['${src}'], isDecode, isPunycode);
+      
+      keyset['${linkSelectionTitle}']   = isSingle && (command.linkText || command.selectionText) || tab.title;
+      keyset['${selectionLinkTitle}']   = isSingle && (command.selectionText || command.linkText) || tab.title;
+      keyset['${linkSrcUrl}']    = isSingle && (command.linkUrl || command.srcUrl) || tab.url;
+      keyset['${linkSrcUrl}']    = decodeURL(keyset['${linkSrcUrl}'], isDecode, isPunycode);
+      keyset['${srcLinkUrl}']    = isSingle && (command.srcUrl || command.linkUrl) || tab.url;
+      keyset['${srcLinkUrl}']    = decodeURL(keyset['${srcLinkUrl}'], isDecode, isPunycode);
       
       keyset['${index}']    = tab.index;
       keyset['${id}']       = tab.id;
@@ -424,16 +433,19 @@ function onContextMenus(info, tab) {
 // コンテキストメニュー更新
 function updateContextMenus() {
   function onUpdateContextMenus(valueSet) {
+    const format9 = extension(valueSet, 'others_format9', true);
+    
     // メニュー追加
     const contexts = [];
     if (valueSet.checkbox__menus_contexts_all) {  contexts.push('all'); }
     if (valueSet.checkbox__menus_contexts_page) { contexts.push('page'); }
-    if (extension(valueSet, 'menus_contexts_selection', true)) { contexts.push('selection'); }
-    if (extension(valueSet, 'menus_contexts_link', true)) { contexts.push('link'); }
-    if (extension(valueSet, 'menus_contexts_image', true)) { contexts.push('image'); }
+    if (!format9 && extension(valueSet, 'menus_contexts_selection', true)) { contexts.push('selection'); }
+    if (!format9 && extension(valueSet, 'menus_contexts_link', true)) { contexts.push('link'); }
+    if (!format9 && extension(valueSet, 'menus_contexts_image', true)) { contexts.push('image'); }
     if (valueSet.checkbox__menus_contexts_browser_action) { contexts.push('browser_action'); }
     if (isFirefox() && valueSet.checkbox__menus_contexts_tab) { contexts.push('tab'); }
     
+    let isMenu = false;
     if (contexts.length) {
       let menus = JSON.parse(JSON.stringify(valueSet.menus));
       if (!extension(valueSet, 'others_edit_menu_title', true)) {
@@ -493,9 +505,19 @@ function updateContextMenus() {
           });
         }
       }
-      if (menus.length) {
-        chrome.contextMenus.onClicked.addListener(onContextMenus);
-      }
+      isMenu = menus.length;
+    }
+    if (format9) {
+      chrome.contextMenus.create({
+        id: 'exmenu'+valueSet.menus[21].id,
+        title: (extension(valueSet, 'others_edit_menu_title', true)
+                ? valueSet.menus[21].title
+                : defaultStorageValueSet.menus[21].title),
+        contexts: ['selection', 'link', 'image'],
+      });
+    }
+    if (isMenu || format9) {
+      chrome.contextMenus.onClicked.addListener(onContextMenus);
     }
   };
   

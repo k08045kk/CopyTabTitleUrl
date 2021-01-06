@@ -64,5 +64,8 @@
   },
   "optionPage_ExcludeHidden": {
     "message": "숨겨진 탭 제외"
+  },
+  "optionPage_Format9": {
+    "message": "선택, 링크, 이미지 컨텍스트 메뉴에서 format9 만 설정"
   }
 }

@@ -64,5 +64,8 @@
   },
   "optionPage_ExcludeHidden": {
     "message": "Excluir guias ocultas"
+  },
+  "optionPage_Format9": {
+    "message": "seleção, link, imagem Defina apenas o formato 9 no menu de contexto"
   }
 }

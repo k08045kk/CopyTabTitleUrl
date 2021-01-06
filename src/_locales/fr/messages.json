@@ -73,5 +73,8 @@
   },
   "optionPage_ExcludeHidden": {
     "message": "Exclure les onglets masqués"
+  },
+  "optionPage_Format9": {
+    "message": "sélection, lien, image Définir uniquement format9 dans le menu contextuel"
   }
 }
