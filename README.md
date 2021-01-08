@@ -84,7 +84,7 @@ ${CR}, ${r}     | Carriage Return (\r)                  | v1.1.1, v1.5.2
 ${LF}, ${n}     | Line Feed (\n)                        | v1.1.1, v1.5.2
 ${tab}, ${t}    | Horizontal Tab (\t)                   | v0.0.9, v1.5.2
 ${$}            | $                                     | v1.5.4
-${xXX}          | Specify the character code in hexadecimal of "XX".    | --- 🧪
+${xXX}          | Specify the character code in hexadecimal of "XX".    | v----- 🧪
 
 
 ### Date
@@ -119,7 +119,7 @@ ${href}         | URL                                   | v1.5.6
 
 ※If `(data)` does not exist, it is treated as an empty string.  
 ※${protocol}//${hostname}${:port}${pathname}${search}${hash}  
-　`https://example.com:80/path/file?param1=data1&param2=data2#hash`  
+　`https://example.com:80/path/file?key=value&query#fragment`  
 ※[window.URL - Web API | MDN](https://developer.mozilla.org/docs/Web/API/URL)
 
 
