@@ -13,9 +13,9 @@ https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgj
 
 
 ## Features
-You can customize the extension by setting options.
+You can customize the extension from setting options.
 
-You can perform the following clipboard copy actions.
+You can perform actions the following.
 + Copy the title and URL
 + Copy the title
 + Copy the URL
@@ -32,7 +32,7 @@ You can perform actions from the following operations.
 + Browser action (popup, click)
 + Keyboard shortcuts
 
-You can perform the following auxiliary functions.
+You can perform actions in combination with the following auxiliary functions.
 + Decode the URL
 + Decode the punycode
 + Copy in HTML format
