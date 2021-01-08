@@ -21,7 +21,7 @@
     "message": "Afficher le menu contextuel"
   },
   "optionPage_Action": {
-    "message": "Exécuter l'action de format"
+    "message": "Format de copie1"
   },
   "optionPage_Complate": {
     "message": "Afficher la notification de fin de copie"
@@ -33,7 +33,7 @@
     "message": "Veuillez modifier le réglage standard."
   },
   "optionPage_Format2": {
-    "message": "Activer le format 2"
+    "message": "Activer le format2"
   },
   "optionPage_ExtendMenus": {
     "message": "Activer le menu contextuel étendu"
@@ -70,5 +70,11 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Utiliser l'API Clipboard"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Exclure les onglets masqués"
+  },
+  "optionPage_Format9": {
+    "message": "sélection, lien, image Définir uniquement format9 dans le menu contextuel"
   }
 }

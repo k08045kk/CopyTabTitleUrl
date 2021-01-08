@@ -1,31 +1,13 @@
 ﻿/**
  * 共通処理
  */
-var page = 'common';
-var ACTION_MENU_TOP_LEVEL_LIMIT = 6;
-
-try {
-  ACTION_MENU_TOP_LEVEL_LIMIT = chrome.contextMenus.ACTION_MENU_TOP_LEVEL_LIMIT;
-} catch (e) {}
 
 // ブラウザ判定
 function isFirefox() {
   return 'browser' in window;
 };
-function isEdge() {
-  return 'edge' in window;
-};
 function isChrome() {
   return !isFirefox();
-};
-
-// モバイル判定
-function isMobile() {
-  const ua = window.navigator.userAgent.toLowerCase();
-  return ua.indexOf('android') != -1
-      || ua.indexOf('mobile') != -1
-      || ua.indexOf('iphone') != -1
-      || ua.indexOf('ipod') != -1;
 };
 
 // Windows判定
@@ -110,15 +92,17 @@ const defaultStorageValueSetVersion2 = {
   checkbox__menus_contexts_browser_action: true,
   checkbox__menus_contexts_tab: true,           // Firefox only
   checkbox__popup_comlate: false,
-  //checkbox__others_clipboard_api: false,
   checkbox__others_format2: false,
   checkbox__others_extend_menus: false,         // v2.0.0+
+  checkbox__others_format9: false,              // v2.2.0+
   checkbox__others_edit_menu_title: false,      // v2.0.0+
   checkbox__others_decode: false,
   checkbox__others_punycode: false,
   checkbox__others_html: false,
+  checkbox__others_clipboard_api: false,        // v2.2.0+ Firefox only
   checkbox__others_enter: true,
   checkbox__others_pin: false,
+  checkbox__others_hidden: false,               // v2.1.1+
   checkbox__others_selected: true,
   checkbox__others_language: false,
   checkbox__others_extension: false,
@@ -163,151 +147,195 @@ const defaultStorageValueSetVersion2 = {
     {id:8, title:'format6', format:''}, 
     {id:9, title:'format7', format:''}, 
     {id:10, title:'format8', format:''}, 
-    {id:11, title:'format9', format:''}, 
+    {id:11, title:'format9', format:'[${linkSelectionTitle}](${linkSrcUrl})'},  // v2.2.0+
   ]
 };
 const defaultStorageValueSet = defaultStorageValueSetVersion2;
 
-
-
-function _dateFormat(format, opt_date, opt_prefix, opt_suffix) {
-  var pre = (opt_prefix != null) ? opt_prefix : '';
-  var suf = (opt_suffix != null) ? opt_suffix : '';
-  var fmt = {};
-  fmt[pre+'yyyy'+suf] = function(date) { return ''  + date.getFullYear(); };
-  fmt[pre+'MM'+suf]   = function(date) { return('0' +(date.getMonth() + 1)).slice(-2); };
-  fmt[pre+'dd'+suf]   = function(date) { return('0' + date.getDate()).slice(-2); };
-  fmt[pre+'hh'+suf]   = function(date) { return('0' +(date.getHours() % 12)).slice(-2); };
-  fmt[pre+'HH'+suf]   = function(date) { return('0' + date.getHours()).slice(-2); };
-  fmt[pre+'mm'+suf]   = function(date) { return('0' + date.getMinutes()).slice(-2); };
-  fmt[pre+'ss'+suf]   = function(date) { return('0' + date.getSeconds()).slice(-2); };
-  fmt[pre+'SSS'+suf]  = function(date) { return('00'+ date.getMilliseconds()).slice(-3); };
-  fmt[pre+'yy'+suf]   = function(date) { return(''  + date.getFullYear()).slice(-2); };
-  fmt[pre+'M'+suf]    = function(date) { return ''  +(date.getMonth() + 1); };
-  fmt[pre+'d'+suf]    = function(date) { return ''  + date.getDate(); };
-  fmt[pre+'h'+suf]    = function(date) { return ''  +(date.getHours() % 12); };
-  fmt[pre+'H'+suf]    = function(date) { return ''  + date.getHours(); };
-  fmt[pre+'m'+suf]    = function(date) { return ''  + date.getMinutes(); };
-  fmt[pre+'s'+suf]    = function(date) { return ''  + date.getSeconds(); };
-  fmt[pre+'S'+suf]    = function(date) { return ''  + date.getMilliseconds(); };
-  
-  var date = opt_date;
-  if (date == null) {
-    date = new Date();
-  } else if (typeof date === 'number' && isFinite(date) && Math.floor(date) === date) {
-    date = new Date(date);
-  } else if (Object.prototype.toString.call(date) === '[object String]') {
-    date = new Date(date);
-  }
-  
-  var result = format;
-  for (var key in fmt) {
-    if (fmt.hasOwnProperty(key)) {
-      result = result.split(key).join(fmt[key](date));
+// URLのデコード
+function decodeURL(data, isDecode, isPunycode) {
+  try {
+    const url = new URL(data);
+    let protocol = url.protocol;
+    let hostname = url.hostname;
+    let port = url.port;
+    let pathname = url.pathname;
+    let search = url.search;
+    let hash = url.hash;
+    if (isPunycode) {
+      try {
+        hostname = punycode.toUnicode(hostname);
+      } catch (e) {}
     }
+    if (isDecode) {
+      try {
+        pathname = decodeURIComponent(pathname);
+      } catch (e) {}
+      try {
+        search = decodeURIComponent(search);
+      } catch (e) {}
+      try {
+        hash = decodeURIComponent(hash);
+      } catch (e) {}
+    }
+    return protocol+'//'+hostname+(port != '' ? ':'+port : '')+pathname+search+hash;
+  } catch (e) {
+    return data;
   }
-  return result;
 };
 
-function _urlFormat(format, url, isDecode, isPunycode) {
-  function decode(text) {
-    return isDecode ? decodeURIComponent(text) : text;
-  };
-  const properties = 'hash host hostname href origin password pathname port protocol search username'.split(' ');
-  if (isPunycode) {
-    format = format.replace(/\${href}/g, '${protocol}//${username:password@}${host}${pathname}${search}${hash}')
-                   .replace(/\${origin}/g, '${protocol}//${username:password@}${host}')
-                   .replace(/\${host}/g, '${hostname}'+(url.host.indexOf(':') >= 0 ? ':'+url.host.split(':')[1] : ''));
-    try {
-      format = format.replace(/\${hostname}/g, punycode.toUnicode(url.hostname));
-    } catch (e) {
-      format = format.replace(/\${hostname}/g, url.hostname);
+// フォーマット文字列作成
+function createFormatText(command, tabs) {
+  // 前処理
+  const enter = getEnterCode();
+  const keyset = {};
+  let format = command.format;
+  
+  // Standard
+  keyset['${enter}'] = enter;
+  keyset['${$}'] = '$';
+  format = format.replace(/\${(title|url|enter)}/ig, (m) => { return m.toLowerCase(); });
+  
+  if (command.checkbox__others_extension) {
+    // Basic
+    format = format.replace(/\${(text|index|id)}/ig, (m) => { return m.toLowerCase(); })
+    
+    // Character code
+    keyset['${cr}'] = '\r';
+    keyset['${lf}'] = '\n';
+    keyset['${tab}'] = '\t';
+    format = format.replace(/\${(tab|\\t|t)}/ig, '${tab}')
+                   .replace(/\${(cr|\\r|r)}/ig,  '${cr}')
+                   .replace(/\${(lf|\\n|n)}/ig,  '${lf}')
+    
+    // Date
+    const now = new Date();
+    keyset['${yyyy}'] = ''  + now.getFullYear();
+    keyset['${MM}']   =('0' +(now.getMonth() + 1)).slice(-2);
+    keyset['${dd}']   =('0' + now.getDate()).slice(-2);
+    keyset['${hh}']   =('0' +(now.getHours() % 12)).slice(-2);
+    keyset['${HH}']   =('0' + now.getHours()).slice(-2);
+    keyset['${mm}']   =('0' + now.getMinutes()).slice(-2);
+    keyset['${ss}']   =('0' + now.getSeconds()).slice(-2);
+    keyset['${SSS}']  =('00'+ now.getMilliseconds()).slice(-3);
+    keyset['${yy}']   =(''  + now.getFullYear()).slice(-2);
+    keyset['${M}']    = ''  +(now.getMonth() + 1);
+    keyset['${d}']    = ''  + now.getDate();
+    keyset['${h}']    = ''  +(now.getHours() % 12);
+    keyset['${H}']    = ''  + now.getHours();
+    keyset['${m}']    = ''  + now.getMinutes();
+    keyset['${s}']    = ''  + now.getSeconds();
+    keyset['${S}']    = ''  + now.getMilliseconds();
+    
+    // URL
+    if (command.checkbox__others_decode || command.checkbox__others_punycode) {
+      format = format.replace(/\${url}/g, '${href}')
+                     .replace(/\${href}/g, '${origin}${pathname}${search}${hash}')
+                     .replace(/\${origin}/g, '${protocol}//${host}')
+                     .replace(/\${host}/g, '${hostname}${:port}')
     }
   }
-  for (let i=0; i<properties.length; i++) {
-    const key = properties[i];
-    format = format.replace(new RegExp('\\${'+key+'}', 'g'), decode(url[key]));
+  
+  // 本処理
+  const temp = [];
+  const isDecode = command.checkbox__others_decode;
+  const isPunycode = command.checkbox__others_punycode;
+  const isSingle = tabs.length == 1;
+  for (let i=0; i<tabs.length; i++) {
+    const tab = tabs[i];
+    
+    // Standard
+    keyset['${title}'] = tab.title;
+    keyset['${url}'] = tab.url;
+    
+    if (command.checkbox__others_extension) {
+      // Basic
+      keyset['${text}']     = isSingle && command.selectionText || tab.title;
+      keyset['${linkText}'] = isSingle && command.linkText || tab.title;
+      keyset['${linkUrl}']  = isSingle && command.linkUrl || tab.url;
+      keyset['${linkUrl}']  = decodeURL(keyset['${linkUrl}'], isDecode, isPunycode);
+      keyset['${link}']     = keyset['${linkUrl}'];
+      keyset['${src}']      = isSingle && command.srcUrl || tab.url;
+      keyset['${src}']      = decodeURL(keyset['${src}'], isDecode, isPunycode);
+      
+      keyset['${linkSelectionTitle}']   = isSingle && (command.linkText || command.selectionText) || tab.title;
+      keyset['${selectionLinkTitle}']   = isSingle && (command.selectionText || command.linkText) || tab.title;
+      keyset['${linkSrcUrl}']    = isSingle && (command.linkUrl || command.srcUrl) || tab.url;
+      keyset['${linkSrcUrl}']    = decodeURL(keyset['${linkSrcUrl}'], isDecode, isPunycode);
+      keyset['${srcLinkUrl}']    = isSingle && (command.srcUrl || command.linkUrl) || tab.url;
+      keyset['${srcLinkUrl}']    = decodeURL(keyset['${srcLinkUrl}'], isDecode, isPunycode);
+      
+      keyset['${index}']    = tab.index;
+      keyset['${id}']       = tab.id;
+      keyset['${tabId}']    = tab.id;
+      keyset['${windowId}'] = tab.windowId;
+      keyset['${favIconUrl}'] = tab.favIconUrl != '' ? tab.favIconUrl : void 0;
+      
+      // see https://daringfireball.net/projects/markdown/syntax#backslash
+      // + <> → &lt;&gt;
+      keyset['${markdown}']
+          = tab.title.replace(/([\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!])/g, (c) => { return '\\'+c; })
+                     .replace(/</g, '&lt;')
+                     .replace(/>/g, '&gt;');
+      
+      // URL
+      const url = new URL(tab.url);
+      'hash host hostname href origin pathname port protocol search'.split(' ').forEach((key) => {
+        keyset['${'+key+'}'] = url[key];
+      });
+      keyset['${:port}'] = url.port != '' ? ':'+url.port : '';
+      if (isDecode) {
+        'hash pathname search'.split(' ').forEach((key) => {
+          try {
+            keyset['${'+key+'}'] = decodeURIComponent(url[key]);
+          } catch (e) {
+            keyset['${'+key+'}'] = url[key];
+          }
+        });
+      }
+      if (isPunycode) {
+        try {
+          keyset['${hostname}'] = punycode.toUnicode(url.hostname);
+        } catch (e) {
+          keyset['${hostname}'] = url.hostname;
+        }
+      }
+    }
+    
+    // 変換
+    const fmt = format.replace(/\${.*?}/ig, (m) => {
+      if (keyset.hasOwnProperty(m)) {
+        return keyset[m];
+      }
+      return m;
+    });
+    temp.push(fmt);
   }
-  format = format.replace(/\${username:password@}/g, decode(url.username) + (url.username != '' && url.password != '' ? ':' : '') + decode(url.password) + (url.username != '' || url.password != '' ? '@' : ''));
-  format = format.replace(/\${username@}/g, url.username != '' ? decode(url.username)+'@' : '');
-  format = format.replace(/\${password@}/g, url.password != '' ? decode(url.password)+'@' : '');
-  format = format.replace(/\${:port}/g, url.port != '' ? ':'+decode(url.port) : '');
-  return format;
-  // ${hash} ${host} ${hostname} ${href} ${origin} ${password} ${pathname} ${port} ${protocol} ${search} ${username}
-  // ${protocol}//${username:password@}${hostname}${:port}${pathname}${search}${hash}
-  // https://username:password@example.com:80/path/file?param1=data1&param2=data2#hash
-
+  return temp.join((!command.checkbox__others_extension || command.checkbox__others_enter)
+                   ? enter 
+                   : '');
+  // ${TITLE}${enter}${URL}${enter}ABCDEF abcdef あいうえお${CR}${LF}${test}${tab}${$}
+  // ${index}, ${id}, ${tabId}, ${windowId}, ${favIconUrl}, ${markdown}
+  // ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}${enter}${yy}-${M}-${d}T${H}:${m}:${s}.${S}${enter}${hh}-${h}
+  // ${url}${enter}${href}${enter}${protocol}//${hostname}${:port}${pathname}${search}${hash}${enter}${origin}${enter}${protocol}//${host}${enter}${protocol}//${hostname}${port}
 };
-
 
 // クリップボードにコピー
 function copyToClipboard(command, tabs) {
-  // コピー文字列作成
-  const temp = [];
-  const enter = getEnterCode();
-  const now = new Date();
-  for (let i=0; i<tabs.length; i++) {
-    let format = command.format;
-    let url = tabs[i].url;
-    if (extension(command, 'others_decode', true) || extension(command, 'others_punycode', true)) {
-      url = '${href}';
-    }
-    format = format.replace(/\${title}/ig, tabs[i].title)
-                   .replace(/\${url}/ig, url)
-                   .replace(/\${enter}/ig, enter);
-    if (command.checkbox__others_extension) {
-      const stext = tabs.length == 1 && command.selectionText || tabs[i].title;
-      const ltext = tabs.length == 1 && command.linkText || tabs[i].title;
-      const link  = tabs.length == 1 && command.linkUrl || tabs[i].url;
-      const src   = tabs.length == 1 && command.srcUrl || tabs[i].url;
-      format = format.replace(/\${(tab|\\t|t)}/ig, '\t')
-                     .replace(/\${(cr|\\r|r)}/ig,  '\r')
-                     .replace(/\${(lf|\\n|n)}/ig,  '\n')
-                     .replace(/\${text}/ig, stext)
-                     .replace(/\${linkText}/g, ltext)
-                     .replace(/\${(linkUrl|link)}/g, link)
-                     .replace(/\${src}/g, src)
-                     ;
-      format = format.replace(/\${index}/ig, tabs[i].index)
-                     .replace(/\${id}/ig, tabs[i].id)
-                     .replace(/\${tabId}/g, tabs[i].id)
-                     .replace(/\${windowId}/g, tabs[i].windowId)
-                     .replace(/\${favIconUrl}/g, tabs[i].favIconUrl != '' ? tabs[i].favIconUrl : void 0);
-      format = format.replace(/\${markdown}/g, () => {
-        // see https://daringfireball.net/projects/markdown/syntax#backslash
-        // + <> → &lt;&gt;
-        return tabs[i].title.replace(/([\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!])/g, (c) => { return '\\'+c; })
-                            .replace(/</g, '&lt;')
-                            .replace(/>/g, '&gt;');
-      });
-      format = format.replace(/\${x[0-9A-Fa-f][0-9A-Fa-f]}/g, (hex) => {
-        return String.fromCharCode(parseInt(hex.substring(3, hex.length-1), 16));
-      });
-      format = _dateFormat(format, now, '${', '}');
-      format = _urlFormat(format, new URL(tabs[i].url), 
-                          command.checkbox__others_decode, 
-                          command.checkbox__others_punycode);
-    }
-    temp.push(format.replace(/\${\$}/ig, '$'));
-  }
-  const text = temp.join((!command.checkbox__others_extension || command.checkbox__others_enter)
-                          ? enter 
-                          : '');
+  const text = createFormatText(command, tabs);
   
-  // クリップボードコピー
-  if (isMobile() && page == 'background') {
-    // Clipboard API(Firefox63+実装)
-    // Firefox63+ dom.events.asyncClipboard.dataTransfer=true が必須
-    // Android Firefoxのバックグラウンドは、execCommand('copy')が動作しない。
-    // そのため、対象環境のみClicpboard APIを使用する。
-    navigator.clipboard.writeText(text).then(() => {
-      /* success */
-    }, () => {
-      /* failure */
+  if (isFirefox() 
+   && extension(command, 'others_clipboard_api', true) 
+   && !extension(command, 'others_html', true)) {
+    // クリップボードコピー（ClipboardAPI）
+    navigator.clipboard.writeText(text).then(function() {
+      //console.log('successfully');
+    }, function() {
+      //console.log('failed');
     });
   } else {
-    // 通常のクリップボードコピー処理
-    function oncopy(event) {
+    // クリップボードコピー（execCommand）
+    document.addEventListener('copy', function oncopy(event) {
       document.removeEventListener('copy', oncopy, true);
       event.stopImmediatePropagation();
       event.preventDefault();
@@ -316,9 +344,7 @@ function copyToClipboard(command, tabs) {
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
-    };
-    document.addEventListener('copy', oncopy, true);
-    
+    }, true);
     document.execCommand('copy');
   }
 };
@@ -369,6 +395,13 @@ function onCopyTab(command, callback) {
         }
       }
     }
+    if (isFirefox() && extension(command, 'others_hidden', true)) {
+      for (let i=temp.length; --i; ) {
+        if (temp[i].hidden) {
+          temp.splice(i, 1);
+        }
+      }
+    }
     if (temp.length == 0) {
       // #24 コピーするタブがない場合、カレントタブをコピーする
       chrome.tabs.query({currentWindow:true, active:true}, (tabs) => {
@@ -411,16 +444,19 @@ function onContextMenus(info, tab) {
 // コンテキストメニュー更新
 function updateContextMenus() {
   function onUpdateContextMenus(valueSet) {
+    const format9 = extension(valueSet, 'others_format9', true);
+    
     // メニュー追加
     const contexts = [];
     if (valueSet.checkbox__menus_contexts_all) {  contexts.push('all'); }
     if (valueSet.checkbox__menus_contexts_page) { contexts.push('page'); }
-    if (valueSet.checkbox__menus_contexts_selection) { contexts.push('selection'); }
-    if (extension(valueSet, 'menus_contexts_link', true)) { contexts.push('link'); }
-    if (extension(valueSet, 'menus_contexts_image', true)) { contexts.push('image'); }
+    if (!format9 && extension(valueSet, 'menus_contexts_selection', true)) { contexts.push('selection'); }
+    if (!format9 && extension(valueSet, 'menus_contexts_link', true)) { contexts.push('link'); }
+    if (!format9 && extension(valueSet, 'menus_contexts_image', true)) { contexts.push('image'); }
     if (valueSet.checkbox__menus_contexts_browser_action) { contexts.push('browser_action'); }
     if (isFirefox() && valueSet.checkbox__menus_contexts_tab) { contexts.push('tab'); }
     
+    let isMenu = false;
     if (contexts.length) {
       let menus = JSON.parse(JSON.stringify(valueSet.menus));
       if (!extension(valueSet, 'others_edit_menu_title', true)) {
@@ -459,7 +495,7 @@ function updateContextMenus() {
       for (let i=0; i<menus.length; i++) {
         if (menus[i].type == 'separator') {
           // ブラウザアクションは、6個制限(ACTION_MENU_TOP_LEVEL_LIMIT)があるため、セパレータなし
-          if (menus.length > ACTION_MENU_TOP_LEVEL_LIMIT) {
+          if (menus.length > chrome.contextMenus.ACTION_MENU_TOP_LEVEL_LIMIT) {
             if (!(contexts.length == 1 && contexts[0] == 'browser_action')) {
               chrome.contextMenus.create({
                 type: menus[i].type,
@@ -480,18 +516,26 @@ function updateContextMenus() {
           });
         }
       }
-      if (menus.length) {
-        chrome.contextMenus.onClicked.addListener(onContextMenus);
-      }
+      isMenu = menus.length;
+    }
+    if (format9) {
+      chrome.contextMenus.create({
+        id: 'exmenu'+valueSet.menus[21].id,
+        title: (extension(valueSet, 'others_edit_menu_title', true)
+                ? valueSet.menus[21].title
+                : defaultStorageValueSet.menus[21].title),
+        contexts: ['selection', 'link', 'image'],
+      });
+    }
+    if (isMenu || format9) {
+      chrome.contextMenus.onClicked.addListener(onContextMenus);
     }
   };
   
-  // モバイル以外 && メニュー削除 && ストレージ取得
-  if (!isMobile()) {
-    chrome.contextMenus.removeAll(() => {
-      getStorageArea().get(defaultStorageValueSet, onUpdateContextMenus);
-    });
-  }
+  // メニュー削除 && ストレージ取得
+  chrome.contextMenus.removeAll(() => {
+    getStorageArea().get(defaultStorageValueSet, onUpdateContextMenus);
+  });
 };
 
 // ブラウザアクションの更新

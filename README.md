@@ -13,9 +13,9 @@ https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgj
 
 
 ## Features
-You can customize the extension by setting options.
+You can customize the extension from setting options.
 
-You can perform the following clipboard copy actions.
+You can perform actions the following.
 + Copy the title and URL
 + Copy the title
 + Copy the URL
@@ -32,7 +32,7 @@ You can perform actions from the following operations.
 + Browser action (popup, click)
 + Keyboard shortcuts
 
-You can perform the following auxiliary functions.
+You can perform actions in combination with the following auxiliary functions.
 + Decode the URL
 + Decode the punycode
 + Copy in HTML format
@@ -61,6 +61,10 @@ ${text}         | Selected text or page title (※1)     | v1.5.2
 ${linkText}     | Link text or page title (※2)         | v2.1.0 (Firefox only)
 ${linkUrl}, ${link}     | Link URL or page URL (※2)    | v2.1.0
 ${src}          | "src" URL or page URL (※3)           | v2.1.0
+${linkSelectionTitle}   | Link text or selected text or page title (※1,2,3)    | v2.2.0 🧪
+${selectionLinkTitle}   | Selected text or link text or page title (※1,2,3)    | v2.2.0 🧪
+${linkSrcUrl}   | Link URL or "src" URL or page URL (※1,2,3)   | v2.2.0 🧪
+${srcLinkUrl}   | "src" URL or link URL or page URL (※1,2,3)   | v2.2.0 🧪
 ${index}        | Serial number from 0 per window       | v1.5.2
 ${tabId}, $(id} | Tab ID                                | v2.1.0 🧪, v1.5.2
 ${windowId}     | Tab host window ID                    | v2.1.0 🧪
@@ -80,7 +84,7 @@ ${CR}, ${r}     | Carriage Return (\r)                  | v1.1.1, v1.5.2
 ${LF}, ${n}     | Line Feed (\n)                        | v1.1.1, v1.5.2
 ${tab}, ${t}    | Horizontal Tab (\t)                   | v0.0.9, v1.5.2
 ${$}            | $                                     | v1.5.4
-${xXX}          | Specify the character code in hexadecimal of "XX".    | v2.1.0 🧪
+${xXX}          | Specify the character code in hexadecimal of "XX".    | --- 🧪
 
 
 ### Date

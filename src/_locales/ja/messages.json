@@ -18,7 +18,7 @@
     "message": "ポップアップメニューを表示する"
   },
   "optionPage_Action": {
-    "message": "フォーマットアクションの実行する"
+    "message": "format1をコピーする"
   },
   "optionPage_Complate": {
     "message": "コピー完了通知を表示する"
@@ -30,7 +30,7 @@
     "message": "標準設定から変更してください。"
   },
   "optionPage_Format2": {
-    "message": "フォーマット2を有効にする"
+    "message": "format2を有効にする"
   },
   "optionPage_ExtendMenus": {
     "message": "拡張コンテキストメニューを有効にする"
@@ -70,5 +70,11 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "クリップボードAPIを使用する"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "非表示のタブを除外する"
+  },
+  "optionPage_Format9": {
+    "message": "選択・リンク・画像コンテキストメニューでformat9のみを設定する"
   }
 }

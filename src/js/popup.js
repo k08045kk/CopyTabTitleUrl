@@ -5,14 +5,7 @@
 
 // コピー完了イベント
 function onTabCopyComplete() {
-  if (isMobile()) {
-    document.getElementById('action').hidden = false;
-    setTimeout(() => {
-      document.getElementById('action').hidden = true;
-    }, 1000);
-  } else {
-    window.close();
-  }
+  window.close();
 };
 
 // ページ読み込み完了イベント
@@ -34,15 +27,15 @@ function onInit() {
   
   // コピーイベント設定
   document.querySelectorAll('.copy').forEach((element) => {
-    element.addEventListener('click', (event) => {
+    const id = element.id.match(/\d+$/)[0]-0;
+    const menuid = id >= 5 && element.dataset.menu.match(/\d+$/)[0]-0 || 0;
+    element.addEventListener('click', () => {
       // ポップアップ表示のイベント
-      const id = event.target.id.match(/\d+$/)[0]-0;
       getStorageArea().get(defaultStorageValueSet, (valueSet) => {
         const win = document.getElementById('target_win');
         const all = document.getElementById('target_all');
         let target = 'tab';
         if (id >= 5) {
-          const menuid = event.target.dataset.menu.match(/\d+$/)[0]-0;
           target = valueSet.menus[menuid].target;
         }
         if (win.checked) {  target = 'window';  }
@@ -88,6 +81,6 @@ function onInit() {
 };
 
 (function main() {
-  //document.addEventListener("DOMContentLoaded", onInit);
-  onInit();
+  document.addEventListener("DOMContentLoaded", onInit);
+  //onInit();
 })();

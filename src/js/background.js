@@ -1,7 +1,6 @@
 ﻿/**
  * バックグラウンド処理
  */
-page = 'background';
 
 // ストレージバージョン2対応
 function converteStorageVersion2(oldValueSet) {
@@ -88,53 +87,38 @@ function main() {
   updateContextMenus();
   
   // キーボードショートカット
-  if (!isMobile()) {
-    chrome.commands.onCommand.addListener((command) => {
-      getStorageArea().get(defaultStorageValueSet, (valueSet) => {
-        if (command == 'shortcut_action') {
-          valueSet.format = valueSet.formats[3].format;
-          valueSet.target = 'tab';
-          onCopyTab(valueSet, null);
-        } else if (valueSet.checkbox__others_extension) {
-          if (valueSet.checkbox__others_format2) {
-            if (command == 'shortcut_action2') {
-              valueSet.format = valueSet.formats[4].format;
-              valueSet.target = 'tab';
-              onCopyTab(valueSet, null);
-            }
+  chrome.commands.onCommand.addListener((command) => {
+    getStorageArea().get(defaultStorageValueSet, (valueSet) => {
+      if (command == 'shortcut_action') {
+        valueSet.format = valueSet.formats[3].format;
+        valueSet.target = 'tab';
+        onCopyTab(valueSet, null);
+      } else if (valueSet.checkbox__others_extension) {
+        if (valueSet.checkbox__others_format2) {
+          if (command == 'shortcut_action2') {
+            valueSet.format = valueSet.formats[4].format;
+            valueSet.target = 'tab';
+            onCopyTab(valueSet, null);
           }
-          /*
-          // 未実装（要望があれば機能拡張する）
-          if (valueSet.checkbox__others_extend_menus) {
-            if (command == 'shortcut_action3') {
-              valueSet.format = valueSet.formats[5].format;
-              valueSet.target = valueSet.menus[15].target;
-              onCopyTab(valueSet, null);
-            }
-            if (command == 'shortcut_action4') {
-              valueSet.format = valueSet.formats[6].format;
-              valueSet.target = valueSet.menus[16].target;
-              onCopyTab(valueSet, null);
-            }
-          }
-          */
         }
-      });
+        /*
+        // 未実装（要望があれば機能拡張する）
+        if (valueSet.checkbox__others_extend_menus) {
+          if (command == 'shortcut_action3') {
+            valueSet.format = valueSet.formats[5].format;
+            valueSet.target = valueSet.menus[15].target;
+            onCopyTab(valueSet, null);
+          }
+          if (command == 'shortcut_action4') {
+            valueSet.format = valueSet.formats[6].format;
+            valueSet.target = valueSet.menus[16].target;
+            onCopyTab(valueSet, null);
+          }
+        }
+        */
+      }
     });
-//    // キーボードショートカット設定反映
-//    if (isFirefox()) {
-//      getStorageArea().get(defaultStorageValueSet, (valueSet) => {
-//        for (let i=3; i<=4; i++) {
-//          if (valueSet.formats[i].shortcut != '') {
-//            chrome.commands.update({
-//              'name': 'shortcut_action'+(i==3 ? '' : (i-2)+''),
-//              'shortcut': valueSet.formats[i].shortcut
-//            });
-//          }
-//        }
-//      });
-//    }
-  }
+  });
 };
 
 getStorageArea().get(null, (valueSet) => {

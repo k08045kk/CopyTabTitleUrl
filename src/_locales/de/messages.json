@@ -21,7 +21,7 @@
     "message": "Popup-Menü anzeigen"
   },
   "optionPage_Action": {
-    "message": "Formataktion ausführen"
+    "message": "Kopierformat1"
   },
   "optionPage_Complate": {
     "message": "Benachrichtigung über den Abschluss der Kopie anzeigen"
@@ -33,7 +33,7 @@
     "message": "Bitte ändern Sie die Standardeinstellung."
   },
   "optionPage_Format2": {
-    "message": "Aktivieren Sie Format 2"
+    "message": "Aktivieren Sie format2"
   },
   "optionPage_ExtendMenus": {
     "message": "Aktivieren Sie das erweiterte Kontextmenü"
@@ -70,5 +70,11 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Verwenden Sie die Zwischenablage-API"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Versteckte Registerkarten ausschließen"
+  },
+  "optionPage_Format9": {
+    "message": "Auswahl, Link, Bild Nur Kontext9 im Kontextmenü einstellen"
   }
 }

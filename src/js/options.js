@@ -48,9 +48,6 @@ function updateOptionPage() {
   // ALL選択時は、PAGEを無効化
   const all = checkbox('checkbox__menus_contexts_all');
   document.getElementById('checkbox__menus_contexts_page').disabled = all;
-  document.getElementById('checkbox__menus_contexts_selection').disabled = all;
-  document.getElementById('checkbox__menus_contexts_link').disabled = all;
-  document.getElementById('checkbox__menus_contexts_image').disabled = all;
   document.getElementById('checkbox__menus_contexts_browser_action').disabled = all;
   
   // コピー完了通知
@@ -89,6 +86,11 @@ function updateOptionPage() {
   document.querySelectorAll('.extend_menus:not(.hide)').forEach((v, i, a) => {
     v.hidden = !(extension && exmenus);
   });
+  const format9 = checkbox('checkbox__others_format9');
+  document.getElementById('checkbox__others_format9').disabled = !exmenus;
+  document.getElementById('checkbox__menus_contexts_selection').disabled = all || (exmenus && format9);
+  document.getElementById('checkbox__menus_contexts_link').disabled = all || (exmenus && format9);
+  document.getElementById('checkbox__menus_contexts_image').disabled = all || (exmenus && format9);
   // タイトル編集
   const edit = checkbox('checkbox__others_edit_menu_title');
   document.querySelectorAll('.menu_label').forEach((element) => {
@@ -97,27 +99,15 @@ function updateOptionPage() {
   document.querySelectorAll('.menu_title').forEach((element) => {
     element.hidden = !(extension && edit);
   });
-  
-  // ブラウザアクションの更新
-  if (isMobile()) {
-    if (action && !checkbox('checkbox__popup_comlate')) {
-      // Android Firefoxでは、一度ポップアップを有効化すると、無効化できない
-      // そのため、設定反映には再起動が必要
-      chrome.browserAction.getPopup({}, (url) => {
-        if (!(url == null || url == '')) {
-          document.getElementById('browser_option').hidden = false;
-        }
-      });
-    } else {
-      document.getElementById('browser_option').hidden = true;
-    }
-  }
+  // ClipBoardAPI
+  const html = checkbox('checkbox__others_html');
+  document.getElementById('checkbox__others_clipboard_api').disabled = html;
 };
 
 // ショートカットを更新
 function updateShortcut() {
   // ショートカット2の有効と無効
-  if (isFirefox() && !isMobile()) {
+  if (isFirefox()) {
     let extension = checkbox('checkbox__others_extension');
     let format2 = checkbox('checkbox__others_format2');
     if (extension && format2) {
@@ -183,7 +173,7 @@ function onUpdateFormat() {
 // コマンド文字列の更新イベント
 function onUpdateShortcut() {
   const element = this;
-  if (isFirefox() && !isMobile()) {
+  if (isFirefox()) {
     getStorageArea().get(['formats'], (oldValueSet) => {
       const newValueSet = {formats:JSON.parse(JSON.stringify(oldValueSet.formats))};
       const index = element.id.match(/\d+$/)[0];
@@ -196,7 +186,7 @@ function onUpdateShortcut() {
           chrome.commands.reset(name);
         }
         getStorageArea().set(newValueSet, () => {});
-        element.style.background = '';
+        element.classList.remove('error');
       } catch (e) {
         // 直前の成功状態に戻す
         if (oldValueSet.formats[index].shortcut != '') {
@@ -204,7 +194,7 @@ function onUpdateShortcut() {
         } else {
           chrome.commands.reset(name);
         }
-        element.style.background = '#ffeaee';
+        element.classList.add('error');
       }
     });
   }
@@ -236,31 +226,29 @@ function setOptionPageValues(valueSet) {
   for (let i=3; i<valueSet.formats.length; i++) {
     document.getElementById('format'+i).value  = valueSet.formats[i].format;
   }
-  if (!isMobile()) {
-    if (isFirefox()) {
-      const newValueSet = {formats:JSON.parse(JSON.stringify(valueSet.formats))};
-      chrome.commands.getAll((commands) => {
-        for (let i=0; i<commands.length; i++) {
-          const id = commands[i].description.match(/\d+$/)[0]-0+2;
-          document.getElementById('shortcut'+id).value  = commands[i].shortcut;
-          newValueSet.formats[id].shortcut = commands[i].shortcut;
+  if (isFirefox()) {
+    const newValueSet = {formats:JSON.parse(JSON.stringify(valueSet.formats))};
+    chrome.commands.getAll((commands) => {
+      for (let i=0; i<commands.length; i++) {
+        const id = commands[i].description.match(/\d+$/)[0]-0+2;
+        document.getElementById('shortcut'+id).value  = commands[i].shortcut;
+        newValueSet.formats[id].shortcut = commands[i].shortcut;
+      }
+      getStorageArea().set(newValueSet, () => {});
+    });
+  } else {
+    chrome.commands.getAll((commands) => {
+      const shortcuts = [];
+      for (let i=0; i<commands.length; i++) {
+        if (commands[i].description.startsWith('format') && commands[i].shortcut != '') {
+          shortcuts.push(commands[i].description + ': ' + commands[i].shortcut);
         }
-        getStorageArea().set(newValueSet, () => {});
-      });
-    } else {
-      chrome.commands.getAll((commands) => {
-        const shortcuts = [];
-        for (let i=0; i<commands.length; i++) {
-          if (commands[i].description.startsWith('format') && commands[i].shortcut != '') {
-            shortcuts.push(commands[i].description + ': ' + commands[i].shortcut);
-          }
-        }
-        if (shortcuts.length) {
-          // '\n'改行を挿入するため、innerTextとする
-          document.getElementById('shortcut_commands').innerText = '\n\n'+shortcuts.join('\n');
-        }
-      });
-    }
+      }
+      if (shortcuts.length) {
+        // '\n'改行を挿入するため、innerTextとする
+        document.getElementById('shortcut_commands').innerText = '\n\n'+shortcuts.join('\n');
+      }
+    });
   }
 };
 
@@ -310,16 +298,6 @@ function onInit() {
   // 初期化ボタンの設定（最優先で設定する）
   document.getElementById('reset').addEventListener('click', onReset);
   
-  if (isMobile()) {
-    // AndroidFirefox非対応
-    // コンテキストメニュー
-    // キーボードショートカット
-    // ピン留めタブ
-    // 選択タブ
-    document.querySelectorAll('.desktop').forEach((v, i, a) => {
-      v.classList.add('hide');
-    });
-  }
   if (isChrome()) {
     // Chrome非対応
     // タブコンテキストメニュー

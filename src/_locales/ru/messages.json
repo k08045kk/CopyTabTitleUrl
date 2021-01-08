@@ -12,7 +12,7 @@
     "message": "Показать всплывающее меню"
   },
   "optionPage_Action": {
-    "message": "Выполнить действие форматирования"
+    "message": "Копировать format1"
   },
   "optionPage_Complate": {
     "message": "Показать уведомление о завершении копирования"
@@ -61,5 +61,11 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "Использовать API буфера обмена"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "Исключить скрытые вкладки"
+  },
+  "optionPage_Format9": {
+    "message": "выделение, ссылка, изображение Установить только формат9 в контекстном меню"
   }
 }

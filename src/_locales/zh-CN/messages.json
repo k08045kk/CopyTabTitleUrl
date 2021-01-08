@@ -12,7 +12,7 @@
     "message": "显示弹出菜单"
   },
   "optionPage_Action": {
-    "message": "执行格式动作"
+    "message": "复制格式1"
   },
   "optionPage_Complate": {
     "message": "显示复制完成通知"
@@ -61,5 +61,11 @@
   },
   "optionPage_ClipboardAPI": {
     "message": "使用剪贴板API"
+  },
+  "optionPage_ExcludeHidden": {
+    "message": "排除隐藏的标签"
+  },
+  "optionPage_Format9": {
+    "message": "选择，链接，图像在上下文菜单中仅设置format9"
   }
 }
