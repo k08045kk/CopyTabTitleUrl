@@ -12,7 +12,7 @@
     "message": "팝업 메뉴 표시"
   },
   "optionPage_Action": {
-    "message": "포맷 작업 실행"
+    "message": "형식 1 복사"
   },
   "optionPage_Complate": {
     "message": "복사 완료 알림 표시"
@@ -24,7 +24,7 @@
     "message": "표준 설정에서 변경하십시오."
   },
   "optionPage_Format2": {
-    "message": "형식 2 사용"
+    "message": "format2 사용"
   },
   "optionPage_ExtendMenus": {
     "message": "확장 컨텍스트 메뉴 활성화"

@@ -12,7 +12,7 @@
     "message": "Display popup menu"
   },
   "optionPage_Action": {
-    "message": "Execute format action"
+    "message": "Copy format1"
   },
   "optionPage_Complate": {
     "message": "Display copy completion notification"
@@ -24,7 +24,7 @@
     "message": "Please change from the standard setting."
   },
   "optionPage_Format2": {
-    "message": "Enable Format 2"
+    "message": "Enable format2"
   },
   "optionPage_ExtendMenus": {
     "message": "Enable extended context menu"

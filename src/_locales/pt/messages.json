@@ -12,7 +12,7 @@
     "message": "Exibir menu pop-up"
   },
   "optionPage_Action": {
-    "message": "Executar ação de formatação"
+    "message": "Copiar formato1"
   },
   "optionPage_Complate": {
     "message": "Exibir notificação de conclusão de cópia"
@@ -24,7 +24,7 @@
     "message": "Altere a configuração padrão."
   },
   "optionPage_Format2": {
-    "message": "Habilitar Formato 2"
+    "message": "Habilitar format2"
   },
   "optionPage_ExtendMenus": {
     "message": "Habilitar menu de contexto estendido"

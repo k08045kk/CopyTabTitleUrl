@@ -14,8 +14,8 @@
     "description":"ポップアップメニューを表示する"
   },
   "optionPage_Action": {
-    "message":    "Execute format action",
-    "description":"フォーマットアクションを実行する"
+    "message":    "Copy format1",
+    "description":"format1をコピーする"
   },
   "optionPage_Complate": {
     "message":    "Display copy completion notification",
@@ -30,8 +30,8 @@
     "description":"標準設定から変更してください。"
   },
   "optionPage_Format2": {
-    "message":    "Enable Format 2",
-    "description":"フォーマット2を有効にする"
+    "message":    "Enable format2",
+    "description":"format2を有効にする"
   },
   "optionPage_ExtendMenus": {
     "message":    "Enable extended context menu",

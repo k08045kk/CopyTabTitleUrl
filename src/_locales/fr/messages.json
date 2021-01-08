@@ -21,7 +21,7 @@
     "message": "Afficher le menu contextuel"
   },
   "optionPage_Action": {
-    "message": "Exécuter l'action de format"
+    "message": "Format de copie1"
   },
   "optionPage_Complate": {
     "message": "Afficher la notification de fin de copie"
@@ -33,7 +33,7 @@
     "message": "Veuillez modifier le réglage standard."
   },
   "optionPage_Format2": {
-    "message": "Activer le format 2"
+    "message": "Activer le format2"
   },
   "optionPage_ExtendMenus": {
     "message": "Activer le menu contextuel étendu"

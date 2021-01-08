@@ -21,7 +21,7 @@
     "message": "Mostrar menú emergente"
   },
   "optionPage_Action": {
-    "message": "Ejecutar acción de formato"
+    "message": "Copiar formato1"
   },
   "optionPage_Complate": {
     "message": "Mostrar notificación de finalización de copia"
@@ -33,7 +33,7 @@
     "message": "Cambie la configuración estándar."
   },
   "optionPage_Format2": {
-    "message": "Habilitar formato 2"
+    "message": "Habilitar format2"
   },
   "optionPage_ExtendMenus": {
     "message": "Habilitar el menú contextual extendido"
