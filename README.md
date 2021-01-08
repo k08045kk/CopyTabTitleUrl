@@ -61,8 +61,8 @@ ${text}         | Selected text or page title (※1)     | v1.5.2
 ${linkText}     | Link text or page title (※2)         | v2.1.0 (Firefox only)
 ${linkUrl}, ${link}     | Link URL or page URL (※2)    | v2.1.0
 ${src}          | "src" URL or page URL (※3)           | v2.1.0
-${linkSelectionTitle}   | Link text or selected text or page title (※1,2,3)    | v2.2.0 🧪
-${selectionLinkTitle}   | Selected text or link text or page title (※1,2,3)    | v2.2.0 🧪
+${linkSelectionTitle}   | Link text or selected text or page title (※1,2)      | v2.2.0 🧪
+${selectionLinkTitle}   | Selected text or link text or page title (※1,2)      | v2.2.0 🧪
 ${linkSrcUrl}   | Link URL or "src" URL or page URL (※1,2,3)   | v2.2.0 🧪
 ${srcLinkUrl}   | "src" URL or link URL or page URL (※1,2,3)   | v2.2.0 🧪
 ${index}        | Serial number from 0 per window       | v1.5.2
