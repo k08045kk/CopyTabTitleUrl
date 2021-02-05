@@ -39,7 +39,7 @@
   },
   "optionPage_Format9": {
     "message":    "selection, link, image Set only format9 in the context menu",
-    "description":"選択・リンク・画像コンテキストメニューでformat9のみを設定する"
+    "description":"選択・リンク・画像コンテキストメニューにformat9のみを設定する"
   },
   "optionPage_EditMenuTitle": {
     "message":    "Edit the context menu title",
