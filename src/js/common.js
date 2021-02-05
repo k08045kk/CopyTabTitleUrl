@@ -241,6 +241,7 @@ function createFormatText(command, tabs) {
   const isDecode = command.checkbox__others_decode;
   const isPunycode = command.checkbox__others_punycode;
   const isSingle = tabs.length == 1;
+  const urlkeys = 'hash host hostname href origin pathname port protocol search'.split(' ');
   for (let i=0; i<tabs.length; i++) {
     const tab = tabs[i];
     
@@ -279,26 +280,33 @@ function createFormatText(command, tabs) {
                      .replace(/>/g, '&gt;');
       
       // URL
-      const url = new URL(tab.url);
-      'hash host hostname href origin pathname port protocol search'.split(' ').forEach((key) => {
-        keyset['${'+key+'}'] = url[key];
-      });
-      keyset['${:port}'] = url.port != '' ? ':'+url.port : '';
-      if (isDecode) {
-        'hash pathname search'.split(' ').forEach((key) => {
-          try {
-            keyset['${'+key+'}'] = decodeURIComponent(url[key]);
-          } catch (e) {
-            keyset['${'+key+'}'] = url[key];
-          }
+      try {
+        const url = new URL(tab.url);
+        urlkeys.forEach((key) => {
+          keyset['${'+key+'}'] = url[key];
         });
-      }
-      if (isPunycode) {
-        try {
-          keyset['${hostname}'] = punycode.toUnicode(url.hostname);
-        } catch (e) {
-          keyset['${hostname}'] = url.hostname;
+        keyset['${:port}'] = url.port != '' ? ':'+url.port : '';
+        if (isDecode) {
+          'hash pathname search'.split(' ').forEach((key) => {
+            try {
+              keyset['${'+key+'}'] = decodeURIComponent(url[key]);
+            } catch (e) {
+              keyset['${'+key+'}'] = url[key];
+            }
+          });
         }
+        if (isPunycode) {
+          try {
+            keyset['${hostname}'] = punycode.toUnicode(url.hostname);
+          } catch (e) {
+            keyset['${hostname}'] = url.hostname;
+          }
+        }
+      } catch (e) {
+        //console.log(e);
+        urlkeys.forEach((key) => {
+          keyset['${'+key+'}'] = 'undefined';
+        });
       }
     }
     
