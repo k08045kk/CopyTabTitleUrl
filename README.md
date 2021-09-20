@@ -58,6 +58,7 @@ ${title}        | Page title                            | v0.0.7
 ${url}          | Page URL                              | v0.0.7
 ${markdown}     | ${title} markdown escapes             | v2.1.0 🧪
 ${text}         | Selected text or page title (※1)     | v1.5.2
+${selectedText} | Selected text or blank text (※1)     | v2.2.1 🧪
 ${linkText}     | Link text or page title (※2)         | v2.1.0 (Firefox only)
 ${linkUrl}, ${link}     | Link URL or page URL (※2)    | v2.1.0
 ${src}          | "src" URL or page URL (※3)           | v2.1.0

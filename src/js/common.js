@@ -252,6 +252,7 @@ function createFormatText(command, tabs) {
     if (command.checkbox__others_extension) {
       // Basic
       keyset['${text}']     = isSingle && command.selectionText || tab.title;
+      keyset['${selectedText}']  = isSingle && command.selectionText || '';
       keyset['${linkText}'] = isSingle && command.linkText || tab.title;
       keyset['${linkUrl}']  = isSingle && command.linkUrl || tab.url;
       keyset['${linkUrl}']  = decodeURL(keyset['${linkUrl}'], isDecode, isPunycode);
