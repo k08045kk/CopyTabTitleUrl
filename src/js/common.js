@@ -235,6 +235,8 @@ function createFormatText(command, tabs) {
     
     // URL
     if (command.checkbox__others_decode || command.checkbox__others_punycode) {
+      // #35 ソースコード表示画面のURLが正常に取得できないことがある
+      // ${origin} → ${protocol}//${host}
       format = format.replace(/\${url}/g, '${href}')
                      .replace(/\${href}/g, '${origin}${pathname}${search}${hash}')
                      .replace(/\${origin}/g, '${protocol}//${host}')
@@ -314,6 +316,7 @@ function createFormatText(command, tabs) {
         urlkeys.forEach((key) => {
           keyset['${'+key+'}'] = 'undefined';
         });
+        keyset['${:port}'] = 'undefined';
       }
     }
     
