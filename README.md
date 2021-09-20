@@ -99,6 +99,10 @@ ${hh}, ${h}     | hours (12 hours)                      | v1.5.4
 ${mm}, ${m}     | minutes                               | v1.5.4
 ${ss}, ${s}     | seconds                               | v1.5.4
 ${SSS}, ${S}    | milliseconds                          | v1.5.4
+${aa}, ${AA}    | am/pm, AM/PM                          | v2.2.2
+${aaaa}, ${AAAA}| a.m./p.m., A.M./P.M.                  | v2.2.2
+${W}            | Sunday/Monday/Tuesday/Wednesday/Thursday/Friday/Saturday      | v2.2.2
+${WWW}          | Sun/Mon/Tue/Wed/Thu/Fri/Sat           | v2.2.2
 
 ※`${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}`  
 　`2020-04-03T00:48:23.456`

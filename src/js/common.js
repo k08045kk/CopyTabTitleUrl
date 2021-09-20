@@ -226,6 +226,12 @@ function createFormatText(command, tabs) {
     keyset['${m}']    = ''  + now.getMinutes();
     keyset['${s}']    = ''  + now.getSeconds();
     keyset['${S}']    = ''  + now.getMilliseconds();
+    keyset['${aa}']   = now.getHours()/12 < 1 ? 'am' : 'pm';
+    keyset['${AA}']   = now.getHours()/12 < 1 ? 'AM' : 'PM';
+    keyset['${aaaa}'] = now.getHours()/12 < 1 ? 'a.m.' : 'p.m.';
+    keyset['${AAAA}'] = now.getHours()/12 < 1 ? 'A.M.' : 'P.M.';
+    keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
+    keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     
     // URL
     if (command.checkbox__others_decode || command.checkbox__others_punycode) {
