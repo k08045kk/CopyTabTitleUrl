@@ -2,11 +2,11 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "default_locale": "en",
   
   "author": "toshi",
-  "homepage_url": "https://www.bugbugnow.net/",
+  "homepage_url": "https://github.com/k08045kk/CopyTabTitleUrl",
   
   "background": {
     "scripts": [
@@ -47,6 +47,7 @@
   },
   
   "permissions": [
+    "activeTab",
     "clipboardWrite",
     "contextMenus",
     "storage",
