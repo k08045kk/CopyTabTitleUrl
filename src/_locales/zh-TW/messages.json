@@ -42,7 +42,7 @@
     "message": "以 text/html 格式複制"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "用換行符分隔多個選項卡"
+    "message": "分隔多個選項卡"
   },
   "optionPage_ExcludePinned": {
     "message": "排除固定的標籤"

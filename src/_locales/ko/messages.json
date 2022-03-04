@@ -42,7 +42,7 @@
     "message": "text/html 형식으로 복사"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "개행 문자로 여러 탭 분리"
+    "message": "여러 탭 분리"
   },
   "optionPage_ExcludePinned": {
     "message": "고정 된 탭 제외"

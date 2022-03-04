@@ -62,8 +62,8 @@
     "description":"ClipBoard API を使用する"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message":    "Separate multiple tabs with a newline character",
-    "description":"複数タブを改行文字で区切る"
+    "message":    "Separate multiple tabs",
+    "description":"複数タブを区切る"
   },
   "optionPage_ExcludePinned": {
     "message":    "Exclude pinned tabs",

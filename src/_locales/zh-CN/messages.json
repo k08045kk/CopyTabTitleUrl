@@ -42,7 +42,7 @@
     "message": "以 text/html 格式复制"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "用换行符分隔多个选项卡"
+    "message": "分隔多个选项卡"
   },
   "optionPage_ExcludePinned": {
     "message": "排除固定的标签"

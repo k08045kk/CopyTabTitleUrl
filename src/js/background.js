@@ -24,7 +24,7 @@ function converteStorageVersion2(oldValueSet) {
       set.checkbox__others_decode = !!old.format_decode;
       set.checkbox__others_punycode = !!old.format_punycode;
       set.checkbox__others_html = !!old.format_html;
-      set.checkbox__others_enter = 'format_enter' in old ? old.format_enter : true;
+      //set.checkbox__others_enter = 'format_enter' in old ? old.format_enter : true;
       set.checkbox__others_pin = !!old.format_pin;
       set.checkbox__others_selected = 'format_selected' in old ? old.format_selected : true;
       set.checkbox__others_language = !!old.format_language;

@@ -6,6 +6,7 @@
   <style>
 body {
   padding: 0.5em;
+  max-width: 600px;
 }
 hr {
   height: 0;
@@ -50,6 +51,9 @@ input[type="text"] {
 }
 .shortcut.error {
   background: #ffeaee;
+}
+#separator {
+  max-width: 8em;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -304,17 +308,17 @@ input[type="text"] {
       see <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span>
     </p>
     <br/>
-    <p>format<span class="extension" hidden="">1</span>: <input class="format" type="text" id="format3" maxlength="256" /></p>
-    <p class="extension format2" hidden="">format2: <input class="format" type="text" id="format4" maxlength="256" /></p>
+    <p>format<span class="extension" hidden="">1</span>:&ensp;<input class="format" type="text" id="format3" maxlength="256" /></p>
+    <p class="extension format2" hidden="">format2:&ensp;<input class="format" type="text" id="format4" maxlength="256" /></p>
     <div class="extension extend_menus" hidden="">
       <hr/>
-      <p><span id="format5_title">format3</span>: <input class="format" type="text" id="format5" maxlength="256" /></p>
-      <p><span id="format6_title">format4</span>: <input class="format" type="text" id="format6" maxlength="256" /></p>
-      <p><span id="format7_title">format5</span>: <input class="format" type="text" id="format7" maxlength="256" /></p>
-      <p><span id="format8_title">format6</span>: <input class="format" type="text" id="format8" maxlength="256" /></p>
-      <p><span id="format9_title">format7</span>: <input class="format" type="text" id="format9" maxlength="256" /></p>
-      <p><span id="format10_title">format8</span>: <input class="format" type="text" id="format10" maxlength="256" /></p>
-      <p><span id="format11_title">format9</span>: <input class="format" type="text" id="format11" maxlength="256" /></p>
+      <p><span id="format5_title">format3</span>:&ensp;<input class="format" type="text" id="format5" maxlength="256" /></p>
+      <p><span id="format6_title">format4</span>:&ensp;<input class="format" type="text" id="format6" maxlength="256" /></p>
+      <p><span id="format7_title">format5</span>:&ensp;<input class="format" type="text" id="format7" maxlength="256" /></p>
+      <p><span id="format8_title">format6</span>:&ensp;<input class="format" type="text" id="format8" maxlength="256" /></p>
+      <p><span id="format9_title">format7</span>:&ensp;<input class="format" type="text" id="format9" maxlength="256" /></p>
+      <p><span id="format10_title">format8</span>:&ensp;<input class="format" type="text" id="format10" maxlength="256" /></p>
+      <p><span id="format11_title">format9</span>:&ensp;<input class="format" type="text" id="format11" maxlength="256" /></p>
     </div>
   </fieldset>
   <fieldset><!-- キーボードショートカット -->
@@ -333,10 +337,10 @@ input[type="text"] {
         Example: Alt+C
       </p>
       <br/>
-      <p>format<span class="extension">1</span>: <input class="shortcut" type="text" id="shortcut3" maxlength="100" /></p>
-      <p class="extension format2">format2: <input class="shortcut" type="text" id="shortcut4" maxlength="100" /></p>
-      <p class="extension extend_menus hide">format3: <input class="shortcut" type="text" id="shortcut5" maxlength="100" /></p>
-      <p class="extension extend_menus hide">format4: <input class="shortcut" type="text" id="shortcut6" maxlength="100" /></p>
+      <p>format<span class="extension">1</span>:&ensp;<input class="shortcut" type="text" id="shortcut3" maxlength="100" /></p>
+      <p class="extension format2">format2:&ensp;<input class="shortcut" type="text" id="shortcut4" maxlength="100" /></p>
+      <p class="extension extend_menus hide">format3:&ensp;<input class="shortcut" type="text" id="shortcut5" maxlength="100" /></p>
+      <p class="extension extend_menus hide">format4:&ensp;<input class="shortcut" type="text" id="shortcut6" maxlength="100" /></p>
     </div>
   </fieldset>
   
@@ -380,8 +384,8 @@ input[type="text"] {
       <label for="checkbox__others_clipboard_api" data-i18n="optionPage_ClipboardAPI" data-english="Use Clipboard API"></label>
     </p>
     <p class="extension">
-      <input id="checkbox__others_enter" type="checkbox"/>
-      <label for="checkbox__others_enter" data-i18n="optionPage_SeparateMultipleNewLine" data-english="Separate multiple tabs with a newline character"></label>
+      <!--input id="checkbox__others_enter" type="checkbox"/-->
+      <label data-i18n="optionPage_SeparateMultipleNewLine" data-english="Separate multiple tabs"></label>:&ensp;<input type="text" class="options" id="separator" maxlength="256"/>
     </p>
     <hr class="extension"/>
     <p class="extension">

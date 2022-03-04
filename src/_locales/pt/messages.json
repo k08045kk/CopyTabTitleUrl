@@ -42,7 +42,7 @@
     "message": "Copiar em formato texto/html"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "Separe várias guias com um caractere de nova linha"
+    "message": "Separe várias guias"
   },
   "optionPage_ExcludePinned": {
     "message": "Excluir guias fixadas"

@@ -42,7 +42,7 @@
     "message": "Копировать в text/html формате"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "Разделите несколько вкладок символом новой строки"
+    "message": "Разделите несколько вкладок"
   },
   "optionPage_ExcludePinned": {
     "message": "Исключить закрепленные вкладки"

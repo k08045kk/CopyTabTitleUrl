@@ -51,7 +51,7 @@
     "message": "Kopieren Sie im text/html Format"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "Trennen Sie mehrere Registerkarten mit einem Zeilenumbruch"
+    "message": "Trennen Sie mehrere Registerkarten"
   },
   "optionPage_ExcludePinned": {
     "message": "Fixierte Tabs ausschließen"

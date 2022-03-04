@@ -100,7 +100,7 @@ const defaultStorageValueSetVersion2 = {
   checkbox__others_punycode: false,
   checkbox__others_html: false,
   checkbox__others_clipboard_api: false,        // v2.2.0+ Firefox only
-  checkbox__others_enter: true,
+  //checkbox__others_enter: true,               // v2.2.x-
   checkbox__others_pin: false,
   checkbox__others_hidden: false,               // v2.1.1+
   checkbox__others_selected: true,
@@ -148,7 +148,8 @@ const defaultStorageValueSetVersion2 = {
     {id:9, title:'format7', format:''}, 
     {id:10, title:'format8', format:''}, 
     {id:11, title:'format9', format:'[${linkSelectionTitle}](${linkSrcUrl})'},  // v2.2.0+
-  ]
+  ],
+  separator: '${enter}',
 };
 const defaultStorageValueSet = defaultStorageValueSetVersion2;
 
@@ -243,6 +244,8 @@ function createFormatText(command, tabs) {
                      .replace(/\${host}/g, '${hostname}${:port}')
     }
   }
+  const sep = command.checkbox__others_extension ? command.separator : '${enter}';
+  const separator = sep.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
   // 本処理
   const temp = [];
@@ -321,17 +324,10 @@ function createFormatText(command, tabs) {
     }
     
     // 変換
-    const fmt = format.replace(/\${.*?}/ig, (m) => {
-      if (keyset.hasOwnProperty(m)) {
-        return keyset[m];
-      }
-      return m;
-    });
+    const fmt = format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
     temp.push(fmt);
   }
-  return temp.join((!command.checkbox__others_extension || command.checkbox__others_enter)
-                   ? enter 
-                   : '');
+  return temp.join(separator);
   // ${TITLE}${enter}${URL}${enter}ABCDEF abcdef あいうえお${CR}${LF}${test}${tab}${$}
   // ${index}, ${id}, ${tabId}, ${windowId}, ${favIconUrl}, ${markdown}
   // ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}${enter}${yy}-${M}-${d}T${H}:${m}:${s}.${S}${enter}${hh}-${h}

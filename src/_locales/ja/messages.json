@@ -48,7 +48,7 @@
     "message": "text/html 形式でコピー"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "複数のタブを改行文字で区切る"
+    "message": "複数のタブを区切る"
   },
   "optionPage_ExcludePinned": {
     "message": "固定されたタブを除外する"
