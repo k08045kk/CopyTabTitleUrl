@@ -39,7 +39,7 @@
     "message": "Decode the punycode"
   },
   "optionPage_FormatCopyHTML": {
-    "message": "Copy in HTML format"
+    "message": "Copy in text/html format"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message": "Separate multiple tabs with a newline character"

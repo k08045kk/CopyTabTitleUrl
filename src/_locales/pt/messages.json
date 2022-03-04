@@ -39,7 +39,7 @@
     "message": "Decodifique o punycode"
   },
   "optionPage_FormatCopyHTML": {
-    "message": "Copiar em formato HTML"
+    "message": "Copiar em formato texto/html"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message": "Separe várias guias com um caractere de nova linha"

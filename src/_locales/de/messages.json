@@ -21,7 +21,7 @@
     "message": "Popup-Menü anzeigen"
   },
   "optionPage_Action": {
-    "message": "Kopierformat1"
+    "message": "Kopier format1"
   },
   "optionPage_Complate": {
     "message": "Benachrichtigung über den Abschluss der Kopie anzeigen"
@@ -48,7 +48,7 @@
     "message": "Dekodiere den Punycode"
   },
   "optionPage_FormatCopyHTML": {
-    "message": "Im HTML-Format kopieren"
+    "message": "Kopieren Sie im text/html Format"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message": "Trennen Sie mehrere Registerkarten mit einem Zeilenumbruch"

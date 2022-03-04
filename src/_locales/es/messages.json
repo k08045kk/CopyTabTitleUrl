@@ -48,7 +48,7 @@
     "message": "Decodificar el código puny"
   },
   "optionPage_FormatCopyHTML": {
-    "message": "Copiar en formato HTML"
+    "message": "Copiar en formato de texto/html"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message": "Separe varias pestañas con un carácter de nueva línea"

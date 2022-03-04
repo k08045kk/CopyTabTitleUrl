@@ -39,7 +39,7 @@
     "message": "解码punycode"
   },
   "optionPage_FormatCopyHTML": {
-    "message": "以HTML格式复制"
+    "message": "以 text/html 格式复制"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message": "用换行符分隔多个选项卡"

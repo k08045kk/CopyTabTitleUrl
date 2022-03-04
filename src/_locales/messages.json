@@ -6,7 +6,7 @@
   },
   "extensionDescription": {
     "message":    "Copy the title and URL to the clipboard.",
-    "description":"タイトルとURLをクリップボードにコピーします。"
+    "description":"タイトルと URL をクリップボードにコピーします。"
   },
   
   "optionPage_Popup": {
@@ -15,7 +15,7 @@
   },
   "optionPage_Action": {
     "message":    "Copy format1",
-    "description":"format1をコピーする"
+    "description":"format1 をコピーする"
   },
   "optionPage_Complate": {
     "message":    "Display copy completion notification",
@@ -31,7 +31,7 @@
   },
   "optionPage_Format2": {
     "message":    "Enable format2",
-    "description":"format2を有効にする"
+    "description":"format2 を有効にする"
   },
   "optionPage_ExtendMenus": {
     "message":    "Enable extended context menu",
@@ -39,7 +39,7 @@
   },
   "optionPage_Format9": {
     "message":    "selection, link, image Set only format9 in the context menu",
-    "description":"選択・リンク・画像コンテキストメニューにformat9のみを設定する"
+    "description":"選択・リンク・画像コンテキストメニューに format9 のみを設定する"
   },
   "optionPage_EditMenuTitle": {
     "message":    "Edit the context menu title",
@@ -47,19 +47,19 @@
   },
   "optionPage_FormatDecode": {
     "message":    "Decode the URL",
-    "description":"URLをデコードする"
+    "description":"URL をデコードする"
   },
   "optionPage_FormatPunycode": {
     "message":    "Decode the punycode",
     "description":"ピュニコードをデコードする"
   },
   "optionPage_FormatCopyHTML": {
-    "message":    "Copy in HTML format",
-    "description":"HTML形式でコピーする"
+    "message":    "Copy in text/html format",
+    "description":"text/html 形式でコピーする"
   },
   "optionPage_ClipboardAPI": {
     "message":    "Use Clipboard API",
-    "description":"ClipBoard APIを使用する"
+    "description":"ClipBoard API を使用する"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message":    "Separate multiple tabs with a newline character",

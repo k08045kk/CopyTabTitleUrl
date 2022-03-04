@@ -48,7 +48,7 @@
     "message": "Décoder le punycode"
   },
   "optionPage_FormatCopyHTML": {
-    "message": "Copier au format HTML"
+    "message": "Copie au format texte/html"
   },
   "optionPage_SeparateMultipleNewLine": {
     "message": "Séparez plusieurs onglets avec un caractère de nouvelle ligne"
