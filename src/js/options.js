@@ -204,6 +204,13 @@ function onUpdateShortcut() {
   // ショートカット変更画面(https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox)
 };
 
+function onUpdateSeparator() {
+  const valueSet = {};
+  valueSet.separator =  document.getElementById('separator').value;
+  getStorageArea().set(valueSet, () => {});
+};
+
+
 // オプション画面に値を設定する
 function setOptionPageValues(valueSet) {
   // ストレージ内の値で初期化
@@ -214,6 +221,7 @@ function setOptionPageValues(valueSet) {
   });
   radio('browser_action', valueSet);
   radio('browser_action_target', valueSet);
+  document.getElementById('separator').value  = valueSet.separator;
   
   for (let i=0; i<valueSet.menus.length; i++) {
     document.getElementById('menu'+i).checked  = !!valueSet.menus[i].enable;
@@ -326,6 +334,9 @@ function onInit() {
   document.querySelectorAll('[type="radio"]').forEach((element) => {
     element.addEventListener('click', onUpdateOptions);
   });
+  document.querySelectorAll('.options').forEach((element) => {
+    element.addEventListener('click', onUpdateOptions);
+  });
   document.querySelectorAll('.menu').forEach((element) => {
     element.addEventListener('input', onUpdateMenus);
   });
@@ -340,6 +351,9 @@ function onInit() {
   });
   document.querySelectorAll('.shortcut').forEach((element) => {
     element.addEventListener('input', onUpdateShortcut);
+  });
+  document.querySelectorAll('#separator').forEach((element) => {
+    element.addEventListener('input', onUpdateSeparator);
   });
   // 開発者用
   if (false) {

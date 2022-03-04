@@ -24,7 +24,7 @@
     "message": "Пожалуйста, измените стандартную настройку."
   },
   "optionPage_Format2": {
-    "message": "Включить формат 2"
+    "message": "Включить format2"
   },
   "optionPage_ExtendMenus": {
     "message": "Включить расширенное контекстное меню"
@@ -39,10 +39,10 @@
     "message": "Расшифруйте punycode"
   },
   "optionPage_FormatCopyHTML": {
-    "message": "Копировать в формате HTML"
+    "message": "Копировать в text/html формате"
   },
   "optionPage_SeparateMultipleNewLine": {
-    "message": "Разделите несколько вкладок символом новой строки"
+    "message": "Разделите несколько вкладок"
   },
   "optionPage_ExcludePinned": {
     "message": "Исключить закрепленные вкладки"
@@ -66,6 +66,6 @@
     "message": "Исключить скрытые вкладки"
   },
   "optionPage_Format9": {
-    "message": "выделение, ссылка, изображение Установить только формат9 в контекстном меню"
+    "message": "выделение, ссылка, изображение Установить только format9 в контекстном меню"
   }
 }

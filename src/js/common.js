@@ -100,7 +100,7 @@ const defaultStorageValueSetVersion2 = {
   checkbox__others_punycode: false,
   checkbox__others_html: false,
   checkbox__others_clipboard_api: false,        // v2.2.0+ Firefox only
-  checkbox__others_enter: true,
+  //checkbox__others_enter: true,               // v2.2.x-
   checkbox__others_pin: false,
   checkbox__others_hidden: false,               // v2.1.1+
   checkbox__others_selected: true,
@@ -148,7 +148,8 @@ const defaultStorageValueSetVersion2 = {
     {id:9, title:'format7', format:''}, 
     {id:10, title:'format8', format:''}, 
     {id:11, title:'format9', format:'[${linkSelectionTitle}](${linkSrcUrl})'},  // v2.2.0+
-  ]
+  ],
+  separator: '${enter}',
 };
 const defaultStorageValueSet = defaultStorageValueSetVersion2;
 
@@ -226,21 +227,32 @@ function createFormatText(command, tabs) {
     keyset['${m}']    = ''  + now.getMinutes();
     keyset['${s}']    = ''  + now.getSeconds();
     keyset['${S}']    = ''  + now.getMilliseconds();
+    keyset['${aa}']   = now.getHours()/12 < 1 ? 'am' : 'pm';
+    keyset['${AA}']   = now.getHours()/12 < 1 ? 'AM' : 'PM';
+    keyset['${aaaa}'] = now.getHours()/12 < 1 ? 'a.m.' : 'p.m.';
+    keyset['${AAAA}'] = now.getHours()/12 < 1 ? 'A.M.' : 'P.M.';
+    keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
+    keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     
     // URL
     if (command.checkbox__others_decode || command.checkbox__others_punycode) {
+      // #35 ソースコード表示画面のURLが正常に取得できないことがある
+      // ${origin} → ${protocol}//${host}
       format = format.replace(/\${url}/g, '${href}')
                      .replace(/\${href}/g, '${origin}${pathname}${search}${hash}')
                      .replace(/\${origin}/g, '${protocol}//${host}')
                      .replace(/\${host}/g, '${hostname}${:port}')
     }
   }
+  const sep = command.checkbox__others_extension ? command.separator : '${enter}';
+  const separator = sep.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
   // 本処理
   const temp = [];
   const isDecode = command.checkbox__others_decode;
   const isPunycode = command.checkbox__others_punycode;
   const isSingle = tabs.length == 1;
+  const urlkeys = 'hash host hostname href origin pathname port protocol search'.split(' ');
   for (let i=0; i<tabs.length; i++) {
     const tab = tabs[i];
     
@@ -251,6 +263,7 @@ function createFormatText(command, tabs) {
     if (command.checkbox__others_extension) {
       // Basic
       keyset['${text}']     = isSingle && command.selectionText || tab.title;
+      keyset['${selectedText}']  = isSingle && command.selectionText || '';
       keyset['${linkText}'] = isSingle && command.linkText || tab.title;
       keyset['${linkUrl}']  = isSingle && command.linkUrl || tab.url;
       keyset['${linkUrl}']  = decodeURL(keyset['${linkUrl}'], isDecode, isPunycode);
@@ -279,41 +292,42 @@ function createFormatText(command, tabs) {
                      .replace(/>/g, '&gt;');
       
       // URL
-      const url = new URL(tab.url);
-      'hash host hostname href origin pathname port protocol search'.split(' ').forEach((key) => {
-        keyset['${'+key+'}'] = url[key];
-      });
-      keyset['${:port}'] = url.port != '' ? ':'+url.port : '';
-      if (isDecode) {
-        'hash pathname search'.split(' ').forEach((key) => {
-          try {
-            keyset['${'+key+'}'] = decodeURIComponent(url[key]);
-          } catch (e) {
-            keyset['${'+key+'}'] = url[key];
-          }
+      try {
+        const url = new URL(tab.url);
+        urlkeys.forEach((key) => {
+          keyset['${'+key+'}'] = url[key];
         });
-      }
-      if (isPunycode) {
-        try {
-          keyset['${hostname}'] = punycode.toUnicode(url.hostname);
-        } catch (e) {
-          keyset['${hostname}'] = url.hostname;
+        keyset['${:port}'] = url.port != '' ? ':'+url.port : '';
+        if (isDecode) {
+          'hash pathname search'.split(' ').forEach((key) => {
+            try {
+              keyset['${'+key+'}'] = decodeURIComponent(url[key]);
+            } catch (e) {
+              keyset['${'+key+'}'] = url[key];
+            }
+          });
         }
+        if (isPunycode) {
+          try {
+            keyset['${hostname}'] = punycode.toUnicode(url.hostname);
+          } catch (e) {
+            keyset['${hostname}'] = url.hostname;
+          }
+        }
+      } catch (e) {
+        //console.log(e);
+        urlkeys.forEach((key) => {
+          keyset['${'+key+'}'] = 'undefined';
+        });
+        keyset['${:port}'] = 'undefined';
       }
     }
     
     // 変換
-    const fmt = format.replace(/\${.*?}/ig, (m) => {
-      if (keyset.hasOwnProperty(m)) {
-        return keyset[m];
-      }
-      return m;
-    });
+    const fmt = format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
     temp.push(fmt);
   }
-  return temp.join((!command.checkbox__others_extension || command.checkbox__others_enter)
-                   ? enter 
-                   : '');
+  return temp.join(separator);
   // ${TITLE}${enter}${URL}${enter}ABCDEF abcdef あいうえお${CR}${LF}${test}${tab}${$}
   // ${index}, ${id}, ${tabId}, ${windowId}, ${favIconUrl}, ${markdown}
   // ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}${enter}${yy}-${M}-${d}T${H}:${m}:${s}.${S}${enter}${hh}-${h}
@@ -340,7 +354,7 @@ function copyToClipboard(command, tabs) {
       event.stopImmediatePropagation();
       event.preventDefault();
       
-      if (extension(command, 'others_html', true)) {
+      if (extension(command, 'others_html', true) && command.id >= 3) {
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
@@ -428,6 +442,7 @@ function onContextMenus(info, tab) {
     const menu = valueSet.menus.find((v) => {
       return v.id == id;
     });
+    valueSet.id = menu.format;
     valueSet.format = valueSet.formats.find((v) => v.id == menu.format).format;
     //valueSet.format = valueSet.formats.find((v) => v.id == menu.format);
     //valueSet.format.checkbox__others_html = true; // みたいな？
@@ -526,9 +541,6 @@ function updateContextMenus() {
                 : defaultStorageValueSet.menus[21].title),
         contexts: ['selection', 'link', 'image'],
       });
-    }
-    if (isMenu || format9) {
-      chrome.contextMenus.onClicked.addListener(onContextMenus);
     }
   };
   
