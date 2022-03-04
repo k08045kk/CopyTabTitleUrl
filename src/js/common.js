@@ -546,9 +546,6 @@ function updateContextMenus() {
         contexts: ['selection', 'link', 'image'],
       });
     }
-    if (isMenu || format9) {
-      chrome.contextMenus.onClicked.addListener(onContextMenus);
-    }
   };
   
   // メニュー削除 && ストレージ取得

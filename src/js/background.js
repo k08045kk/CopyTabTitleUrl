@@ -86,6 +86,7 @@ function main() {
   
   // コンテキストメニュー更新
   updateContextMenus();
+  chrome.contextMenus.onClicked.addListener(onContextMenus);
   
   // キーボードショートカット
   chrome.commands.onCommand.addListener((command) => {
