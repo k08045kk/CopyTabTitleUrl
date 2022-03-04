@@ -41,6 +41,7 @@ function onInit() {
         if (win.checked) {  target = 'window';  }
         if (all.checked) {  target = 'all';  }
         
+        valueSet.id = id;
         valueSet.format = valueSet.formats[id].format;
         valueSet.target = target;
         onCopyTab(valueSet, onTabCopyComplete);
@@ -52,6 +53,7 @@ function onInit() {
   getStorageArea().get(defaultStorageValueSet, (valueSet) => {
     if (valueSet.select__browser_action == 'action') {
       // アクションのみ(完了通知を表示する)
+      valueSet.id = 3;
       valueSet.format = valueSet.formats[3].format;
       valueSet.target = valueSet.select__browser_action_target;
       onCopyTab(valueSet, () => {

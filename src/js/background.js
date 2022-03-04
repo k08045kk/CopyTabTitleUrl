@@ -76,6 +76,7 @@ function main() {
   // ブラウザアクション
   chrome.browserAction.onClicked.addListener((info, tab) => {
     getStorageArea().get(defaultStorageValueSet, (valueSet) => {
+      valueSet.id = 3;
       valueSet.format = valueSet.formats[3].format;
       valueSet.target = valueSet.select__browser_action_target;
       onCopyTab(valueSet, null);
@@ -90,12 +91,14 @@ function main() {
   chrome.commands.onCommand.addListener((command) => {
     getStorageArea().get(defaultStorageValueSet, (valueSet) => {
       if (command == 'shortcut_action') {
+        valueSet.id = 3;
         valueSet.format = valueSet.formats[3].format;
         valueSet.target = 'tab';
         onCopyTab(valueSet, null);
       } else if (valueSet.checkbox__others_extension) {
         if (valueSet.checkbox__others_format2) {
           if (command == 'shortcut_action2') {
+            valueSet.id = 4;
             valueSet.format = valueSet.formats[4].format;
             valueSet.target = 'tab';
             onCopyTab(valueSet, null);
@@ -105,11 +108,13 @@ function main() {
         // 未実装（要望があれば機能拡張する）
         if (valueSet.checkbox__others_extend_menus) {
           if (command == 'shortcut_action3') {
+            valueSet.id = 5;
             valueSet.format = valueSet.formats[5].format;
             valueSet.target = valueSet.menus[15].target;
             onCopyTab(valueSet, null);
           }
           if (command == 'shortcut_action4') {
+            valueSet.id = 6;
             valueSet.format = valueSet.formats[6].format;
             valueSet.target = valueSet.menus[16].target;
             onCopyTab(valueSet, null);

@@ -358,7 +358,7 @@ function copyToClipboard(command, tabs) {
       event.stopImmediatePropagation();
       event.preventDefault();
       
-      if (extension(command, 'others_html', true)) {
+      if (extension(command, 'others_html', true) && command.id >= 3) {
         event.clipboardData.setData('text/html', text);
       }
       event.clipboardData.setData('text/plain', text);
@@ -446,6 +446,7 @@ function onContextMenus(info, tab) {
     const menu = valueSet.menus.find((v) => {
       return v.id == id;
     });
+    valueSet.id = menu.format;
     valueSet.format = valueSet.formats.find((v) => v.id == menu.format).format;
     //valueSet.format = valueSet.formats.find((v) => v.id == menu.format);
     //valueSet.format.checkbox__others_html = true; // みたいな？
