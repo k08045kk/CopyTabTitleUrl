@@ -198,15 +198,18 @@ function createFormatText(command, tabs) {
   const enter = getEnterCode(command);
   const keyset = {};
   let format = command.format;
+  let separator = command.checkbox__others_extension ? command.separator : '${enter}';
   
   // Standard
   keyset['${enter}'] = enter;
   keyset['${$}'] = '$';
-  format = format.replace(/\${(title|url|enter)}/ig, (m) => { return m.toLowerCase(); });
+  format = format.replace(/\${(title|url|enter)}/ig, (m) => m.toLowerCase());
+  separator = separator.replace(/\${(title|url|enter)}/ig, (m) => m.toLowerCase());
   
   if (command.checkbox__others_extension) {
     // Basic
-    format = format.replace(/\${(text|index|id)}/ig, (m) => { return m.toLowerCase(); })
+    format = format.replace(/\${(text|index|id)}/ig, (m) => m.toLowerCase());
+    separator = separator.replace(/\${(text|index|id)}/ig, (m) => m.toLowerCase());
     
     // Character code
     keyset['${cr}'] = '\r';
@@ -215,6 +218,9 @@ function createFormatText(command, tabs) {
     format = format.replace(/\${(tab|\\t|t)}/ig, '${tab}')
                    .replace(/\${(cr|\\r|r)}/ig,  '${cr}')
                    .replace(/\${(lf|\\n|n)}/ig,  '${lf}')
+    separator = separator.replace(/\${(tab|\\t|t)}/ig, '${tab}')
+                         .replace(/\${(cr|\\r|r)}/ig,  '${cr}')
+                         .replace(/\${(lf|\\n|n)}/ig,  '${lf}')
     
     // Date
     const now = new Date();
@@ -251,8 +257,7 @@ function createFormatText(command, tabs) {
                      .replace(/\${host}/g, '${hostname}${:port}')
     }
   }
-  const sep = command.checkbox__others_extension ? command.separator : '${enter}';
-  const separator = sep.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
+  const sep = separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
   // 本処理
   const temp = [];
@@ -334,7 +339,7 @@ function createFormatText(command, tabs) {
     const fmt = format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
     temp.push(fmt);
   }
-  return temp.join(separator);
+  return temp.join(sep);
   // ${TITLE}${enter}${URL}${enter}ABCDEF abcdef あいうえお${CR}${LF}${test}${tab}${$}
   // ${index}, ${id}, ${tabId}, ${windowId}, ${favIconUrl}, ${markdown}
   // ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}${enter}${yy}-${M}-${d}T${H}:${m}:${s}.${S}${enter}${hh}-${h}
