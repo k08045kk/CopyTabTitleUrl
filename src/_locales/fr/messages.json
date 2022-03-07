@@ -76,5 +76,8 @@
   },
   "optionPage_Format9": {
     "message": "sélection, lien, image Définir uniquement format9 dans le menu contextuel"
+  },
+  "optionPage_NewLine": {
+    "message": "Caractère de saut de ligne"
   }
 }

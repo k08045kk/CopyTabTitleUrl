@@ -76,5 +76,8 @@
   },
   "optionPage_Format9": {
     "message": "selección, enlace, imagen Establecer solo formato9 en el menú contextual"
+  },
+  "optionPage_NewLine": {
+    "message": "Carácter de nueva línea"
   }
 }

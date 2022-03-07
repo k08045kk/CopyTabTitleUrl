@@ -67,5 +67,8 @@
   },
   "optionPage_Format9": {
     "message": "selection, link, image Set only format9 in the context menu"
+  },
+  "optionPage_NewLine": {
+    "message": "Newline character"
   }
 }

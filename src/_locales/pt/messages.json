@@ -67,5 +67,8 @@
   },
   "optionPage_Format9": {
     "message": "seleção, link, imagem Defina apenas o formato 9 no menu de contexto"
+  },
+  "optionPage_NewLine": {
+    "message": "Caractere de nova linha"
   }
 }
