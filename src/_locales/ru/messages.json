@@ -67,5 +67,8 @@
   },
   "optionPage_Format9": {
     "message": "выделение, ссылка, изображение Установить только format9 в контекстном меню"
+  },
+  "optionPage_NewLine": {
+    "message": "Символ новой строки"
   }
 }

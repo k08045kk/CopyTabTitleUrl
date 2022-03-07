@@ -76,5 +76,8 @@
   },
   "optionPage_Format9": {
     "message": "選択・リンク・画像コンテキストメニューに format9 のみを設定する"
+  },
+  "optionPage_NewLine": {
+    "message": "改行文字"
   }
 }

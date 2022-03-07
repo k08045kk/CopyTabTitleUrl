@@ -76,5 +76,8 @@
   },
   "optionPage_Format9": {
     "message": "Auswahl, Link, Bild Nur Kontext9 im Kontextmenü einstellen"
+  },
+  "optionPage_NewLine": {
+    "message": "Newline-Zeichen"
   }
 }

@@ -102,6 +102,11 @@ function updateOptionPage() {
   // ClipBoardAPI
   const html = checkbox('checkbox__others_html');
   document.getElementById('checkbox__others_clipboard_api').disabled = html;
+  
+  // 改行
+  const newline = document.getElementById('newline').value;
+  document.getElementById('newline').value = newline == '' ? 'default' : newline;
+
 };
 
 // ショートカットを更新
@@ -132,6 +137,7 @@ function onUpdateOptions() {
     });
     valueSet['select__browser_action'] = radio('browser_action');
     valueSet['select__browser_action_target'] = radio('browser_action_target');
+    valueSet.newline = document.getElementById('newline').value;
     
     // ストレージへ設定を保存
     getStorageArea().set(valueSet, () => {
@@ -222,6 +228,7 @@ function setOptionPageValues(valueSet) {
   radio('browser_action', valueSet);
   radio('browser_action_target', valueSet);
   document.getElementById('separator').value  = valueSet.separator;
+  document.getElementById('newline').value  = valueSet.newline;
   
   for (let i=0; i<valueSet.menus.length; i++) {
     document.getElementById('menu'+i).checked  = !!valueSet.menus[i].enable;
@@ -336,6 +343,9 @@ function onInit() {
   });
   document.querySelectorAll('.options').forEach((element) => {
     element.addEventListener('click', onUpdateOptions);
+  });
+  document.querySelectorAll('#newline').forEach((element) => {
+    element.addEventListener('change', onUpdateOptions);
   });
   document.querySelectorAll('.menu').forEach((element) => {
     element.addEventListener('input', onUpdateMenus);

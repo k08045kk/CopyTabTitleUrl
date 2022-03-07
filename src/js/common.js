@@ -22,8 +22,14 @@ function getStorageArea() {
 };
 
 // 改行文字を取得
-function getEnterCode() {
-  return isWindows() ? '\r\n' : '\n';
+function getEnterCode(command) {
+  let enter = isWindows() ? '\r\n' : '\n';
+  switch (command.newline) {
+  case 'CRLF':  enter = '\r\n'; break;
+  case 'LF':    enter = '\n';   break;
+  case 'CR':    enter = '\r';   break;
+  }
+  return enter;
 };
 
 function extension(valueSet, name, opt_extension) {
@@ -149,7 +155,8 @@ const defaultStorageValueSetVersion2 = {
     {id:10, title:'format8', format:''}, 
     {id:11, title:'format9', format:'[${linkSelectionTitle}](${linkSrcUrl})'},  // v2.2.0+
   ],
-  separator: '${enter}',
+  separator: '${enter}',                        // v2.3.1+
+  newline: 'default',                           // v2.3.2+
 };
 const defaultStorageValueSet = defaultStorageValueSetVersion2;
 
@@ -188,7 +195,7 @@ function decodeURL(data, isDecode, isPunycode) {
 // フォーマット文字列作成
 function createFormatText(command, tabs) {
   // 前処理
-  const enter = getEnterCode();
+  const enter = getEnterCode(command);
   const keyset = {};
   let format = command.format;
   

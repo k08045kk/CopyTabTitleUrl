@@ -65,6 +65,10 @@
     "message":    "Separate multiple tabs",
     "description":"複数タブを区切る"
   },
+  "optionPage_NewLine": {
+    "message":    "Newline character",
+    "description":"改行文字"
+  },
   "optionPage_ExcludePinned": {
     "message":    "Exclude pinned tabs",
     "description":"ピン留めタブを除外する"

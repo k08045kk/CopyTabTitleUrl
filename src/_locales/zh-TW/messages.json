@@ -67,5 +67,8 @@
   },
   "optionPage_Format9": {
     "message": "選擇，鏈接，圖像在上下文菜單中僅設置format9"
+  },
+  "optionPage_NewLine": {
+    "message": "換行符"
   }
 }

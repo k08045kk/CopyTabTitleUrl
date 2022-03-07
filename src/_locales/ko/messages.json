@@ -67,5 +67,8 @@
   },
   "optionPage_Format9": {
     "message": "선택, 링크, 이미지 컨텍스트 메뉴에서 format9 만 설정"
+  },
+  "optionPage_NewLine": {
+    "message": "줄 바꿈 문자"
   }
 }
