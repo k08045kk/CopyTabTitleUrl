@@ -10,16 +10,18 @@ body {
 }
 hr {
   height: 0;
-  margin: 0;
+  margin: .5em;
   padding: 0;
   border: 0;
   border-top: 1px solid #b1b1b1;
 }
 fieldset {
-  margin: 0 0 1em 0;
+  margin: .5em .5em 2em;
+  padding: .5em;
   border: 1px solid #b1b1b1;
 }
 fieldset > legend {
+  padding: 0 0.25em;
   font-size: 16px;
   font-weight: bold;
 }
@@ -28,13 +30,9 @@ fieldset > fieldset {
   margin-bottom: 0.5em;
 }
 p {
-  margin:0.25em;
+  margin: 0.25em;
   font-size: 14px;
 }
-/*
-input[type="text"] {
-  margin:0.5em;
-}*/
 .hide, 
 [hidden] {
   display: none !important;
@@ -44,13 +42,8 @@ input[type="text"] {
   display: block;
   clear: both;
 }
-.link {
-}
 .menu_target {
   float: right;
-}
-.shortcut.error {
-  background: #ffeaee;
 }
 #separator {
   max-width: 8em;
@@ -68,20 +61,19 @@ input[type="text"] {
     color: #E8EAED;
     border: 1px solid #888;
   }
-  .shortcut.error {
-    background: #8E1C33;
-  }
   input[type="checkbox"]:disabled + label {
     color: #9A9C9E;
   }
 }
   </style>
-  <script defer="" src="/js/common.js"></script>
-  <script defer="" src="/js/options.js"></script>
+  <script src="/common.js"></script>
+  <script src="./options.js"></script>
 </head>
 <body>
-  
-  <fieldset><!-- コンテキストメニュー -->
+
+
+  <!-- コンテキストメニュー -->
+  <fieldset>
     <legend>Context menu</legend>
     <p>
       <input id="checkbox__menus_contexts_all" type="checkbox"/>
@@ -111,7 +103,7 @@ input[type="text"] {
       <input id="checkbox__menus_contexts_tab" type="checkbox"/>
       <label for="checkbox__menus_contexts_tab">Tab context menu</label>
     </p>
-    <fieldset id="menu_item" hidden="">
+    <fieldset id="menu_item" hidden>
       <legend>Menu item</legend>
       <div id="menus">
         <p>
@@ -134,7 +126,7 @@ input[type="text"] {
           <label class="menu_label" id="menu3_label" for="menu3">format</label>
           <input class="extension menu_title" id="menu3_title" type="text" maxlength="64"/>
         </p>
-        <p class="extension format2">
+        <p class="format2">
           <input class="menu" id="menu4" type="checkbox"/>
           <label class="menu_label" id="menu4_label" for="menu4">format2</label>
           <input class="extension menu_title" id="menu4_title" type="text" maxlength="64"/>
@@ -160,7 +152,7 @@ input[type="text"] {
           <label class="menu_label" id="menu8_label" for="menu8">format (window tabs)</label>
           <input class="extension menu_title" id="menu8_title" type="text" maxlength="64"/>
         </p>
-        <p class="extension format2">
+        <p class="format2">
           <input class="menu" id="menu9" type="checkbox"/>
           <label class="menu_label" id="menu9_label" for="menu9">format2 (window tabs)</label>
           <input class="extension menu_title" id="menu9_title" type="text" maxlength="64"/>
@@ -186,7 +178,7 @@ input[type="text"] {
           <label class="menu_label" id="menu13_label" for="menu13">format (all tabs)</label>
           <input class="extension menu_title" id="menu13_title" type="text" maxlength="64"/>
         </p>
-        <p class="extension format2">
+        <p class="format2">
           <input class="menu" id="menu14" type="checkbox"/>
           <label class="menu_label" id="menu14_label" for="menu14">format2 (all tabs)</label>
           <input class="extension menu_title" id="menu14_title" type="text" maxlength="64"/>
@@ -265,22 +257,25 @@ input[type="text"] {
       </div>
     </fieldset>
   </fieldset>
-  
-  <fieldset id="browser_action"><!-- ブラウザアクション -->
+
+
+  <!-- ブラウザアクション -->
+  <fieldset id="browser_action">
     <legend>Browser action</legend>
     <p>
       <input id="select__browser_action__popup" type="radio" name="browser_action" value="popup"/>
-      <label for="select__browser_action__popup" data-i18n="optionPage_Popup" data-english="Display popup menu"></label>
+      <label for="select__browser_action__popup">Show popup</label>
     </p>
     <p>
       <input id="select__browser_action__action" type="radio" name="browser_action" value="action"/>
-      <label for="select__browser_action__action" data-i18n="optionPage_Action" data-english="Copy format1"></label>
+      <label for="select__browser_action__action">Copy format</label>
     </p>
-    <p style="margin-left:1em;">
+    <div class="browser_action" style="margin-left:1em;" hidden>
+    <p>
       <input id="checkbox__popup_comlate" type="checkbox"/>
-      <label for="checkbox__popup_comlate" data-i18n="optionPage_Complate" data-english="Display copy completion notification"></label>
+      <label for="checkbox__popup_comlate">Show completion notification</label>
     </p>
-    <fieldset id="browser_action_target" hidden="">
+    <fieldset id="browser_action_target">
       <legend>Target</legend>
       <p>
         <input id="select__browser_action_target__tab" type="radio" name="browser_action_target" value="tab"/>
@@ -295,12 +290,15 @@ input[type="text"] {
         <label for="select__browser_action_target__all">All tabs</label>
       </p>
     </fieldset>
+    </div>
   </fieldset>
-  
-  <fieldset id="format"><!-- フォーマット -->
+
+
+  <!-- フォーマット -->
+  <fieldset id="format">
     <legend>Format</legend>
     <p class="normal">${title}, ${url}, ${enter}, ${$}.</p>
-    <p class="extension" hidden="">
+    <p class="extension" hidden>
       ${title},${url},${text},${link},${src},${index},${$}.<br/>
       ${enter},${r},${n},${t},${xXX}.<br/>
       ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}<br/>
@@ -308,128 +306,145 @@ input[type="text"] {
       see <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span>
     </p>
     <br/>
-    <p>format<span class="extension" hidden="">1</span>:&ensp;<input class="format" type="text" id="format3" maxlength="256" /></p>
-    <p class="extension format2" hidden="">format2:&ensp;<input class="format" type="text" id="format4" maxlength="256" /></p>
-    <div class="extension extend_menus" hidden="">
+    <p>format:&ensp;&ensp;<input class="format" type="text" id="format3" maxlength="256" /></p>
+    <p class="format2" hidden>
+      format2:&ensp;<input class="format" type="text" id="format4" maxlength="256" />
+    </p>
+    <div class="extension extend_menus" hidden>
       <hr/>
-      <p><span id="format5_title">format3</span>:&ensp;<input class="format" type="text" id="format5" maxlength="256" /></p>
-      <p><span id="format6_title">format4</span>:&ensp;<input class="format" type="text" id="format6" maxlength="256" /></p>
-      <p><span id="format7_title">format5</span>:&ensp;<input class="format" type="text" id="format7" maxlength="256" /></p>
-      <p><span id="format8_title">format6</span>:&ensp;<input class="format" type="text" id="format8" maxlength="256" /></p>
-      <p><span id="format9_title">format7</span>:&ensp;<input class="format" type="text" id="format9" maxlength="256" /></p>
-      <p><span id="format10_title">format8</span>:&ensp;<input class="format" type="text" id="format10" maxlength="256" /></p>
-      <p><span id="format11_title">format9</span>:&ensp;<input class="format" type="text" id="format11" maxlength="256" /></p>
+      <p>format3:&ensp;<input class="format" type="text" id="format5"  maxlength="256" /></p>
+      <p>format4:&ensp;<input class="format" type="text" id="format6"  maxlength="256" /></p>
+      <p>format5:&ensp;<input class="format" type="text" id="format7"  maxlength="256" /></p>
+      <p>format6:&ensp;<input class="format" type="text" id="format8"  maxlength="256" /></p>
+      <p>format7:&ensp;<input class="format" type="text" id="format9"  maxlength="256" /></p>
+      <p>format8:&ensp;<input class="format" type="text" id="format10" maxlength="256" /></p>
+      <p>format9:&ensp;<input class="format" type="text" id="format11" maxlength="256" /></p>
     </div>
   </fieldset>
-  <fieldset><!-- キーボードショートカット -->
+
+
+  <!-- キーボードショートカット -->
+  <fieldset>
     <legend>Keyboard shortcut</legend>
-    <div class="chrome">
-      <p>
-        <span data-i18n="optionPage_KeyboardShortcutMessage" data-english="Please change from the standard setting."></span><br/>
+    <div>
+      <p class="chrome">
+        Please change it from browser's settings screen.<br/>
         <span class="link">chrome://extensions/shortcuts</span>
-        <span id="shortcut_commands"></span>
       </p>
-    </div>
-    <div class="firefox">
-      <p>
-        Key(function key only) or Modifier+Key or Modifier+Modifier+Key.<br/>
-        Modifiers are Ctrl, Alt, Command, MacCtrl, Shift(secondary modifier only).<br/>
-        Example: Alt+C
+      <p class="firefox">
+        Please change it from browser's settings screen.<br/>
+        [about:addons] > [⚙] > [Manage Extension Shortcuts]<br/>
+        see <span class="link">https://support.mozilla.org/kb/manage-extension-shortcuts-firefox</span>
       </p>
-      <br/>
-      <p>format<span class="extension">1</span>:&ensp;<input class="shortcut" type="text" id="shortcut3" maxlength="100" /></p>
-      <p class="extension format2">format2:&ensp;<input class="shortcut" type="text" id="shortcut4" maxlength="100" /></p>
-      <p class="extension extend_menus hide">format3:&ensp;<input class="shortcut" type="text" id="shortcut5" maxlength="100" /></p>
-      <p class="extension extend_menus hide">format4:&ensp;<input class="shortcut" type="text" id="shortcut6" maxlength="100" /></p>
     </div>
   </fieldset>
-  
-  <fieldset><!-- その他 -->
+
+
+  <!-- 正規表現 -->
+  <!--fieldset id="regexp" class="extension">
+    <legend>RegExp</legend>
+    <p>${title.replace(1,2)} => <br/>"${title}".replace(new RegExp("${text1}","g"),"${text2}")</p>
+    <p>
+      
+    </p>
+    <p>🧪  This feature is currently under testing.</p>
+    <br/>
+    <p>text1&ensp;=&ensp;<input class="retext" type="text" id="retext1" maxlength="256" /></p>
+    <p>text2&ensp;=&ensp;<input class="retext" type="text" id="retext2" maxlength="256" /></p>
+    <p>text3&ensp;=&ensp;<input class="retext" type="text" id="retext3" maxlength="256" /></p>
+    <p>text4&ensp;=&ensp;<input class="retext" type="text" id="retext4" maxlength="256" /></p>
+  </fieldset-->
+
+
+  <!-- その他 -->
+  <fieldset>
     <legend>Other</legend>
-    <!--p class="extension">
-      <input id="checkbox__others_clipboard_api" type="checkbox"/>
-      <label for="checkbox__others_clipboard_api" data-i18n="optionPage_ClipboardAPI" data-english="Use Clipboard API"></label>
-    </p-->
-    <p class="extension">
+    <p>
       <input id="checkbox__others_format2" type="checkbox"/>
-      <label for="checkbox__others_format2" data-i18n="optionPage_Format2" data-english="Enable format2"></label>
+      <label for="checkbox__others_format2">Enable format2</label>
     </p>
     <p class="extension">
       <input id="checkbox__others_extend_menus" type="checkbox"/>
-      <label for="checkbox__others_extend_menus" data-i18n="optionPage_ExtendMenus" data-english="Enable extended context menu"></label>
+      <label for="checkbox__others_extend_menus" title="Enable format3 through format9.">
+        Enable extended context menu
+      </label>
     </p>
     <p class="extension">
       <input id="checkbox__others_format9" type="checkbox"/>
-      <label for="checkbox__others_format9" data-i18n="optionPage_Format9" data-english="selection, link, image Set only format9 in the context menu"></label>
+      <label for="checkbox__others_format9">
+        Selection, Link, Image Set only format9 in the context menu
+      </label>
     </p>
     <p class="extension">
       <input id="checkbox__others_edit_menu_title" type="checkbox"/>
-      <label for="checkbox__others_edit_menu_title" data-i18n="optionPage_EditMenuTitle" data-english="Edit the context menu title"></label>
+      <label for="checkbox__others_edit_menu_title" title="Make the title of the context menu editable.">
+        Edit the context menu title
+      </label>
     </p>
     <hr class="extension"/>
     <p class="extension">
       <input id="checkbox__others_decode" type="checkbox"/>
-      <label for="checkbox__others_decode" data-i18n="optionPage_FormatDecode" data-english="Decode the URL"></label>
+      <label for="checkbox__others_decode" title="Interprets percent encoding.">Decode the URL</label>
     </p>
     <p class="extension">
       <input id="checkbox__others_punycode" type="checkbox"/>
-      <label for="checkbox__others_punycode" data-i18n="optionPage_FormatPunycode" data-english="Decode the punycode"></label>
+      <label for="checkbox__others_punycode" title="Interpret the punycode.">Decode the punycode</label>
     </p>
     <p class="extension">
       <input id="checkbox__others_html" type="checkbox"/>
-      <label for="checkbox__others_html" data-i18n="optionPage_FormatCopyHTML" data-english="Copy in text/html format"></label>
-    </p>
-    <p class="extension firefox">
-      <input id="checkbox__others_clipboard_api" type="checkbox"/>
-      <label for="checkbox__others_clipboard_api" data-i18n="optionPage_ClipboardAPI" data-english="Use Clipboard API"></label>
+      <label for="checkbox__others_html" title="Copy not only text/plain but also text/html format.">
+        Copy in text/html format
+      </label>
     </p>
     <p class="extension">
-      <!--input id="checkbox__others_enter" type="checkbox"/-->
-      <label data-i18n="optionPage_SeparateMultipleNewLine" data-english="Separate multiple tabs"></label>:&ensp;<input type="text" class="options" id="separator" maxlength="256"/>
+      <label>Separate multiple tabs</label>:
+      <input type="text" class="options" id="separator" maxlength="256"/>
     </p>
     <p class="extension">
-      <label data-i18n="optionPage_NewLine" data-english="Newline character"></label>:&ensp;${enter}&ensp;=&ensp;<select id="newline">
+      <label>Newline character</label>:&ensp;${enter}&ensp;=&ensp;
+      <select id="newline">
         <option value="default">default</option>
-        <option value="LF">LF</option>
-        <option value="CR">CR</option>
         <option value="CRLF">CRLF</option>
+        <option value="CR">CR</option>
+        <option value="LF">LF</option>
       </select>
     </p>
+    <!--hr class="extension"/>
+    <p class="extension">
+      <input id="checkbox__others_regexp" type="checkbox"/>
+      <label for="checkbox__others_regexp">Use regular expressions</label>
+    </p-->
     <hr class="extension"/>
     <p class="extension">
       <input id="checkbox__others_pin" type="checkbox"/>
-      <label for="checkbox__others_pin" data-i18n="optionPage_ExcludePinned" data-english="Exclude pinned tabs"></label>
+      <label for="checkbox__others_pin">Exclude pinned tabs</label>
     </p>
     <p class="extension firefox">
       <input id="checkbox__others_hidden" type="checkbox"/>
-      <label for="checkbox__others_hidden" data-i18n="optionPage_ExcludeHidden" data-english="Exclude hidden tabs"></label>
+      <label for="checkbox__others_hidden">Exclude hidden tabs</label>
     </p>
     <hr class="extension"/>
     <p>
-      <input id="checkbox__others_selected" type="checkbox"/>
-      <label for="checkbox__others_selected" data-i18n="optionPage_MultipleSelectionTabs" data-english="Enable multiple selection tabs"></label>
-    </p>
-    <p>
-      <input id="checkbox__others_language" type="checkbox"/>
-      <label for="checkbox__others_language">Use English as the standard language</label>
-    </p>
-    <p>
       <input id="checkbox__others_extension" type="checkbox"/>
-      <label for="checkbox__others_extension" data-i18n="optionPage_ExtendedMode" data-english="Extended mode"></label>
+      <label for="checkbox__others_extension" title="Advanced features will be opened up.">
+        Enable extended mode
+      </label>
     </p>
   </fieldset>
   
-  <p><button id="reset" data-i18n="optionPage_Reset" data-english="Restore default settings"></button></p>  
-  <p id="setting" hidden=""><!-- 開発者用 -->
-    <textarea id="setting_json"></textarea><br/>
+  <p><button id="reset">Restore default settings</button></p>
+  <div hidden><!-- 翻訳文字列置き場 -->
+    <p id="optionPage_Reset">Restore default settings</p>
+    <p id="optionPage_ConfirmReset">Really reset to default settings?</p>
+  </div>
+  
+  <!-- 開発者用 -->
+  <fieldset id="setting" hidden>
+    <textarea id="setting_json" rows="5"></textarea><br/>
     <button id="setting_get">get</button>
     <button id="setting_set">set</button>
     <button id="setting_clear">clear</button>
-  </p>
-  
-  <div hidden=""><!-- 翻訳文字列置き場 -->
-    <p id="optionPage_Reset" data-i18n="optionPage_Reset" data-english="Restore default settings"></p>
-    <p id="optionPage_ConfirmReset" data-i18n="optionPage_ConfirmReset" data-english="Really reset to default settings?"></p>
-  </div>
+    <button id="setting_run">run</button>
+  </fieldset>
 </body>
 </html>
