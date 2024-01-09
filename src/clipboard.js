@@ -60,7 +60,7 @@ async function closeOffscreenDocument() {
 const platformPromise = chrome.runtime.getPlatformInfo();
 let platform = null;
 const getEnterCode = async (cmd) => {
-  const newline = ex2(cmd) ? cmd.newline : defaultStorage.newline;
+  const newline = ex3(cmd) ? cmd.newline : defaultStorage.newline;
   switch (newline) {
   case 'CRLF':  return '\r\n';
   case 'CR':    return '\r';
@@ -98,9 +98,9 @@ const decodeURL = (data, isDecode, isPunycode) => {
 // フォーマット文字列作成
 const createFormatText = (cmd, tabs) => {
   // 前処理
-  const isExtendedMode = ex2(cmd);
-  const isDecode = ex2(cmd, 'others_decode');
-  const isPunycode = ex2(cmd, 'others_punycode');
+  const isExtendedMode = ex3(cmd);
+  const isDecode = ex3(cmd, 'copy_decode');
+  const isPunycode = ex3(cmd, 'copy_punycode');
   const enter = cmd.enter;
   const keyset = {};
   let format = cmd.format;
@@ -174,7 +174,7 @@ const createFormatText = (cmd, tabs) => {
   for (const tab of tabs) {
     // Standard
     keyset['${title}'] = tab.title;
-    keyset['${url}'] = tab.url;
+    keyset['${url}'] = decodeURL(tab.url, isDecode, isPunycode);
     
     if (isExtendedMode) {
       // Basic
@@ -241,8 +241,8 @@ const copyToClipboard = async (cmd, tabs) => {
   const data = {
     target: 'offscreen',
     type: 'clipboardWrite',
-    text: await createFormatText(cmd, tabs),
-    html: ex2(cmd, 'others_html') && cmd.id >= 3,
+    text: createFormatText(cmd, tabs),
+    html: ex3(cmd, 'copy_html') && cmd.id >= 3,
   };
   
   if (isFirefox()) {
@@ -275,7 +275,7 @@ const onCopy = async (cmd) => {
     'window': {currentWindow:true}, 
     'all': {},
   }[cmd.target];
-  if (ex2(cmd, 'others_pin')) {
+  if (ex3(cmd, 'exclude_pin')) {
     targetQuery.pinned = false;
   }
   if (cmd.tab && cmd.target == 'window') {
@@ -302,7 +302,7 @@ const onCopy = async (cmd) => {
     // 全ウィンドウを取得して、windowIdが一致するもののみとする
     temp = tabs.filter(tab => tab.windowId === cmd.tab.windowId);
   }
-  if (isFirefox() && ex2(cmd, 'others_hidden')) {
+  if (isFirefox() && ex3(cmd, 'exclude_hidden')) {
     temp = temp.filter(tab => !tab.hidden);
   }
   if (temp.length === 0) {
@@ -316,5 +316,3 @@ const onCopy = async (cmd) => {
     chrome.runtime.sendMessage({target:'popup', type:cmd.callback});
   }
 };
-
-

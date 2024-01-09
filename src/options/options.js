@@ -6,60 +6,54 @@
 
 
 
-const LEN_FORMATS = 12;
-//const LEN_RETEXT = 4;
+const MENUS_LEN = 12;
+const FORMATS1 = 3;
+const FORMATS9 = 11;
+const FORMATS_LEN = 12;
+//const RETEXT_LEN = 9;
 
 
 
-const checkbox = (id) => document.getElementById('checkbox__'+id);
-
+const checkbox = (id) => document.getElementById(id);
 
 
 // オプション画面の更新
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
-  // ALL選択時は、PAGEを無効化
-  const all = checkbox('menus_contexts_all').checked;
-  checkbox('menus_contexts_page').disabled = all;
-  checkbox('menus_contexts_browser_action').disabled = all;
-  
-  // コピー完了通知
-  const action = document.getElementById('select__browser_action__action').checked;
+  // Browser action
+  const action = document.querySelector('[name="browser_action"][value="action"]').checked;
+  checkbox('popup_format2').disabled = action;
+  document.getElementById('browser_action_target').disabled = !action;
   checkbox('popup_comlate').disabled = !action;
   
-  // BrowserActionのAction選択時のみアクション一覧表示
-  document.querySelectorAll('.browser_action:not(.hide)').forEach(v => v.hidden = !action);
+  
+  // コンテキスト
+  const all = checkbox('context_all').checked;
+  checkbox('context_page').disabled = all;
+  checkbox('context_action').disabled = all;
+  const format9 = checkbox('menus_format9').checked;
+  checkbox('context_selection').disabled = all || format9;
+  checkbox('context_link').disabled = all || format9;
+  checkbox('context_image').disabled = all || format9;
   
   // コンテキストメニュー選択時
-  const contexts = checkbox('menus_contexts_all').checked
-                || checkbox('menus_contexts_page').checked
-                || checkbox('menus_contexts_selection').checked
-                || checkbox('menus_contexts_link').checked
-                || checkbox('menus_contexts_image').checked
-                || checkbox('menus_contexts_browser_action').checked
-                || (isFirefox() && checkbox('menus_contexts_tab').checked);
+  const contexts = checkbox('context_all').checked
+                || checkbox('context_page').checked
+                || checkbox('context_selection').checked
+                || checkbox('context_link').checked
+                || checkbox('context_image').checked
+                || checkbox('context_action').checked
+                || (isFirefox() && checkbox('context_tab').checked);
   document.getElementById('menu_item').hidden = !contexts;
   
+  
   // 拡張モード選択時
-  const extension = checkbox('others_extension').checked;
-  document.querySelectorAll('.normal:not(.hide)').forEach(v => v.hidden = extension);
-  document.querySelectorAll('.extension:not(.hide)').forEach(v => v.hidden = !extension);
-  // フォーマット2
-  const format2 = checkbox('others_format2').checked;
-  document.querySelectorAll('.format2:not(.hide)').forEach(v => v.hidden = !format2);
-  // 拡張メニュー
-  const exmenus = format2 && checkbox('others_extend_menus').checked;
-  checkbox('others_extend_menus').disabled = !format2;
-  document.querySelectorAll('.extend_menus:not(.hide)').forEach(v => v.hidden = !(extension && exmenus));
-  const format9 = checkbox('others_format9').checked;
-  checkbox('others_format9').disabled = !exmenus;
-  checkbox('menus_contexts_selection').disabled = all || (exmenus && format9);
-  checkbox('menus_contexts_link').disabled = all || (exmenus && format9);
-  checkbox('menus_contexts_image').disabled = all || (exmenus && format9);
+  const extension = checkbox('extended_mode').checked;
+  document.body.dataset.mode = extension ? 'extended' : 'normal';
+  
   // タイトル編集
-  const edit = checkbox('others_edit_menu_title').checked;
-  document.querySelectorAll('.menu_label').forEach(v => v.hidden = extension && edit);
-  document.querySelectorAll('.menu_title').forEach(v => v.hidden = !(extension && edit));
+  const edit = checkbox('menus_edit_title').checked;
+  document.getElementById('menus').dataset.edit = extension && edit;
   
 //  // 正規表現
 //  const regexp = checkbox('others_regexp').checked;
@@ -71,19 +65,11 @@ function updateOptionPage() {
 // コンテキストメニュー変更イベント
 async function onUpdateOptions() {
   const cmd = await chrome.storage.local.get(defaultStorage);
-  Object.keys(cmd).forEach((v) => {
-    if (v.startsWith('checkbox__')) {
-      cmd[v] = document.getElementById(v).checked;
-    } else if (v.startsWith('select__')) {
-      
-    } else {
-      delete cmd[v];
-    }
+  Object.keys(cmd.options).forEach((key) => {
+    cmd.options[key] = document.getElementById(key).checked;
   });
-  cmd['select__browser_action']
-     = [...document.getElementsByName('browser_action')].find(v => v.checked).value;
-  cmd['select__browser_action_target']
-     = [...document.getElementsByName('browser_action_target')].find(v => v.checked).value;
+  cmd.browser_action = [...document.getElementsByName('browser_action')].find(v => v.checked).value;
+  cmd.browser_action_target = document.getElementById('browser_action_target').value;
   cmd.newline = document.getElementById('newline').value;
   
   // ストレージへ設定を保存
@@ -97,12 +83,10 @@ async function onUpdateOptions() {
 // コンテキストメニューの更新イベント
 async function onUpdateMenus() {
   const cmd = await chrome.storage.local.get({menus: defaultStorage.menus});
-  for (let i=0; i<cmd.menus.length; i++) {
+  for (let i=0; i<MENUS_LEN; i++) {
     cmd.menus[i].enable = document.getElementById('menu'+i).checked;
     cmd.menus[i].title = document.getElementById('menu'+i+'_title').value;
-    if (cmd.menus[i].format >= 5) {
-      cmd.menus[i].target = document.getElementById('menu'+i+'_target').value;
-    }
+    cmd.menus[i].target = document.getElementById('menu'+i+'_target').value;
   }
   await chrome.storage.local.set(cmd);
   await chrome.runtime.sendMessage({target:'background', type:'update'});
@@ -111,8 +95,8 @@ async function onUpdateMenus() {
 // フォーマット文字列の更新イベント
 async function onUpdateFormat() {
   const cmd = await chrome.storage.local.get({formats: defaultStorage.formats});
-  for (let i=3; i<LEN_FORMATS; i++) {
-    cmd.formats[i].format = document.getElementById('format'+i).value;
+  for (let i=0; i<FORMATS_LEN; i++) {
+    cmd.formats[i] = document.getElementById('format'+i).value;
   }
   await chrome.storage.local.set(cmd);
 };
@@ -127,7 +111,7 @@ async function onUpdateSeparator() {
 
 //async function onUpdateText() {
 //  const cmd = await chrome.storage.local.get({texts: defaultStorage.texts});
-//  for (let i=0; i<LEN_RETEXT; i++) {
+//  for (let i=0; i<RETEXT_LEN; i++) {
 //    cmd.texts[i] = document.getElementById('retext'+(i+1)).value;
 //  }
 //  await chrome.storage.local.set(cmd);
@@ -136,39 +120,37 @@ async function onUpdateSeparator() {
 
 
 // オプション画面に値を設定する
-function setOptionPageValues(cmd) {
-  // ストレージ内の値で初期化
-  Object.keys(defaultStorage).forEach((v) => {
-    if (v.startsWith('checkbox__')) {
-      document.getElementById(v).checked = cmd[v];
-    }
-  });
-  [...document.getElementsByName('browser_action')]
-              .find(v => v.value === cmd['select__browser_action']).checked = true;
-  [...document.getElementsByName('browser_action_target')]
-              .find(v => v.value === cmd['select__browser_action_target']).checked = true;
-  document.getElementById('separator').value  = cmd.separator;
-  document.getElementById('newline').value  = cmd.newline;
+async function setupOptionPage() {
+  const cmd = await chrome.storage.local.get(defaultStorage);
   
-  for (let i=0; i<cmd.menus.length; i++) {
+  Object.keys(defaultStorage.options).forEach((key) => {
+    checkbox(key).checked = cmd.options[key];
+  });
+  
+  document.querySelector('[name="browser_action"][value="'+cmd.browser_action+'"]').checked = true;
+  document.getElementById('browser_action_target').value = cmd.browser_action_target;
+  document.getElementById('newline').value  = cmd.newline;
+  document.getElementById('separator').value  = cmd.separator;
+  
+  for (let i=0; i<MENUS_LEN; i++) {
     document.getElementById('menu'+i).checked  = !!cmd.menus[i].enable;
     document.getElementById('menu'+i+'_title').value = cmd.menus[i].title;
-    if (cmd.menus[i].format >= 5) {
-      document.getElementById('menu'+i+'_target').value = cmd.menus[i].target;
-    }
+    document.getElementById('menu'+i+'_target').value = cmd.menus[i].target;
   }
-  for (let i=3; i<LEN_FORMATS; i++) {
-    document.getElementById('format'+i).value  = cmd.formats[i].format;
+  for (let i=0; i<FORMATS_LEN; i++) {
+    document.getElementById('format'+i).value = cmd.formats[i];
   }
-//  for (let i=0; i<LEN_RETEXT; i++) {
+//  for (let i=0; i<RETEXT_LEN; i++) {
 //    document.getElementById('retext'+(i+1)).value  = cmd.texts[i];
 //  }
+  
+  updateOptionPage();
 };
 
 
 
 // 初期化ボタンイベント
-const onReset = async function() {
+async function onReset() {
   const element = this;
   
   // ボタンを元に戻す
@@ -176,7 +158,7 @@ const onReset = async function() {
     clearInterval(element.dataset.id);
     element.dataset.id = 0;
     element.dataset.delay = 0;
-    element.textContent = document.getElementById('optionPage_Reset').textContent;
+    element.textContent = element.dataset.reset;
   };
   
   // 2段階確認待ち
@@ -185,7 +167,7 @@ const onReset = async function() {
       onStop();
     } else {
       element.dataset.delay--;
-      element.textContent = document.getElementById('optionPage_ConfirmReset').textContent;
+      element.textContent = element.dataset.confirm;
     }
   };
   
@@ -201,8 +183,7 @@ const onReset = async function() {
     await chrome.storage.local.clear();
     await chrome.storage.local.set(defaultStorage);
     await chrome.runtime.sendMessage({target:'background', type:'update'});
-    setOptionPageValues(defaultStorage);
-    updateOptionPage();
+    await setupOptionPage();
   }
 };
 
@@ -210,54 +191,48 @@ const onReset = async function() {
 
 // ページ初期化
 document.addEventListener("DOMContentLoaded", async () => {
-  // 初期化ボタンの設定（最優先で設定する）
-  document.getElementById('reset').dataset.id = 0;
-  document.getElementById('reset').dataset.delay = 0;
-  document.getElementById('reset').addEventListener('click', onReset);
+  await setupOptionPage();
   
   if (isFirefox()) {
-    // Firefox非対応
-    // キーボードショートカット（標準機能による設定）
     document.querySelectorAll('.chrome').forEach(v => v.classList.add('hide'));
   } else {
-    // Chrome非対応
-    // タブコンテキストメニュー
-    // キーボードショートカット（拡張機能による設定）
     document.querySelectorAll('.firefox').forEach(v => v.classList.add('hide'));
   }
   
-  // (storage内の)初期値を設定
-  const cmd = await chrome.storage.local.get(defaultStorage);
-  setOptionPageValues(cmd);
-  updateOptionPage();
-  
   // イベント設定
-  document.getElementById('separator').addEventListener('input', onUpdateSeparator);
-  document.getElementById('newline').addEventListener('change', onUpdateOptions);
   document.querySelectorAll('[type="checkbox"]:not(.menu)').forEach((element) => {
-    element.addEventListener('click', onUpdateOptions);
+    element.addEventListener('change', onUpdateOptions);
   });
-  document.querySelectorAll('[type="radio"]').forEach((element) => {
-    element.addEventListener('click', onUpdateOptions);
+  document.querySelectorAll('[type="radio"], .action_target').forEach((element) => {
+    element.addEventListener('change', onUpdateOptions);
   });
-  document.querySelectorAll('.options').forEach((element) => {
-    element.addEventListener('click', onUpdateOptions);
-  });
-  document.querySelectorAll('.menu').forEach((element) => {
-    element.addEventListener('input', onUpdateMenus);
+  document.getElementById('newline').addEventListener('change', onUpdateOptions);
+  document.querySelectorAll('.menu, .menu_target').forEach((element) => {
+    element.addEventListener('change', onUpdateMenus);
   });
   document.querySelectorAll('.menu_title').forEach((element) => {
     element.addEventListener('input', onUpdateMenus);
   });
-  document.querySelectorAll('.menu_target').forEach((element) => {
-    element.addEventListener('change', onUpdateMenus);
-  });
   document.querySelectorAll('.format').forEach((element) => {
     element.addEventListener('input', onUpdateFormat);
   });
+  document.getElementById('separator').addEventListener('input', onUpdateSeparator);
 //  document.querySelectorAll('.retext').forEach((element) => {
 //    element.addEventListener('input', onUpdateText);
 //  });
+  document.getElementById('reset').addEventListener('click', onReset);
+  
+//  // ショートカット
+//  const shortcuts = [];
+//  for (const command of await chrome.commands.getAll()) {
+//    if (command.description.startsWith('format')) {
+//      shortcuts.push(command.description+': '+command.shortcut);
+//    }
+//  }
+//  if (shortcuts.length) {
+//    // '\n'改行を挿入するため、innerTextとする
+//    document.getElementById('shortcut_commands').innerText = shortcuts.join('\n');
+//  }
   
   // 開発者用
   if (false) {
@@ -274,7 +249,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       await chrome.storage.local.clear();
     });
     document.getElementById('setting_run').addEventListener('click', async () => {
-      //await converteStorageVersion3();
+      await converteStorageVersion3();
     });
     document.getElementById('setting').hidden = false;
   }

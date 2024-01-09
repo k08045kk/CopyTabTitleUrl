@@ -86,23 +86,29 @@ body {
   <script src="./popup.js"></script>
 </head>
 <body>
-  <div id="panel" hidden="">
+  <div id="panel" hidden>
     <div class="box title">CopyTabTitleUrl</div>
     <div class="box item copy" id="format0">title<br/>URL</div>
     <div class="box item copy" id="format1">title</div>
     <div class="box item copy" id="format2">URL</div>
     <div class="box item copy" id="format3">format</div>
-    <div class="box item copy format2" id="format4" hidden="">format2</div>
+    <div class="box item copy format2" id="format4" hidden>format2</div>
     
     <input class="hide" id="target_win" type="checkbox"/>
     <input class="hide" id="target_all" type="checkbox"/>
     <div class="box clearfix">
-      <label id="target_win_label" for="target_win"><div class="item target win" id="target_win_label_div">Window</div></label>
-      <label id="target_all_label" for="target_all"><div class="item target all">All</div></label>
+      <label id="target_win_label" for="target_win">
+        <div class="item target win" id="target_win_label_div">Window</div>
+      </label>
+      <label id="target_all_label" for="target_all">
+        <div class="item target all">All</div>
+      </label>
     </div>
     <div class="title" id="footer"></div>
   </div>
-  <div id="action" hidden="">
+  
+
+  <div id="action" hidden>
     <div class="title"></div>
     <p style="text-align:center;">Completed</p>
     <div class="title"></div>

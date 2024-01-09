@@ -28,14 +28,13 @@ You can perform actions on the following tabs.
 + All tabs
 
 You can perform actions from the following operations.
-+ Context menu (all, page, selection, link, image, browser action, tab)
 + Browser action (popup, click)
++ Context menu (all, page, browser action, tab)
 + Keyboard shortcut
 
 You can perform actions in combination with the following auxiliary functions.
 + Decode the URL
 + Decode the punycode
-+ Copy in text/html format
 
 
 

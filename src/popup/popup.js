@@ -25,19 +25,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   // コピーイベント設定
   document.querySelectorAll('.copy').forEach((element) => {
     const id = element.id.match(/\d+$/)[0]-0;
-    const menuid = id >= 5 && element.dataset.menu.match(/\d+$/)[0]-0 || 0;
     element.addEventListener('click', async () => {
       // ポップアップ表示のイベント
       const cmd = await chrome.storage.local.get(defaultStorage);
       const win = document.getElementById('target_win');
       const all = document.getElementById('target_all');
       let target = 'tab';
-      if (id >= 5) {      target = cmd.menus[menuid].target;  }
       if (win.checked) {  target = 'window';  }
       if (all.checked) {  target = 'all';  }
       
       cmd.id = id;
-      cmd.format = cmd.formats[id].format;
+      cmd.format = cmd.formats[id];
       cmd.target = target;
       cmd.callback = 'close';
       chrome.runtime.sendMessage({target:'background', type:'copy', cmd});
@@ -47,19 +45,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   // アクション
   const cmd = await chrome.storage.local.get(defaultStorage);
-  if (cmd.select__browser_action === 'action') {
-    // アクションのみ(完了通知を表示する)
-    cmd.id = 3;
-    cmd.format = cmd.formats[3].format;
-    cmd.target = cmd.select__browser_action_target;
-    cmd.callback = 'notice';
-    chrome.runtime.sendMessage({target:'background', type:'copy', cmd});
-  } else {
+  if (cmd.browser_action === 'popup') {
     // ポップアップ表示する
-    if (ex2(cmd, 'others_format2')) {
-      document.querySelectorAll('.format2:not(.hide)').forEach(v => v.hidden = false);
+    if (ex3(cmd, 'popup_format2')) {
+      document.querySelectorAll('.format2').forEach(v => v.hidden = false);
     }
     document.getElementById('panel').hidden = false;
+  } else {
+    // アクションのみ(完了通知を表示する)
+    const id = 3;
+    cmd.id = id;
+    cmd.format = cmd.formats[id];
+    cmd.target = cmd.browser_action_target;
+    cmd.callback = 'notice';
+    chrome.runtime.sendMessage({target:'background', type:'copy', cmd});
   }
 });
 

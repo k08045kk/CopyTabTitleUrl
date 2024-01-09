@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "CopyTabTitleUrl",
   "description": "Copy the title and URL to the clipboard.",
-  "version": "3.0.0",
+  "version": "3.1.0",
   
   "author": "toshi",
   "homepage_url": "https://github.com/k08045kk/CopyTabTitleUrl",
@@ -46,7 +46,7 @@
   
   "commands": {
     "shortcut_action": {
-      "description": "format1"
+      "description": "format"
     },
     "shortcut_action2": {
       "description": "format2"

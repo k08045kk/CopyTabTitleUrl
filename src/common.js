@@ -32,46 +32,38 @@ const isChrome = () => !isFirefox();
 
 
 const extendedMode = [
-  // checkbox
-  //'menus_contexts_all',                       // standard
-  //'menus_contexts_page',                      // standard
-  'menus_contexts_selection',
-  'menus_contexts_link',
-  'menus_contexts_image',
-  //'menus_contexts_browser_action',            // standard
-  //'menus_contexts_tab',                       // standard
+  //'popup_format2',                    // standard v3.0.0+
+  //'popup_comlate',                    // standard
   
-  //'popup_comlate',                            // standard
+  //'context_all',                      // standard
+  //'context_page',                     // standard
+  'context_selection',
+  'context_link',
+  'context_image',
+  //'context_action',                   // standard
+  //'context_tab',                      // standard
   
-  //'others_format2',                           // standard v3.0.0+
-  'others_extend_menus', 
-  'others_format9', 
-  'others_edit_menu_title',
+  //'copy_decode',                      // standard v3.1.0+
+  //'copy_punycode',                    // standard v3.1.0+
+  'copy_html',
+  'copy_regexp',
+  //'exclude_pin',                      // standard v3.1.0+
+  //'exclude_hidden',                   // standard v3.1.0+
+  'menus_edit_title',
+  'menus_format9', 
+  //'extended_mode',                    // standard
   
-  'others_decode',
-  'others_punycode',
-  'others_html',
   
-  'others_pin',
-  'others_hidden',
-  
-  //'others_extension',                         // standard
-  
-  // select
-  //'browser_action',                           // standard
-  //'browser_action_target',                    // standard
-  
-  // 
-  //'separator',                                // extended
-  //'newline',                                  // extended
+  //'newline',                          // extended
+  //'separator',                        // extended
 ];
-const ex2 = (cmd, name) => {
+const ex3 = (cmd, name) => {
   if (name) {
     return extendedMode.includes(name)
-         ? cmd.checkbox__others_extension && cmd['checkbox__'+name]
-         : cmd['checkbox__'+name];
+         ?(cmd.options.extended_mode ? cmd.options[name] : defaultStorage.options[name])
+         : cmd.options[name];
   }
-  return cmd.checkbox__others_extension;
+  return cmd.options.extended_mode;
 };
 
 
@@ -139,7 +131,7 @@ const defaultStorageVersion2 = {
   checkbox__menus_contexts_tab: true,           // Firefox only
   checkbox__popup_comlate: false,
   checkbox__others_format2: false,              // v3.0.0 （標準モードへ移行）
-  checkbox__others_extend_menus: false,         // v2.0.0+
+  checkbox__others_extend_menus: false,         // v2.0.0-v3.0.0 （拡張モードと統合）
   checkbox__others_format9: false,              // v2.2.0+
   checkbox__others_edit_menu_title: false,      // v2.0.0+
   checkbox__others_decode: false,
@@ -201,4 +193,151 @@ const defaultStorageVersion2 = {
 Object.freeze(defaultStorageVersion2);
 
 
-const defaultStorage = defaultStorageVersion2;
+
+const defaultStorageVersion3 = {
+  version: 3,                           // v3.1.0
+  // id
+  // format
+  // target
+  // selectionText
+  // linkText
+  // linkUrl
+  // srcUrl
+  // tab
+  // enter
+  browser_action: 'popup',              // popup / action
+  browser_action_target: 'tab',         // tab / window / all
+  newline: 'default',                   // default / CRLF / CR / LF
+  separator: '${enter}',                // $text
+  options: {
+    popup_format2: false,               // v3.0.0 （標準モードへ移行）
+    popup_comlate: true,                // v3.0.0 （初期設定を変更）
+    
+    context_all: false,
+    context_page: false,
+    context_selection: false,
+    context_link: false,
+    context_image: false,
+    context_action: true,
+    context_tab: true,                 // Firefox only
+    
+    copy_decode: false,                 // v3.1.0 （標準モードへ移行）
+    copy_punycode: false,               // v3.1.0 （標準モードへ移行）
+    copy_html: false,
+//    copy_regexp: false,               // v3.?.?
+    exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
+    exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
+    menus_edit_title: false,
+    menus_format9: false,
+    extended_mode: false,
+  },
+  menus: [
+    {enable:true,  target:'tab', title:'title and URL'},
+    {enable:true,  target:'tab', title:'title'},
+    {enable:true,  target:'tab', title:'URL'},
+    {enable:false, target:'tab', title:'format'},
+    {enable:false, target:'tab', title:'format2'},
+    
+    {enable:false, target:'tab', title:'format3'},
+    {enable:false, target:'tab', title:'format4'},
+    {enable:false, target:'tab', title:'format5'},
+    {enable:false, target:'tab', title:'format6'},
+    {enable:false, target:'tab', title:'format7'},
+    {enable:false, target:'tab', title:'format8'},
+    {enable:false, target:'tab', title:'format9'},
+  ],
+  formats: [
+    '${title}${enter}${url}',                   //  0: title and URL
+    '${title}',                                 //  1: title
+    '${url}',                                   //  2: URL
+    '[${title}](${url})',                       //  3: Markdown
+    '<a href="${url}">${title}</a>',            //  4: HTML Link
+    
+    '',                                         //  5
+    '',                                         //  6
+    '',                                         //  7
+    '',                                         //  8
+    '',                                         //  9
+    '',                                         // 10
+    '[${linkSelectionTitle}](${linkSrcUrl})',   // 11
+  ],
+//  texts: [                                      // v3.?.?
+//    "\\$&",
+//    "[*_\\\\`#+\\-.!{}[\\]()]",                 // Markdown special characters [*_\`#+-.!{}[]()]
+//    "",
+//    "",
+//    "",
+//    "",
+//    "",
+//    "",
+//    "",
+//    "",
+//  ],
+  
+  // 備考：容量概算
+  // 　　　(12[menus.title] x 64 x 2) + (12[formats] x 256 x 2) + (10[texts] x 256 x 2) = 33
+  // 　　　1536 + 6144 + 5120 = 12800 = 13 KB
+  // 　　　合計：5 + 17 = 22 KB
+  // 　　　chrome.storage.local = 10 MB
+  // 　　　chrome.storage.sync  = 100 KB
+};
+Object.freeze(defaultStorageVersion3);
+async function converteStorageVersion3() {
+  const oldStorage = await chrome.storage.local.get();
+  if (oldStorage && oldStorage.version && oldStorage.version >= 3) {
+    // バージョン３　変更なし
+  } else if (oldStorage && oldStorage.version && oldStorage.version == 2) {
+    let newStorage = structuredClone(defaultStorageVersion3);
+    try {
+      newStorage.browser_action         = oldStorage.select__browser_action;
+      newStorage.browser_action_target  = oldStorage.select__browser_action_target;
+      newStorage.options.popup_format2  = oldStorage.checkbox__others_format2;
+      newStorage.options.popup_comlate  = oldStorage.select__browser_action == 'popup'
+                                        ? true
+                                        : oldStorage.checkbox__popup_comlate;
+      
+      newStorage.options.context_all    = oldStorage.checkbox__menus_contexts_all;
+      newStorage.options.context_page   = oldStorage.checkbox__menus_contexts_page;
+      newStorage.options.context_selection = oldStorage.checkbox__menus_contexts_selection;
+      newStorage.options.context_link   = oldStorage.checkbox__menus_contexts_link;
+      newStorage.options.context_image  = oldStorage.checkbox__menus_contexts_image;
+      newStorage.options.context_action = oldStorage.checkbox__menus_contexts_browser_action;
+      newStorage.options.context_tab    = oldStorage.checkbox__menus_contexts_tab;
+      
+      newStorage.options.copy_decode    = oldStorage.checkbox__others_decode;
+      newStorage.options.copy_punycode  = oldStorage.checkbox__others_punycode;
+      newStorage.options.copy_html      = oldStorage.checkbox__others_html;
+      
+      newStorage.newline    = oldStorage.newline;
+      newStorage.separator  = oldStorage.separator;
+      
+      newStorage.options.exclude_pin    = oldStorage.checkbox__others_pin;
+      newStorage.options.exclude_hidden = true;
+      
+      newStorage.options.menus_edit_title = oldStorage.checkbox__others_edit_menu_title;
+      newStorage.options.menus_format9  = oldStorage.checkbox__others_format9;
+      
+      newStorage.options.extended_mode  = oldStorage.checkbox__others_extension;
+      
+      newStorage.menus = oldStorage.menus.map(menu => {
+        return {enable:!!menu.enable, target:menu.target, title:menu.title};
+      });
+      newStorage.menus.splice(5, 10);
+      
+      newStorage.formats = oldStorage.formats.map(v => v.format);
+    } catch {
+      newStorage = structuredClone(defaultStorageVersion3);
+    }
+    
+    await chrome.storage.local.clear();
+    await chrome.storage.local.set(newStorage);
+    // バージョン２→３
+  } else {
+    await chrome.storage.local.clear();
+    await chrome.storage.local.set(defaultStorageVersion3);
+    // バージョン１　想定外
+  }
+};
+
+
+const defaultStorage = defaultStorageVersion3;
