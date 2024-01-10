@@ -78,17 +78,25 @@ const getEnterCode = async (cmd) => {
 const decodeURL = (data, isDecode, isPunycode) => {
   if (isDecode || isPunycode) {
     try {
-      let {protocol, hostname, port, pathname, search, hash} = new URL(data);
+      let {href, hostname, username, password} = new URL(data);
+      const user = username != '' 
+                 ? username+(password != '' ? ':'+password : '')+'@'
+                 : '';
       if (isPunycode) {
-        try { hostname = punycode.toUnicode(hostname); } catch (e) {}
+        try { 
+          const hostname2 = punycode.toUnicode(hostname);
+          if (hostname != hostname2) {
+            href = href.replace(user+hostname, user+hostname2);
+          }
+        } catch {}
       }
       if (isDecode) {
-        try { pathname = decodeURIComponent(pathname); } catch (e) {}
-        try { search = decodeURIComponent(search); } catch (e) {}
-        try { hash = decodeURIComponent(hash); } catch (e) {}
+        try { href = decodeURIComponent(href); } catch {}
       }
-      return protocol+'//'+hostname+(port != '' ? ':'+port : '')+pathname+search+hash;
-    } catch (e) {}
+      return href;
+      // 備考：「view-source:」のピュニコード変換は未対応
+      //       URL.hostname が取れない仕様のため
+    } catch {}
   }
   return data;
 };
@@ -152,25 +160,14 @@ const createFormatText = (cmd, tabs) => {
     keyset['${AAAA}'] = now.getHours()/12 < 1 ? 'A.M.' : 'P.M.';
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
-    
-    // URL
-    if (isDecode || isPunycode) {
-      // #35 ソースコード表示画面のURLが正常に取得できないことがある
-      // ${origin} → ${protocol}//${host}
-      format = format.replace(/\${url}/g, '${href}')
-                     .replace(/\${href}/g, '${origin}${pathname}${search}${hash}')
-                     .replace(/\${origin}/g, '${protocol}//${host}')
-                     .replace(/\${host}/g, '${hostname}${:port}');
-      // ${url}, ${href}, ${origin}, ${host} は存在しなくなる
-      // ${protocol}//${hostname}${:port}${pathname}${search}${hash}
-    }
   }
   const sep = separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
   // 本処理
   const temp = [];
   const isSingle = tabs.length == 1;
-  const urlkeys = 'hash host hostname href origin pathname port protocol search'.split(' ');
+  const urlkeys = ['href', 'origin', 'protocol', 'username', 'password', 
+                   'host', 'hostname', 'port', 'pathname', 'search', 'hash'];
   for (const tab of tabs) {
     // Standard
     keyset['${title}'] = tab.title;
@@ -210,17 +207,32 @@ const createFormatText = (cmd, tabs) => {
       // URL
       const url = new URL(tab.url);
       urlkeys.forEach(key => keyset['${'+key+'}'] = url[key]);
+      keyset['${username@}'] = url.username != '' ? url.username+'@' : '';
+      keyset['${username:password@}'] = url.username != '' 
+                                       ? url.username+(url.password != '' ? ':'+url.password : '')+'@'
+                                       : '';
       keyset['${:port}'] = url.port != '' ? ':'+url.port : '';
+      if (isPunycode) {
+        try { keyset['${hostname}'] = punycode.toUnicode(url.hostname); } catch {}
+        if (url.hostname != keyset['${hostname}']) {
+          const user = keyset['${username:password@}'];
+          keyset['${href}'] = url.href.replace(user+url.hostname, user+keyset['${hostname}']);
+          if (url.origin != 'null') {
+            keyset['${origin}'] = url.origin.replace(url.hostname, keyset['${hostname}']);
+          }
+          keyset['${host}'] = url.host.replace(url.hostname, keyset['${hostname}']);
+        }
+        // https://日本語.jp/日本語.jp/xn--wgv71a119e.jp
+        // ${title}${enter}${url}${enter}${href}${enter}${origin}${enter}${host}${enter}${hostname}
+        // ${protocol}//${username:password@}${hostname}${:port}${pathname}${search}${hash}
+      }
       if (isDecode) {
-        ['hash', 'pathname', 'search'].forEach((key) => {
-          try {   keyset['${'+key+'}'] = decodeURIComponent(url[key]); } 
-          catch { keyset['${'+key+'}'] = url[key]; }
+        ['${href}', '${username}', '${password}', '${username@}', '${username:password@}',
+         '${pathname}', '${search}', '${hash}'].forEach((key) => {
+          try { keyset[key] = decodeURIComponent(keyset[key]); } catch {}
         });
       }
-      if (isPunycode) {
-        try {   keyset['${hostname}'] = punycode.toUnicode(url.hostname); }
-        catch { keyset['${hostname}'] = url.hostname; }
-      }
+      // 備考：username, password は、閲覧 URL としては出現しないはず（一応実装しておく）
     }
     
     // 変換
