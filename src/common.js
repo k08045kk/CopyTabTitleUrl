@@ -46,7 +46,7 @@ const extendedMode = [
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+
   'copy_html',
-  'copy_regexp',
+  'copy_func',
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
   'menus_edit_title',
@@ -219,12 +219,12 @@ const defaultStorageVersion3 = {
     context_link: false,
     context_image: false,
     context_action: true,
-    context_tab: true,                 // Firefox only
+    context_tab: true,                  // Firefox only
     
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
     copy_html: false,
-//    copy_regexp: false,               // v3.?.?
+    copy_func: false,                   // v3.1.0
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
     menus_edit_title: false,
@@ -261,18 +261,20 @@ const defaultStorageVersion3 = {
     '',                                         // 10
     '[${linkSelectionTitle}](${linkSrcUrl})',   // 11
   ],
-//  texts: [                                      // v3.?.?
-//    "\\$&",
-//    "[*_\\\\`#+\\-.!{}[\\]()]",                 // Markdown special characters [*_\`#+-.!{}[]()]
-//    "",
-//    "",
-//    "",
-//    "",
-//    "",
-//    "",
-//    "",
-//    "",
-//  ],
+  texts: [                                      // v3.1.0
+    "\\$&",
+    "[*_\\\\`#+\\-.!{}[\\]()]",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    // Markdown special characters [*_\`#+-.!{}[]()]
+    // see https://daringfireball.net/projects/markdown/syntax#backslash
+  ],
   
   // 備考：容量概算
   // 　　　(12[menus.title] x 64 x 2) + (12[formats] x 256 x 2) + (10[texts] x 256 x 2) = 33

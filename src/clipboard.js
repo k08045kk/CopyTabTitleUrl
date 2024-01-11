@@ -197,13 +197,6 @@ const createFormatText = (cmd, tabs) => {
       keyset['${windowId}'] = tab.windowId;
       keyset['${favIconUrl}'] = tab.favIconUrl != '' ? tab.favIconUrl : void 0;
       
-      // see https://daringfireball.net/projects/markdown/syntax#backslash
-      // + <> → &lt;&gt;
-      keyset['${markdown}']
-          = tab.title.replace(/([\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!])/g, (c) => { return '\\'+c; })
-                     .replace(/</g, '&lt;')
-                     .replace(/>/g, '&gt;');
-      
       // URL
       const url = new URL(tab.url);
       urlkeys.forEach(key => keyset['${'+key+'}'] = url[key]);
@@ -233,10 +226,116 @@ const createFormatText = (cmd, tabs) => {
         });
       }
       // 備考：username, password は、閲覧 URL としては出現しないはず（一応実装しておく）
+      
+      // Function
+      if (ex3(cmd, 'copy_func')) {
+        for (let i=0; i<10; i++) {
+          keyset['${text'+i+'}'] = cmd.texts[i];
+        }
+      }
     }
     
     // 変換
-    const fmt = format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
+    const reNum = /^[+\-]?\d+$/;
+    const fmt = format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m)
+                      .replace(/\${.*?}/ig, (match) => {
+      if (!ex3(cmd, 'copy_func')) { return match; }
+      let ret = match;
+      const m = match.match(/^\${(?<key>\w+).(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+)(,(?<arg2>\w+|[+\-]?\d+))?)?\))?}$/);
+      // ${key.fn(arg1,arg2)}
+      // ${key.fn(arg1)}
+      // ${key.fn}
+//console.log('copy_func', m, keyset);
+      if (m && keyset['${'+m.groups.key+'}'] != null) {
+        try {
+          const input = keyset['${'+m.groups.key+'}'];
+          const func = m.groups.fn;
+          const args = m.groups.args;
+          const arg1 = reNum.test(m.groups.arg1) ? Number.parseInt(m.groups.arg1)
+                                                 : keyset['${'+m.groups.arg1+'}'];
+          const arg2 = reNum.test(m.groups.arg2) ? Number.parseInt(m.groups.arg2)
+                                                 : keyset['${'+m.groups.arg2+'}'];
+//console.log(func, args, arg1, arg2);
+          switch (func) {
+          case 'length':
+            if (args == null) {
+              ret = input[func];
+            }
+            break;
+          case 'replace':
+          case 'replaceAll':
+            const flags = func === 'replace' ? '' : 'g';
+            if (arg1 != null && arg2 != null) {
+              ret = input.replace(new RegExp(arg1, flags), arg2);
+              // 備考：数値が入力されてもエラーとならないことを確認
+              // 備考：次の変換に失敗するため、正規表現を replace の入力に与える挙動とする
+              //       'abc'.replace('[a]','x');  // abc
+              //       'abc'.replace(new RegExp('[a]'),'x');  // xbc
+            }
+            break;
+          case 'substring':
+          case 'slice':
+            if (Number.isInteger(arg1) && (arg2 == null || Number.isInteger(arg2))) {
+              ret = input[func](arg1, arg2);
+            }
+            break;
+          case 'padStart':
+          case 'padEnd':
+            if (Number.isInteger(arg1) && arg2 != null) {
+              ret = input[func](arg1, arg2);
+            }
+            break;
+          case 'at':
+          case 'charAt':
+          case 'charCodeAt':
+          case 'codePointAt':
+          case 'repeat':
+            if (Number.isInteger(arg1)) {
+              ret = input[func](arg1);
+            }
+            break;
+          case 'startsWith':
+          case 'endsWith':
+          case 'includes':
+          case 'indexOf':
+          case 'lastIndexOf':
+          case 'normalize':
+            // RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.
+            if (arg1 != null) {
+              ret = input[func](arg1);
+            }
+            break;
+          case 'isWellFormed':
+          case 'trim':
+          case 'trimStart':
+          case 'trimEnd':
+          case 'toLocaleLowerCase':
+          case 'toLocaleUpperCase':
+          case 'toLowerCase':
+          case 'toString':
+          case 'toUpperCase':
+          case 'toWellFormed':
+          case 'valueOf':
+            ret = input[func]();
+            break;
+          //case 'concat':
+          //case 'split':
+          //case 'localeCompare':
+          //case 'match':
+          //case 'matchAll':
+          //case 'search':
+          // see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+          }
+        } catch (e) { ret = match+'['+e.toString()+']'; }
+      }
+//console.log(match);
+//console.log(ret);
+      return ret;
+      // ${title.replaceAll('[*_\\`#+\-.!{}[\]()]','\$&')}
+      // ${url.replaceAll('^(https?:\/\/www\.amazon\.(com|co\.jp))\/[^/].*(\/dp\/\w+)(\/\?#)?.*$','$1$3')}
+      // ${WWW.replace(new RegExp('^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)$','g'),'')}
+      // see https://daringfireball.net/projects/markdown/syntax#backslash
+    });
     temp.push(fmt);
   }
   return temp.join(sep);

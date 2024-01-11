@@ -312,20 +312,26 @@ body[data-mode="extended"] .normal,
   </fieldset>
 
 
-  <!-- 正規表現 -->
-  <!--fieldset id="regexp" class="extension">
-    <legend>RegExp</legend>
-    <p>${title.replace(1,2)} => <br/>"${title}".replace(new RegExp("${text1}","g"),"${text2}")</p>
-    <p>
-      
-    </p>
+  <!-- テキスト -->
+  <fieldset class="extension" id="func">
+    <legend>Text</legend>
+    <p>Set text for format function.</p>
+    <p>Example: </p>
+    <p>${url.length}, ${text0.toLowerCase()}</p>
+    <p>${title.slice(-2)}, ${title.replaceAll(text1,text0)}</p>
     <p>🧪  This feature is currently under testing.</p>
     <br/>
-    <p>text1&ensp;=&ensp;<input class="retext" type="text" id="retext1" maxlength="256" /></p>
-    <p>text2&ensp;=&ensp;<input class="retext" type="text" id="retext2" maxlength="256" /></p>
-    <p>text3&ensp;=&ensp;<input class="retext" type="text" id="retext3" maxlength="256" /></p>
-    <p>text4&ensp;=&ensp;<input class="retext" type="text" id="retext4" maxlength="256" /></p>
-  </fieldset-->
+    <p>${text0}&ensp;=&ensp;<input class="text" id="text0" type="text" maxlength="256"></p>
+    <p>${text1}&ensp;=&ensp;<input class="text" id="text1" type="text" maxlength="256"></p>
+    <p>${text2}&ensp;=&ensp;<input class="text" id="text2" type="text" maxlength="256"></p>
+    <p>${text3}&ensp;=&ensp;<input class="text" id="text3" type="text" maxlength="256"></p>
+    <p>${text4}&ensp;=&ensp;<input class="text" id="text4" type="text" maxlength="256"></p>
+    <p>${text5}&ensp;=&ensp;<input class="text" id="text5" type="text" maxlength="256"></p>
+    <p>${text6}&ensp;=&ensp;<input class="text" id="text6" type="text" maxlength="256"></p>
+    <p>${text7}&ensp;=&ensp;<input class="text" id="text7" type="text" maxlength="256"></p>
+    <p>${text8}&ensp;=&ensp;<input class="text" id="text8" type="text" maxlength="256"></p>
+    <p>${text9}&ensp;=&ensp;<input class="text" id="text9" type="text" maxlength="256"></p>
+  </fieldset>
 
 
   <!-- その他 -->
@@ -342,10 +348,9 @@ body[data-mode="extended"] .normal,
     </p>
 
     <hr class="extension"/>
-    <!--p class="extension">
-      <input id="copy_regexp" type="checkbox"/>
-      <label for="copy_regexp"> Use regular expressions </label>
-    </p-->
+    <p class="extension">
+      <label><input id="copy_func" type="checkbox"> Enable format functions </label>
+    </p>
     <p class="extension indent2">
       Newline character:&ensp;${enter}&ensp;=&ensp;
       <select id="newline">

@@ -10,7 +10,7 @@ const MENUS_LEN = 12;
 const FORMATS1 = 3;
 const FORMATS9 = 11;
 const FORMATS_LEN = 12;
-//const RETEXT_LEN = 9;
+const TEXTS_LEN = 10;
 
 
 
@@ -55,9 +55,9 @@ function updateOptionPage() {
   const edit = checkbox('menus_edit_title').checked;
   document.getElementById('menus').dataset.edit = extension && edit;
   
-//  // 正規表現
-//  const regexp = checkbox('others_regexp').checked;
-//  document.getElementById('regexp').hidden = !(extension && regexp);
+  // フォーマット関数
+  const func = checkbox('copy_func').checked;
+  document.getElementById('func').hidden = !(extension && func);
 };
 
 
@@ -109,13 +109,13 @@ async function onUpdateSeparator() {
 };
 
 
-//async function onUpdateText() {
-//  const cmd = await chrome.storage.local.get({texts: defaultStorage.texts});
-//  for (let i=0; i<RETEXT_LEN; i++) {
-//    cmd.texts[i] = document.getElementById('retext'+(i+1)).value;
-//  }
-//  await chrome.storage.local.set(cmd);
-//};
+async function onUpdateText() {
+  const cmd = await chrome.storage.local.get({texts: defaultStorage.texts});
+  for (let i=0; i<TEXTS_LEN; i++) {
+    cmd.texts[i] = document.getElementById('text'+i).value;
+  }
+  await chrome.storage.local.set(cmd);
+};
 
 
 
@@ -140,9 +140,9 @@ async function setupOptionPage() {
   for (let i=0; i<FORMATS_LEN; i++) {
     document.getElementById('format'+i).value = cmd.formats[i];
   }
-//  for (let i=0; i<RETEXT_LEN; i++) {
-//    document.getElementById('retext'+(i+1)).value  = cmd.texts[i];
-//  }
+  for (let i=0; i<TEXTS_LEN; i++) {
+    document.getElementById('text'+i).value  = cmd.texts[i];
+  }
   
   updateOptionPage();
 };
@@ -217,9 +217,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     element.addEventListener('input', onUpdateFormat);
   });
   document.getElementById('separator').addEventListener('input', onUpdateSeparator);
-//  document.querySelectorAll('.retext').forEach((element) => {
-//    element.addEventListener('input', onUpdateText);
-//  });
+  document.querySelectorAll('.text').forEach((element) => {
+    element.addEventListener('input', onUpdateText);
+  });
   document.getElementById('reset').addEventListener('click', onReset);
   
 //  // ショートカット
