@@ -160,6 +160,13 @@ const createFormatText = (cmd, tabs) => {
     keyset['${AAAA}'] = now.getHours()/12 < 1 ? 'A.M.' : 'P.M.';
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
+    
+    // Function
+    if (ex3(cmd, 'copy_func')) {
+      for (let i=0; i<10; i++) {
+        keyset['${text'+i+'}'] = cmd.texts[i];
+      }
+    }
   }
   const sep = separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
@@ -226,13 +233,6 @@ const createFormatText = (cmd, tabs) => {
         });
       }
       // 備考：username, password は、閲覧 URL としては出現しないはず（一応実装しておく）
-      
-      // Function
-      if (ex3(cmd, 'copy_func')) {
-        for (let i=0; i<10; i++) {
-          keyset['${text'+i+'}'] = cmd.texts[i];
-        }
-      }
     }
     
     // 変換
