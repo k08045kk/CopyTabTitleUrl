@@ -177,6 +177,7 @@ const defaultStorageVersion3 = {
   options: {
     popup_format2: false,               // v3.0.0 （標準モードへ移行）
     popup_title: false,                 // v3.1.0
+    popup_tooltip: false,               // v3.1.0
     popup_comlate: true,                // v3.0.0 （初期設定を変更）
     
     context_all: false,
@@ -256,6 +257,7 @@ Object.freeze(defaultStorageVersion3);
 const extendedMode = [
   //'popup_format2',                    // standard v3.0.0+
   'popup_title',
+  'popup_tooltip',
   //'popup_comlate',                    // standard
   
   //'context_all',                      // standard

@@ -59,6 +59,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('format'+i).textContent = cmd.menus[i].title;
       }
     }
+    if (ex3(cmd, 'popup_tooltip')) {
+      for (let i=0; i<5; i++) {
+        document.getElementById('format'+i).setAttribute('title', cmd.formats[i]);
+      }
+    }
     document.getElementById('panel').hidden = false;
   } else {
     // アクションのみ(完了通知を表示する)
