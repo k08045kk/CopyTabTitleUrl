@@ -54,6 +54,7 @@ function updateOptionPage() {
   // タイトル編集
   const edit = checkbox('menus_edit_title').checked;
   document.getElementById('menus').dataset.edit = extension && edit;
+  document.getElementById('popup_title').disabled = !(extension && edit);
   
   // フォーマット関数
   const func = checkbox('copy_func').checked;
@@ -65,7 +66,7 @@ function updateOptionPage() {
 // コンテキストメニュー変更イベント
 async function onUpdateOptions() {
   const cmd = await chrome.storage.local.get(defaultStorage);
-  Object.keys(cmd.options).forEach((key) => {
+  Object.keys(defaultStorage.options).forEach((key) => {
     cmd.options[key] = document.getElementById(key).checked;
   });
   cmd.browser_action = [...document.getElementsByName('browser_action')].find(v => v.checked).value;
