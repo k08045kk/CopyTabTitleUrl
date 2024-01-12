@@ -11,13 +11,11 @@ if (globalThis.importScripts) {
 }
 
 
+
+/* ========================================================================== */
+/* イベント                                                                   */
+/* ========================================================================== */
 // ブラウザアクション
-const updateAction = (cmd) => {
-  const popup = (cmd.browser_action == 'popup' || ex3(cmd, 'popup_comlate'))
-              ? '/popup/popup.html'
-              : '';
-  chrome.action.setPopup({popup});
-};
 chrome.action.onClicked.addListener(async (info, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   const id = 3;
@@ -28,7 +26,7 @@ chrome.action.onClicked.addListener(async (info, tab) => {
 });
 
 
-// コンテキストメニューイベント
+// コンテキストメニュー
 const onContextMenus = async (info, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   const id = info.menuItemId.match(/\d+$/)[0]-0;
@@ -45,8 +43,53 @@ const onContextMenus = async (info, tab) => {
 chrome.contextMenus.onClicked.addListener(onContextMenus);
 
 
+// キーボードショートカット
+chrome.commands.onCommand.addListener(async (command) => {
+  const cmd = await chrome.storage.local.get(defaultStorage);
+  if (command === 'shortcut_action') {
+    const id = 3;
+    cmd.id = id;
+    cmd.format = cmd.formats[id];
+    cmd.target = 'tab';
+    onCopy(cmd);
+  } else if (command === 'shortcut_action2') {
+    const id = 4;
+    cmd.id = id;
+    cmd.format = cmd.formats[id];
+    cmd.target = 'tab';
+    onCopy(cmd);
+  }
+});
 
-// コンテキストメニュー更新
+
+// メッセージ
+chrome.runtime.onMessage.addListener((data, sender) => {
+  if (data.target !== 'background') { return; }
+  switch (data.type) {
+  case 'update':                // options.js
+    update();
+    break;
+  case 'copy':                  // popup.js
+    onCopy(data.cmd);
+    break;
+  }
+});
+
+
+
+/* ========================================================================== */
+/* 更新                                                                       */
+/* ========================================================================== */
+// ブラウザアクション
+const updateAction = (cmd) => {
+  const popup = (cmd.browser_action == 'popup' || ex3(cmd, 'popup_comlate'))
+              ? '/popup/popup.html'
+              : '';
+  chrome.action.setPopup({popup});
+};
+
+
+// コンテキストメニュー
 const updateContextMenus = async (cmd) => {
   // メニュー削除 && ストレージ取得
   await chrome.contextMenus.removeAll();
@@ -96,7 +139,7 @@ const updateContextMenus = async (cmd) => {
 };
 
 
-
+// 全体
 const update = async () => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   updateAction(cmd);
@@ -105,40 +148,9 @@ const update = async () => {
 
 
 
-// キーボードショートカット
-chrome.commands.onCommand.addListener(async (command) => {
-  const cmd = await chrome.storage.local.get(defaultStorage);
-  if (command === 'shortcut_action') {
-    const id = 3;
-    cmd.id = id;
-    cmd.format = cmd.formats[id];
-    cmd.target = 'tab';
-    onCopy(cmd);
-  } else if (command === 'shortcut_action2') {
-    const id = 4;
-    cmd.id = id;
-    cmd.format = cmd.formats[id];
-    cmd.target = 'tab';
-    onCopy(cmd);
-  }
-});
-
-
-
-chrome.runtime.onMessage.addListener((data, sender) => {
-  if (data.target !== 'background') { return; }
-  switch (data.type) {
-  case 'update':                // options.js
-    update();
-    break;
-  case 'copy':                  // popup.js
-    onCopy(data.cmd);
-    break;
-  }
-});
-//chrome.runtime.onStartup.addListener(update);
-update(); // 拡張機能の有効・無効切り替え対策
-
-
-
+/* ========================================================================== */
+/* main                                                                       */
+/* ========================================================================== */
 chrome.runtime.onInstalled.addListener(converteStorageVersion3);
+//chrome.runtime.onStartup.addListener(update);
+update();

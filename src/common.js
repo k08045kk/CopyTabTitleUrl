@@ -4,10 +4,12 @@
 'use strict';
 
 /**
+ * 備考
  * 最小対応バージョンの覚書
+ * 
  * Firefox 115.0+
  *   manifest.json
- *   browser_specific_settings.strict_min_version = "115.0";
+ *     browser_specific_settings.strict_min_version = "115.0";
  *   109: Manifest V3 対応（既定で有効化）
  *   115: ESR
  *   ???: background module 対応
@@ -28,43 +30,6 @@ const module = {};
 // ブラウザ判定
 const isFirefox = () => 'browser' in globalThis;
 const isChrome = () => !isFirefox();
-
-
-
-const extendedMode = [
-  //'popup_format2',                    // standard v3.0.0+
-  //'popup_comlate',                    // standard
-  
-  //'context_all',                      // standard
-  //'context_page',                     // standard
-  'context_selection',
-  'context_link',
-  'context_image',
-  //'context_action',                   // standard
-  //'context_tab',                      // standard
-  
-  //'copy_decode',                      // standard v3.1.0+
-  //'copy_punycode',                    // standard v3.1.0+
-  'copy_html',
-  'copy_func',
-  //'exclude_pin',                      // standard v3.1.0+
-  //'exclude_hidden',                   // standard v3.1.0+
-  'menus_edit_title',
-  'menus_format9', 
-  //'extended_mode',                    // standard
-  
-  
-  //'newline',                          // extended
-  //'separator',                        // extended
-];
-const ex3 = (cmd, name) => {
-  if (name) {
-    return extendedMode.includes(name)
-         ?(cmd.options.extended_mode ? cmd.options[name] : defaultStorage.options[name])
-         : cmd.options[name];
-  }
-  return cmd.options.extended_mode;
-};
 
 
 
@@ -284,6 +249,51 @@ const defaultStorageVersion3 = {
   // 　　　chrome.storage.sync  = 100 KB
 };
 Object.freeze(defaultStorageVersion3);
+
+
+
+const extendedMode = [
+  //'popup_format2',                    // standard v3.0.0+
+  //'popup_comlate',                    // standard
+  
+  //'context_all',                      // standard
+  //'context_page',                     // standard
+  'context_selection',
+  'context_link',
+  'context_image',
+  //'context_action',                   // standard
+  //'context_tab',                      // standard
+  
+  //'copy_decode',                      // standard v3.1.0+
+  //'copy_punycode',                    // standard v3.1.0+
+  'copy_html',
+  'copy_func',
+  //'exclude_pin',                      // standard v3.1.0+
+  //'exclude_hidden',                   // standard v3.1.0+
+  'menus_edit_title',
+  'menus_format9', 
+  //'extended_mode',                    // standard
+  
+  
+  //'newline',                          // extended
+  //'separator',                        // extended
+];
+Object.freeze(extendedMode);
+const ex3 = (cmd, name) => {
+  if (name) {
+    return extendedMode.includes(name)
+         ?(cmd.options.extended_mode ? cmd.options[name] : defaultStorage.options[name])
+         : cmd.options[name];
+  }
+  return cmd.options.extended_mode;
+};
+
+
+
+const defaultStorage = defaultStorageVersion3;
+
+
+
 async function converteStorageVersion3() {
   const oldStorage = await chrome.storage.local.get();
   if (oldStorage && oldStorage.version && oldStorage.version >= 3) {
@@ -340,6 +350,5 @@ async function converteStorageVersion3() {
     // バージョン１　想定外
   }
 };
-
-
-const defaultStorage = defaultStorageVersion3;
+// 備考：メジャーバージョン４以降で廃止予定
+//       最低でも１年程度（～２０２４年１２月）は、変換機能を維持する
