@@ -50,6 +50,7 @@ function updateOptionPage() {
   // 拡張モード選択時
   const extension = checkbox('extended_mode').checked;
   document.body.dataset.mode = extension ? 'extended' : 'normal';
+  document.body.dataset.edit = extension ? checkbox('extended_edit').checked : false;
   
   // タイトル編集
   const edit = checkbox('menus_edit_title').checked;

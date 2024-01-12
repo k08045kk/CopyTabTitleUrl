@@ -31,8 +31,10 @@ const onContextMenus = async (info, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   const id = info.menuItemId.match(/\d+$/)[0]-0;
   cmd.id = id;
-  cmd.format = cmd.formats[id];
-  cmd.target = ex3(cmd) ? cmd.menus[id].target : defaultStorage.menus[id].target;
+  cmd.format = ex3(cmd, 'extended_edit') || 3<=id ? cmd.formats[id] : defaultStorage.formats[id];
+  cmd.target = ex3(cmd) && (ex3(cmd, 'extended_edit') || 3<=id) 
+             ? cmd.menus[id].target 
+             : defaultStorage.menus[id].target;
   cmd.selectionText = info.selectionText;
   cmd.linkText = info.linkText;  // Firefox56+(Chromeは、対象外)
   cmd.linkUrl = info.linkUrl;

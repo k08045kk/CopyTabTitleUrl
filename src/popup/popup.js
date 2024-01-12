@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (all.checked) {  target = 'all';  }
       
       cmd.id = id;
-      cmd.format = cmd.formats[id];
+      cmd.format = ex3(cmd, 'extended_edit') || 3<=id ? cmd.formats[id] : defaultStorage.formats[id];
       cmd.target = target;
       cmd.callback = 'close';
       chrome.runtime.sendMessage({target:'background', type:'copy', cmd});

@@ -79,6 +79,7 @@ p {
 
 body[data-mode="normal"] .extension,
 body[data-mode="extended"] .normal,
+body[data-edit="false"] .exedit,
 #menus[data-edit="false"] .menu_title,
 #menus[data-edit="true"] .menu_label {
   display: none;
@@ -136,7 +137,7 @@ body[data-mode="extended"] .normal,
         <input class="menu" id="menu0" type="checkbox">
         <label class="menu_label" for="menu0"> title and URL </label>
         <input class="menu_title" id="menu0_title" type="text" maxlength="64">
-        <select class="hide extension menu_target" id="menu0_target">
+        <select class="exedit extension menu_target" id="menu0_target">
           <option value="tab">tab</option>
           <option value="window">window</option>
           <option value="all">all</option>
@@ -147,7 +148,7 @@ body[data-mode="extended"] .normal,
         <input class="menu" id="menu1" type="checkbox">
         <label class="menu_label" for="menu1"> title </label>
         <input class="menu_title" id="menu1_title" type="text" maxlength="64">
-        <select class="hide extension menu_target" id="menu1_target">
+        <select class="exedit extension menu_target" id="menu1_target">
           <option value="tab">tab</option>
           <option value="window">window</option>
           <option value="all">all</option>
@@ -158,7 +159,7 @@ body[data-mode="extended"] .normal,
         <input class="menu" id="menu2" type="checkbox">
         <label class="menu_label" for="menu2"> URL </label>
         <input class="menu_title" id="menu2_title" type="text" maxlength="64">
-        <select class="hide extension menu_target" id="menu2_target">
+        <select class="exedit extension menu_target" id="menu2_target">
           <option value="tab">tab</option>
           <option value="window">window</option>
           <option value="all">all</option>
@@ -299,9 +300,9 @@ body[data-mode="extended"] .normal,
       see <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span>
     </p>
     <br>
-    <p class="hide"> title and URL: <input class="format" id="format0" type="text" maxlength="256"></p>
-    <p class="hide"> title: <input class="format" id="format1" type="text" maxlength="256"></p>
-    <p class="hide"> URL:   <input class="format" id="format2" type="text" maxlength="256"></p>
+    <p class="exedit"> title and URL: <input class="format" id="format0" type="text" maxlength="256"></p>
+    <p class="exedit"> title: <input class="format" id="format1" type="text" maxlength="256"></p>
+    <p class="exedit"> URL:   <input class="format" id="format2" type="text" maxlength="256"></p>
     <p> format&ensp;: <input class="format" id="format3" type="text" maxlength="256"></p>
     <p> format2:      <input class="format" id="format4" type="text" maxlength="256"></p>
     <div class="extension">
@@ -385,6 +386,9 @@ body[data-mode="extended"] .normal,
     </p>
 
     <hr>
+    <p class="extension"><label>
+      <input id="extended_edit" type="checkbox"> Edit the initial settings </label>
+    </p>
     <p><label><input id="extended_mode" type="checkbox"> Enable Extended mode </label></p>
   </fieldset>
 
