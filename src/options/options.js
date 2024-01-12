@@ -54,7 +54,8 @@ function updateOptionPage() {
   // タイトル編集
   const edit = checkbox('menus_edit_title').checked;
   document.getElementById('menus').dataset.edit = extension && edit;
-  document.getElementById('popup_title').disabled = !(extension && edit);
+  document.getElementById('popup_title').disabled = !(extension && edit && !action);
+  document.getElementById('popup_tooltip').disabled = !(extension && !action);
   
   // フォーマット関数
   const func = checkbox('copy_func').checked;
