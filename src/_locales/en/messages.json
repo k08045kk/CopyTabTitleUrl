@@ -1,0 +1,8 @@
+{
+  "extensionName": {
+    "message": "CopyTabTitleUrl"
+  },
+  "extensionDescription": {
+    "message": "Copy the title and URL to the clipboard."
+  }
+}

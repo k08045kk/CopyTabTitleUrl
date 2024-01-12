@@ -1,8 +1,9 @@
-﻿{
+{
   "manifest_version": 3,
-  "name": "CopyTabTitleUrl",
-  "description": "Copy the title and URL to the clipboard.",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
   "version": "3.1.0",
+  "default_locale": "en",
   
   "author": "toshi",
   "homepage_url": "https://github.com/k08045kk/CopyTabTitleUrl",
@@ -27,7 +28,7 @@
   },
   
   "action": {
-    "default_title": "CopyTabTitleUrl",
+    "default_title": "__MSG_extensionName__",
     "default_icon": {
       "19": "icon/19.png",
       "38": "icon/38.png"
