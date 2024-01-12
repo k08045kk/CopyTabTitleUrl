@@ -239,6 +239,11 @@ const createFormatText = (cmd, tabs) => {
     const reNum = /^[+\-]?\d+$/;
     const fmt = format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m)
                       .replace(/\${.*?}/ig, (match) => {
+      // Requests: If you have additional feature requests for this feature, 
+      // please contact Issues on GitHub. 
+      // Personalized feature additions will not be implemented. 
+      // Only features for the masses will be considered for addition. 
+      // Please contact us stating the purpose of use and how you intend to use the feature.
       if (!ex3(cmd, 'copy_func')) { return match; }
       let ret = match;
       const m = match.match(/^\${(?<key>\w+).(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+)(,(?<arg2>\w+|[+\-]?\d+))?)?\))?}$/);
@@ -305,6 +310,10 @@ const createFormatText = (cmd, tabs) => {
               ret = input[func](arg1);
             }
             break;
+          case 'concat':
+            ret = input[func](arg1 ?? '', arg2 ?? '');
+            // ...args 非対応
+            break;
           case 'isWellFormed':
           case 'trim':
           case 'trimStart':
@@ -318,7 +327,6 @@ const createFormatText = (cmd, tabs) => {
           case 'valueOf':
             ret = input[func]();
             break;
-          //case 'concat':
           //case 'split':
           //case 'localeCompare':
           //case 'match':
