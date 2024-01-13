@@ -239,6 +239,16 @@ const createFormatText = (cmd, tabs) => {
     
     // 変換
     const reNum = /^[+\-]?\d+$/;
+    const reStr = /^("[^"}]*"|'[^'}]*')$/;
+    const getValue = (valueText) => {
+      if (reNum.test(valueText)) {
+        return Number.parseInt(valueText);
+      } else if (reStr.test(valueText)) {
+        return valueText.slice(1, -1);
+      } else {
+        return keyset['${'+valueText+'}'];
+      }
+    };
     const fmt = format//.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m)
                       .replace(/\${.*?}/ig, (match) => {
       // Requests: If you have additional feature requests for this feature, 
@@ -251,26 +261,26 @@ const createFormatText = (cmd, tabs) => {
       }
       if (!ex3(cmd, 'copy_func')) { return match; }
       let ret = match;
-      const m = match.match(/^\${((?<out>\w+)=)?(?<in>\w+)(?<prop>\[(?<idx>\w+|[+\-]?\d+)\]|\.(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+)(,(?<arg2>\w+|[+\-]?\d+))?)?\))?)?}$/);
+      const m = match.match(/^\${((?<out>\w+)=)?(?<in>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?<prop>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}$/);
       // ${key.fn(arg1,arg2)}
       // ${key.fn(arg1)}
       // ${key.fn}
 //console.log('copy_func', m, keyset);
-      if (m && keyset['${'+m.groups.in+'}'] != null) {
+      if (m == null) { return match; }
+      const input = getValue(m.groups.in);
+      if (reNum.test(m.groups.in) || reNum.test(m.groups.in)) {
+        ret = input;
+      } else if (input != null) {
         try {
-          const input = keyset['${'+m.groups.in+'}'];
-          const idx = reNum.test(m.groups.idx) ? Number.parseInt(m.groups.idx)
-                                               : keyset['${'+m.groups.idx+'}'];
+          const idx = getValue(m.groups.idx);
           const func = m.groups.fn || '';
-          const arg1 = reNum.test(m.groups.arg1) ? Number.parseInt(m.groups.arg1)
-                                                 : keyset['${'+m.groups.arg1+'}'];
-          const arg2 = reNum.test(m.groups.arg2) ? Number.parseInt(m.groups.arg2)
-                                                 : keyset['${'+m.groups.arg2+'}'];
+          const arg1 = getValue(m.groups.arg1);
+          const arg2 = getValue(m.groups.arg2);
           const isValue = m.groups.prop == null;
           const isArray = m.groups.prop?.at(0) === '[';
           const isAttr = m.groups.prop?.at(0) === '.' && m.groups.args == null;
           const isFunc  = m.groups.args?.at(0) === '(';
-//console.log(func, args, arg1, arg2);
+//console.log(func, idx, arg1, arg2);
           switch (func) {
           case '':
             if (isValue) {
@@ -364,11 +374,11 @@ const createFormatText = (cmd, tabs) => {
           //case 'search':
           // see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
           }
-          if (m.groups.out != null) {
-            keyset['${'+m.groups.out+'}'] = ret;
-            ret = '';
-          }
         } catch (e) { ret = match+'['+e.toString()+']'; }
+      }
+      if (m.groups.out != null) {
+        keyset['${'+m.groups.out+'}'] = ret;
+        ret = '';
       }
 //console.log(match);
 //console.log(ret);
