@@ -160,6 +160,8 @@ const createFormatText = (cmd, tabs) => {
     keyset['${AAAA}'] = now.getHours()/12 < 1 ? 'A.M.' : 'P.M.';
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
+    keyset['${ampm}'] = ''+Math.floor(now.getHours()/12);
+    keyset['${day}']  = ''+now.getDay();
     
     // Function
     if (ex3(cmd, 'copy_func')) {
@@ -237,40 +239,60 @@ const createFormatText = (cmd, tabs) => {
     
     // 変換
     const reNum = /^[+\-]?\d+$/;
-    const fmt = format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m)
+    const fmt = format//.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m)
                       .replace(/\${.*?}/ig, (match) => {
       // Requests: If you have additional feature requests for this feature, 
       // please contact Issues on GitHub. 
       // Personalized feature additions will not be implemented. 
       // Only features for the masses will be considered for addition. 
       // Please contact us stating the purpose of use and how you intend to use the feature.
+      if (keyset.hasOwnProperty(match)) {
+        return keyset[match];
+      }
       if (!ex3(cmd, 'copy_func')) { return match; }
       let ret = match;
-      const m = match.match(/^\${(?<key>\w+).(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+)(,(?<arg2>\w+|[+\-]?\d+))?)?\))?}$/);
+      const m = match.match(/^\${((?<out>\w+)=)?(?<in>\w+)(?<prop>\[(?<idx>\w+|[+\-]?\d+)\]|\.(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+)(,(?<arg2>\w+|[+\-]?\d+))?)?\))?)?}$/);
       // ${key.fn(arg1,arg2)}
       // ${key.fn(arg1)}
       // ${key.fn}
 //console.log('copy_func', m, keyset);
-      if (m && keyset['${'+m.groups.key+'}'] != null) {
+      if (m && keyset['${'+m.groups.in+'}'] != null) {
         try {
-          const input = keyset['${'+m.groups.key+'}'];
-          const func = m.groups.fn;
-          const args = m.groups.args;
+          const input = keyset['${'+m.groups.in+'}'];
+          const idx = reNum.test(m.groups.idx) ? Number.parseInt(m.groups.idx)
+                                               : keyset['${'+m.groups.idx+'}'];
+          const func = m.groups.fn || '';
           const arg1 = reNum.test(m.groups.arg1) ? Number.parseInt(m.groups.arg1)
                                                  : keyset['${'+m.groups.arg1+'}'];
           const arg2 = reNum.test(m.groups.arg2) ? Number.parseInt(m.groups.arg2)
                                                  : keyset['${'+m.groups.arg2+'}'];
+          const isValue = m.groups.prop == null;
+          const isArray = m.groups.prop?.at(0) === '[';
+          const isAttr = m.groups.prop?.at(0) === '.' && m.groups.args == null;
+          const isFunc  = m.groups.args?.at(0) === '(';
 //console.log(func, args, arg1, arg2);
           switch (func) {
+          case '':
+            if (isValue) {
+              ret = input;
+            } else if (isArray) {
+              const obj = JSON.parse(input);
+              if (typeof obj === "object" && obj !== null) {
+                ret = obj[idx];
+                // 配列を想定する。ただし、オブジェクトでも良い。
+                // 取得失敗時は、 undefined を返す。
+              }
+            }
+            break;
           case 'length':
-            if (args == null) {
+            if (isAttr) {
               ret = input[func];
             }
             break;
           case 'replace':
           case 'replaceAll':
             const flags = func === 'replace' ? '' : 'g';
-            if (arg1 != null && arg2 != null) {
+            if (isFunc && arg1 != null && arg2 != null) {
               ret = input.replace(new RegExp(arg1, flags), arg2);
               // 備考：数値が入力されてもエラーとならないことを確認
               // 備考：次の変換に失敗するため、正規表現を replace の入力に与える挙動とする
@@ -280,13 +302,13 @@ const createFormatText = (cmd, tabs) => {
             break;
           case 'substring':
           case 'slice':
-            if (Number.isInteger(arg1) && (arg2 == null || Number.isInteger(arg2))) {
+            if (isFunc && Number.isInteger(arg1) && (arg2 == null || Number.isInteger(arg2))) {
               ret = input[func](arg1, arg2);
             }
             break;
           case 'padStart':
           case 'padEnd':
-            if (Number.isInteger(arg1) && arg2 != null) {
+            if (isFunc && Number.isInteger(arg1) && arg2 != null) {
               ret = input[func](arg1, arg2);
             }
             break;
@@ -295,7 +317,7 @@ const createFormatText = (cmd, tabs) => {
           case 'charCodeAt':
           case 'codePointAt':
           case 'repeat':
-            if (Number.isInteger(arg1)) {
+            if (isFunc && Number.isInteger(arg1)) {
               ret = input[func](arg1);
             }
             break;
@@ -306,13 +328,20 @@ const createFormatText = (cmd, tabs) => {
           case 'lastIndexOf':
           case 'normalize':
             // RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.
-            if (arg1 != null) {
+            if (isFunc && arg1 != null) {
               ret = input[func](arg1);
             }
             break;
           case 'concat':
-            ret = input[func](arg1 ?? '', arg2 ?? '');
-            // ...args 非対応
+            if (isFunc) {
+              ret = input[func](arg1 ?? '', arg2 ?? '');
+              // ...args 非対応
+            }
+            break;
+          case 'split':
+            if (isFunc && arg1 != null) {
+              ret = JSON.stringify(input[func](arg1));
+            }
             break;
           case 'isWellFormed':
           case 'trim':
@@ -325,30 +354,31 @@ const createFormatText = (cmd, tabs) => {
           case 'toUpperCase':
           case 'toWellFormed':
           case 'valueOf':
-            ret = input[func]();
+            if (isFunc) {
+              ret = input[func]();
+            }
             break;
-          //case 'split':
           //case 'localeCompare':
           //case 'match':
           //case 'matchAll':
           //case 'search':
           // see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
           }
+          if (m.groups.out != null) {
+            keyset['${'+m.groups.out+'}'] = ret;
+            ret = '';
+          }
         } catch (e) { ret = match+'['+e.toString()+']'; }
       }
 //console.log(match);
 //console.log(ret);
       return ret;
-      // ${title.replaceAll('[*_\\`#+\-.!{}[\]()]','\$&')}
-      // ${url.replaceAll('^(https?:\/\/www\.amazon\.(com|co\.jp))\/[^/].*(\/dp\/\w+)(\/\?#)?.*$','$1$3')}
-      // ${WWW.replace(new RegExp('^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)$','g'),'')}
-      // see https://daringfireball.net/projects/markdown/syntax#backslash
     });
     temp.push(fmt);
   }
   return temp.join(sep);
   // ${TITLE}${enter}${URL}${enter}ABCDEF abcdef あいうえお${CR}${LF}${test}${tab}${$}
-  // ${index}, ${id}, ${tabId}, ${windowId}, ${favIconUrl}, ${markdown}
+  // ${index}, ${id}, ${tabId}, ${windowId}, ${favIconUrl}
   // ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}${enter}${yy}-${M}-${d}T${H}:${m}:${s}.${S}${enter}${hh}-${h}
   // ${url}${enter}${href}${enter}${protocol}//${hostname}${:port}${pathname}${search}${hash}${enter}${origin}${enter}${protocol}//${host}${enter}${protocol}//${hostname}${port}
 };
