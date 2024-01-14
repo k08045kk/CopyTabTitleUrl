@@ -160,7 +160,6 @@ const createFormatText = (cmd, tabs) => {
     keyset['${AAAA}'] = now.getHours()/12 < 1 ? 'A.M.' : 'P.M.';
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
-    keyset['${ampm}'] = ''+Math.floor(now.getHours()/12);
     keyset['${day}']  = ''+now.getDay();
     
     // Function
@@ -245,8 +244,14 @@ const createFormatText = (cmd, tabs) => {
         return Number.parseInt(valueText);
       } else if (reStr.test(valueText)) {
         return valueText.slice(1, -1);
+      } else if (keyset['${'+valueText+'}'] != null) {
+        if (reNum.test(keyset['${'+valueText+'}'])) {
+          return Number.parseInt(keyset['${'+valueText+'}']);
+        } else {
+          return keyset['${'+valueText+'}'];
+        }
       } else {
-        return keyset['${'+valueText+'}'];
+        return void 0;
       }
     };
     const fmt = format//.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m)
@@ -270,6 +275,23 @@ const createFormatText = (cmd, tabs) => {
       const input = getValue(m.groups.in);
       if (reNum.test(m.groups.in) || reNum.test(m.groups.in)) {
         ret = input;
+      } else if (m.groups.in === 'Math' && m.groups.args?.at(0) === '(') {
+        try {
+          const func = m.groups.fn;
+          const arg1 = getValue(m.groups.arg1);
+          const arg2 = getValue(m.groups.arg2);
+          if (Number.isInteger(arg1) && Number.isInteger(arg2)) {
+            switch (func) {
+            case 'add':     ret = arg1 + arg2;      break;
+            case 'sub':     ret = arg1 - arg2;      break;
+            case 'mul':     ret = arg1 * arg2;      break;
+            case 'div':     ret = Math.floor(arg1 / arg2);  break;
+            case 'mod':     ret = arg1 % arg2;      break;
+            }
+            // ${ampm=Math.div(H,12)}
+          }
+//console.log(func, arg1, arg2);
+        } catch (e) { ret = match+'['+e.toString()+']'; }
       } else if (input != null) {
         try {
           const idx = getValue(m.groups.idx);
