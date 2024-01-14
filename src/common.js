@@ -191,7 +191,7 @@ const defaultStorageVersion3 = {
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
     copy_html: false,
-    copy_func: false,                   // v3.1.0
+    copy_programmable: false,           // v3.1.0
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
     menus_edit_title: false,
@@ -230,8 +230,8 @@ const defaultStorageVersion3 = {
     '[${linkSelectionTitle}](${linkSrcUrl})',   // 11
   ],
   texts: [                                      // v3.1.0
-    "\\$&",
     "[*_\\\\`#+\\-.!{}[\\]()]",
+    "",
     "",
     "",
     "",
@@ -272,7 +272,7 @@ const extendedMode = [
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+
   'copy_html',
-  'copy_func',
+  'copy_programmable',
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
   'menus_edit_title',

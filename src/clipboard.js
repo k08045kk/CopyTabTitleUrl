@@ -164,7 +164,7 @@ const createFormatText = (cmd, tabs) => {
     keyset['${day}']  = ''+now.getDay();
     
     // Function
-    if (ex3(cmd, 'copy_func')) {
+    if (ex3(cmd, 'copy_programmable')) {
       for (let i=0; i<10; i++) {
         keyset['${text'+i+'}'] = cmd.texts[i];
       }
@@ -259,13 +259,13 @@ const createFormatText = (cmd, tabs) => {
       if (keyset.hasOwnProperty(match)) {
         return keyset[match];
       }
-      if (!ex3(cmd, 'copy_func')) { return match; }
+      if (!ex3(cmd, 'copy_programmable')) { return match; }
       let ret = match;
       const m = match.match(/^\${((?<out>\w+)=)?(?<in>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?<prop>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}$/);
       // ${key.fn(arg1,arg2)}
       // ${key.fn(arg1)}
       // ${key.fn}
-//console.log('copy_func', m, keyset);
+//console.log('copy_programmable', m, keyset);
       if (m == null) { return match; }
       const input = getValue(m.groups.in);
       if (reNum.test(m.groups.in) || reNum.test(m.groups.in)) {

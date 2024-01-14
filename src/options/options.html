@@ -320,10 +320,11 @@ body[data-edit="false"] .exedit,
 
 
   <!-- テキスト -->
-  <fieldset class="extension" id="func">
-    <legend>Text (for format functions)</legend>
-    <p>${url.length}, ${text0.toLowerCase()}</p>
-    <p>${title.slice(-2)}, ${title.replaceAll(text1,text0)}</p>
+  <fieldset class="extension" id="program">
+    <legend>Text (for programmable copy)</legend>
+    <p>${url.length}</p>
+    <p>${text0.toLowerCase()}</p>
+    <p>${title.replaceAll(text0,'\$&')}</p>
     <p>This feature is currently under testing. 🧪 </p>
     <br/>
     <p>${text0}&ensp;=&ensp;<input class="text" id="text0" type="text" maxlength="256"></p>
@@ -354,7 +355,7 @@ body[data-edit="false"] .exedit,
 
     <hr class="extension"/>
     <p class="extension">
-      <label><input id="copy_func" type="checkbox"> Enable format functions </label>
+      <label><input id="copy_programmable" type="checkbox"> Enable programmable copy </label>
     </p>
     <p class="extension indent2">
       Newline character:&ensp;${enter}&ensp;=&ensp;

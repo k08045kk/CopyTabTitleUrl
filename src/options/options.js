@@ -59,8 +59,8 @@ function updateOptionPage() {
   document.getElementById('popup_tooltip').disabled = !(extension && !action);
   
   // フォーマット関数
-  const func = checkbox('copy_func').checked;
-  document.getElementById('func').hidden = !(extension && func);
+  const program = checkbox('copy_programmable').checked;
+  document.getElementById('program').hidden = !(extension && program);
 };
 
 
