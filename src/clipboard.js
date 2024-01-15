@@ -277,6 +277,14 @@ const createFormatText = (cmd, tabs) => {
         ret = input;
       } else if (m.groups.in === 'Math' && m.groups.args?.at(0) === '(') {
         try {
+          const toBoolean = (value) => {
+            switch (value) {
+            case 'true':  return true;
+            case 'false': return false;
+            case '0':     return false;
+            }
+            return !!value;
+          };
           const func = m.groups.fn;
           const arg1 = getValue(m.groups.arg1);
           const arg2 = getValue(m.groups.arg2);
@@ -287,8 +295,28 @@ const createFormatText = (cmd, tabs) => {
             case 'mul':     ret = arg1 * arg2;      break;
             case 'div':     ret = Math.floor(arg1 / arg2);  break;
             case 'mod':     ret = arg1 % arg2;      break;
+            case 'lt':      ret = arg1 <  arg2;     break;
+            case 'lte':     ret = arg1 <= arg2;     break;
+            case 'gt':      ret = arg1 >  arg2;     break;
+            case 'gte':     ret = arg1 >= arg2;     break;
             }
             // ${ampm=Math.div(H,12)}
+          }
+          if (arg1 != null && arg2 != null) {
+            switch (func) {
+            case 'cond':    ret =  toBoolean(arg1) ? arg2 : '';       break;
+            case 'condn':   ret = !toBoolean(arg1) ? arg2 : '';       break;
+            case 'eq':      ret = arg1 == arg2;     break;
+            case 'neq':     ret = arg1 != arg2;     break;
+            case 'and':     ret = toBoolean(arg1) && toBoolean(arg2); break;
+            case 'or':      ret = toBoolean(arg1) || toBoolean(arg2); break;
+            }
+            // ${x=Math.eq(text0,text1)}${Math.cond(x,text2)}${Math.condn(x,text3)}
+          }
+          if (arg1 != null) {
+            switch (func) {
+            case 'not':     ret = !toBoolean(arg1); break;
+            }
           }
 //console.log(func, arg1, arg2);
         } catch (e) { ret = match+'['+e.toString()+']'; }
