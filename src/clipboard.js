@@ -167,9 +167,20 @@ const createFormatText = (cmd, tabs) => {
       for (let i=0; i<10; i++) {
         keyset['${text'+i+'}'] = cmd.texts[i];
       }
+      //keyset['${Math}'] = 'Math';
+      //keyset['${String}'] = 'String';
+      // 未定義の方が違和感がない？
+      keyset['${undefined}'] = 'undefined';
+      keyset['${null}'] = 'null';
+      keyset['${true}'] = true;
+      keyset['${false}'] = false;
+      keyset['${NaN}'] = NaN;
+      keyset['${Infinity}'] = Infinity;
     }
   }
-  const sep = separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
+  const sep = ex3(cmd, 'copy_programmable')
+            ? compile(separator, keyset)
+            : separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
   // 本処理
   const temp = [];
@@ -237,204 +248,11 @@ const createFormatText = (cmd, tabs) => {
     }
     
     // 変換
-    const reNum = /^[+\-]?\d+$/;
-    const reStr = /^("[^"}]*"|'[^'}]*')$/;
-    const getValue = (valueText) => {
-      if (reNum.test(valueText)) {
-        return Number.parseInt(valueText);
-      } else if (reStr.test(valueText)) {
-        return valueText.slice(1, -1);
-      } else if (keyset['${'+valueText+'}'] != null) {
-        if (reNum.test(keyset['${'+valueText+'}'])) {
-          return Number.parseInt(keyset['${'+valueText+'}']);
-        } else {
-          return keyset['${'+valueText+'}'];
-        }
-      } else {
-        return void 0;
-      }
-    };
-    const fmt = format//.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m)
-                      .replace(/\${.*?}/ig, (match) => {
-      // Requests: If you have additional feature requests for this feature, 
-      // please contact Issues on GitHub. 
-      // Personalized feature additions will not be implemented. 
-      // Only features for the masses will be considered for addition. 
-      // Please contact us stating the purpose of use and how you intend to use the feature.
-      if (keyset.hasOwnProperty(match)) {
-        return keyset[match];
-      }
-      if (!ex3(cmd, 'copy_programmable')) { return match; }
-      let ret = match;
-      const m = match.match(/^\${((?<out>\w+)=)?(?<in>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?<prop>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\(((?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}$/);
-      // ${key.fn(arg1,arg2)}
-      // ${key.fn(arg1)}
-      // ${key.fn}
-//console.log('copy_programmable', m, keyset);
-      if (m == null) { return match; }
-      const input = getValue(m.groups.in);
-      if (reNum.test(m.groups.in) || reNum.test(m.groups.in)) {
-        ret = input;
-      } else if (m.groups.in === 'Math' && m.groups.args?.at(0) === '(') {
-        try {
-          const toBoolean = (value) => {
-            switch (value) {
-            case 'true':  return true;
-            case 'false': return false;
-            case '0':     return false;
-            }
-            return !!value;
-          };
-          const func = m.groups.fn;
-          const arg1 = getValue(m.groups.arg1);
-          const arg2 = getValue(m.groups.arg2);
-          if (Number.isInteger(arg1) && Number.isInteger(arg2)) {
-            switch (func) {
-            case 'add':     ret = arg1 + arg2;      break;
-            case 'sub':     ret = arg1 - arg2;      break;
-            case 'mul':     ret = arg1 * arg2;      break;
-            case 'div':     ret = Math.floor(arg1 / arg2);  break;
-            case 'mod':     ret = arg1 % arg2;      break;
-            case 'lt':      ret = arg1 <  arg2;     break;
-            case 'lte':     ret = arg1 <= arg2;     break;
-            case 'gt':      ret = arg1 >  arg2;     break;
-            case 'gte':     ret = arg1 >= arg2;     break;
-            }
-            // ${ampm=Math.div(H,12)}
-          }
-          if (arg1 != null && arg2 != null) {
-            switch (func) {
-            case 'cond':    ret =  toBoolean(arg1) ? arg2 : '';       break;
-            case 'condn':   ret = !toBoolean(arg1) ? arg2 : '';       break;
-            case 'eq':      ret = arg1 == arg2;     break;
-            case 'neq':     ret = arg1 != arg2;     break;
-            case 'and':     ret = toBoolean(arg1) && toBoolean(arg2); break;
-            case 'or':      ret = toBoolean(arg1) || toBoolean(arg2); break;
-            }
-            // ${x=Math.eq(text0,text1)}${Math.cond(x,text2)}${Math.condn(x,text3)}
-          }
-          if (arg1 != null) {
-            switch (func) {
-            case 'not':     ret = !toBoolean(arg1); break;
-            }
-          }
-//console.log(func, arg1, arg2);
-        } catch (e) { ret = match+'['+e.toString()+']'; }
-      } else if (input != null) {
-        try {
-          const idx = getValue(m.groups.idx);
-          const func = m.groups.fn || '';
-          const arg1 = getValue(m.groups.arg1);
-          const arg2 = getValue(m.groups.arg2);
-          const isValue = m.groups.prop == null;
-          const isArray = m.groups.prop?.at(0) === '[';
-          const isAttr = m.groups.prop?.at(0) === '.' && m.groups.args == null;
-          const isFunc  = m.groups.args?.at(0) === '(';
-//console.log(func, idx, arg1, arg2);
-          switch (func) {
-          case '':
-            if (isValue) {
-              ret = input;
-            } else if (isArray) {
-              const obj = JSON.parse(input);
-              if (typeof obj === "object" && obj !== null) {
-                ret = obj[idx];
-                // 配列を想定する。ただし、オブジェクトでも良い。
-                // 取得失敗時は、 undefined を返す。
-              }
-            }
-            break;
-          case 'length':
-            if (isAttr) {
-              ret = input[func];
-            }
-            break;
-          case 'replace':
-          case 'replaceAll':
-            const flags = func === 'replace' ? '' : 'g';
-            if (isFunc && arg1 != null && arg2 != null) {
-              ret = input.replace(new RegExp(arg1, flags), arg2);
-              // 備考：数値が入力されてもエラーとならないことを確認
-              // 備考：次の変換に失敗するため、正規表現を replace の入力に与える挙動とする
-              //       'abc'.replace('[a]','x');  // abc
-              //       'abc'.replace(new RegExp('[a]'),'x');  // xbc
-            }
-            break;
-          case 'substring':
-          case 'slice':
-            if (isFunc && Number.isInteger(arg1) && (arg2 == null || Number.isInteger(arg2))) {
-              ret = input[func](arg1, arg2);
-            }
-            break;
-          case 'padStart':
-          case 'padEnd':
-            if (isFunc && Number.isInteger(arg1) && arg2 != null) {
-              ret = input[func](arg1, arg2);
-            }
-            break;
-          case 'at':
-          case 'charAt':
-          case 'charCodeAt':
-          case 'codePointAt':
-          case 'repeat':
-            if (isFunc && Number.isInteger(arg1)) {
-              ret = input[func](arg1);
-            }
-            break;
-          case 'startsWith':
-          case 'endsWith':
-          case 'includes':
-          case 'indexOf':
-          case 'lastIndexOf':
-          case 'normalize':
-            // RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.
-            if (isFunc && arg1 != null) {
-              ret = input[func](arg1);
-            }
-            break;
-          case 'concat':
-            if (isFunc) {
-              ret = input[func](arg1 ?? '', arg2 ?? '');
-              // ...args 非対応
-            }
-            break;
-          case 'split':
-            if (isFunc && arg1 != null) {
-              ret = JSON.stringify(input[func](arg1));
-            }
-            break;
-          case 'isWellFormed':
-          case 'trim':
-          case 'trimStart':
-          case 'trimEnd':
-          case 'toLocaleLowerCase':
-          case 'toLocaleUpperCase':
-          case 'toLowerCase':
-          case 'toString':
-          case 'toUpperCase':
-          case 'toWellFormed':
-          case 'valueOf':
-            if (isFunc) {
-              ret = input[func]();
-            }
-            break;
-          //case 'localeCompare':
-          //case 'match':
-          //case 'matchAll':
-          //case 'search':
-          // see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-          }
-        } catch (e) { ret = match+'['+e.toString()+']'; }
-      }
-      if (m.groups.out != null) {
-        keyset['${'+m.groups.out+'}'] = ret;
-        ret = '';
-      }
-//console.log(match);
-//console.log(ret);
-      return ret;
-    });
-    temp.push(fmt);
+    if (ex3(cmd, 'copy_programmable')) {
+      temp.push(compile(format, keyset));
+    } else {
+      temp.push(format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m));
+    }
   }
   return temp.join(sep);
   // ${TITLE}${enter}${URL}${enter}ABCDEF abcdef あいうえお${CR}${LF}${test}${tab}${$}

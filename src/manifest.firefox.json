@@ -22,6 +22,7 @@
     "scripts": [
       "/common.js",
       "/lib/punycode.js/punycode.js",
+      "/compiler.js",
       "/clipboard.js",
       "/background.js"
     ]
