@@ -52,6 +52,8 @@ function updateOptionPage() {
   document.body.dataset.mode = extension ? 'extended' : 'normal';
   document.body.dataset.edit = extension ? checkbox('extended_edit').checked : false;
   
+  document.getElementById('copy_html').disabled = isFirefox() && checkbox('copy_clipboard_api').checked;
+  
   // タイトル編集
   const edit = checkbox('menus_edit_title').checked;
   document.getElementById('menus').dataset.edit = extension && edit;

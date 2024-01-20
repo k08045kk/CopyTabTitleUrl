@@ -102,7 +102,7 @@ const defaultStorageVersion2 = {
   checkbox__others_decode: false,
   checkbox__others_punycode: false,
   checkbox__others_html: false,
-  //checkbox__others_clipboard_api: false,        // v2.2.0-v3.0.0 Firefox only （廃止済み）
+  checkbox__others_clipboard_api: false,        // v2.2.0-v3.0.0 v3.1.0 Firefox only
   //checkbox__others_enter: true,               // v2.2.x-
   checkbox__others_pin: false,
   checkbox__others_hidden: true,                // v2.1.1+, v3.0.0 （初期設定をfalse→trueに変更）
@@ -190,6 +190,7 @@ const defaultStorageVersion3 = {
     
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
+    copy_clipboard_api: false,
     copy_html: false,
     copy_programmable: false,           // v3.1.0
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
@@ -271,6 +272,7 @@ const extendedMode = [
   
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+
+  'copy_clipboard_api',
   'copy_html',
   'copy_programmable',
   //'exclude_pin',                      // standard v3.1.0+
@@ -324,6 +326,7 @@ async function converteStorageVersion3() {
       
       newStorage.options.copy_decode    = oldStorage.checkbox__others_decode;
       newStorage.options.copy_punycode  = oldStorage.checkbox__others_punycode;
+      newStorage.options.copy_clipboard_api = oldStorage.checkbox__others_clipboard_api;
       newStorage.options.copy_html      = oldStorage.checkbox__others_html;
       
       newStorage.newline    = oldStorage.newline;

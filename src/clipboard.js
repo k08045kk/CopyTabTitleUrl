@@ -270,19 +270,29 @@ const copyToClipboard = async (cmd, tabs) => {
     type: 'clipboardWrite',
     text: createFormatText(cmd, tabs),
     html: ex3(cmd, 'copy_html') && cmd.id >= 3,
+    api: ex3(cmd, 'copy_clipboard_api'),
   };
   
   if (isFirefox()) {
-    document.addEventListener('copy', () => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      
-      event.clipboardData.setData('text/plain', data.text);
-      if (data.html === true) {
-        event.clipboardData.setData('text/html', data.text);
-      }
-    }, {capture:true, once:true});
-    document.execCommand('copy');
+    if (data.api) {
+      // #61 dom.event.clipboardevents.enabled=false で document.execCommand('copy'); が動作しない対策
+      navigator.clipboard.writeText(data.text).then(() => {
+        //console.log('successfully');
+      }, () => {
+        //console.log('failed');
+      });
+    } else {
+      document.addEventListener('copy', () => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        
+        event.clipboardData.setData('text/plain', data.text);
+        if (data.html === true) {
+          event.clipboardData.setData('text/html', data.text);
+        }
+      }, {capture:true, once:true});
+      document.execCommand('copy');
+    }
   } else {
     // オフスクリーン方式（Chrome 109+）
     await setupOffscreenDocument('/offscreen/offscreen.html');
