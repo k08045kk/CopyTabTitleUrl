@@ -6,9 +6,15 @@
 
 if (globalThis.importScripts) {
   importScripts('/common.js');
+  // punycode.js - module
+  // clipboard.js - isFirefox, ex3, defaultStorage
+  // background.js - isFirefox, ex3, defaultStorage, converteStorageVersion3
   importScripts('/lib/punycode.js/punycode.js');
+  // clipboard.js - punycode
   importScripts('/background/compiler.js');
+  // clipboard.js - compile
   importScripts('/background/clipboard.js');
+  // background.js - onCopy
 }
 
 
