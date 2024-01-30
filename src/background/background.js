@@ -7,8 +7,8 @@
 if (globalThis.importScripts) {
   importScripts('/common.js');
   importScripts('/lib/punycode.js/punycode.js');
-  importScripts('/compiler.js');
-  importScripts('/clipboard.js');
+  importScripts('/background/compiler.js');
+  importScripts('/background/clipboard.js');
 }
 
 

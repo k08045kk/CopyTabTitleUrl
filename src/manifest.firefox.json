@@ -22,9 +22,9 @@
     "scripts": [
       "/common.js",
       "/lib/punycode.js/punycode.js",
-      "/compiler.js",
-      "/clipboard.js",
-      "/background.js"
+      "/background/compiler.js",
+      "/background/clipboard.js",
+      "/background/background.js"
     ]
   },
   

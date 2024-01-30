@@ -9,7 +9,7 @@
   "homepage_url": "https://github.com/k08045kk/CopyTabTitleUrl",
   
   "background": {
-    "service_worker": "/background.js"
+    "service_worker": "/background/background.js"
   },
   
   "action": {
