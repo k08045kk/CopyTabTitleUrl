@@ -28,104 +28,20 @@ You can perform actions on the following tabs.
 + All tabs
 
 You can perform actions from the following operations.
-+ Context menu (all, page, selection, link, image, browser action, tab)
 + Browser action (popup, click)
-+ Keyboard shortcuts
++ Context menu (all, page, browser action, tab)
++ Keyboard shortcut
 
 You can perform actions in combination with the following auxiliary functions.
 + Decode the URL
 + Decode the punycode
-+ Copy in HTML format
 
 
 
-## Format
-### Standard
-format          | description                           | version
----             | ---                                   | ---
-${title}        | Page title                            | v0.0.7
-${url}          | Page URL                              | v0.0.7
-${enter}        | Newline characters (Windows:\r\n, Mac/Linux:\n)       | v0.0.9
-${$}            | $                                     | v1.5.4
+## Options
+You can customize the extension by changing the extension settings from the Options page.  
+For additional information on customization, see [here](https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options).
 
-※Non-standard features will not work unless "Extended mode" is enabled.
-
-
-### Basic
-format          | description                           | version
----             | ---                                   | ---
-${title}        | Page title                            | v0.0.7
-${url}          | Page URL                              | v0.0.7
-${markdown}     | ${title} markdown escapes             | v2.1.0 🧪
-${text}         | Selected text or page title (※1)     | v1.5.2
-${selectedText} | Selected text or blank text (※1)     | v2.2.1 🧪
-${linkText}     | Link text or page title (※2)         | v2.1.0 (Firefox only)
-${linkUrl}, ${link}     | Link URL or page URL (※2)    | v2.1.0
-${src}          | "src" URL or page URL (※3)           | v2.1.0
-${linkSelectionTitle}   | Link text or selected text or page title (※1,2)      | v2.2.0 🧪
-${selectionLinkTitle}   | Selected text or link text or page title (※1,2)      | v2.2.0 🧪
-${linkSrcUrl}   | Link URL or "src" URL or page URL (※1,2,3)   | v2.2.0 🧪
-${srcLinkUrl}   | "src" URL or link URL or page URL (※1,2,3)   | v2.2.0 🧪
-${index}        | Serial number from 0 per window       | v1.5.2
-${tabId}, $(id} | Tab ID                                | v2.1.0 🧪, v1.5.2
-${windowId}     | Tab host window ID                    | v2.1.0 🧪
-${favIconUrl}   | Favicon URL (※4)                     | v1.6.0 🧪
-
-※1: Used in the selection context menus.  
-※2: Used in the link context menu.  
-※3: Used in the image context menu.  
-※4: If it does not exist, output `undefined`.
-
-
-### Character code
-format          | description                           | version
----             | ---                                   | ---
-${enter}        | Newline characters (Windows:\r\n, Mac/Linux:\n)       | v0.0.9
-${CR}, ${r}     | Carriage Return (\r)                  | v1.1.1, v1.5.2
-${LF}, ${n}     | Line Feed (\n)                        | v1.1.1, v1.5.2
-${tab}, ${t}    | Horizontal Tab (\t)                   | v0.0.9, v1.5.2
-${$}            | $                                     | v1.5.4
-${xXX}          | Specify the character code in hexadecimal of "XX".    | v----- 🧪
-
-
-### Date
-format          | description                           | version
----             | ---                                   | ---
-${yyyy}, ${yy}  | year                                  | v1.5.4
-${MM}, ${M}     | month                                 | v1.5.4
-${dd}, ${d}     | day                                   | v1.5.4
-${HH}, ${H}     | hours (24 hours)                      | v1.5.4
-${hh}, ${h}     | hours (12 hours)                      | v1.5.4
-${mm}, ${m}     | minutes                               | v1.5.4
-${ss}, ${s}     | seconds                               | v1.5.4
-${SSS}, ${S}    | milliseconds                          | v1.5.4
-${AA}, ${aa}    | AM/PM, am/pm                          | v2.2.2 🧪
-${AAAA}, ${aaaa}| A.M./P.M., a.m./p.m.                  | v2.2.2 🧪
-${W}            | Sunday/Monday/Tuesday/Wednesday/Thursday/Friday/Saturday      | v2.2.2 🧪
-${WWW}          | Sun/Mon/Tue/Wed/Thu/Fri/Sat           | v2.2.2 🧪
-
-※`${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}`  
-　`2020-04-03T00:48:23.456`
-
-
-### URL
-format          | description                           | version
----             | ---                                   | ---
-${protocol}     | protocol:                             | v1.5.6
-${host}         | hostname(:port)                       | v1.5.6
-${hostname}     | hostname                              | v1.5.6
-${port}         | (port)                                | v1.5.6
-${:port}        | (:port)                               | v1.5.6
-${pathname}     | /pathname                             | v1.5.6
-${search}       | (?param)                              | v1.5.6
-${hash}         | (#hash)                               | v1.5.6
-${origin}       | URL origin                            | v1.5.6
-${href}         | URL                                   | v1.5.6
-
-※If `(data)` does not exist, it is treated as an empty string.  
-※${protocol}//${hostname}${:port}${pathname}${search}${hash}  
-　`https://example.com:80/path/file?key=value&query#fragment`  
-※[window.URL - Web API | MDN](https://developer.mozilla.org/docs/Web/API/URL)
 
 
 

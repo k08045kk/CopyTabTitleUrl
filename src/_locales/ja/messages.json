@@ -1,83 +1,67 @@
-﻿{
-  "extensionName": {
-    "message": "CopyTabTitleUrl"
-  },
+{
   "extensionDescription": {
     "message": "タイトルと URL をクリップボードにコピーします。"
   },
-  "optionsPage_Complate": {
-    "message": "コピー完了通知を表示する"
+  
+  
+  "optionsBrowserActionPopupContent": {
+    "message": "ポップアップを表示する"
   },
-  "optionsPage_ExtendMenus": {
-    "message": "拡張メニューを有効にする"
+  "optionsPopupFormat2Content": {
+    "message": "format2 を使用する"
   },
-  "optionsPage_EditMenuTitle": {
-    "message": "メニュータイトルを有効にする"
+  "optionsPopupTitleContent": {
+    "message": "コンテキストメニューのタイトルを使用する"
   },
-  "optionPage_Popup": {
-    "message": "ポップアップメニューを表示する"
+  "optionsPopupTooltipContent": {
+    "message": "format のツールチップを表示する"
   },
-  "optionPage_Action": {
-    "message": "format1 をコピーする"
+  "optionsBrowserActionActionContent": {
+    "message": "format をコピーする"
   },
-  "optionPage_Complate": {
-    "message": "コピー完了通知を表示する"
+  "optionsPopupComlateContent": {
+    "message": "コピー完了を表示する"
   },
-  "optionPage_Restart": {
-    "message": "再起動"
+  
+  
+  "optionsCopyDecodeContent": {
+    "message": "URL をデコードする"
   },
-  "optionPage_KeyboardShortcutMessage": {
-    "message": "標準設定から変更してください。"
+  "optionsCopyPunycodeContent": {
+    "message": "Punycode をデコードする"
   },
-  "optionPage_Format2": {
-    "message": "format2 を有効にする"
+  "optionsCopyClipboardApiContent": {
+    "message": "Clipboard API を使用する"
   },
-  "optionPage_ExtendMenus": {
-    "message": "拡張コンテキストメニューを有効にする"
+  "optionsCopyHtmlContent": {
+    "message": "text/html 形式でも format をコピーする"
   },
-  "optionPage_EditMenuTitle": {
+  "optionsNewlineLabelContent": {
+    "message": "改行文字: $${enter} ="
+  },
+  "optionsSeparatorLabelContent": {
+    "message": "複数タブの区切り文字:"
+  },
+  "optionsExcludePinContent": {
+    "message": "固定タブを除外する"
+  },
+  "optionsExcludeHiddenContent": {
+    "message": "非表示タブを除外する"
+  },
+  "optionsMenusEditTitleContent": {
     "message": "コンテキストメニューのタイトルを編集する"
   },
-  "optionPage_FormatDecode": {
-    "message": "URLをデコードする"
-  },
-  "optionPage_FormatPunycode": {
-    "message": "punycode をデコードする"
-  },
-  "optionPage_FormatCopyHTML": {
-    "message": "text/html 形式でコピー"
-  },
-  "optionPage_SeparateMultipleNewLine": {
-    "message": "複数のタブを区切る"
-  },
-  "optionPage_ExcludePinned": {
-    "message": "固定されたタブを除外する"
-  },
-  "optionPage_MultipleSelectionTabs": {
-    "message": "複数の選択タブを有効にする"
-  },
-  "optionPage_ExtendedMode": {
-    "message": "拡張モード"
-  },
-  "optionPage_Reset": {
+  
+  
+  "optionsResetContent": {
     "message": "初期設定に戻す"
   },
-  "optionPage_ConfirmReset": {
+  "optionsResetConfirmContent": {
     "message": "本当に初期設定に戻しますか？"
   },
-  "dummyDummyDummy": {
-    "message": "dummy"
-  },
-  "optionPage_ClipboardAPI": {
-    "message": "クリップボードAPIを使用する"
-  },
-  "optionPage_ExcludeHidden": {
-    "message": "非表示のタブを除外する"
-  },
-  "optionPage_Format9": {
-    "message": "選択・リンク・画像コンテキストメニューに format9 のみを設定する"
-  },
-  "optionPage_NewLine": {
-    "message": "改行文字"
+  
+  
+  "lang": {
+    "message": "ja"
   }
 }

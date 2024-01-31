@@ -1,14 +1,9 @@
-﻿{
-  "manifest_version": 2,
+{
+  "manifest_version": 3,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "2.3.2",
+  "version": "3.1.0",
   "default_locale": "en",
-  "applications": {
-    "gecko": {
-      "id": "CopyTabTitleUrl@bugbugnow.net"
-    }
-  },
   
   "author": "toshi",
   "homepage_url": "https://github.com/k08045kk/CopyTabTitleUrl",
@@ -16,20 +11,24 @@
     "name": "toshi",
     "url": "https://github.com/k08045kk"
   },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "CopyTabTitleUrl@bugbugnow.net",
+      "strict_min_version": "115.0"
+    }
+  },
   
   "background": {
     "scripts": [
+      "/common.js",
       "/lib/punycode.js/punycode.js",
-      "/js/common.js",
-      "/js/background.js"
+      "/background/compiler.js",
+      "/background/clipboard.js",
+      "/background/background.js"
     ]
   },
   
-  "options_ui": {
-    "page": "/html/options.html"
-  },
-  
-  "browser_action": {
+  "action": {
     "default_title": "__MSG_extensionName__",
     "default_icon": {
       "19": "icon/19.png",
@@ -37,15 +36,19 @@
     }
   },
   
+  "options_ui": {
+    "page": "/options/options.html"
+  },
+  
   "icons": {
     "16": "icon/16.png",
     "48": "icon/48.png",
-    "128": "icon/128.png"
+    "128":"icon/128.png"
   },
   
   "commands": {
     "shortcut_action": {
-      "description": "format1"
+      "description": "format"
     },
     "shortcut_action2": {
       "description": "format2"

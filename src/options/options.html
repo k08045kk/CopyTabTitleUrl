@@ -1,0 +1,427 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UFT-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+.hide, 
+[hidden] {
+  display: none !important;
+}
+body {
+  max-width: 600px;
+}
+body, button, input, select {
+  font-size: 14px;
+}
+
+hr {
+  height: 0;
+  margin: .5em;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid #b1b1b1;
+}
+fieldset {
+  margin: .5em .5em 1.5em;
+  padding: .5em;
+  border: 1px solid #b1b1b1;
+}
+fieldset > legend {
+  padding: 0 0.25em;
+  font-size: 16px;
+  font-weight: bold;
+}
+fieldset > fieldset {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin: 0.25em;
+}
+.target_wrap::after, 
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.action_target,
+.menu_target {
+  float: right;
+}
+#separator {
+  max-width: 10em;
+}
+.indent {
+  margin-left: 1em;
+}
+.indent2 {
+  margin-left: 2em;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #E8EAED;
+    background: #202124;
+  }
+  input,
+  select,
+  button {
+    background: #444;
+    color: #E8EAED;
+    border: 1px solid #888;
+  }
+  input[type="checkbox"]:disabled + label {
+    color: #9A9C9E;
+  }
+}
+
+body[data-mode="normal"] .extension,
+body[data-mode="extended"] .normal,
+body[data-edit="false"] .exedit,
+#menus[data-edit="false"] .menu_title,
+#menus[data-edit="true"] .menu_label,
+#programmable[data-enable="true"] .disalbe,
+#programmable[data-enable="false"] .enable {
+  display: none;
+}
+  </style>
+  <script src="/common.js"></script>
+  <script src="./options.js"></script>
+</head>
+<body data-mode="normal">
+
+
+  <!-- ブラウザアクション -->
+  <fieldset id="browser_action">
+    <legend id="browser_action_legend" data-i18n></legend>
+    <p>
+      <input id="browser_action_popup" type="radio" name="browser_action" value="popup">
+      <label for="browser_action_popup" data-i18n></label></p>
+    <p class="indent">
+      <input id="popup_format2" type="checkbox">
+      <label for="popup_format2" data-i18n></label></p>
+    <p class="extension indent">
+      <input id="popup_title" type="checkbox">
+      <label for="popup_title" data-i18n></label></p>
+    <p class="extension indent">
+      <input id="popup_tooltip" type="checkbox">
+      <label for="popup_tooltip" data-i18n></label></p>
+    
+    <p class="target_wrap">
+      <input id="browser_action_action" type="radio" name="browser_action" value="action">
+      <label for="browser_action_action" data-i18n></label>
+      <select class="action_target" id="browser_action_target">
+        <option value="tab">tab</option>
+        <option value="window">window</option>
+        <option value="all">all</option>
+      </select></p>
+    <p class="indent">
+      <input id="popup_comlate" type="checkbox">
+      <label for="popup_comlate" data-i18n></label></p>
+  </fieldset>
+
+
+  <!-- コンテキストメニュー -->
+  <fieldset id="menus" data-edit="false">
+    <legend id="menus_legend" data-i18n></legend>
+    <p>
+      <input id="context_all" type="checkbox">
+      <label for="context_all" data-i18n></label></p>
+    <p>
+      <input id="context_page" type="checkbox">
+      <label for="context_page" data-i18n></label></p>
+    <div class="extension">
+      <p>
+        <input id="context_selection" type="checkbox">
+        <label for="context_selection" data-i18n></label></p>
+      <p>
+        <input id="context_link" type="checkbox">
+        <label for="context_link" data-i18n></label></p>
+      <p>
+        <input id="context_image" type="checkbox">
+        <label for="context_image" data-i18n></label></p>
+    </div>
+    <p>
+      <input id="context_action" type="checkbox">
+      <label for="context_action" data-i18n></label></p>
+    <p class="firefox">
+      <input id="context_tab" type="checkbox">
+      <label for="context_tab" data-i18n></label></p>
+    <fieldset id="menu_item">
+      <legend id="menu_item_legend" data-i18n></legend>
+      <p class="target_wrap">
+        <input class="menu" id="menu0" type="checkbox">
+        <label class="menu_label" for="menu0"> title and URL </label>
+        <input class="menu_title" id="menu0_title" type="text" maxlength="64">
+        <select class="exedit extension menu_target" id="menu0_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="target_wrap">
+        <input class="menu" id="menu1" type="checkbox">
+        <label class="menu_label" for="menu1"> title </label>
+        <input class="menu_title" id="menu1_title" type="text" maxlength="64">
+        <select class="exedit extension menu_target" id="menu1_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="target_wrap">
+        <input class="menu" id="menu2" type="checkbox">
+        <label class="menu_label" for="menu2"> URL </label>
+        <input class="menu_title" id="menu2_title" type="text" maxlength="64">
+        <select class="exedit extension menu_target" id="menu2_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="target_wrap">
+        <input class="menu" id="menu3" type="checkbox">
+        <label class="menu_label" for="menu3"> format </label>
+        <input class="menu_title" id="menu3_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu3_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="target_wrap format2">
+        <input class="menu" id="menu4" type="checkbox">
+        <label class="menu_label" for="menu4"> format2 </label>
+        <input class="menu_title" id="menu4_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu4_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <hr class="extension">
+      <p class="extension target_wrap">
+        <input class="menu" id="menu5" type="checkbox">
+        <label class="menu_label" id="menu5_label" for="menu5">format3</label>
+        <input class="menu_title" id="menu5_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu5_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="extension target_wrap">
+        <input class="menu" id="menu6" type="checkbox">
+        <label class="menu_label" id="menu6_label" for="menu6">format4</label>
+        <input class="menu_title" id="menu6_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu6_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="extension target_wrap">
+        <input class="menu" id="menu7" type="checkbox">
+        <label class="menu_label" id="menu7_label" for="menu7">format5</label>
+        <input class="menu_title" id="menu7_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu7_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="extension target_wrap">
+        <input class="menu" id="menu8" type="checkbox">
+        <label class="menu_label" id="menu8_label" for="menu8">format6</label>
+        <input class="menu_title" id="menu8_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu8_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="extension target_wrap">
+        <input class="menu" id="menu9" type="checkbox">
+        <label class="menu_label" id="menu9_label" for="menu9">format7</label>
+        <input class="menu_title" id="menu9_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu9_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <p class="extension target_wrap">
+        <input class="menu" id="menu10" type="checkbox">
+        <label class="menu_label" id="menu10_label" for="menu10">format8</label>
+        <input class="menu_title" id="menu10_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu10_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+      <hr class="extension">
+      <p class="extension target_wrap">
+        <input class="menu" id="menu11" type="checkbox">
+        <label class="menu_label" id="menu11_label" for="menu11">format9</label>
+        <input class="menu_title" id="menu11_title" type="text" maxlength="64">
+        <select class="extension menu_target" id="menu11_target">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select></p>
+    </fieldset>
+  </fieldset>
+
+
+  <!-- キーボードショートカット -->
+  <fieldset>
+    <legend id="shortcut_legend" data-i18n></legend>
+    <p class="chrome">
+      Please change it from browser settings screen.<br>
+      <span class="link">chrome://extensions/shortcuts</span></p>
+    <p class="firefox">
+      Please change it from browser settings screen.<br>
+      [about:addons] > [⚙] > [Manage Extension Shortcuts]<br>
+      see <span class="link">https://support.mozilla.org/kb/manage-extension-shortcuts-firefox</span></p>
+    <!--br>
+    <p id="shortcut_commands"></p-->
+  </fieldset>
+
+
+  <!-- フォーマット -->
+  <fieldset id="format">
+    <legend id="format_legend" data-i18n></legend>
+    <p class="normal">${title}, ${url}, ${enter}, ${$}.</p>
+    <p class="extension">
+      ${title}, ${url}, ${text}, ${link}, ${src}.<br>
+      ${enter}, ${CR}, ${LF}, ${TAB}, ${$}.<br>
+      ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}<br>
+      ${protocol}//${host}${pathname}${search}${hash}<br>
+      see <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span></p>
+    <br>
+    <p class="exedit"> title and URL: <input class="format" id="format0" type="text" maxlength="256"></p>
+    <p class="exedit"> title: <input class="format" id="format1" type="text" maxlength="256"></p>
+    <p class="exedit"> URL:   <input class="format" id="format2" type="text" maxlength="256"></p>
+    <p> format:&ensp; <input class="format" id="format3" type="text" maxlength="256"></p>
+    <p> format2:      <input class="format" id="format4" type="text" maxlength="256"></p>
+    <div class="extension">
+      <hr><!-- ---------- -->
+      <p> format3: <input class="format" id="format5"  type="text" maxlength="256"></p>
+      <p> format4: <input class="format" id="format6"  type="text" maxlength="256"></p>
+      <p> format5: <input class="format" id="format7"  type="text" maxlength="256"></p>
+      <p> format6: <input class="format" id="format8"  type="text" maxlength="256"></p>
+      <p> format7: <input class="format" id="format9"  type="text" maxlength="256"></p>
+      <p> format8: <input class="format" id="format10" type="text" maxlength="256"></p>
+      <hr><!-- ---------- -->
+      <p> format9: <input class="format" id="format11" type="text" maxlength="256"></p>
+    </div>
+  </fieldset>
+
+
+  <!-- テキスト -->
+  <fieldset class="extension" id="programmable" data-enable="false">
+    <legend id="programmable_legend" data-i18n></legend>
+    <p>
+      <input id="copy_programmable" type="checkbox">
+      <label for="copy_programmable" data-i18n></label></p>
+    <div class="enable">
+      <hr><!-- ---------- -->
+      <p>
+        ${url.length}<br>
+        ${title.toLowerCase()}<br>
+        ${title.replaceAll(text0,'\$&')}<br>
+        This feature is currently being tested. 🧪 <br>
+        Backward compatibility of format is not guaranteed.<br>
+        Please read the source directly for usage details.<br>
+        see /background/compiler.js</p>
+      <br>
+      <p> ${text0} = <input class="text" id="text0" type="text" maxlength="256"></p>
+      <p> ${text1} = <input class="text" id="text1" type="text" maxlength="256"></p>
+      <p> ${text2} = <input class="text" id="text2" type="text" maxlength="256"></p>
+      <p> ${text3} = <input class="text" id="text3" type="text" maxlength="256"></p>
+      <p> ${text4} = <input class="text" id="text4" type="text" maxlength="256"></p>
+      <p> ${text5} = <input class="text" id="text5" type="text" maxlength="256"></p>
+      <p> ${text6} = <input class="text" id="text6" type="text" maxlength="256"></p>
+      <p> ${text7} = <input class="text" id="text7" type="text" maxlength="256"></p>
+      <p> ${text8} = <input class="text" id="text8" type="text" maxlength="256"></p>
+      <p> ${text9} = <input class="text" id="text9" type="text" maxlength="256"></p>
+    </div>
+  </fieldset>
+
+
+  <!-- その他 -->
+  <fieldset>
+    <p>
+      <input id="copy_decode" type="checkbox">
+      <label for="copy_decode" data-i18n></label></p>
+    <p>
+      <input id="copy_punycode" type="checkbox">
+      <label for="copy_punycode" data-i18n></label></p>
+    <p class="extension firefox">
+      <input id="copy_clipboard_api" type="checkbox">
+      <label for="copy_clipboard_api" data-i18n></label></p>
+    <p class="extension">
+      <input id="copy_html" type="checkbox">
+      <label for="copy_html" data-i18n></label></p>
+
+    <hr class="extension">
+    <p class="extension indent2">
+      <label id="newline_label" data-i18n></label>
+      <select id="newline">
+        <option value="default">default</option>
+        <option value="CRLF">CRLF</option>
+        <option value="CR">CR</option>
+        <option value="LF">LF</option>
+      </select></p>
+    <p class="extension indent2">
+      <label id="separator_label" data-i18n></label>
+      <input id="separator" type="text" maxlength="256"></p>
+
+    <hr><!-- ---------- -->
+    <p>
+      <input id="exclude_pin" type="checkbox">
+      <label for="exclude_pin" data-i18n></label></p>
+    <p class="firefox">
+      <input id="exclude_hidden" type="checkbox">
+      <label for="exclude_hidden" data-i18n></label></p>
+
+    <hr class="extension">
+    <p class="extension">
+      <input id="menus_edit_title" type="checkbox">
+      <label for="menus_edit_title" data-i18n></label></p>
+    <p class="extension">
+      <input id="menus_format9" type="checkbox">
+      <label for="menus_format9" data-i18n></label></p>
+
+    <hr><!-- ---------- -->
+    <p>
+      <input id="use_english" type="checkbox">
+      <label for="use_english"> Use English </label></p>
+    <p class="extension"><label>
+      <input id="extended_edit" type="checkbox">
+      <label for="extended_edit" data-i18n></label></p>
+    <p>
+      <input id="extended_mode" type="checkbox">
+      <label for="extended_mode" data-i18n></label></p>
+  </fieldset>
+
+
+  <!-- 開発者用 -->
+  <fieldset id="setting" hidden>
+    <textarea id="setting_json" rows="5"></textarea><br>
+    <button id="setting_get">get</button>
+    <button id="setting_set">set</button>
+    <button id="setting_clear">clear</button>
+    <button id="setting_run">run</button>
+  </fieldset>
+
+
+  <fieldset style="margin-bottom:0;">
+    <button id="reset" data-id="0" data-delay="0"></button>
+  </fieldset>
+</body>
+</html>

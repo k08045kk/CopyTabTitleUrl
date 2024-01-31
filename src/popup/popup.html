@@ -49,6 +49,11 @@ body {
   padding: .5em 0;
   float: left;
 }
+.item {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .item:hover {
   background: #b995c5;
   color: #fff;
@@ -82,35 +87,33 @@ body {
   }
 }
   </style>
-  <script defer="" src="/lib/punycode.js/punycode.js"></script>
-  <script defer="" src="/js/common.js"></script>
-  <script defer="" src="/js/popup.js"></script>
+  <script src="/common.js"></script>
+  <script src="./popup.js"></script>
 </head>
 <body>
-  <div id="panel" hidden="">
+  <div id="panel" hidden>
     <div class="box title">CopyTabTitleUrl</div>
     <div class="box item copy" id="format0">title<br/>URL</div>
     <div class="box item copy" id="format1">title</div>
     <div class="box item copy" id="format2">URL</div>
-    <div class="box item copy" id="format3">format<span class="format2" hidden="">1</span></div>
-    <div class="box item copy format2" id="format4" hidden="">format2</div>
-    <div class="box item copy extend_menus" id="format5" data-menu="menu15" hidden="">format3</div>
-    <div class="box item copy extend_menus" id="format6" data-menu="menu16" hidden="">format4</div>
-    <div class="box item copy extend_menus" id="format7" data-menu="menu17" hidden="">format5</div>
-    <div class="box item copy extend_menus" id="format8" data-menu="menu18" hidden="">format6</div>
-    <div class="box item copy extend_menus" id="format9" data-menu="menu19" hidden="">format7</div>
-    <div class="box item copy extend_menus" id="format10" data-menu="menu20" hidden="">format8</div>
-    <div class="box item copy extend_menus" id="format11" data-menu="menu21" hidden="">format9</div>
+    <div class="box item copy" id="format3">format</div>
+    <div class="box item copy format2" id="format4" hidden>format2</div>
     
     <input class="hide" id="target_win" type="checkbox"/>
     <input class="hide" id="target_all" type="checkbox"/>
     <div class="box clearfix">
-      <label id="target_win_label" for="target_win"><div class="item target win" id="target_win_label_div">Window</div></label>
-      <label id="target_all_label" for="target_all"><div class="item target all">All</div></label>
+      <label id="target_win_label" for="target_win">
+        <div class="item target win" id="target_win_label_div">Window</div>
+      </label>
+      <label id="target_all_label" for="target_all">
+        <div class="item target all">All</div>
+      </label>
     </div>
     <div class="title" id="footer"></div>
   </div>
-  <div id="action" hidden="">
+  
+
+  <div id="action" hidden>
     <div class="title"></div>
     <p style="text-align:center;">Completed</p>
     <div class="title"></div>

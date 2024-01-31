@@ -1,74 +1,147 @@
-﻿{
+{
   "extensionName": {
     "message": "CopyTabTitleUrl"
   },
   "extensionDescription": {
     "message": "Copy the title and URL to the clipboard."
   },
-  "dummyDummyDummy": {
-    "message": "dummy"
+  
+  
+  "optionsBrowserActionLegendContent": {
+    "message": "Browser Action"
   },
-  "optionPage_Popup": {
-    "message": "Display popup menu"
+  "optionsBrowserActionPopupContent": {
+    "message": "Show popup"
   },
-  "optionPage_Action": {
-    "message": "Copy format1"
+  "optionsPopupFormat2Content": {
+    "message": "Use format2"
   },
-  "optionPage_Complate": {
-    "message": "Display copy completion notification"
+  "optionsPopupTitleContent": {
+    "message": "Use context menu title"
   },
-  "optionPage_Restart": {
-    "message": "Restart"
+  "optionsPopupTooltipContent": {
+    "message": "Show format tooltip"
   },
-  "optionPage_KeyboardShortcutMessage": {
-    "message": "Please change from the standard setting."
+  "optionsBrowserActionActionContent": {
+    "message": "Copy format"
   },
-  "optionPage_Format2": {
-    "message": "Enable format2"
+  "optionsPopupComlateContent": {
+    "message": "Show completion popup"
   },
-  "optionPage_ExtendMenus": {
-    "message": "Enable extended context menu"
+  
+  
+  "optionsMenusLegendContent": {
+    "message": "Context Menu"
   },
-  "optionPage_EditMenuTitle": {
-    "message": "Edit the context menu title"
+  "optionsContextAllContent": {
+    "message": "All context"
   },
-  "optionPage_FormatDecode": {
+  "optionsContextPageContent": {
+    "message": "Page context"
+  },
+  "optionsContextSelectionContent": {
+    "message": "Selection context"
+  },
+  "optionsContextLinkContent": {
+    "message": "Link context"
+  },
+  "optionsContextImageContent": {
+    "message": "Image context"
+  },
+  "optionsContextActionContent": {
+    "message": "Browser action context"
+  },
+  "optionsContextTabContent": {
+    "message": "Tab context"
+  },
+  "optionsMenuItemLegendContent": {
+    "message": "Menu Item"
+  },
+  
+  
+  "optionsShortcutLegendContent": {
+    "message": "Keyboard Shortcut"
+  },
+  
+  
+  "optionsFormatLegendContent": {
+    "message": "Format"
+  },
+  
+  
+  "optionsProgrammableLegendContent": {
+    "message": "Programmable"
+  },
+  "optionsCopyProgrammableContent": {
+    "message": "Enable programmable copy"
+  },
+  
+  
+  "optionsCopyDecodeContent": {
     "message": "Decode the URL"
   },
-  "optionPage_FormatPunycode": {
+  "optionsCopyDecodeTitle": {
+    "message": "Interprets percent encoding."
+  },
+  "optionsCopyPunycodeContent": {
     "message": "Decode the punycode"
   },
-  "optionPage_FormatCopyHTML": {
-    "message": "Copy in text/html format"
+  "optionsCopyPunycodeTitle": {
+    "message": "Interpret the punycode."
   },
-  "optionPage_SeparateMultipleNewLine": {
-    "message": "Separate multiple tabs"
-  },
-  "optionPage_ExcludePinned": {
-    "message": "Exclude pinned tabs"
-  },
-  "optionPage_MultipleSelectionTabs": {
-    "message": "Enable multiple selection tabs"
-  },
-  "optionPage_ExtendedMode": {
-    "message": "Extended mode"
-  },
-  "optionPage_Reset": {
-    "message": "Restore default settings"
-  },
-  "optionPage_ConfirmReset": {
-    "message": "Really reset to default settings?"
-  },
-  "optionPage_ClipboardAPI": {
+  "optionsCopyClipboardApiContent": {
     "message": "Use Clipboard API"
   },
-  "optionPage_ExcludeHidden": {
+  "optionsCopyClipboardApiTitle": {
+    "message": "dom.event.clipboardevents.enabled=false Countermeasure."
+  },
+  "optionsCopyHtmlContent": {
+    "message": "Copy format in text/html format"
+  },
+  "optionsCopyHtmlTitle": {
+    "message": "Copy not only text/plain but also text/html format."
+  },
+  "optionsNewlineLabelContent": {
+    "message": "Newline character: $${enter} ="
+  },
+  "optionsSeparatorLabelContent": {
+    "message": "Separate multiple tabs:"
+  },
+  "optionsExcludePinContent": {
+    "message": "Exclude pinned tabs"
+  },
+  "optionsExcludeHiddenContent": {
     "message": "Exclude hidden tabs"
   },
-  "optionPage_Format9": {
-    "message": "selection, link, image Set only format9 in the context menu"
+  "optionsMenusEditTitleContent": {
+    "message": "Edit the context menu title"
   },
-  "optionPage_NewLine": {
-    "message": "Newline character"
+  "optionsMenusEditTitleTitle": {
+    "message": "Make the title of the context menu editable."
+  },
+  "optionsMenusFormat9Content": {
+    "message": "Set only format9 in specific context menu"
+  },
+  "optionsMenusFormat9Title": {
+    "message": "Selection, Link, Image Set only format9 in context menus."
+  },
+  "optionsExtendedEditContent": {
+    "message": "Use Extended Edit Mode"
+  },
+  "optionsExtendedModeContent": {
+    "message": "Use Extended Mode"
+  },
+  
+  
+  "optionsResetContent": {
+    "message": "Restore default settings"
+  },
+  "optionsResetConfirmContent": {
+    "message": "Really reset to default settings?"
+  },
+  
+  
+  "lang": {
+    "message": "en"
   }
 }
