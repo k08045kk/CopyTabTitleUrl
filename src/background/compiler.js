@@ -1,5 +1,5 @@
 /**
- * programmable copy
+ * programmable format
  */
 'use strict';
 
