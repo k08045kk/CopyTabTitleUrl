@@ -219,16 +219,33 @@ async function onReset() {
 
 
 
+function createOptionPage() {
+  document.querySelectorAll('input[type="text"]').forEach((element) => {
+    // menu_title, format, text, separator
+    const max = element.classList.contains('menu_title')
+              ? "64" : "256";
+    element.setAttribute('maxlength', max);
+  });
+  
+  document.querySelectorAll('select.menu_target').forEach((element) => {
+    const options = '<option value="tab">tab</option>'
+                  + '<option value="window">window</option>'
+                  + '<option value="all">all</option>'
+                  + '<option value="separator">separator</option>';
+    element.insertAdjacentHTML('afterbegin', options);
+  });
+  
+  const query = isFirefox() ? '.chrome' : '.firefox';
+  document.querySelectorAll(query).forEach(v => v.classList.add('hide'));
+};
+
+
+
 // ページ初期化
 document.addEventListener("DOMContentLoaded", async () => {
   en = await (await fetch('/_locales/en/messages.json')).json();
+  createOptionPage();
   await setupOptionPage();
-  
-  if (isFirefox()) {
-    document.querySelectorAll('.chrome').forEach(v => v.classList.add('hide'));
-  } else {
-    document.querySelectorAll('.firefox').forEach(v => v.classList.add('hide'));
-  }
   
   // イベント設定
   document.querySelectorAll('[type="checkbox"]:not(.menu)').forEach((element) => {
