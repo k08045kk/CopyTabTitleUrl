@@ -197,6 +197,7 @@ const defaultStorageVersion3 = {
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
     menus_edit_title: false,
     menus_format9: false,
+    use_english: false,                 // v3.1.0 (others_language 後継機能)
     extended_edit: false,               // v3.1.0
     extended_mode: false,
   },
@@ -279,6 +280,7 @@ const extendedMode = [
   //'exclude_hidden',                   // standard v3.1.0+
   'menus_edit_title',
   'menus_format9', 
+  //'use_english',                      // standard
   'extended_edit', 
   //'extended_mode',                    // standard
   

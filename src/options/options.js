@@ -14,13 +14,38 @@ const TEXTS_LEN = 10;
 
 
 
+let en = {};
 const checkbox = (id) => document.getElementById(id);
+
 
 
 // オプション画面の更新
 // 注意：ブラウザアクション更新後に実行すること
 function updateOptionPage() {
-  // Browser action
+  // 翻訳
+  const lang = chrome.i18n.getMessage('lang');
+  if (lang === 'en') {
+    checkbox('use_english').disabled = true;
+  }
+  const i18n = lang !== 'en' && !checkbox('use_english').checked;
+  const getMessage = key => i18n ? chrome.i18n.getMessage(key) : en[key]?.message.replace(/\$\$/g, '$');
+  document.querySelectorAll('*[data-i18n]').forEach(v => {
+    const id = v.id || v.getAttribute('for');
+    const key = id.replace(/(^[a-z]|_[a-z])/g, m => m.at(-1).toUpperCase());
+    
+    const content = getMessage('options'+key+'Content');
+    if (content) { v.textContent =  content; }
+    
+    const title = getMessage('options'+key+'Title');
+    if (title) { v.title = title; }
+  });
+  const reset = document.getElementById('reset');
+  reset.dataset.reset = getMessage('optionsResetContent');
+  reset.dataset.confirm = getMessage('optionsResetConfirmContent');
+  reset.textContent = reset.dataset.reset;
+  
+  
+  // ブラウザアクション
   const action = document.querySelector('[name="browser_action"][value="action"]').checked;
   checkbox('popup_format2').disabled = action;
   document.getElementById('browser_action_target').disabled = !action;
@@ -61,8 +86,8 @@ function updateOptionPage() {
   document.getElementById('popup_tooltip').disabled = !(extension && !action);
   
   // フォーマット関数
-  const program = checkbox('copy_programmable').checked;
-  document.getElementById('program').hidden = !(extension && program);
+  const programmable = checkbox('copy_programmable').checked;
+  document.getElementById('programmable').dataset.enable = programmable;
 };
 
 
@@ -196,6 +221,7 @@ async function onReset() {
 
 // ページ初期化
 document.addEventListener("DOMContentLoaded", async () => {
+  en = await (await fetch('/_locales/en/messages.json')).json();
   await setupOptionPage();
   
   if (isFirefox()) {

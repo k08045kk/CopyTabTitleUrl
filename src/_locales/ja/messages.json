@@ -1,5 +1,67 @@
 {
   "extensionDescription": {
     "message": "タイトルと URL をクリップボードにコピーします。"
+  },
+  
+  
+  "optionsBrowserActionPopupContent": {
+    "message": "ポップアップを表示する"
+  },
+  "optionsPopupFormat2Content": {
+    "message": "format2 を使用する"
+  },
+  "optionsPopupTitleContent": {
+    "message": "コンテキストメニューのタイトルを使用する"
+  },
+  "optionsPopupTooltipContent": {
+    "message": "format のツールチップを表示する"
+  },
+  "optionsBrowserActionActionContent": {
+    "message": "format をコピーする"
+  },
+  "optionsPopupComlateContent": {
+    "message": "コピー完了を表示する"
+  },
+  
+  
+  "optionsCopyDecodeContent": {
+    "message": "URL をデコードする"
+  },
+  "optionsCopyPunycodeContent": {
+    "message": "Punycode をデコードする"
+  },
+  "optionsCopyClipboardApiContent": {
+    "message": "Clipboard API を使用する"
+  },
+  "optionsCopyHtmlContent": {
+    "message": "text/html 形式でも format をコピーする"
+  },
+  "optionsNewlineLabelContent": {
+    "message": "改行文字: $${enter} ="
+  },
+  "optionsSeparatorLabelContent": {
+    "message": "複数タブの区切り文字:"
+  },
+  "optionsExcludePinContent": {
+    "message": "固定タブを除外する"
+  },
+  "optionsExcludeHiddenContent": {
+    "message": "非表示タブを除外する"
+  },
+  "optionsMenusEditTitleContent": {
+    "message": "コンテキストメニューのタイトルを編集する"
+  },
+  
+  
+  "optionsResetContent": {
+    "message": "初期設定に戻す"
+  },
+  "optionsResetConfirmContent": {
+    "message": "本当に初期設定に戻しますか？"
+  },
+  
+  
+  "lang": {
+    "message": "ja"
   }
 }
