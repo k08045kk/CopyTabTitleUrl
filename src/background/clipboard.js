@@ -269,7 +269,7 @@ const copyToClipboard = async (cmd, tabs) => {
     target: 'offscreen',
     type: 'clipboardWrite',
     text: createFormatText(cmd, tabs),
-    html: ex3(cmd, 'copy_html') && cmd.id >= 3,
+    html: ex3(cmd, 'copy_html') && cmd.id >= 3 && /<.+>/.test(cmd.format),
     api: ex3(cmd, 'copy_clipboard_api'),
   };
   

@@ -99,7 +99,7 @@
     "message": "Copy format in text/html format"
   },
   "optionsCopyHtmlTitle": {
-    "message": "Copy not only text/plain but also text/html format."
+    "message": "When matching the regular expression /<.+>/"
   },
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
