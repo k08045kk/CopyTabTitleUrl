@@ -126,15 +126,15 @@ const createFormatText = (cmd, tabs) => {
     separator = separator.replace(/\${(text|index|id)}/ig, (m) => m.toLowerCase());
     
     // Character code
-    keyset['${cr}'] = '\r';
-    keyset['${lf}'] = '\n';
-    keyset['${tab}'] = '\t';
-    format = format.replace(/\${(tab|\\t|t)}/ig, '${tab}')
-                   .replace(/\${(cr|\\r|r)}/ig,  '${cr}')
-                   .replace(/\${(lf|\\n|n)}/ig,  '${lf}')
-    separator = separator.replace(/\${(tab|\\t|t)}/ig, '${tab}')
-                         .replace(/\${(cr|\\r|r)}/ig,  '${cr}')
-                         .replace(/\${(lf|\\n|n)}/ig,  '${lf}')
+    keyset['${TAB}'] = keyset['${t}'] = '\t';
+    keyset['${CR}']  = keyset['${r}'] = '\r';
+    keyset['${LF}']  = keyset['${n}'] = '\n';
+    format = format.replace(/\${(tab|\\t|t)}/ig, '${TAB}')
+                   .replace(/\${(cr|\\r|r)}/ig,  '${CR}')
+                   .replace(/\${(lf|\\n|n)}/ig,  '${LF}')
+    separator = separator.replace(/\${(tab|\\t|t)}/ig, '${TAB}')
+                         .replace(/\${(cr|\\r|r)}/ig,  '${CR}')
+                         .replace(/\${(lf|\\n|n)}/ig,  '${LF}')
     
     // Date
     const now = new Date();
@@ -161,6 +161,7 @@ const createFormatText = (cmd, tabs) => {
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     keyset['${day}']  = ''+now.getDay();
+    keyset['${dayOfWeek}']  = keyset['${day}'];
     
     // Function
     if (ex3(cmd, 'copy_programmable')) {
