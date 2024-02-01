@@ -46,7 +46,7 @@ function updateOptionPage() {
   
   
   // ブラウザアクション
-  const action = document.querySelector('[name="browser_action"][value="action"]').checked;
+  const action = document.getElementById('browser_action_action').checked;
   checkbox('popup_format2').disabled = action;
   document.getElementById('browser_action_target').disabled = !action;
   checkbox('popup_comlate').disabled = !action;
@@ -73,17 +73,17 @@ function updateOptionPage() {
   
   
   // 拡張モード選択時
-  const extension = checkbox('extended_mode').checked;
-  document.body.dataset.mode = extension ? 'extended' : 'normal';
-  document.body.dataset.edit = extension ? checkbox('extended_edit').checked : false;
+  const exmode = checkbox('extended_mode').checked;
+  document.body.dataset.exmode = exmode;
+  document.body.dataset.exedit = exmode && checkbox('extended_edit').checked;
   
   document.getElementById('copy_html').disabled = isFirefox() && checkbox('copy_clipboard_api').checked;
   
   // タイトル編集
   const edit = checkbox('menus_edit_title').checked;
-  document.getElementById('menus').dataset.edit = extension && edit;
-  document.getElementById('popup_title').disabled = !(extension && edit && !action);
-  document.getElementById('popup_tooltip').disabled = !(extension && !action);
+  document.getElementById('menus').dataset.edit = exmode && edit;
+  document.getElementById('popup_title').disabled = !(exmode && edit && !action);
+  document.getElementById('popup_tooltip').disabled = !(exmode && !action);
   
   // フォーマット関数
   const programmable = checkbox('copy_programmable').checked;
@@ -219,7 +219,7 @@ async function onReset() {
 
 
 
-function createOptionPage() {
+function startupOptionPage() {
   document.querySelectorAll('input[type="text"]').forEach((element) => {
     // menu_title, format, text, separator
     const max = element.classList.contains('menu_title')
@@ -244,7 +244,7 @@ function createOptionPage() {
 // ページ初期化
 document.addEventListener("DOMContentLoaded", async () => {
   en = await (await fetch('/_locales/en/messages.json')).json();
-  createOptionPage();
+  startupOptionPage();
   await setupOptionPage();
   
   // イベント設定

@@ -80,9 +80,9 @@ p {
   }
 }
 
-body[data-mode="normal"] .extension,
-body[data-mode="extended"] .normal,
-body[data-edit="false"] .exedit,
+body[data-exmode="false"] .exmode,
+body[data-exmode="true"] .normal,
+body[data-exedit="false"] .exedit,
 #menus[data-edit="false"] .menu_title,
 #menus[data-edit="true"] .menu_label,
 #programmable[data-enable="true"] .disalbe,
@@ -95,7 +95,7 @@ body[data-edit="false"] .exedit,
 
 
 
-<body data-mode="normal">
+<body>
 
   <!-- ブラウザアクション -->
   <fieldset id="browser_action">
@@ -106,10 +106,10 @@ body[data-edit="false"] .exedit,
     <p class="indent">
       <input id="popup_format2" type="checkbox">
       <label for="popup_format2" data-i18n></label>
-    <p class="extension indent">
+    <p class="exmode indent">
       <input id="popup_title" type="checkbox">
       <label for="popup_title" data-i18n></label>
-    <p class="extension indent">
+    <p class="exmode indent">
       <input id="popup_tooltip" type="checkbox">
       <label for="popup_tooltip" data-i18n></label>
     
@@ -136,17 +136,15 @@ body[data-edit="false"] .exedit,
     <p>
       <input id="context_page" type="checkbox">
       <label for="context_page" data-i18n></label>
-    <div class="extension">
-      <p>
-        <input id="context_selection" type="checkbox">
-        <label for="context_selection" data-i18n></label>
-      <p>
-        <input id="context_link" type="checkbox">
-        <label for="context_link" data-i18n></label>
-      <p>
-        <input id="context_image" type="checkbox">
-        <label for="context_image" data-i18n></label>
-    </div>
+    <p class="exmode">
+      <input id="context_selection" type="checkbox">
+      <label for="context_selection" data-i18n></label>
+    <p class="exmode">
+      <input id="context_link" type="checkbox">
+      <label for="context_link" data-i18n></label>
+    <p class="exmode">
+      <input id="context_image" type="checkbox">
+      <label for="context_image" data-i18n></label>
     <p>
       <input id="context_action" type="checkbox">
       <label for="context_action" data-i18n></label>
@@ -159,64 +157,64 @@ body[data-edit="false"] .exedit,
         <input class="menu" id="menu0" type="checkbox">
         <label class="menu_label" for="menu0"> title and URL </label>
         <input class="menu_title" id="menu0_title" type="text">
-        <select class="exedit extension menu_target" id="menu0_target"></select>
+        <select class="exmode exedit menu_target" id="menu0_target"></select>
       <p class="target_wrap">
         <input class="menu" id="menu1" type="checkbox">
         <label class="menu_label" for="menu1"> title </label>
         <input class="menu_title" id="menu1_title" type="text">
-        <select class="exedit extension menu_target" id="menu1_target"></select>
+        <select class="exmode exedit menu_target" id="menu1_target"></select>
       <p class="target_wrap">
         <input class="menu" id="menu2" type="checkbox">
         <label class="menu_label" for="menu2"> URL </label>
         <input class="menu_title" id="menu2_title" type="text">
-        <select class="exedit extension menu_target" id="menu2_target"></select>
+        <select class="exmode exedit menu_target" id="menu2_target"></select>
       <p class="target_wrap">
         <input class="menu" id="menu3" type="checkbox">
         <label class="menu_label" for="menu3"> format </label>
         <input class="menu_title" id="menu3_title" type="text">
-        <select class="extension menu_target" id="menu3_target"></select>
-      <p class="target_wrap format2">
+        <select class="exmode menu_target" id="menu3_target"></select>
+      <p class="target_wrap">
         <input class="menu" id="menu4" type="checkbox">
         <label class="menu_label" for="menu4"> format2 </label>
         <input class="menu_title" id="menu4_title" type="text">
-        <select class="extension menu_target" id="menu4_target"></select>
-      <hr class="extension"><!-- ---------- -->
-      <p class="extension target_wrap">
+        <select class="exmode menu_target" id="menu4_target"></select>
+      <hr class="exmode"><!-- ---------- -->
+      <p class="exmode target_wrap">
         <input class="menu" id="menu5" type="checkbox">
         <label class="menu_label" id="menu5_label" for="menu5">format3</label>
         <input class="menu_title" id="menu5_title" type="text">
-        <select class="extension menu_target" id="menu5_target"></select>
-      <p class="extension target_wrap">
+        <select class="exmode menu_target" id="menu5_target"></select>
+      <p class="exmode target_wrap">
         <input class="menu" id="menu6" type="checkbox">
         <label class="menu_label" id="menu6_label" for="menu6">format4</label>
         <input class="menu_title" id="menu6_title" type="text">
-        <select class="extension menu_target" id="menu6_target"></select>
-      <p class="extension target_wrap">
+        <select class="exmode menu_target" id="menu6_target"></select>
+      <p class="exmode target_wrap">
         <input class="menu" id="menu7" type="checkbox">
         <label class="menu_label" id="menu7_label" for="menu7">format5</label>
         <input class="menu_title" id="menu7_title" type="text">
-        <select class="extension menu_target" id="menu7_target"></select>
-      <p class="extension target_wrap">
+        <select class="exmode menu_target" id="menu7_target"></select>
+      <p class="exmode target_wrap">
         <input class="menu" id="menu8" type="checkbox">
         <label class="menu_label" id="menu8_label" for="menu8">format6</label>
         <input class="menu_title" id="menu8_title" type="text">
-        <select class="extension menu_target" id="menu8_target"></select>
-      <p class="extension target_wrap">
+        <select class="exmode menu_target" id="menu8_target"></select>
+      <p class="exmode target_wrap">
         <input class="menu" id="menu9" type="checkbox">
         <label class="menu_label" id="menu9_label" for="menu9">format7</label>
         <input class="menu_title" id="menu9_title" type="text">
-        <select class="extension menu_target" id="menu9_target"></select>
-      <p class="extension target_wrap">
+        <select class="exmode menu_target" id="menu9_target"></select>
+      <p class="exmode target_wrap">
         <input class="menu" id="menu10" type="checkbox">
         <label class="menu_label" id="menu10_label" for="menu10">format8</label>
         <input class="menu_title" id="menu10_title" type="text">
-        <select class="extension menu_target" id="menu10_target"></select>
-      <hr class="extension"><!-- ---------- -->
-      <p class="extension target_wrap">
+        <select class="exmode menu_target" id="menu10_target"></select>
+      <hr class="exmode"><!-- ---------- -->
+      <p class="exmode target_wrap">
         <input class="menu" id="menu11" type="checkbox">
         <label class="menu_label" id="menu11_label" for="menu11">format9</label>
         <input class="menu_title" id="menu11_title" type="text">
-        <select class="extension menu_target" id="menu11_target"></select>
+        <select class="exmode menu_target" id="menu11_target"></select>
     </fieldset>
   </fieldset>
 
@@ -240,7 +238,7 @@ body[data-edit="false"] .exedit,
   <fieldset id="format">
     <legend id="format_legend" data-i18n></legend>
     <p class="normal">${title}, ${url}, ${enter}, ${$}.</p>
-    <p class="extension">
+    <p class="exmode">
       ${title}, ${url}, ${text}, ${link}, ${src}.<br>
       ${enter}, ${CR}, ${LF}, ${TAB}, ${$}.<br>
       ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}<br>
@@ -252,22 +250,20 @@ body[data-edit="false"] .exedit,
     <p class="exedit"> URL:   <input class="format" id="format2" type="text">
     <p> format:&ensp; <input class="format" id="format3" type="text">
     <p> format2:      <input class="format" id="format4" type="text">
-    <div class="extension">
-      <hr><!-- ---------- -->
-      <p> format3: <input class="format" id="format5"  type="text">
-      <p> format4: <input class="format" id="format6"  type="text">
-      <p> format5: <input class="format" id="format7"  type="text">
-      <p> format6: <input class="format" id="format8"  type="text">
-      <p> format7: <input class="format" id="format9"  type="text">
-      <p> format8: <input class="format" id="format10" type="text">
-      <hr><!-- ---------- -->
-      <p> format9: <input class="format" id="format11" type="text">
-    </div>
+    <hr class="exmode"><!-- ---------- -->
+    <p class="exmode"> format3: <input class="format" id="format5"  type="text">
+    <p class="exmode"> format4: <input class="format" id="format6"  type="text">
+    <p class="exmode"> format5: <input class="format" id="format7"  type="text">
+    <p class="exmode"> format6: <input class="format" id="format8"  type="text">
+    <p class="exmode"> format7: <input class="format" id="format9"  type="text">
+    <p class="exmode"> format8: <input class="format" id="format10" type="text">
+    <hr class="exmode"><!-- ---------- -->
+    <p class="exmode"> format9: <input class="format" id="format11" type="text">
   </fieldset>
 
 
   <!-- プログラム -->
-  <fieldset class="extension" id="programmable" data-enable="false">
+  <fieldset class="exmode" id="programmable" data-enable="false">
     <legend id="programmable_legend" data-i18n></legend>
     <p>
       <input id="copy_programmable" type="checkbox">
@@ -305,15 +301,15 @@ body[data-edit="false"] .exedit,
     <p>
       <input id="copy_punycode" type="checkbox">
       <label for="copy_punycode" data-i18n></label>
-    <p class="extension firefox">
+    <p class="exmode firefox">
       <input id="copy_clipboard_api" type="checkbox">
       <label for="copy_clipboard_api" data-i18n></label>
-    <p class="extension">
+    <p class="exmode">
       <input id="copy_html" type="checkbox">
       <label for="copy_html" data-i18n></label>
 
-    <hr class="extension"><!-- ---------- -->
-    <p class="extension indent2">
+    <hr class="exmode"><!-- ---------- -->
+    <p class="exmode indent2">
       <label id="newline_label" data-i18n></label>
       <select id="newline">
         <option value="default">default</option>
@@ -321,7 +317,7 @@ body[data-edit="false"] .exedit,
         <option value="CR">CR</option>
         <option value="LF">LF</option>
       </select>
-    <p class="extension indent2">
+    <p class="exmode indent2">
       <label id="separator_label" data-i18n></label>
       <input id="separator" type="text">
 
@@ -333,11 +329,11 @@ body[data-edit="false"] .exedit,
       <input id="exclude_hidden" type="checkbox">
       <label for="exclude_hidden" data-i18n></label>
 
-    <hr class="extension">
-    <p class="extension">
+    <hr class="exmode">
+    <p class="exmode">
       <input id="menus_edit_title" type="checkbox">
       <label for="menus_edit_title" data-i18n></label>
-    <p class="extension">
+    <p class="exmode">
       <input id="menus_format9" type="checkbox">
       <label for="menus_format9" data-i18n></label>
 
@@ -345,7 +341,7 @@ body[data-edit="false"] .exedit,
     <p>
       <input id="use_english" type="checkbox">
       <label for="use_english"> Use English </label>
-    <p class="extension"><label>
+    <p class="exmode"><label>
       <input id="extended_edit" type="checkbox">
       <label for="extended_edit" data-i18n></label>
     <p>
