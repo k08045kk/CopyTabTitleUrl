@@ -111,6 +111,7 @@ const createFormatText = (cmd, tabs) => {
   const isPunycode = ex3(cmd, 'copy_punycode');
   const enter = cmd.enter;
   const keyset = {};
+  const now = new Date();
   let format = cmd.format;
   let separator = isExtendedMode ? cmd.separator : defaultStorage.separator;
   
@@ -137,7 +138,6 @@ const createFormatText = (cmd, tabs) => {
                          .replace(/\${(lf|\\n|n)}/ig,  '${LF}')
     
     // Date
-    const now = new Date();
     keyset['${yyyy}'] =('000'+ now.getFullYear()).slice(-4);
     keyset['${yy}']   =('0' + now.getFullYear()).slice(-2);
     keyset['${y}']    = ''  + now.getFullYear();
@@ -162,6 +162,8 @@ const createFormatText = (cmd, tabs) => {
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     keyset['${day}']  = ''+now.getDay();
+    keyset['${Time}']  = ''+now.getTime();      // milliseconds
+    keyset['${TimezoneOffset}']  = ''+now.getTimezoneOffset();  // minute offset from UTC
     
     keyset['${YYYY}'] = keyset['${yyyy}'];
     keyset['${YY}']   = keyset['${yy}'];
@@ -170,7 +172,7 @@ const createFormatText = (cmd, tabs) => {
     keyset['${D}']    = keyset['${d}'];
     keyset['${dayOfWeek}']  = keyset['${day}'];
     
-    // Function
+    // Programmable Format
     if (ex3(cmd, 'copy_programmable')) {
       for (let i=0; i<10; i++) {
         keyset['${text'+i+'}'] = cmd.texts[i];
@@ -187,7 +189,7 @@ const createFormatText = (cmd, tabs) => {
     }
   }
   const sep = ex3(cmd, 'copy_programmable')
-            ? compile(separator, keyset)
+            ? compile(separator, keyset, now)
             : separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
   // 本処理
@@ -257,7 +259,7 @@ const createFormatText = (cmd, tabs) => {
     
     // 変換
     if (ex3(cmd, 'copy_programmable')) {
-      temp.push(compile(format, keyset));
+      temp.push(compile(format, keyset, now));
     } else {
       temp.push(format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m));
     }

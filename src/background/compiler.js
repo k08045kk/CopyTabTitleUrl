@@ -5,7 +5,7 @@
 
 
 //export 
-function compile(format, keyset) {
+function compile(format, keyset, now) {
   const reInteger = /^[+\-]?\d+$/;
   const reString = /^("[^"}]*"|'[^'}]*')$/;
   const isInteger = (i) => {
@@ -69,6 +69,10 @@ function compile(format, keyset) {
   // in = idx = arg1 = arg2 = (\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')
   // re = /^\${(<out>=)?<in>(\[<idx>\]|\.<fn>(\((<arg1>(,<arg2>)?)?\))?)?}$/
   
+  // 備考：次の要素にアクセスできない（名称に記号が含まれるため）
+  //       ${$}, ${:port}, ${username@}, ${username:password@}
+  //       すべて代用が可能なため、現状動作でよしとする。（${port} 等）
+  
   return format.replace(/\${.*?}/ig, (match) => {
     if (keyset.hasOwnProperty(match)) { return keyset[match]; }
     // ${title}, ${url}
@@ -127,6 +131,19 @@ function compile(format, keyset) {
           // ${String.fromCharCode(65,66)} => AB
           // ${String.fromCodePoint(65,66)} => AB
         }
+      } else if (m.groups.in === 'Date' && m.groups.args != null) {
+        const arg1 = toValue(m.groups.arg1);
+        switch (m.groups.fn) {
+        case 'toDateString':  ret = now.toDateString(); success = true; break;
+        case 'toISOString':   ret = now.toISOString();  success = true; break;
+        case 'toString':      ret = now.toString();     success = true; break;
+        case 'toTimeString':  ret = now.toTimeString(); success = true; break;
+        case 'toUTCString':   ret = now.toUTCString();  success = true; break;
+        case 'toLocaleDateString':  ret = now.toLocaleDateString(arg1 ?? void 0); success = true; break;
+        case 'toLocaleString':      ret = now.toLocaleString(arg1 ?? void 0);     success = true; break;
+        case 'toLocaleTimeString':  ret = now.toLocaleTimeString(arg1 ?? void 0); success = true; break;
+        }
+        // ${Date.toLocaleString()}
       } else if (m.groups.supp == null) {
         const value = toValue(m.groups.in);
         if (value != null) {
