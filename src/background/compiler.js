@@ -45,9 +45,10 @@ function compile(format, keyset, now) {
     }
   };
   const reserved = [
-    'Math', 'String',
+    'Math', 'String', 'Date',
     'true', 'false', 'null', 'undefined', 'NaN', 'Infinity',
     '$', 'title', 'url',
+    'tabs', 'tab',
   ];
   
   const re = /^\${(?:(?<out>\w+)=)?(?<in>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?<supp>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\((?:(?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?:,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}$/;
@@ -116,6 +117,18 @@ function compile(format, keyset, now) {
         if (arg1 != null) {
           switch (m.groups.fn) {
           case 'not':   ret = !toBoolean(arg1); success = true; break;
+          }
+        }
+        if ((arg1 == null && arg2 == null) || (isInteger(arg1) && (arg2 == null || isInteger(arg2)))) {
+          switch (m.groups.fn) {
+          case 'random':
+            const max = isInteger(arg1) ? arg1 : 2_147_483_647;   // 32bit符号付き整数の最大値
+            const min = isInteger(arg2) ? arg2 : 0;
+            ret = Math.floor(Math.random() * (max - min)) + min;  // min <= ret < max
+            success = true;
+            // Math.random(max,min), Math.random(max), Math.random()
+            // Math.random(min,max)
+            break;
           }
         }
       } else if (m.groups.in === 'String' && m.groups.args != null) {

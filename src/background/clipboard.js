@@ -186,6 +186,7 @@ const createFormatText = (cmd, tabs) => {
       keyset['${false}'] = false;
       keyset['${NaN}'] = NaN;
       keyset['${Infinity}'] = Infinity;
+      keyset['${tabs.length}'] = tabs.length;
     }
   }
   const sep = ex3(cmd, 'copy_programmable')
@@ -197,6 +198,12 @@ const createFormatText = (cmd, tabs) => {
   const isSingle = tabs.length == 1;
   const urlkeys = ['href', 'origin', 'protocol', 'username', 'password', 
                    'host', 'hostname', 'port', 'pathname', 'search', 'hash'];
+  const tabkeys = ['active','attention','audible','autoDiscardable','cookieStoreId','discarded',
+                   'favIconUrl','height','hidden','highlighted','id','incognito','index',
+                   'isArticle','isInReaderMode','lastAccessed','mutedInfo','openerTabId','pinned',
+                   'sessionId','status','successorId','title','url','width','windowId'];
+  // see https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab
+  
   for (const tab of tabs) {
     // Standard
     keyset['${title}'] = tab.title;
@@ -259,6 +266,9 @@ const createFormatText = (cmd, tabs) => {
     
     // 変換
     if (ex3(cmd, 'copy_programmable')) {
+      tabkeys.forEach(key => keyset['${tab.'+key+'}'] = tab[key]);
+      // 備考：tab 情報をそのまま提供する（url のデコード等は、実施しない）
+      
       temp.push(compile(format, keyset, now));
     } else {
       temp.push(format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m));
