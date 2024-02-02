@@ -162,8 +162,8 @@ const createFormatText = (cmd, tabs) => {
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     keyset['${day}']  = ''+now.getDay();
-    keyset['${Time}']  = ''+now.getTime();      // milliseconds
-    keyset['${TimezoneOffset}']  = ''+now.getTimezoneOffset();  // minute offset from UTC
+    keyset['${time}']  = ''+now.getTime();      // milliseconds
+    keyset['${timezoneOffset}']  = ''+now.getTimezoneOffset();  // minute offset from UTC
     
     keyset['${YYYY}'] = keyset['${yyyy}'];
     keyset['${YY}']   = keyset['${yy}'];
