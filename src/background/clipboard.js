@@ -138,7 +138,9 @@ const createFormatText = (cmd, tabs) => {
     
     // Date
     const now = new Date();
-    keyset['${yyyy}'] = ''  + now.getFullYear();
+    keyset['${yyyy}'] =('000'+ now.getFullYear()).slice(-4);
+    keyset['${yy}']   =('0' + now.getFullYear()).slice(-2);
+    keyset['${y}']    = ''  + now.getFullYear();
     keyset['${MM}']   =('0' +(now.getMonth() + 1)).slice(-2);
     keyset['${dd}']   =('0' + now.getDate()).slice(-2);
     keyset['${hh}']   =('0' +(now.getHours() % 12)).slice(-2);
@@ -146,7 +148,6 @@ const createFormatText = (cmd, tabs) => {
     keyset['${mm}']   =('0' + now.getMinutes()).slice(-2);
     keyset['${ss}']   =('0' + now.getSeconds()).slice(-2);
     keyset['${SSS}']  =('00'+ now.getMilliseconds()).slice(-3);
-    keyset['${yy}']   =(''  + now.getFullYear()).slice(-2);
     keyset['${M}']    = ''  +(now.getMonth() + 1);
     keyset['${d}']    = ''  + now.getDate();
     keyset['${h}']    = ''  +(now.getHours() % 12);
@@ -161,6 +162,12 @@ const createFormatText = (cmd, tabs) => {
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     keyset['${day}']  = ''+now.getDay();
+    
+    keyset['${YYYY}'] = keyset['${yyyy}'];
+    keyset['${YY}']   = keyset['${yy}'];
+    keyset['${Y}']    = keyset['${y}'];
+    keyset['${DD}']   = keyset['${dd}'];
+    keyset['${D}']    = keyset['${d}'];
     keyset['${dayOfWeek}']  = keyset['${day}'];
     
     // Function
