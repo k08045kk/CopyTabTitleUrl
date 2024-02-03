@@ -23,7 +23,7 @@ if (globalThis.importScripts) {
 /* イベント                                                                   */
 /* ========================================================================== */
 // ブラウザアクション
-chrome.action.onClicked.addListener(async (info, tab) => {
+chrome.action.onClicked.addListener(async (tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   const id = 3;
   cmd.id = id;
