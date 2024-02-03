@@ -211,6 +211,8 @@ const createFormatText = (cmd, tabs) => {
     
     if (isExtendedMode) {
       // Basic
+      keyset['${frameUrl}'] = isSingle && cmd.frameUrl || tab.url;
+      keyset['${frameUrl}'] = decodeURL(keyset['${frameUrl}'], isDecode, isPunycode);
       keyset['${text}']     = isSingle && cmd.selectionText || tab.title;
       keyset['${selectedText}']  = isSingle && cmd.selectionText || '';
       keyset['${linkText}'] = isSingle && cmd.linkText || tab.title;

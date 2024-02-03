@@ -42,6 +42,7 @@ const onContextMenus = async (info, tab) => {
   cmd.target = ex3(cmd) && (ex3(cmd, 'extended_edit') || 3<=id) 
              ? cmd.menus[id].target 
              : defaultStorage.menus[id].target;
+  cmd.frameUrl = info.frameUrl;
   cmd.selectionText = info.selectionText;
   cmd.linkText = info.linkText;  // Firefox56+(Chromeは、対象外)
   cmd.linkUrl = info.linkUrl;
