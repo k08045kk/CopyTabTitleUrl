@@ -54,15 +54,15 @@ chrome.contextMenus.onClicked.addListener(onContextMenus);
 
 
 // キーボードショートカット
-chrome.commands.onCommand.addListener(async (command) => {
+chrome.commands.onCommand.addListener(async (name, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
-  if (command === 'shortcut_action') {
+  if (name === 'shortcut_action') {
     const id = 3;
     cmd.id = id;
     cmd.format = cmd.formats[id];
     cmd.target = 'tab';
     onCopy(cmd);
-  } else if (command === 'shortcut_action2') {
+  } else if (name === 'shortcut_action2') {
     const id = 4;
     cmd.id = id;
     cmd.format = cmd.formats[id];
