@@ -226,6 +226,7 @@ const createFormatText = (cmd, tabs) => {
       keyset['${frameUrl}'] = isSingle && cmd.frameUrl || tab.url;
       keyset['${frameUrl}'] = decodeURL(keyset['${frameUrl}'], isDecode, isPunycode);
       keyset['${text}']     = isSingle && cmd.selectionText || tab.title;
+      keyset['${selectionText}'] = isSingle && cmd.selectionText || '';
       keyset['${selectedText}']  = isSingle && cmd.selectionText || '';
       keyset['${linkText}'] = isSingle && cmd.linkText || tab.title;
       keyset['${linkUrl}']  = isSingle && cmd.linkUrl || tab.url;
@@ -405,7 +406,8 @@ const onCopy = async (cmd) => {
       const keys = ['pageCanonicalUrl', 'pageTitle', 'pageDescription', 'pageKeywords',
                     'ogTitle', 'ogType', 'ogUrl', 'ogImage', 'ogSiteName', 'ogDescription', 'ogLocale'];
 //console.log(results);
-      cmd.selectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText;
+      cmd.selectionText = cmd.selectionText 
+                       || results.find(v => v.result.pageSelectionText)?.result.pageSelectionText || '';
       cmd.scripting = {};
       keys.forEach(key => cmd.scripting[key] = results[0].result[key]);
       cmd.scripting.pageSelectionText = cmd.selectionText;
