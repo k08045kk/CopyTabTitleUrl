@@ -75,6 +75,9 @@
   "optionsCopyProgrammableContent": {
     "message": "Enable programmable format"
   },
+  "optionsCopyScriptingContent": {
+    "message": "Enable content script for active tab"
+  },
   
   
   "optionsCopyDecodeContent": {

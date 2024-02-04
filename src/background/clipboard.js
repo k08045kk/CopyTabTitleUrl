@@ -188,6 +188,18 @@ const createFormatText = (cmd, tabs) => {
       keyset['${Infinity}'] = Infinity;
       keyset['${tabs.length}'] = tabs.length;
     }
+    
+    keyset['${scripting}'] = !!cmd.scripting;
+    if (cmd.scripting) {
+      Object.keys(cmd.scripting).forEach(key => keyset['${'+key+'}'] = cmd.scripting[key]);
+    }
+    if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && tabs.length === 1) {
+      keyset['${canonicalUrl}'] = keyset['${pageCanonicalUrl}'] || tabs[0].url;
+      keyset['${canonicalUrl}'] = decodeURL(keyset['${canonicalUrl}'], isDecode, isPunycode);
+      keyset['${ogpUrl}'] = keyset['${ogUrl}'] || tabs[0].url;
+      keyset['${ogpUrl}'] = decodeURL(keyset['${ogpUrl}'], isDecode, isPunycode);
+      keyset['${ogpTitle}'] = keyset['${ogTitle}'] || tabs[0].title;
+    }
   }
   const sep = ex3(cmd, 'copy_programmable')
             ? compile(separator, keyset, now)
@@ -233,7 +245,7 @@ const createFormatText = (cmd, tabs) => {
       keyset['${id}']       = tab.id;
       keyset['${tabId}']    = tab.id;
       keyset['${windowId}'] = tab.windowId;
-      keyset['${favIconUrl}'] = tab.favIconUrl != '' ? tab.favIconUrl : void 0;
+      keyset['${favIconUrl}'] = tab.favIconUrl != null ? tab.favIconUrl : '';
       
       // URL
       const url = new URL(tab.url);
@@ -367,6 +379,45 @@ const onCopy = async (cmd) => {
   if (temp.length === 0) {
     // #24 コピーするタブがない場合、カレントタブをコピーする
     temp = await chrome.tabs.query({currentWindow:true, active:true});
+  }
+  
+  // コンテンツスクリプト
+  if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
+    try {
+      const target = {tabId:temp[0].id, allFrames:true};
+      const func = () => {
+        return {
+          pageSelectionText: window.getSelection().toString(),
+          pageCanonicalUrl: document.querySelector('link[rel="canonical"]')?.href ?? '',
+          pageTitle: document.querySelector('title')?.textContent ?? '',
+          pageDescription: document.querySelector('meta[name="description"]')?.content ?? '',
+          pageKeywords: document.querySelector('meta[name="keywords"]')?.content ?? '',
+          ogTitle: document.querySelector('meta[property="og:title"]')?.content ?? '',
+          ogType: document.querySelector('meta[property="og:type"]')?.content ?? '',
+          ogUrl: document.querySelector('meta[property="og:url"]')?.content ?? '',
+          ogImage: document.querySelector('meta[property="og:image"]')?.content ?? '',
+          ogSiteName: document.querySelector('meta[property="og:site_name"]')?.content ?? '',
+          ogDescription: document.querySelector('meta[property="og:description"]')?.content ?? '',
+          ogLocale: document.querySelector('meta[property="og:locale"]')?.content ?? '',
+        };
+      };
+      const results = await chrome.scripting.executeScript({target, func});
+      const keys = ['pageCanonicalUrl', 'pageTitle', 'pageDescription', 'pageKeywords',
+                    'ogTitle', 'ogType', 'ogUrl', 'ogImage', 'ogSiteName', 'ogDescription', 'ogLocale'];
+//console.log(results);
+      cmd.selectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText;
+      cmd.scripting = {};
+      keys.forEach(key => cmd.scripting[key] = results[0].result[key]);
+      cmd.scripting.pageSelectionText = cmd.selectionText;
+      // 備考：複数フレームがある場合、最初のフレームの選択テキストを使用する
+//console.log(cmd.scripting);
+    } catch (e) {
+      cmd.scripting = null;
+      //console.log(e);
+      // 備考：タブコンテキストメニューで非アクティブタブを選択した場合
+      //       非アクティブタブの情報でコピーする（copy_scripting を実施できる）
+      // 備考：「chrome://」では動作しません
+    }
   }
   
   // クリップボードにコピー

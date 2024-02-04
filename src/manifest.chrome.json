@@ -47,6 +47,7 @@
     "clipboardWrite",
     "contextMenus",
     "offscreen",
+    "scripting",
     "storage",
     "tabs"
   ]

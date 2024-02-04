@@ -59,6 +59,7 @@
     "activeTab",
     "clipboardWrite",
     "contextMenus",
+    "scripting",
     "storage",
     "tabs"
   ]
