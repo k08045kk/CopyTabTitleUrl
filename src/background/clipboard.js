@@ -387,12 +387,34 @@ const onCopy = async (cmd) => {
     try {
       const target = {tabId:temp[0].id, allFrames:true};
       const func = () => {
+        const themes = [...document.querySelectorAll('meta[name="theme-color"]')];
+        const theme  = themes.find(theme => !theme.media || window.matchMedia(theme.media).matches);
+        // 備考：theme-color のみ media 属性がある
         return {
+          pageTitle: document.querySelector('title')?.textContent ?? '',
           pageCanonicalUrl: document.querySelector('link[rel="canonical"]')?.href ?? '',
           pageImageSrc: document.querySelector('link[rel="image_src"]')?.href ?? '',
-          pageTitle: document.querySelector('title')?.textContent ?? '',
-          pageDescription: document.querySelector('meta[name="description"]')?.content ?? '',
-          pageKeywords: document.querySelector('meta[name="keywords"]')?.content ?? '',
+          
+          metaCharset: document.querySelector('meta[charset]')?.charset ?? '',
+          metaDescription: document.querySelector('meta[name="description"]')?.content ?? '',
+          metaKeywords: document.querySelector('meta[name="keywords"]')?.content ?? '',
+          
+          metaGenerator: document.querySelector('meta[name="generator"]')?.content ?? '',
+          metaAuthor: document.querySelector('meta[name="author"]')?.content ?? '',
+          metaCopyright: document.querySelector('meta[name="copyright"]')?.content ?? '',
+          metaReplyTo: document.querySelector('meta[name="reply-to"]')?.content ?? '',
+          metaTel: document.querySelector('meta[name="tel"]')?.content ?? '',
+          metaFax: document.querySelector('meta[name="fax"]')?.content ?? '',
+          metaCode: document.querySelector('meta[name="code"]')?.content ?? '',
+          metaTitle: document.querySelector('meta[name="title"]')?.content ?? '',
+          metaBuild: document.querySelector('meta[name="build"]')?.content ?? '',
+          metaCreationDate: document.querySelector('meta[name="creation date"]')?.content ?? '',
+          metaDate: document.querySelector('meta[name="date"]')?.content ?? '',
+          metaLanguage: document.querySelector('meta[name="language"]')?.content ?? '',
+          
+          metaApplicationName: document.querySelector('meta[name="application-name"]')?.content ?? '',
+          metaThemeColor: theme?.content ?? '',
+          
           ogTitle: document.querySelector('meta[property="og:title"]')?.content ?? '',
           ogType: document.querySelector('meta[property="og:type"]')?.content ?? '',
           ogUrl: document.querySelector('meta[property="og:url"]')?.content ?? '',
@@ -400,13 +422,23 @@ const onCopy = async (cmd) => {
           ogSiteName: document.querySelector('meta[property="og:site_name"]')?.content ?? '',
           ogDescription: document.querySelector('meta[property="og:description"]')?.content ?? '',
           ogLocale: document.querySelector('meta[property="og:locale"]')?.content ?? '',
+          ogDeterminer: document.querySelector('meta[property="og:determiner"]')?.content ?? '',
+          ogAudio: document.querySelector('meta[property="og:audio"]')?.content ?? '',
+          ogVideo: document.querySelector('meta[property="og:video"]')?.content ?? '',
+          
           pageSelectionText: window.getSelection().toString(),
           pageH1: document.querySelector('h1')?.textContent ?? '',
         };
+        // 備考：media 属性等は未考慮
       };
       const results = await chrome.scripting.executeScript({target, func});
-      const keys = ['pageCanonicalUrl', 'pageImageSrc', 'pageTitle', 'pageDescription', 'pageKeywords',
+      const keys = ['pageTitle', 'pageCanonicalUrl', 'pageImageSrc', 
+                    'metaCharset', 'metaDescription', 'metaKeywords', 
+                    'metaGenerator', 'metaAuthor', 'metaCopyright', 'metaReplyTo', 'metaTel', 'metaFax', 
+                    'metaCode', 'metaTitle', 'metaBuild', 'metaCreationDate', 'metaDate', 'metaLanguage', 
+                    'metaApplicationName', 'metaThemeColor',
                     'ogTitle', 'ogType', 'ogUrl', 'ogImage', 'ogSiteName', 'ogDescription', 'ogLocale',
+                    'ogDeterminer', 'ogAudio', 'ogVideo', 
                   /*'pageSelectionText',*/'pageH1'];
 //console.log(results);
       cmd.selectionText = cmd.selectionText 
