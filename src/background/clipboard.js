@@ -388,8 +388,8 @@ const onCopy = async (cmd) => {
       const target = {tabId:temp[0].id, allFrames:true};
       const func = () => {
         return {
-          pageSelectionText: window.getSelection().toString(),
           pageCanonicalUrl: document.querySelector('link[rel="canonical"]')?.href ?? '',
+          pageImageSrc: document.querySelector('link[rel="image_src"]')?.href ?? '',
           pageTitle: document.querySelector('title')?.textContent ?? '',
           pageDescription: document.querySelector('meta[name="description"]')?.content ?? '',
           pageKeywords: document.querySelector('meta[name="keywords"]')?.content ?? '',
@@ -400,11 +400,14 @@ const onCopy = async (cmd) => {
           ogSiteName: document.querySelector('meta[property="og:site_name"]')?.content ?? '',
           ogDescription: document.querySelector('meta[property="og:description"]')?.content ?? '',
           ogLocale: document.querySelector('meta[property="og:locale"]')?.content ?? '',
+          pageSelectionText: window.getSelection().toString(),
+          pageH1: document.querySelector('h1')?.textContent ?? '',
         };
       };
       const results = await chrome.scripting.executeScript({target, func});
-      const keys = ['pageCanonicalUrl', 'pageTitle', 'pageDescription', 'pageKeywords',
-                    'ogTitle', 'ogType', 'ogUrl', 'ogImage', 'ogSiteName', 'ogDescription', 'ogLocale'];
+      const keys = ['pageCanonicalUrl', 'pageImageSrc', 'pageTitle', 'pageDescription', 'pageKeywords',
+                    'ogTitle', 'ogType', 'ogUrl', 'ogImage', 'ogSiteName', 'ogDescription', 'ogLocale',
+                  /*'pageSelectionText',*/'pageH1'];
 //console.log(results);
       cmd.selectionText = cmd.selectionText 
                        || results.find(v => v.result.pageSelectionText)?.result.pageSelectionText || '';
