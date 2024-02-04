@@ -13,6 +13,8 @@ if (globalThis.importScripts) {
   // clipboard.js - punycode
   importScripts('/background/compiler.js');
   // clipboard.js - compile
+  importScripts('/background/scripting.js');
+  // clipboard.js - executeScript
   importScripts('/background/clipboard.js');
   // background.js - onCopy
 }

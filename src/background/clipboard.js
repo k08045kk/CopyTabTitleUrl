@@ -194,11 +194,14 @@ const createFormatText = (cmd, tabs) => {
       Object.keys(cmd.scripting).forEach(key => keyset['${'+key+'}'] = cmd.scripting[key]);
     }
     if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && tabs.length === 1) {
-      keyset['${canonicalUrl}'] = keyset['${pageCanonicalUrl}'] || tabs[0].url;
+      keyset['${canonicalUrl}'] = keyset['${pageCanonicalUrl}'] || keyset['${ogUrl}'] || tabs[0].url;
       keyset['${canonicalUrl}'] = decodeURL(keyset['${canonicalUrl}'], isDecode, isPunycode);
-      keyset['${ogpUrl}'] = keyset['${ogUrl}'] || tabs[0].url;
+      keyset['${ogpUrl}'] = keyset['${ogpUrl}'] || tabs[0].url;
       keyset['${ogpUrl}'] = decodeURL(keyset['${ogpUrl}'], isDecode, isPunycode);
-      keyset['${ogpTitle}'] = keyset['${ogTitle}'] || tabs[0].title;
+      keyset['${ogpImage}'] = keyset['${ogpImage}'] || '';
+      keyset['${ogpImage}'] = decodeURL(keyset['${ogpImage}'], isDecode, isPunycode);
+      keyset['${ogpTitle}'] = keyset['${ogpTitle}'] || tabs[0].title;
+      keyset['${ogpDescription}'] = keyset['${ogpDescription}'] || '';
     }
   }
   const sep = ex3(cmd, 'copy_programmable')
@@ -382,79 +385,10 @@ const onCopy = async (cmd) => {
     temp = await chrome.tabs.query({currentWindow:true, active:true});
   }
   
-  // コンテンツスクリプト
   if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
-    try {
-      const target = {tabId:temp[0].id, allFrames:true};
-      const func = () => {
-        const themes = [...document.querySelectorAll('meta[name="theme-color"]')];
-        const theme  = themes.find(theme => !theme.media || window.matchMedia(theme.media).matches);
-        // 備考：theme-color のみ media 属性がある
-        return {
-          pageTitle: document.querySelector('title')?.textContent ?? '',
-          pageCanonicalUrl: document.querySelector('link[rel="canonical"]')?.href ?? '',
-          pageImageSrc: document.querySelector('link[rel="image_src"]')?.href ?? '',
-          
-          metaCharset: document.querySelector('meta[charset]')?.charset ?? '',
-          metaDescription: document.querySelector('meta[name="description"]')?.content ?? '',
-          metaKeywords: document.querySelector('meta[name="keywords"]')?.content ?? '',
-          
-          metaGenerator: document.querySelector('meta[name="generator"]')?.content ?? '',
-          metaAuthor: document.querySelector('meta[name="author"]')?.content ?? '',
-          metaCopyright: document.querySelector('meta[name="copyright"]')?.content ?? '',
-          metaReplyTo: document.querySelector('meta[name="reply-to"]')?.content ?? '',
-          metaTel: document.querySelector('meta[name="tel"]')?.content ?? '',
-          metaFax: document.querySelector('meta[name="fax"]')?.content ?? '',
-          metaCode: document.querySelector('meta[name="code"]')?.content ?? '',
-          metaTitle: document.querySelector('meta[name="title"]')?.content ?? '',
-          metaBuild: document.querySelector('meta[name="build"]')?.content ?? '',
-          metaCreationDate: document.querySelector('meta[name="creation date"]')?.content ?? '',
-          metaDate: document.querySelector('meta[name="date"]')?.content ?? '',
-          metaLanguage: document.querySelector('meta[name="language"]')?.content ?? '',
-          
-          metaApplicationName: document.querySelector('meta[name="application-name"]')?.content ?? '',
-          metaThemeColor: theme?.content ?? '',
-          
-          ogTitle: document.querySelector('meta[property="og:title"]')?.content ?? '',
-          ogType: document.querySelector('meta[property="og:type"]')?.content ?? '',
-          ogUrl: document.querySelector('meta[property="og:url"]')?.content ?? '',
-          ogImage: document.querySelector('meta[property="og:image"]')?.content ?? '',
-          ogSiteName: document.querySelector('meta[property="og:site_name"]')?.content ?? '',
-          ogDescription: document.querySelector('meta[property="og:description"]')?.content ?? '',
-          ogLocale: document.querySelector('meta[property="og:locale"]')?.content ?? '',
-          ogDeterminer: document.querySelector('meta[property="og:determiner"]')?.content ?? '',
-          ogAudio: document.querySelector('meta[property="og:audio"]')?.content ?? '',
-          ogVideo: document.querySelector('meta[property="og:video"]')?.content ?? '',
-          
-          pageSelectionText: window.getSelection().toString(),
-          pageH1: document.querySelector('h1')?.textContent ?? '',
-        };
-        // 備考：media 属性等は未考慮
-      };
-      const results = await chrome.scripting.executeScript({target, func});
-      const keys = ['pageTitle', 'pageCanonicalUrl', 'pageImageSrc', 
-                    'metaCharset', 'metaDescription', 'metaKeywords', 
-                    'metaGenerator', 'metaAuthor', 'metaCopyright', 'metaReplyTo', 'metaTel', 'metaFax', 
-                    'metaCode', 'metaTitle', 'metaBuild', 'metaCreationDate', 'metaDate', 'metaLanguage', 
-                    'metaApplicationName', 'metaThemeColor',
-                    'ogTitle', 'ogType', 'ogUrl', 'ogImage', 'ogSiteName', 'ogDescription', 'ogLocale',
-                    'ogDeterminer', 'ogAudio', 'ogVideo', 
-                  /*'pageSelectionText',*/'pageH1'];
-//console.log(results);
-      cmd.selectionText = cmd.selectionText 
-                       || results.find(v => v.result.pageSelectionText)?.result.pageSelectionText || '';
-      cmd.scripting = {};
-      keys.forEach(key => cmd.scripting[key] = results[0].result[key]);
-      cmd.scripting.pageSelectionText = cmd.selectionText;
-      // 備考：複数フレームがある場合、最初のフレームの選択テキストを使用する
-//console.log(cmd.scripting);
-    } catch (e) {
-      cmd.scripting = null;
-      //console.log(e);
-      // 備考：タブコンテキストメニューで非アクティブタブを選択した場合
-      //       非アクティブタブの情報でコピーする（copy_scripting を実施できる）
-      // 備考：「chrome://」では動作しません
-    }
+    // コンテンツスクリプト
+    cmd.scripting = await executeScript(temp[0]);
+    cmd.selectionText = cmd.selectionText || cmd.scripting?.pageSelectionText || '';
   }
   
   // クリップボードにコピー
