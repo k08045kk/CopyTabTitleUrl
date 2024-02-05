@@ -207,13 +207,26 @@ function compile(format, keyset, now) {
           switch (func) {
           case 'replace':
           case 'replaceAll':
-            const flags = func === 'replace' ? '' : 'g';
             if (arg1 != null && arg2 != null) {
+              const flags = func === 'replace' ? '' : 'g';
               ret = input.replace(new RegExp(arg1, flags), arg2);
               success = true;
               // 備考：次の変換に失敗するため、正規表現を replace の入力に与える挙動とする
               //       'abc'.replace('[a]','x');  // abc
               //       'abc'.replace(new RegExp('[a]'),'x');  // xbc
+            }
+            break;
+          case 'match':
+            if (arg1 != null) {
+              const flags = arg2 == 'g' ? 'g' : '';
+              ret = JSON.stringify(input[func](new RegExp(arg1, flags)));
+              success = true;
+            }
+            break;
+          case 'search':
+            if (arg1 != null) {
+              ret = input[func](new RegExp(arg1));
+              success = true;
             }
             break;
           case 'substring':
@@ -278,9 +291,7 @@ function compile(format, keyset, now) {
             success = true;
             break;
           //case 'localeCompare':
-          //case 'match':
           //case 'matchAll':
-          //case 'search':
           // see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
           }
         }
