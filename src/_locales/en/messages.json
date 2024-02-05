@@ -80,6 +80,9 @@
   },
   
   
+  "optionsOptionsPageDetailsContent": {
+    "message": "Please refer to following URL for details on options."
+  },
   "optionsCopyDecodeContent": {
     "message": "Decode the URL"
   },

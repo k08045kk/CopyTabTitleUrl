@@ -223,28 +223,26 @@ body[data-exedit="false"] .exedit,
   <fieldset>
     <legend id="shortcut_legend" data-i18n></legend>
     <p class="chrome">
-      Please change it from browser settings screen.<br>
-      <span class="link">chrome://extensions/shortcuts</span></p>
+      Please change it from browser settings page.<br>
+      <span class="link">chrome://extensions/shortcuts</span>
     <p class="firefox">
-      Please change it from browser settings screen.<br>
-      [about:addons] > [⚙] > [Manage Extension Shortcuts]<br>
-      see <span class="link">https://support.mozilla.org/kb/manage-extension-shortcuts-firefox</span></p>
-    <!--br>
-    <p id="shortcut_commands"></p-->
+      Please change it from browser settings page.<br>
+      [about:addons] > [⚙] > [Manage Extension Shortcuts]
+    <!--p id="shortcut_commands"-->
   </fieldset>
 
 
   <!-- フォーマット -->
   <fieldset id="format">
     <legend id="format_legend" data-i18n></legend>
-    <p class="normal">${title}, ${url}, ${enter}, ${$}.</p>
+    <p class="normal">
+      ${title}, ${url}, ${enter}, ${$}
     <p class="exmode">
-      ${title}, ${url}, ${text}, ${link}, ${src}.<br>
-      ${enter}, ${CR}, ${LF}, ${TAB}, ${$}.<br>
+      ${title}, ${url}, ${text}, ${link}, ${src}<br>
+      ${enter}, ${CR}, ${LF}, ${TAB}, ${$}<br>
       ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}<br>
       ${protocol}//${host}${pathname}${search}${hash}<br>
-      see <span class="link">https://github.com/k08045kk/CopyTabTitleUrl</span></p>
-    <br>
+    <hr><!-- ---------- -->
     <p class="exedit"> title and URL: <input class="format" id="format0" type="text">
     <p class="exedit"> title: <input class="format" id="format1" type="text">
     <p class="exedit"> URL:   <input class="format" id="format2" type="text">
@@ -274,14 +272,11 @@ body[data-exedit="false"] .exedit,
     <div class="enable">
       <hr><!-- ---------- -->
       <p>
-        ${url.length}<br>
-        ${title.toLowerCase()}<br>
-        ${title.replaceAll(text0,'\$&')}<br>
-        This feature is currently being tested.<br>
+        This feature is currently being tested. 🧪<br>
         Backward compatibility of format is not guaranteed.<br>
         Please read the source directly for usage details.<br>
-        see /background/compiler.js</p>
-      <br>
+        see /background/compiler.js
+      <hr><!-- ---------- -->
       <p> ${text0} = <input class="text" id="text0" type="text">
       <p> ${text1} = <input class="text" id="text1" type="text">
       <p> ${text2} = <input class="text" id="text2" type="text">
@@ -298,6 +293,11 @@ body[data-exedit="false"] .exedit,
 
   <!-- その他 -->
   <fieldset>
+    <p class="exmode" id="options_page_details" data-i18n>
+    <p class="exmode">
+      <small>see <span class="link">https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</span></small>
+    <hr class="exmode"><!-- ---------- -->
+
     <p>
       <input id="copy_decode" type="checkbox">
       <label for="copy_decode" data-i18n></label>

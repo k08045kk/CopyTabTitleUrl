@@ -24,6 +24,9 @@
   },
   
   
+  "optionsOptionsPageDetailsContent": {
+    "message": "オプションの詳細は、下記URLを参照ください。"
+  },
   "optionsCopyDecodeContent": {
     "message": "URL をデコードする"
   },
