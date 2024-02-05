@@ -106,14 +106,19 @@ function compile(format, keyset, now) {
         }
         if (arg1 != null && arg2 != null) {
           switch (m.groups.fn) {
-          case 'cond':  ret =  toBoolean(arg1) ? arg2 : '';       success = true; break;
-          case 'condn': ret = !toBoolean(arg1) ? arg2 : '';       success = true; break;
+          case 'cond':  success =  toBoolean(arg1); ret = success ? arg2 : '';  break;
+          case 'condn': success = !toBoolean(arg1); ret = success ? arg2 : '';  break;
           case 'eq':    ret = arg1 == arg2;   success = true; break;
           case 'neq':   ret = arg1 != arg2;   success = true; break;
           case 'and':   ret = toBoolean(arg1) && toBoolean(arg2); success = true; break;
           case 'or':    ret = toBoolean(arg1) || toBoolean(arg2); success = true; break;
           }
           // ${x=Math.eq(text0,text1)}${Math.cond(x,text2)}${Math.condn(x,text3)}
+        }
+        if (arg1 != null && arg2 == null) {
+          switch (m.groups.fn) {
+          case 'cond':  success =  toBoolean(arg1); ret = success ? arg1 : '';  break;
+          }
         }
         if (arg1 != null) {
           switch (m.groups.fn) {
@@ -285,7 +290,7 @@ function compile(format, keyset, now) {
       success = false;
     }
 //console.log('match', match);
-//console.log('ret', ret, success);
+//console.log('ret', ret, success, m.groups.out);
     
     if (m.groups.out != null && success) {
       keyset['${'+m.groups.out+'}'] = ret;
