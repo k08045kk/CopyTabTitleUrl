@@ -186,7 +186,8 @@ const createFormatText = (cmd, tabs) => {
       keyset['${false}'] = false;
       keyset['${NaN}'] = NaN;
       keyset['${Infinity}'] = Infinity;
-      keyset['${tabs.length}'] = tabs.length;
+      //keyset['${tabs.length}'] = tabs.length;
+      keyset['${tabsLength}'] = tabs.length;
     }
     
     keyset['${scripting}'] = !!cmd.scripting;
@@ -284,7 +285,8 @@ const createFormatText = (cmd, tabs) => {
     
     // 変換
     if (ex3(cmd, 'copy_programmable')) {
-      tabkeys.forEach(key => keyset['${tab.'+key+'}'] = tab[key]);
+      //tabkeys.forEach(key => keyset['${tab.'+key+'}'] = tab[key]);
+      tabkeys.forEach(key => keyset['${tab'+(key.at(0).toUpperCase()+key.slice(1))+'}'] = tab[key]);
       // 備考：tab 情報をそのまま提供する（url のデコード等は、実施しない）
       
       temp.push(compile(format, keyset, now));

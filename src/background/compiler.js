@@ -46,6 +46,7 @@ function compile(format, keyset, now) {
     }
   };
   const reserved = [
+    'globalThis', 'this', 'arguments',
     'Math', 'String', 'Date',
     'true', 'false', 'null', 'undefined', 'NaN', 'Infinity',
     '$', 'title', 'url', 'enter',
@@ -73,8 +74,6 @@ function compile(format, keyset, now) {
   // 備考：次の要素にアクセスできない（名称に記号が含まれるため）
   //       ${$}, ${:port}, ${username@}, ${username:password@}
   //       すべて代用が可能なため、現状動作でよしとする。（${port} 等）
-  // 備考：プロパティアクセス系の要素にアクセスできない（名称に記号が含まれるため）
-  //       ${tabs.length}, ${tab.title}
   
   return format.replace(/\${.*?}/ig, (match) => {
     if (keyset.hasOwnProperty(match)) { return keyset[match]; }
@@ -88,7 +87,13 @@ function compile(format, keyset, now) {
 //console.log('copy_programmable', m, keyset);
     
     try {
-      if (m.groups.in === 'Math' && m.groups.args != null) {
+      if (m.groups.in === 'globalThis' && m.groups.idx != null) {
+        const idx = toValue(m.groups.idx);
+        ret = keyset['${'+idx+'}'];
+        success = true;
+        // Deprecated: The feature will be deprecated if a better way to access the element is found.
+        // ${out=globalThis["tab.status"]} => ${tab.status}
+      } else if (m.groups.in === 'Math' && m.groups.args != null) {
         const arg1 = toValue(m.groups.arg1);
         const arg2 = toValue(m.groups.arg2);
         if (isInteger(arg1) && isInteger(arg2)) {
