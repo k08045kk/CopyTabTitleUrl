@@ -48,21 +48,20 @@ function compile(format, keyset, now) {
   const reserved = [
     'Math', 'String', 'Date',
     'true', 'false', 'null', 'undefined', 'NaN', 'Infinity',
-    '$', 'title', 'url',
-    'tabs', 'tab',
+    '$', 'title', 'url', 'enter',
+    'tabs', 'tab', 'scripting',
   ];
   
   const re = /^\${(?:(?<out>\w+)=)?(?<in>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?<supp>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\((?:(?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?:,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}$/;
   // ${(out=)in([idx]|.fn|.fn(args))}
   // ${in.fn(arg1,arg2)}
-  // ${in.fn(arg1)}
   // ${in.fn}
   // ${in[idx]}
   // ${in}
   // ${integer}
   // ${'string'}
   // ${'string'.fn()}
-  // in = constant(Math, String) | variable
+  // in = constant(Math, String, Date) | variable
   // fn = constant(replace, replaceAll, ...)
   // out | idx | arg1 | arg2 = variable
   // variable = property | integer | string
@@ -74,6 +73,8 @@ function compile(format, keyset, now) {
   // 備考：次の要素にアクセスできない（名称に記号が含まれるため）
   //       ${$}, ${:port}, ${username@}, ${username:password@}
   //       すべて代用が可能なため、現状動作でよしとする。（${port} 等）
+  // 備考：プロパティアクセス系の要素にアクセスできない（名称に記号が含まれるため）
+  //       ${tabs.length}, ${tab.title}
   
   return format.replace(/\${.*?}/ig, (match) => {
     if (keyset.hasOwnProperty(match)) { return keyset[match]; }
@@ -106,8 +107,6 @@ function compile(format, keyset, now) {
         }
         if (arg1 != null && arg2 != null) {
           switch (m.groups.fn) {
-          case 'cond':  success =  toBoolean(arg1); ret = success ? arg2 : '';  break;
-          case 'condn': success = !toBoolean(arg1); ret = success ? arg2 : '';  break;
           case 'eq':    ret = arg1 == arg2;   success = true; break;
           case 'neq':   ret = arg1 != arg2;   success = true; break;
           case 'and':   ret = toBoolean(arg1) && toBoolean(arg2); success = true; break;
@@ -115,25 +114,22 @@ function compile(format, keyset, now) {
           }
           // ${x=Math.eq(text0,text1)}${Math.cond(x,text2)}${Math.condn(x,text3)}
         }
-        if (arg1 != null && arg2 == null) {
-          switch (m.groups.fn) {
-          case 'cond':  success =  toBoolean(arg1); ret = success ? arg1 : '';  break;
-          }
-        }
         if (arg1 != null) {
           switch (m.groups.fn) {
           case 'not':   ret = !toBoolean(arg1); success = true; break;
+          case 'cond':  success =  toBoolean(arg1); ret = success ? arg2 ?? arg1 : '';  break;
+          case 'condn': success = !toBoolean(arg1); ret = success ? arg2 ?? arg1 : '';  break;
           }
         }
         if ((arg1 == null && arg2 == null) || (isInteger(arg1) && (arg2 == null || isInteger(arg2)))) {
           switch (m.groups.fn) {
-          case 'random':
-            const max = isInteger(arg1) ? arg1 : 2_147_483_647;   // 32bit符号付き整数の最大値
+          case 'random':        // Math.random()
+                                // Math.random(max)
+                                // Math.random(max,min) or Math.random(min,max)
+            const max = isInteger(arg1) ? arg1 : 2_147_483_647;   // 32bit 符号付き整数の最大値
             const min = isInteger(arg2) ? arg2 : 0;
             ret = Math.floor(Math.random() * (max - min)) + min;  // min <= ret < max
             success = true;
-            // Math.random(max,min), Math.random(max), Math.random()
-            // Math.random(min,max)
             break;
           }
         }
@@ -147,22 +143,26 @@ function compile(format, keyset, now) {
           case 'fromCharCode':  ret = String.fromCharCode.apply(null, args);  success = true; break;
           case 'fromCodePoint': ret = String.fromCodePoint.apply(null, args); success = true; break;
           }
+          // String.fromCharCode(num1: number)
+          // String.fromCharCode(num1: number, num2: number)
           // ${String.fromCharCode(65,66)} => AB
-          // ${String.fromCodePoint(65,66)} => AB
         }
       } else if (m.groups.in === 'Date' && m.groups.args != null) {
         const arg1 = toValue(m.groups.arg1);
+        const arg2 = toValue(m.groups.arg2);
         switch (m.groups.fn) {
         case 'toDateString':  ret = now.toDateString(); success = true; break;
         case 'toISOString':   ret = now.toISOString();  success = true; break;
         case 'toString':      ret = now.toString();     success = true; break;
         case 'toTimeString':  ret = now.toTimeString(); success = true; break;
         case 'toUTCString':   ret = now.toUTCString();  success = true; break;
-        case 'toLocaleDateString':  ret = now.toLocaleDateString(arg1 ?? void 0); success = true; break;
-        case 'toLocaleString':      ret = now.toLocaleString(arg1 ?? void 0);     success = true; break;
-        case 'toLocaleTimeString':  ret = now.toLocaleTimeString(arg1 ?? void 0); success = true; break;
+        case 'toLocaleDateString':  ret = now.toLocaleDateString(arg1); success = true; break;
+        case 'toLocaleString':      ret = now.toLocaleString(arg1);     success = true; break;
+        case 'toLocaleTimeString':  ret = now.toLocaleTimeString(arg1); success = true; break;
         }
-        // ${Date.toLocaleString()}
+        // Date.toLocaleString()
+        // Date.toLocaleString(locales: string)
+        // ${Date.toLocaleString("ja")}
       } else if (m.groups.supp == null) {
         const value = toValue(m.groups.in);
         if (value != null) {
@@ -170,7 +170,7 @@ function compile(format, keyset, now) {
           success = true;
         }
         // ${out=in}, ${integer}, ${'string'}, ${property}
-        // ${x=-1}, ${x="string"}
+        // ${x=-1}, ${x="string"}, ${title}
       } else {
         const input = reString.test(m.groups.in)
                     ? m.groups.in.slice(1, -1)
@@ -188,11 +188,12 @@ function compile(format, keyset, now) {
           }
           // ${array[index]}, ${object[propety]}
           // ${x=array[0]}, ${x=object[propety]}
-          // Error: $('abc'[0]} -> ${'abc'.at(0)}
+          // Error: ${'abc'[0]} -> ${'abc'.at(0)}
+          // Error: ${'["abc","xyz"]'.length} -> 13 instead of 2
         } else if (m.groups.args == null) {
           const func = m.groups.fn;
           switch (func) {
-          case 'length':
+          case 'length':        // in.length
             ret = input[func];
             success = true;
             break;
@@ -205,88 +206,100 @@ function compile(format, keyset, now) {
           const arg2 = toValue(m.groups.arg2);
 //console.log('fn()', input, func, arg1, arg2);
           switch (func) {
-          case 'replace':
-          case 'replaceAll':
+          case 'replace':       // in.replace(pattern: RegExp, replacement: string)
+          case 'replaceAll':    // in.replaceAll(pattern: RegExp, replacement: string)
             if (arg1 != null && arg2 != null) {
               const flags = func === 'replace' ? '' : 'g';
               ret = input.replace(new RegExp(arg1, flags), arg2);
               success = true;
-              // 備考：次の変換に失敗するため、正規表現を replace の入力に与える挙動とする
-              //       'abc'.replace('[a]','x');  // abc
-              //       'abc'.replace(new RegExp('[a]'),'x');  // xbc
             }
             break;
-          case 'match':
+          case 'match':         // in.match(regexp: RegExp, flags: string)
             if (arg1 != null) {
               const flags = arg2 == 'g' ? 'g' : '';
               ret = JSON.stringify(input[func](new RegExp(arg1, flags)));
               success = true;
             }
             break;
-          case 'search':
+          case 'search':        // in.search(regexp: RegExp)
             if (arg1 != null) {
               ret = input[func](new RegExp(arg1));
               success = true;
             }
             break;
-          case 'substring':
-          case 'slice':
+          case 'substring':     // in.substring(indexStart: number)
+                                // in.substring(indexStart: number, indexEnd: number)
+          case 'slice':         // in.slice(indexStart: number)
+                                // in.slice(indexStart: number, indexEnd: number)
             if (isInteger(arg1) && (arg2 == null || isInteger(arg2))) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'padStart':
-          case 'padEnd':
-            if (isInteger(arg1) && arg2 != null) {
+          case 'padStart':      // in.padStart(targetLength: number)
+                                // in.padStart(targetLength: number, padString: string)
+          case 'padEnd':        // in.padEnd(targetLength: number)
+                                // in.padEnd(targetLength: number, padString: string)
+            if (isInteger(arg1)) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'at':
-          case 'charAt':
-          case 'charCodeAt':
-          case 'codePointAt':
-          case 'repeat':
+          case 'at':            // in.at(index: number)
+          case 'charAt':        // in.charAt(index: number)
+          case 'charCodeAt':    // in.charCodeAt(index: number)
+          case 'codePointAt':   // in.codePointAt(index: number)
+          case 'repeat':        // in.repeat(count: number)
             if (isInteger(arg1)) {
               ret = input[func](arg1);
               success = true;
             }
             break;
-          case 'startsWith':
-          case 'endsWith':
-          case 'includes':
-          case 'indexOf':
-          case 'lastIndexOf':
-          case 'normalize':
-            // RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.
+          case 'startsWith':    // in.startsWith(searchString: string)
+                                // in.startsWith(searchString: string, position: number)
+          case 'endsWith':      // in.endsWith(searchString: string)
+                                // in.endsWith(searchString: string, endPosition: number)
+          case 'includes':      // in.includes(searchString: string)
+                                // in.includes(searchString: string, position: number)
+          case 'indexOf':       // in.indexOf(searchString: string)
+                                // in.indexOf(searchString: string, position: number)
+          case 'lastIndexOf':   // in.lastIndexOf(searchString: string)
+                                // in.lastIndexOf(searchString: string, position: number)
             if (arg1 != null) {
-              ret = input[func](arg1);
+              ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'concat':
+          case 'normalize':     // in.normalize()
+                                // in.normalize(form: string)
+            // RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.
+            ret = input[func](arg1);
+            success = true;
+            break;
+          case 'concat':        // in.concat(str1: string)
+                                // in.concat(str1: string, str2: string)
             ret = input[func](arg1 ?? '', arg2 ?? '');
             success = true;
             // ...args 非対応
             break;
-          case 'split':
+          case 'split':         // in.split(separator: string)
+                                // in.split(separator: string, limit: number)
             if (arg1 != null) {
-              ret = JSON.stringify(input[func](arg1));
+              ret = JSON.stringify(input[func](arg1, arg2));
               success = true;
             }
             break;
-          case 'isWellFormed':
-          case 'trim':
-          case 'trimStart':
-          case 'trimEnd':
-          case 'toLocaleLowerCase':
-          case 'toLocaleUpperCase':
-          case 'toLowerCase':
-          case 'toString':
-          case 'toUpperCase':
-          case 'toWellFormed':
-          case 'valueOf':
+          case 'isWellFormed':  // in.isWellFormed()
+          case 'trim':          // in.trim()
+          case 'trimStart':     // in.trimStart()
+          case 'trimEnd':       // in.trimEnd()
+          case 'toLocaleLowerCase': // in.toLocaleLowerCase()
+          case 'toLocaleUpperCase': // in.toLocaleUpperCase()
+          case 'toLowerCase':   // in.toLowerCase()
+          case 'toString':      // in.toString()
+          case 'toUpperCase':   // in.toUpperCase()
+          case 'toWellFormed':  // in.toWellFormed()
+          case 'valueOf':       // in.valueOf()
             ret = input[func]();
             success = true;
             break;
