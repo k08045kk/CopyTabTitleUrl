@@ -9,16 +9,25 @@
  * 
  * Firefox 115.0+
  *   manifest.json
- *     browser_specific_settings.strict_min_version = "115.0";
+ *     browser_specific_settings.gecko.strict_min_version = "115.0";
  *   109: Manifest V3 対応（既定で有効化）
- *   101: browser.scripting.executeScript()
+ *   102: browser.scripting.executeScript()
  *   115: ESR
  *   ???: background module 対応
- *
+ * 
+ * Android Firefox 121.0+
+ *   manifest.json
+ *     browser_specific_settings.gecko_android.strict_min_version = "121.0";
+ *   107: Android Firefox Bate: Supports WebExtension API
+ *   121: Android Firefox: Supports WebExtension API
+ *   There is no following function:
+ *     chrome.contextMenus
+ *     chrome.commands
+ * 
  * Chrome 116+
  *   88:  Manifest v3 対応
+ *   88:  chrome.scripting.executeScript()
  *   94:  structuredClone()
- *   101: chrome.scripting.executeScript()
  *   103: chrome.i18n.getMessage 不具合対応
  *   109: chrome.offscreen
  *   116: chrome.runtime.getContexts({contextTypes:['OFFSCREEN_DOCUMENT']});

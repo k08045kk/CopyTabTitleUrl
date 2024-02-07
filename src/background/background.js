@@ -52,11 +52,11 @@ const onContextMenus = async (info, tab) => {
   cmd.tab = tab;
   onCopy(cmd);
 };
-chrome.contextMenus.onClicked.addListener(onContextMenus);
+chrome.contextMenus?.onClicked.addListener(onContextMenus);
 
 
 // キーボードショートカット
-chrome.commands.onCommand.addListener(async (name, tab) => {
+chrome.commands?.onCommand.addListener(async (name, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   if (name === 'shortcut_action') {
     const id = 3;
@@ -103,6 +103,8 @@ const updateAction = (cmd) => {
 
 // コンテキストメニュー
 const updateContextMenus = async (cmd) => {
+  if (!chrome.contextMenus) { return; }
+  
   // メニュー削除 && ストレージ取得
   await chrome.contextMenus.removeAll();
   

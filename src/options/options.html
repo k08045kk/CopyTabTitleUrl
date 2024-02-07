@@ -106,10 +106,10 @@ body[data-exedit="false"] .exedit,
     <p class="indent">
       <input id="popup_format2" type="checkbox">
       <label for="popup_format2" data-i18n></label>
-    <p class="exmode indent">
+    <p class="exmode indent mobile">
       <input id="popup_title" type="checkbox">
       <label for="popup_title" data-i18n></label>
-    <p class="exmode indent">
+    <p class="exmode indent mobile">
       <input id="popup_tooltip" type="checkbox">
       <label for="popup_tooltip" data-i18n></label>
     
@@ -128,7 +128,7 @@ body[data-exedit="false"] .exedit,
 
 
   <!-- コンテキストメニュー -->
-  <fieldset id="menus" data-edit="false">
+  <fieldset class="mobile" id="menus" data-edit="false">
     <legend id="menus_legend" data-i18n></legend>
     <p>
       <input id="context_all" type="checkbox">
@@ -153,74 +153,37 @@ body[data-exedit="false"] .exedit,
       <label for="context_tab" data-i18n></label>
     <fieldset id="menu_item">
       <legend id="menu_item_legend" data-i18n></legend>
-      <p class="target_wrap">
-        <input class="menu" id="menu0" type="checkbox">
-        <label class="menu_label" for="menu0"> title and URL </label>
-        <input class="menu_title" id="menu0_title" type="text">
-        <select class="exmode exedit menu_target" id="menu0_target"></select>
-      <p class="target_wrap">
-        <input class="menu" id="menu1" type="checkbox">
-        <label class="menu_label" for="menu1"> title </label>
-        <input class="menu_title" id="menu1_title" type="text">
-        <select class="exmode exedit menu_target" id="menu1_target"></select>
-      <p class="target_wrap">
-        <input class="menu" id="menu2" type="checkbox">
-        <label class="menu_label" for="menu2"> URL </label>
-        <input class="menu_title" id="menu2_title" type="text">
-        <select class="exmode exedit menu_target" id="menu2_target"></select>
-      <p class="target_wrap">
-        <input class="menu" id="menu3" type="checkbox">
-        <label class="menu_label" for="menu3"> format </label>
-        <input class="menu_title" id="menu3_title" type="text">
-        <select class="exmode menu_target" id="menu3_target"></select>
-      <p class="target_wrap">
-        <input class="menu" id="menu4" type="checkbox">
-        <label class="menu_label" for="menu4"> format2 </label>
-        <input class="menu_title" id="menu4_title" type="text">
-        <select class="exmode menu_target" id="menu4_target"></select>
+      <template id="template_menuitem">
+        <input class="menu_checkbox" id="" type="checkbox">
+        <label class="menu_label" for=""></label>
+        <input class="menu_title" id="" type="text">
+        <select class="exmode menu_target" id="">
+          <option value="tab">tab</option>
+          <option value="window">window</option>
+          <option value="all">all</option>
+          <option value="separator">separator</option>
+        </select>
+      </template>
+      <p class="menuitem target_wrap" id="menu0" data-text="title and URL" data-edit="exedit">
+      <p class="menuitem target_wrap" id="menu1" data-text="title" data-edit="exedit">
+      <p class="menuitem target_wrap" id="menu2" data-text="URL" data-edit="exedit">
+      <p class="menuitem target_wrap" id="menu3" data-text="format">
+      <p class="menuitem target_wrap" id="menu4" data-text="format2">
       <hr class="exmode"><!-- ---------- -->
-      <p class="exmode target_wrap">
-        <input class="menu" id="menu5" type="checkbox">
-        <label class="menu_label" id="menu5_label" for="menu5">format3</label>
-        <input class="menu_title" id="menu5_title" type="text">
-        <select class="exmode menu_target" id="menu5_target"></select>
-      <p class="exmode target_wrap">
-        <input class="menu" id="menu6" type="checkbox">
-        <label class="menu_label" id="menu6_label" for="menu6">format4</label>
-        <input class="menu_title" id="menu6_title" type="text">
-        <select class="exmode menu_target" id="menu6_target"></select>
-      <p class="exmode target_wrap">
-        <input class="menu" id="menu7" type="checkbox">
-        <label class="menu_label" id="menu7_label" for="menu7">format5</label>
-        <input class="menu_title" id="menu7_title" type="text">
-        <select class="exmode menu_target" id="menu7_target"></select>
-      <p class="exmode target_wrap">
-        <input class="menu" id="menu8" type="checkbox">
-        <label class="menu_label" id="menu8_label" for="menu8">format6</label>
-        <input class="menu_title" id="menu8_title" type="text">
-        <select class="exmode menu_target" id="menu8_target"></select>
-      <p class="exmode target_wrap">
-        <input class="menu" id="menu9" type="checkbox">
-        <label class="menu_label" id="menu9_label" for="menu9">format7</label>
-        <input class="menu_title" id="menu9_title" type="text">
-        <select class="exmode menu_target" id="menu9_target"></select>
-      <p class="exmode target_wrap">
-        <input class="menu" id="menu10" type="checkbox">
-        <label class="menu_label" id="menu10_label" for="menu10">format8</label>
-        <input class="menu_title" id="menu10_title" type="text">
-        <select class="exmode menu_target" id="menu10_target"></select>
+      <p class="exmode menuitem target_wrap" id="menu5" data-text="format3">
+      <p class="exmode menuitem target_wrap" id="menu6" data-text="format4">
+      <p class="exmode menuitem target_wrap" id="menu7" data-text="format5">
+      <p class="exmode menuitem target_wrap" id="menu8" data-text="format6">
+      <p class="exmode menuitem target_wrap" id="menu9" data-text="format7">
+      <p class="exmode menuitem target_wrap" id="menu10" data-text="format8">
       <hr class="exmode"><!-- ---------- -->
-      <p class="exmode target_wrap">
-        <input class="menu" id="menu11" type="checkbox">
-        <label class="menu_label" id="menu11_label" for="menu11">format9</label>
-        <input class="menu_title" id="menu11_title" type="text">
-        <select class="exmode menu_target" id="menu11_target"></select>
+      <p class="exmode menuitem target_wrap" id="menu11" data-text="format9">
     </fieldset>
   </fieldset>
 
 
   <!-- キーボードショートカット -->
-  <fieldset>
+  <fieldset class="mobile" id="shortcut">
     <legend id="shortcut_legend" data-i18n></legend>
     <p class="chrome">
       Please change it from browser settings page.<br>
@@ -324,19 +287,19 @@ body[data-exedit="false"] .exedit,
       <label id="separator_label" data-i18n></label>
       <input id="separator" type="text">
 
-    <hr><!-- ---------- -->
-    <p>
+    <hr class="mobile"><!-- ---------- -->
+    <p class="mobile">
       <input id="exclude_pin" type="checkbox">
       <label for="exclude_pin" data-i18n></label>
-    <p class="firefox">
+    <p class="firefox mobile">
       <input id="exclude_hidden" type="checkbox">
       <label for="exclude_hidden" data-i18n></label>
 
-    <hr class="exmode">
-    <p class="exmode">
+    <hr class="exmode mobile">
+    <p class="exmode mobile">
       <input id="menus_edit_title" type="checkbox">
       <label for="menus_edit_title" data-i18n></label>
-    <p class="exmode">
+    <p class="exmode mobile">
       <input id="menus_format9" type="checkbox">
       <label for="menus_format9" data-i18n></label> 🧪
 
