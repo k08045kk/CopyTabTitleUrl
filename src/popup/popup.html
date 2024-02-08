@@ -8,15 +8,14 @@
   box-sizing: border-box;
 }
 body {
-  width: 160px;
+  min-width: 160px; /* 10em - 3em = 7em */
+  max-width: 250px; /* 15em - 3em = 12em */
   color: #000;
   pading: 0;
-  margin: auto;
+  margin: auto;      /* mobile 対策 モバイルの左右はいろいろ怪しいため、中央寄せ */
+  border: 1px solid #aaa;
   font-size: 16px;
   user-select: none;
-}
-#panel, #action {
-  border: 1px solid #aaa;
 }
 
 .clearfix::after {
@@ -28,37 +27,39 @@ body {
 [hidden] {
   display: none !important;
 }
-#action {
-  text-align: center;
-}
 
 .title {
   font-size: 12px;
-  text-align: center;
-  padding: .25em 0;
+  padding: .25em;
 }
 .box {
   border-bottom: 1px solid #aaa;
 }
 .copy {
   padding: .5em 1.5em;
-}
-.target {
-  width: 50%;
-  text-align: center;
-  padding: .5em 0;
-  float: left;
-}
-.item {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+.copy::before { /* menus_edit_title の空文字対策 */
+  content: '';
+  display: inline-block;
+}
+.target {
+  width: 50%;
+  padding: .5em;
+  float: left;
+}
+.title,
+.target,
+.complete {
+  text-align: center;
 }
 .item:hover {
   background: #b995c5;
   color: #fff;
 }
-#target_win_label_div {
+#target_win_label {
   border-right: 1px solid #aaa;
 }
 #target_win:checked ~ .box .item.win, 
@@ -73,8 +74,6 @@ body {
 #footer::after {
   content: 'tab';
 }
-#target_win:hover ~ #footer::after, 
-#target_all:hover ~ #footer::after,
 #target_win:checked ~ #footer::after, 
 #target_all:checked ~ #footer::after {
   content: 'tabs';
@@ -102,12 +101,8 @@ body {
     <input class="hide" id="target_win" type="checkbox"/>
     <input class="hide" id="target_all" type="checkbox"/>
     <div class="box clearfix">
-      <label id="target_win_label" for="target_win">
-        <div class="item target win" id="target_win_label_div">Window</div>
-      </label>
-      <label id="target_all_label" for="target_all">
-        <div class="item target all">All</div>
-      </label>
+      <label class="item target win" id="target_win_label" for="target_win">window</label>
+      <label class="item target all" id="target_all_label" for="target_all">all</label>
     </div>
     <div class="title" id="footer"></div>
   </div>
@@ -115,7 +110,7 @@ body {
 
   <div id="action" hidden>
     <div class="title"></div>
-    <p style="text-align:center;">Completed</p>
+    <p class="complete">Completed</p>
     <div class="title"></div>
   </div>
 </body>
