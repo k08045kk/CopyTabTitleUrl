@@ -7,6 +7,7 @@
   
   "author": "toshi",
   "homepage_url": "https://github.com/k08045kk/CopyTabTitleUrl",
+  "minimum_chrome_version": "116.0",
   
   "background": {
     "service_worker": "/background/background.js"

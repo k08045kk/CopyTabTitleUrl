@@ -19,12 +19,14 @@
  *   manifest.json
  *     browser_specific_settings.gecko_android.strict_min_version = "121.0";
  *   107: Android Firefox Bate: Supports WebExtension API
- *   121: Android Firefox: Supports WebExtension API
+ *   121: Android Firefox:      Supports WebExtension API
  *   There is no following function:
  *     chrome.contextMenus
  *     chrome.commands
  * 
  * Chrome 116+
+ *   manifest.json
+ *     minimum_chrome_version = "116.0"
  *   88:  Manifest v3 対応
  *   88:  chrome.scripting.executeScript()
  *   94:  structuredClone()

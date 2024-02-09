@@ -52,6 +52,9 @@
   
   "commands": {
     "shortcut_action": {
+      "suggested_key": {
+        "default": "Alt+C"
+      },
       "description": "format"
     },
     "shortcut_action2": {
