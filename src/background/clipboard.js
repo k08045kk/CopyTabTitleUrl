@@ -399,3 +399,4 @@ const onCopy = async (cmd) => {
     chrome.runtime.sendMessage({target:'popup', type:cmd.callback});
   }
 };
+// 備考：Kiwi Browser ですべてのタブをコピーしてしまう（tabs.query()）
