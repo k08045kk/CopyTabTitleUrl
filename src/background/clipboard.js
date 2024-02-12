@@ -345,6 +345,24 @@ const copyToClipboard = async (cmd, tabs) => {
 };
 
 
+const tabsQuery = async (query) => {
+  if (isKiwi()) {
+    let tabs = await chrome.tabs.query(query);
+    
+    delete query.currentWindow;
+    for (const key of Object.keys(query)) {
+      tabs = tabs.filter(tab => tab[key] === query[key]);
+    }
+    
+    const popupUrl = chrome.runtime.getURL('/popup/popup.html');
+    tabs = tabs.filter(tab => tab.url !== popupUrl);
+    return tabs;
+    // 備考：Kiwi Browser が mv3 で常にすべてのタブをコピーする
+    //       Yandex Browser も巻き込まれる（問題はないはず）
+  } else {
+    return await chrome.tabs.query(query);
+  }
+};
 
 // コピーイベント（background.js）
 const onCopy = async (cmd) => {
@@ -367,7 +385,8 @@ const onCopy = async (cmd) => {
   // カレントウィンドウのすべてのタブ:   {currentWindow:true}
   // カレントウィンドウの選択中のタブ:   {currentWindow:true, highlighted:true}
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
-  const tabs = await chrome.tabs.query(targetQuery);
+  //const tabs = await chrome.tabs.query(targetQuery);
+  const tabs = await tabsQuery(targetQuery);
   let temp = tabs;
   if (cmd.tab && cmd.target == 'tab') {
     // 未選択タブのタブコンテキストメニューは、カレントタブとして扱わない
@@ -387,7 +406,8 @@ const onCopy = async (cmd) => {
   }
   if (temp.length === 0) {
     // #24 コピーするタブがない場合、カレントタブをコピーする
-    temp = await chrome.tabs.query({currentWindow:true, active:true});
+    //temp = await chrome.tabs.query({currentWindow:true, active:true});
+    temp = await tabsQuery({currentWindow:true, active:true});
   }
   
   if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {

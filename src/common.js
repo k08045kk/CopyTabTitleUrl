@@ -43,6 +43,7 @@ const module = {};
 // ブラウザ判定
 const isFirefox = () => 'browser' in globalThis;
 const isChrome = () => !isFirefox();
+const isKiwi = () => isChrome() && navigator.userAgent.indexOf('Android') >= 0;
 
 
 
