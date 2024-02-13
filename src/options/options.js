@@ -130,7 +130,7 @@ async function onUpdateOptions() {
 async function onUpdateMenus() {
   const cmd = await chrome.storage.local.get({menus: defaultStorage.menus});
   for (let i=0; i<MENUS_LEN; i++) {
-    cmd.menus[i].enable = document.getElementById('menu'+i+'_checkbox').checked;
+    cmd.menus[i].enable = document.getElementById('menu'+i+'_enable').checked;
     cmd.menus[i].title = document.getElementById('menu'+i+'_title').value;
     cmd.menus[i].target = document.getElementById('menu'+i+'_target').value;
   }
@@ -179,7 +179,7 @@ async function setupOptionPage() {
   document.getElementById('separator').value  = cmd.separator;
   
   for (let i=0; i<MENUS_LEN; i++) {
-    document.getElementById('menu'+i+'_checkbox').checked  = !!cmd.menus[i].enable;
+    document.getElementById('menu'+i+'_enable').checked  = !!cmd.menus[i].enable;
     document.getElementById('menu'+i+'_title').value = cmd.menus[i].title;
     document.getElementById('menu'+i+'_target').value = cmd.menus[i].target;
   }
@@ -241,8 +241,8 @@ function startupOptionPage() {
   document.querySelectorAll('.menuitem').forEach((element, index) => {
     const clone = menu.content.cloneNode(true);
     const id = element.id;
-    clone.querySelector('.menu_checkbox').id = id+'_checkbox';
-    clone.querySelector('.menu_label').setAttribute('for', id+'_checkbox');
+    clone.querySelector('.menu_enable').id = id+'_enable';
+    clone.querySelector('.menu_label').setAttribute('for', id+'_enable');
     clone.querySelector('.menu_label').textContent = element.dataset.text;
     clone.querySelector('.menu_title').id = id+'_title';
     clone.querySelector('.menu_target').id = id+'_target';
@@ -274,14 +274,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   await setupOptionPage();
   
   // イベント設定
-  document.querySelectorAll('[type="checkbox"]:not(.menu_checkbox)').forEach((element) => {
+  document.querySelectorAll('[type="checkbox"]:not(.menu_enable)').forEach((element) => {
     element.addEventListener('change', onUpdateOptions);
   });
   document.querySelectorAll('[type="radio"], .action_target').forEach((element) => {
     element.addEventListener('change', onUpdateOptions);
   });
   document.getElementById('newline').addEventListener('change', onUpdateOptions);
-  document.querySelectorAll('.menu_checkbox, .menu_target').forEach((element) => {
+  document.querySelectorAll('.menu_enable, .menu_target').forEach((element) => {
     element.addEventListener('change', onUpdateMenus);
   });
   document.querySelectorAll('.menu_title').forEach((element) => {
