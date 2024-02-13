@@ -113,7 +113,7 @@ const createFormatText = (cmd, tabs) => {
   const keyset = {};
   const now = new Date();
   let format = cmd.format;
-  let separator = isExtendedMode ? cmd.separator : defaultStorage.separator;
+  let separator = cmd.separator;
   
   // Standard
   keyset['${enter}'] = enter;
@@ -188,21 +188,6 @@ const createFormatText = (cmd, tabs) => {
       keyset['${Infinity}'] = Infinity;
       //keyset['${tabs.length}'] = tabs.length;
       keyset['${tabsLength}'] = tabs.length;
-    }
-    
-    keyset['${scripting}'] = !!cmd.scripting;
-    if (cmd.scripting) {
-      Object.keys(cmd.scripting).forEach(key => keyset['${'+key+'}'] = cmd.scripting[key]);
-    }
-    if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && tabs.length === 1) {
-      keyset['${canonicalUrl}'] = keyset['${pageCanonicalUrl}'] || keyset['${ogUrl}'] || tabs[0].url;
-      keyset['${canonicalUrl}'] = decodeURL(keyset['${canonicalUrl}'], isDecode, isPunycode);
-      keyset['${ogpUrl}'] = keyset['${ogpUrl}'] || tabs[0].url;
-      keyset['${ogpUrl}'] = decodeURL(keyset['${ogpUrl}'], isDecode, isPunycode);
-      keyset['${ogpImage}'] = keyset['${ogpImage}'] || '';
-      keyset['${ogpImage}'] = decodeURL(keyset['${ogpImage}'], isDecode, isPunycode);
-      keyset['${ogpTitle}'] = keyset['${ogpTitle}'] || tabs[0].title;
-      keyset['${ogpDescription}'] = keyset['${ogpDescription}'] || '';
     }
   }
   const sep = ex3(cmd, 'copy_programmable')
@@ -282,6 +267,22 @@ const createFormatText = (cmd, tabs) => {
         });
       }
       // 備考：username, password は、閲覧 URL としては出現しないはず（一応実装しておく）
+    }
+    
+    // Scripting
+    keyset['${scripting}'] = !!cmd.scripting;
+    if (cmd.scripting) {
+      Object.keys(cmd.scripting).forEach(key => keyset['${'+key+'}'] = cmd.scripting[key]);
+    }
+    if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && tabs.length === 1) {
+      keyset['${canonicalUrl}'] = keyset['${pageCanonicalUrl}'] || keyset['${ogUrl}'] || tab.url;
+      keyset['${canonicalUrl}'] = decodeURL(keyset['${canonicalUrl}'], isDecode, isPunycode);
+      keyset['${ogpUrl}'] = keyset['${ogpUrl}'] || tab.url;
+      keyset['${ogpUrl}'] = decodeURL(keyset['${ogpUrl}'], isDecode, isPunycode);
+      keyset['${ogpImage}'] = keyset['${ogpImage}'] || '';
+      keyset['${ogpImage}'] = decodeURL(keyset['${ogpImage}'], isDecode, isPunycode);
+      keyset['${ogpTitle}'] = keyset['${ogpTitle}'] || tab.title;
+      keyset['${ogpDescription}'] = keyset['${ogpDescription}'] || '';
     }
     
     // 変換
@@ -367,6 +368,7 @@ const tabsQuery = async (query) => {
 // コピーイベント（background.js）
 const onCopy = async (cmd) => {
   cmd.enter = await getEnterCode(cmd);
+  cmd.separator = ex3(cmd) ? cmd.separator : defaultStorage.separator;
   
   const targetQuery = {
     'tab': {currentWindow:true, highlighted:true}, 
@@ -412,13 +414,17 @@ const onCopy = async (cmd) => {
   
   if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
     // コンテンツスクリプト
-    cmd.scripting = await executeScript(temp[0]);
+    cmd.scripting = await executeScript(temp[0], cmd);
     cmd.selectionText = cmd.selectionText || cmd.scripting?.pageSelectionText || '';
   }
   
   // クリップボードにコピー
   await copyToClipboard(cmd, temp);
   if (cmd.callback) {
-    chrome.runtime.sendMessage({target:'popup', type:cmd.callback});
+    try {
+      await chrome.runtime.sendMessage({target:'popup', type:cmd.callback});
+    } catch {
+      // 備考：window.prompt() でポップアップが閉じる
+    }
   }
 };

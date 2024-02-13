@@ -74,6 +74,8 @@ function compile(format, keyset, now) {
   // 備考：次の要素にアクセスできない（名称に記号が含まれるため）
   //       ${$}, ${:port}, ${username@}, ${username:password@}
   //       すべて代用が可能なため、現状動作でよしとする。（${port} 等）
+  // 備考：正規表現を変更する場合、次の場所も考慮する。
+  //       scripting.js: isPrompt
   
   return format.replace(/\${.*?}/ig, (match) => {
     if (keyset.hasOwnProperty(match)) { return keyset[match]; }

@@ -5,10 +5,11 @@
 'use strict';
 
 
-async function executeScript(tab) {
+async function executeScript(tab, cmd) {
+  let data = {};
   try {
-    const target = {tabId:tab.id, allFrames:true};
-    const func = () => {
+    const target = {tabId:tab.id};
+    const func = (isPrompt) => {
       return {
         pageTitle: document.querySelector('title')?.textContent ?? '',
         pageCanonicalUrl: document.querySelector('link[rel="canonical" i]')?.href ?? '',
@@ -48,30 +49,45 @@ async function executeScript(tab) {
         ogAudio: document.querySelector('meta[property="og:audio" i]')?.content ?? '',
         ogVideo: document.querySelector('meta[property="og:video" i]')?.content ?? '',
         
-        pageSelectionText: window.getSelection().toString(),
         pageH1: document.querySelector('h1')?.textContent ?? '',
+        pageSelectionText: window.getSelection().toString(),
+        pagePrompt: isPrompt ? window.prompt('Input string: ${pagePrompt}') ?? '' : '',
       };
     };
-    const results = await chrome.scripting.executeScript({target, func});
-//console.log(results);
-    const data = {};
+    const isPrompt = tab.active && !(isMobile() && cmd.callback) && /\${(?:(?<out>\w+)=)?pagePrompt(?<supp>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\((?:(?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?:,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}/.test(cmd.format);
+    const args = [isPrompt];
+    const results = await chrome.scripting.executeScript({target, func, args});
     Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
-    data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
-                          || '';
     data.ogpUrl = data.ogUrl || data.pageCanonicalUrl || '';
     data.ogpImage = data.ogImage || data.pageImageSrc || '';
     data.ogpTitle = data.ogTitle || data.metaTitle || data.pageTitle || '';
     data.pageDescription = data.metaDescription || data.ogDescription || '';
     data.ogpDescription = data.ogDescription || data.metaDescription || '';
-    // URL 系は、以降の処理でデコードする（ここではデコードしない）
-    return data;
-//console.log(data);
+    // 備考：URL 系は、以降の処理でデコードする（ここではデコードしない）
   } catch (e) {
+    data = null;
     //console.log(e);
-    // 備考：タブコンテキストメニューで非アクティブタブを選択した場合
-    //       非アクティブタブの情報でコピーする（copy_scripting を実施できる）
-    // 備考：「chrome://」では動作しない
-    // 備考：複数フレームがある場合、最初のフレームの選択テキストを使用する
+    // 備考：「chrome://」「about:」「mozilla.org」（特権ページ）では動作しない
   }
-  return null;
+  
+  try {
+    if (data?.pageSelectionText == '') {
+      const target = {tabId:tab.id, allFrames:true};
+      const func = () => {
+        return {
+          pageSelectionText: window.getSelection().toString(),
+        };
+      };
+      const results = await chrome.scripting.executeScript({target, func});
+      data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
+                            || '';
+      // 備考：サブフレームの選択テキスト対応
+    }
+  } catch {}
+  
+  return data;
+  // 備考：非アクティブ（タブコンテキストメニュー）で動作する（copy_scripting を実施できる）
+  // 備考：非アクティブ（タブコンテキストメニュー）では、 ${pagePrompt} が動作しない
+  // 備考：モバイルの ${pagePrompt} は、ポップアップ（完了通知含む）で非対応
+  // 備考：separator では、動作しない
 };

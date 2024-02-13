@@ -43,7 +43,9 @@ const module = {};
 // ブラウザ判定
 const isFirefox = () => 'browser' in globalThis;
 const isChrome = () => !isFirefox();
-const isKiwi = () => isChrome() && navigator.userAgent.indexOf('Android') >= 0;
+const isKiwi = () => isChrome() && /(Android)/i.test(navigator.userAgent);
+const isMobile = () => /(Mobile|Android|iPhone)/i.test(navigator.userAgent);
+// 備考：非モバイルの Android 端末が存在する。（大画面端末のタブレット）
 
 
 
