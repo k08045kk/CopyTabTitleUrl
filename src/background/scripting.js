@@ -50,6 +50,7 @@ async function executeScript(tab, cmd) {
         ogVideo: document.querySelector('meta[property="og:video" i]')?.content ?? '',
         
         pageH1: document.querySelector('h1')?.textContent ?? '',
+        //pageAhrefs: [...new Set([...document.querySelectorAll('a[href]')].map(a => a.href).filter(href => !/(^$|^javascript:)/i.test(href)))].join('\n'),
         pageSelectionText: window.getSelection().toString(),
         pagePrompt: isPrompt ? window.prompt('Input string: ${pagePrompt}') ?? '' : '',
       };
