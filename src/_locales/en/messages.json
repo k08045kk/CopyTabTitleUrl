@@ -90,10 +90,10 @@
     "message": "Interprets percent encoding."
   },
   "optionsCopyPunycodeContent": {
-    "message": "Decode the punycode"
+    "message": "Decode the Punycode"
   },
   "optionsCopyPunycodeTitle": {
-    "message": "Interpret the punycode."
+    "message": "Interpret the Punycode."
   },
   "optionsCopyClipboardApiContent": {
     "message": "Use Clipboard API"
