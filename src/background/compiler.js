@@ -24,7 +24,7 @@ function compile(format, keyset, now) {
       return toInteger(text);
     } else if (reString.test(text)) {
       return text.slice(1, -1);
-    } else if (keyset['${'+text+'}'] != null) {
+    } else if (keyset['${'+text+'}'] !== void 0) {
       if (reInteger.test(keyset['${'+text+'}'])) {
         const i = toInteger(keyset['${'+text+'}']);
         if (i != null) { return i; }
@@ -34,16 +34,9 @@ function compile(format, keyset, now) {
     return void 0;
   };
   const toBoolean = (value) => {
-    switch (value) {
-    case 'false':
-    case 'undefined':
-    case 'null':
-    case 'NaN':
-    case '0':
-    case '':      return false;
-    //case 'true':
-    default:      return !!value;
-    }
+    return !!value;
+    // false: false, undefined, null, NaN, 0, ''
+    // true: true, -1, 'false', 'undefined', 'null', 'NaN', '0'
   };
   const reserved = [
     'globalThis', 'this', 'arguments',
@@ -112,7 +105,7 @@ function compile(format, keyset, now) {
           }
           // ${ampm=Math.div(H,12)}
         }
-        if (arg1 != null && arg2 != null) {
+        if (arg1 !== void 0 && arg2 !== void 0) {
           switch (m.groups.fn) {
           case 'eq':    ret = arg1 == arg2;   success = true; break;
           case 'neq':   ret = arg1 != arg2;   success = true; break;
@@ -121,7 +114,7 @@ function compile(format, keyset, now) {
           }
           // ${x=Math.eq(text0,text1)}${Math.cond(x,text2)}${Math.condn(x,text3)}
         }
-        if (arg1 != null) {
+        if (arg1 !== void 0) {
           switch (m.groups.fn) {
           case 'not':   ret = !toBoolean(arg1); success = true; break;
           case 'cond':  success =  toBoolean(arg1); ret = success ? arg2 ?? arg1 : '';  break;
@@ -172,7 +165,7 @@ function compile(format, keyset, now) {
         // ${Date.toLocaleString("ja")}
       } else if (m.groups.supp == null) {
         const value = toValue(m.groups.in);
-        if (value != null) {
+        if (value !== void 0) {
           ret = value;
           success = true;
         }
@@ -189,7 +182,7 @@ function compile(format, keyset, now) {
         } else if (m.groups.idx != null) {
           const idx = toValue(m.groups.idx);
           const obj = JSON.parse(input);
-          if (typeof obj === "object" && obj !== null && obj[idx] != null) {
+          if (typeof obj === "object" && obj !== null && obj[idx] !== void 0) {
             ret = obj[idx];
             success = true;
           }

@@ -180,8 +180,8 @@ const createFormatText = (cmd, tabs) => {
       //keyset['${Math}'] = 'Math';
       //keyset['${String}'] = 'String';
       // 未定義の方が違和感がない？
-      keyset['${undefined}'] = 'undefined';
-      keyset['${null}'] = 'null';
+      keyset['${undefined}'] = undefined;
+      keyset['${null}'] = null;
       keyset['${true}'] = true;
       keyset['${false}'] = false;
       keyset['${NaN}'] = NaN;
