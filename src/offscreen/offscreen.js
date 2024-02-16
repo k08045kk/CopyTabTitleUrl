@@ -3,7 +3,7 @@
 chrome.runtime.onMessage.addListener((data, sender) => {
   if (data.target === 'offscreen' && data.type === 'clipboardWrite') {  // clipboard.js
 /**/// a. document.execCommand('copy') ----------------------------------------
-    document.addEventListener('copy', () => {
+    window.addEventListener('copy', function(event) {
       event.preventDefault();
       event.stopImmediatePropagation();
       

@@ -326,7 +326,7 @@ const copyToClipboard = async (cmd, tabs) => {
         //console.log('failed');
       });
     } else {
-      document.addEventListener('copy', () => {
+      window.addEventListener('copy', function(event) {
         event.preventDefault();
         event.stopImmediatePropagation();
         
