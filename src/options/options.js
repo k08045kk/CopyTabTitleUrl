@@ -236,11 +236,20 @@ async function onReset() {
 
 
 function startupOptionPage() {
-  // add: .menuitem
-  const menu = document.getElementById('template_menuitem');
-  document.querySelectorAll('.menuitem').forEach((element, index) => {
+  // template: checkbox
+  const checkbox = document.getElementById('template_checkbox');
+  document.querySelectorAll('[data-template="checkbox"]').forEach((element) => {
+    const clone = checkbox.content.cloneNode(true);
+    clone.querySelector('input').id = element.dataset.id;
+    clone.querySelector('label').setAttribute('for', element.dataset.id);
+    element.appendChild(clone);
+  });
+  
+  // template: menu
+  const menu = document.getElementById('template_menu');
+  document.querySelectorAll('[data-template="menu"]').forEach((element, index) => {
     const clone = menu.content.cloneNode(true);
-    const id = element.id;
+    const id = element.dataset.id;
     clone.querySelector('.menu_enable').id = id+'_enable';
     clone.querySelector('.menu_label').setAttribute('for', id+'_enable');
     clone.querySelector('.menu_label').textContent = element.dataset.text;
@@ -249,6 +258,7 @@ function startupOptionPage() {
     if (element.dataset.edit === 'exedit') {
       clone.querySelector('.menu_target').classList.add('exedit');
     }
+    element.classList.add('clearfix');
     element.appendChild(clone);
   });
   
