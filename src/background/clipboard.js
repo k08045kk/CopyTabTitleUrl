@@ -204,7 +204,7 @@ const createFormatText = (cmd, tabs) => {
                    'isArticle','isInReaderMode','lastAccessed','mutedInfo','openerTabId','pinned',
                    'sessionId','status','successorId','title','url','width','windowId'];
   // see https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab
-  let idx = 0;  // ${idx}
+  let idx = 0;  // ${tabsIndex}
   
   for (const tab of tabs) {
     // Standard
@@ -287,7 +287,7 @@ const createFormatText = (cmd, tabs) => {
     
     // 変換
     if (ex3(cmd, 'copy_programmable')) {
-      keyset['${idx}'] = idx++;
+      keyset['${tabsIndex}'] = idx++;
       
       //tabkeys.forEach(key => keyset['${tab.'+key+'}'] = tab[key]);
       tabkeys.forEach(key => keyset['${tab'+(key.at(0).toUpperCase()+key.slice(1))+'}'] = tab[key]);
