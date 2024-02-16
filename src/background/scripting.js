@@ -60,8 +60,11 @@ async function executeScript(tab, cmd) {
         ogVideo: document.querySelector('meta[property="og:video" i]')?.content ?? '',
         
         pageH1: document.querySelector('h1')?.textContent ?? '',
-        //pageAhrefs: [...new Set([...document.querySelectorAll('a[href]')].map(a => a.href).filter(href => !/(^$|^javascript:)/i.test(href)))].join('\n'),
+        //pageHs: [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].map(h => h.textContent).join('\n'),
+        //pageAhrefs: [...new Set([...document.links].map(a => a.href).filter(href => !/(^$|^javascript:)/i.test(href)))].join('\n'),
+        //pageImages: [...new Set([...document.images].map(a => a.src).filter(src => !/(^$|^data:)/i.test(src)))].join('\n'),
         pageSelectionText: window.getSelection().toString(),
+        // 備考：ShadowDOM を含む場合、始点のと同じ DOM 内のみ取得する。（ShadowDOM を越境して取得しない）
         pagePrompt: isPrompt ? window.prompt('Input string: ${pagePrompt}') ?? '' : '',
       };
     };
@@ -87,12 +90,15 @@ async function executeScript(tab, cmd) {
       const func = () => {
         return {
           pageSelectionText: window.getSelection().toString(),
+          
+          //pageURL: document.URL ?? '',
         };
       };
       const results = await chrome.scripting.executeScript({target, func});
       data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
                             || '';
       // 備考：サブフレームの選択テキスト対応
+      //data.pageURLs = results.map(v => v.result.pageURL || '');
     }
   } catch {}
   
