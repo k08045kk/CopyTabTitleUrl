@@ -166,12 +166,8 @@ body[data-exedit="false"] .exedit,
   <!-- キーボードショートカット -->
   <fieldset class="mobile" id="shortcut">
     <legend id="shortcut_legend" data-i18n></legend>
-    <p class="chrome">
-      Please change it from browser settings page.<br>
-      <span class="link">chrome://extensions/shortcuts</span>
-    <p class="firefox">
-      Please change it from browser settings page.<br>
-      [about:addons] > [⚙] > [Manage Extension Shortcuts]
+    <p class="chrome" id="shortcut_chrome" data-i18n>
+    <p class="firefox" id="shortcut_firefox" data-i18n>
     <!--p id="shortcut_commands"-->
   </fieldset>
 
@@ -235,7 +231,8 @@ body[data-exedit="false"] .exedit,
   <fieldset>
     <p class="exmode" id="options_page_details" data-i18n>
     <p class="exmode">
-      <small>see <span class="link">https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</span></small>
+      <small class="chrome">see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</small>
+      <span class="firefox">see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</span>
     <hr class="exmode"><!-- ---------- -->
 
     <p data-template="checkbox" data-id="copy_decode">

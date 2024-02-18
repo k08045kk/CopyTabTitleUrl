@@ -24,6 +24,14 @@
   },
   
   
+  "optionsShortcutChromeInnerText": {
+    "message": "ブラウザの設定ページから変更してください。\nchrome://extensions/shortcuts"
+  },
+  "optionsShortcutFirefoxInnerText": {
+    "message": "ブラウザの設定ページから変更してください。\n[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]"
+  },
+  
+  
   "optionsOptionsPageDetailsContent": {
     "message": "オプションの詳細は、下記 URL を参照ください。"
   },

@@ -34,7 +34,10 @@ function updateOptionPage() {
     const key = id.replace(/(^[a-z]|_[a-z])/g, m => m.at(-1).toUpperCase());
     
     const content = getMessage('options'+key+'Content');
-    if (content) { v.textContent =  content; }
+    if (content) { v.textContent = content; }
+    
+    const inner = getMessage('options'+key+'InnerText');
+    if (inner) { v.innerText = inner; }
     
     const title = getMessage('options'+key+'Title');
     if (title) { v.title = title; }

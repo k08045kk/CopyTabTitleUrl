@@ -62,6 +62,12 @@
   "optionsShortcutLegendContent": {
     "message": "Keyboard Shortcut"
   },
+  "optionsShortcutChromeInnerText": {
+    "message": "Please change it from browser settings page.\nchrome://extensions/shortcuts"
+  },
+  "optionsShortcutFirefoxInnerText": {
+    "message": "Please change it from browser settings page.\n[about:addons] > [⚙] > [Manage Extension Shortcuts]"
+  },
   
   
   "optionsFormatLegendContent": {
