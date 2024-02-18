@@ -1,4 +1,7 @@
 {
+  "extensionName": {
+    "message": "CopyTabTitleUrl"
+  },
   "extensionDescription": {
     "message": "タイトルと URL をクリップボードにコピーします。"
   },

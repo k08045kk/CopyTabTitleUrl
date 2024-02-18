@@ -34,7 +34,7 @@ You can perform actions from the following operations.
 
 You can perform actions in combination with the following auxiliary functions.
 + Decode the URL
-+ Decode the punycode
++ Decode the Punycode
 
 
 
