@@ -62,6 +62,12 @@
   "optionsShortcutLegendContent": {
     "message": "Keyboard Shortcut"
   },
+  "optionsShortcutChromeInnerText": {
+    "message": "Please change it from browser settings page.\nchrome://extensions/shortcuts"
+  },
+  "optionsShortcutFirefoxInnerText": {
+    "message": "Please change it from browser settings page.\n[about:addons] > [⚙] > [Manage Extension Shortcuts]"
+  },
   
   
   "optionsFormatLegendContent": {
@@ -70,13 +76,19 @@
   
   
   "optionsProgrammableLegendContent": {
-    "message": "Programmable"
+    "message": "Programmable Format"
   },
   "optionsCopyProgrammableContent": {
-    "message": "Enable programmable copy"
+    "message": "Enable programmable format"
+  },
+  "optionsCopyScriptingContent": {
+    "message": "Enable content script for active tab"
   },
   
   
+  "optionsOptionsPageDetailsContent": {
+    "message": "Please refer to following URL for details on options."
+  },
   "optionsCopyDecodeContent": {
     "message": "Decode the URL"
   },
@@ -84,10 +96,10 @@
     "message": "Interprets percent encoding."
   },
   "optionsCopyPunycodeContent": {
-    "message": "Decode the punycode"
+    "message": "Decode the Punycode"
   },
   "optionsCopyPunycodeTitle": {
-    "message": "Interpret the punycode."
+    "message": "Interpret the Punycode."
   },
   "optionsCopyClipboardApiContent": {
     "message": "Use Clipboard API"
@@ -99,7 +111,7 @@
     "message": "Copy format in text/html format"
   },
   "optionsCopyHtmlTitle": {
-    "message": "Copy not only text/plain but also text/html format."
+    "message": "When matching the regular expression /<.+>/"
   },
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="

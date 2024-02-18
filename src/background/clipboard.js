@@ -111,8 +111,9 @@ const createFormatText = (cmd, tabs) => {
   const isPunycode = ex3(cmd, 'copy_punycode');
   const enter = cmd.enter;
   const keyset = {};
+  const now = new Date();
   let format = cmd.format;
-  let separator = isExtendedMode ? cmd.separator : defaultStorage.separator;
+  let separator = cmd.separator;
   
   // Standard
   keyset['${enter}'] = enter;
@@ -126,19 +127,20 @@ const createFormatText = (cmd, tabs) => {
     separator = separator.replace(/\${(text|index|id)}/ig, (m) => m.toLowerCase());
     
     // Character code
-    keyset['${cr}'] = '\r';
-    keyset['${lf}'] = '\n';
-    keyset['${tab}'] = '\t';
-    format = format.replace(/\${(tab|\\t|t)}/ig, '${tab}')
-                   .replace(/\${(cr|\\r|r)}/ig,  '${cr}')
-                   .replace(/\${(lf|\\n|n)}/ig,  '${lf}')
-    separator = separator.replace(/\${(tab|\\t|t)}/ig, '${tab}')
-                         .replace(/\${(cr|\\r|r)}/ig,  '${cr}')
-                         .replace(/\${(lf|\\n|n)}/ig,  '${lf}')
+    keyset['${TAB}'] = keyset['${t}'] = '\t';
+    keyset['${CR}']  = keyset['${r}'] = '\r';
+    keyset['${LF}']  = keyset['${n}'] = '\n';
+    format = format.replace(/\${(tab|\\t|t)}/ig, '${TAB}')
+                   .replace(/\${(cr|\\r|r)}/ig,  '${CR}')
+                   .replace(/\${(lf|\\n|n)}/ig,  '${LF}')
+    separator = separator.replace(/\${(tab|\\t|t)}/ig, '${TAB}')
+                         .replace(/\${(cr|\\r|r)}/ig,  '${CR}')
+                         .replace(/\${(lf|\\n|n)}/ig,  '${LF}')
     
     // Date
-    const now = new Date();
-    keyset['${yyyy}'] = ''  + now.getFullYear();
+    keyset['${yyyy}'] =('000'+ now.getFullYear()).slice(-4);
+    keyset['${yy}']   =('0' + now.getFullYear()).slice(-2);
+    keyset['${y}']    = ''  + now.getFullYear();
     keyset['${MM}']   =('0' +(now.getMonth() + 1)).slice(-2);
     keyset['${dd}']   =('0' + now.getDate()).slice(-2);
     keyset['${hh}']   =('0' +(now.getHours() % 12)).slice(-2);
@@ -146,7 +148,6 @@ const createFormatText = (cmd, tabs) => {
     keyset['${mm}']   =('0' + now.getMinutes()).slice(-2);
     keyset['${ss}']   =('0' + now.getSeconds()).slice(-2);
     keyset['${SSS}']  =('00'+ now.getMilliseconds()).slice(-3);
-    keyset['${yy}']   =(''  + now.getFullYear()).slice(-2);
     keyset['${M}']    = ''  +(now.getMonth() + 1);
     keyset['${d}']    = ''  + now.getDate();
     keyset['${h}']    = ''  +(now.getHours() % 12);
@@ -161,8 +162,17 @@ const createFormatText = (cmd, tabs) => {
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     keyset['${day}']  = ''+now.getDay();
+    keyset['${time}']  = ''+now.getTime();      // milliseconds
+    keyset['${timezoneOffset}']  = ''+now.getTimezoneOffset();  // minute offset from UTC
     
-    // Function
+    keyset['${YYYY}'] = keyset['${yyyy}'];
+    keyset['${YY}']   = keyset['${yy}'];
+    keyset['${Y}']    = keyset['${y}'];
+    keyset['${DD}']   = keyset['${dd}'];
+    keyset['${D}']    = keyset['${d}'];
+    keyset['${dayOfWeek}']  = keyset['${day}'];
+    
+    // Programmable Format
     if (ex3(cmd, 'copy_programmable')) {
       for (let i=0; i<10; i++) {
         keyset['${text'+i+'}'] = cmd.texts[i];
@@ -170,16 +180,18 @@ const createFormatText = (cmd, tabs) => {
       //keyset['${Math}'] = 'Math';
       //keyset['${String}'] = 'String';
       // 未定義の方が違和感がない？
-      keyset['${undefined}'] = 'undefined';
-      keyset['${null}'] = 'null';
+      keyset['${undefined}'] = undefined;
+      keyset['${null}'] = null;
       keyset['${true}'] = true;
       keyset['${false}'] = false;
       keyset['${NaN}'] = NaN;
       keyset['${Infinity}'] = Infinity;
+      //keyset['${tabs.length}'] = tabs.length;
+      keyset['${tabsLength}'] = tabs.length;
     }
   }
   const sep = ex3(cmd, 'copy_programmable')
-            ? compile(separator, keyset)
+            ? compile(separator, keyset, now)
             : separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);
   
   // 本処理
@@ -187,6 +199,13 @@ const createFormatText = (cmd, tabs) => {
   const isSingle = tabs.length == 1;
   const urlkeys = ['href', 'origin', 'protocol', 'username', 'password', 
                    'host', 'hostname', 'port', 'pathname', 'search', 'hash'];
+  const tabkeys = ['active','attention','audible','autoDiscardable','cookieStoreId','discarded',
+                   'favIconUrl','height','hidden','highlighted','id','incognito','index',
+                   'isArticle','isInReaderMode','lastAccessed','mutedInfo','openerTabId','pinned',
+                   'sessionId','status','successorId','title','url','width','windowId'];
+  // see https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab
+  let idx = 0;  // ${tabsIndex}
+  
   for (const tab of tabs) {
     // Standard
     keyset['${title}'] = tab.title;
@@ -194,7 +213,10 @@ const createFormatText = (cmd, tabs) => {
     
     if (isExtendedMode) {
       // Basic
+      keyset['${frameUrl}'] = isSingle && cmd.frameUrl || tab.url;
+      keyset['${frameUrl}'] = decodeURL(keyset['${frameUrl}'], isDecode, isPunycode);
       keyset['${text}']     = isSingle && cmd.selectionText || tab.title;
+      keyset['${selectionText}'] = isSingle && cmd.selectionText || '';
       keyset['${selectedText}']  = isSingle && cmd.selectionText || '';
       keyset['${linkText}'] = isSingle && cmd.linkText || tab.title;
       keyset['${linkUrl}']  = isSingle && cmd.linkUrl || tab.url;
@@ -214,7 +236,7 @@ const createFormatText = (cmd, tabs) => {
       keyset['${id}']       = tab.id;
       keyset['${tabId}']    = tab.id;
       keyset['${windowId}'] = tab.windowId;
-      keyset['${favIconUrl}'] = tab.favIconUrl != '' ? tab.favIconUrl : void 0;
+      keyset['${favIconUrl}'] = tab.favIconUrl != null ? tab.favIconUrl : '';
       
       // URL
       const url = new URL(tab.url);
@@ -247,9 +269,31 @@ const createFormatText = (cmd, tabs) => {
       // 備考：username, password は、閲覧 URL としては出現しないはず（一応実装しておく）
     }
     
+    // Scripting
+    keyset['${scripting}'] = !!cmd.scripting;
+    if (cmd.scripting) {
+      Object.keys(cmd.scripting).forEach(key => keyset['${'+key+'}'] = cmd.scripting[key]);
+    }
+    if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && tabs.length === 1) {
+      keyset['${canonicalUrl}'] = keyset['${pageCanonicalUrl}'] || keyset['${ogUrl}'] || tab.url;
+      keyset['${canonicalUrl}'] = decodeURL(keyset['${canonicalUrl}'], isDecode, isPunycode);
+      keyset['${ogpUrl}'] = keyset['${ogpUrl}'] || tab.url;
+      keyset['${ogpUrl}'] = decodeURL(keyset['${ogpUrl}'], isDecode, isPunycode);
+      keyset['${ogpImage}'] = keyset['${ogpImage}'] || '';
+      keyset['${ogpImage}'] = decodeURL(keyset['${ogpImage}'], isDecode, isPunycode);
+      keyset['${ogpTitle}'] = keyset['${ogpTitle}'] || tab.title;
+      keyset['${ogpDescription}'] = keyset['${ogpDescription}'] || '';
+    }
+    
     // 変換
     if (ex3(cmd, 'copy_programmable')) {
-      temp.push(compile(format, keyset));
+      keyset['${tabsIndex}'] = idx++;
+      
+      //tabkeys.forEach(key => keyset['${tab.'+key+'}'] = tab[key]);
+      tabkeys.forEach(key => keyset['${tab'+(key.at(0).toUpperCase()+key.slice(1))+'}'] = tab[key]);
+      // 備考：tab 情報をそのまま提供する（url のデコード等は、実施しない）
+      
+      temp.push(compile(format, keyset, now));
     } else {
       temp.push(format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m));
     }
@@ -269,7 +313,7 @@ const copyToClipboard = async (cmd, tabs) => {
     target: 'offscreen',
     type: 'clipboardWrite',
     text: createFormatText(cmd, tabs),
-    html: ex3(cmd, 'copy_html') && cmd.id >= 3,
+    html: ex3(cmd, 'copy_html') && cmd.id >= 3 && /<.+>/.test(cmd.format),
     api: ex3(cmd, 'copy_clipboard_api'),
   };
   
@@ -282,7 +326,7 @@ const copyToClipboard = async (cmd, tabs) => {
         //console.log('failed');
       });
     } else {
-      document.addEventListener('copy', () => {
+      window.addEventListener('copy', function(event) {
         event.preventDefault();
         event.stopImmediatePropagation();
         
@@ -302,10 +346,29 @@ const copyToClipboard = async (cmd, tabs) => {
 };
 
 
+const tabsQuery = async (query) => {
+  if (isKiwi()) {
+    let tabs = await chrome.tabs.query(query);
+    
+    delete query.currentWindow;
+    for (const key of Object.keys(query)) {
+      tabs = tabs.filter(tab => tab[key] === query[key]);
+    }
+    
+    const popupUrl = chrome.runtime.getURL('/popup/popup.html');
+    tabs = tabs.filter(tab => tab.url !== popupUrl);
+    return tabs;
+    // 備考：Kiwi Browser が mv3 で常にすべてのタブをコピーする
+    //       Yandex Browser も巻き込まれる（問題はないはず）
+  } else {
+    return await chrome.tabs.query(query);
+  }
+};
 
 // コピーイベント（background.js）
 const onCopy = async (cmd) => {
   cmd.enter = await getEnterCode(cmd);
+  cmd.separator = ex3(cmd) ? cmd.separator : defaultStorage.separator;
   
   const targetQuery = {
     'tab': {currentWindow:true, highlighted:true}, 
@@ -324,7 +387,8 @@ const onCopy = async (cmd) => {
   // カレントウィンドウのすべてのタブ:   {currentWindow:true}
   // カレントウィンドウの選択中のタブ:   {currentWindow:true, highlighted:true}
   // カレントウィンドウのアクティブタブ: {currentWindow:true, active:true}
-  const tabs = await chrome.tabs.query(targetQuery);
+  //const tabs = await chrome.tabs.query(targetQuery);
+  const tabs = await tabsQuery(targetQuery);
   let temp = tabs;
   if (cmd.tab && cmd.target == 'tab') {
     // 未選択タブのタブコンテキストメニューは、カレントタブとして扱わない
@@ -344,12 +408,23 @@ const onCopy = async (cmd) => {
   }
   if (temp.length === 0) {
     // #24 コピーするタブがない場合、カレントタブをコピーする
-    temp = await chrome.tabs.query({currentWindow:true, active:true});
+    //temp = await chrome.tabs.query({currentWindow:true, active:true});
+    temp = await tabsQuery({currentWindow:true, active:true});
+  }
+  
+  if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
+    // コンテンツスクリプト
+    cmd.scripting = await executeScript(temp[0], cmd);
+    cmd.selectionText = cmd.selectionText || cmd.scripting?.pageSelectionText || '';
   }
   
   // クリップボードにコピー
   await copyToClipboard(cmd, temp);
   if (cmd.callback) {
-    chrome.runtime.sendMessage({target:'popup', type:cmd.callback});
+    try {
+      await chrome.runtime.sendMessage({target:'popup', type:cmd.callback});
+    } catch {
+      // 備考：window.prompt() でポップアップが閉じる
+    }
   }
 };

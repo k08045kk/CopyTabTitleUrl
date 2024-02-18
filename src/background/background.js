@@ -7,12 +7,15 @@
 if (globalThis.importScripts) {
   importScripts('/common.js');
   // punycode.js - module
-  // clipboard.js - isFirefox, ex3, defaultStorage
+  // scripting.js - isMobile
+  // clipboard.js - isFirefox, isWiki, ex3, defaultStorage
   // background.js - isFirefox, ex3, defaultStorage, converteStorageVersion3
   importScripts('/lib/punycode.js/punycode.js');
   // clipboard.js - punycode
   importScripts('/background/compiler.js');
   // clipboard.js - compile
+  importScripts('/background/scripting.js');
+  // clipboard.js - executeScript
   importScripts('/background/clipboard.js');
   // background.js - onCopy
 }
@@ -23,7 +26,7 @@ if (globalThis.importScripts) {
 /* イベント                                                                   */
 /* ========================================================================== */
 // ブラウザアクション
-chrome.action.onClicked.addListener(async (info, tab) => {
+chrome.action.onClicked.addListener(async (tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   const id = 3;
   cmd.id = id;
@@ -42,6 +45,7 @@ const onContextMenus = async (info, tab) => {
   cmd.target = ex3(cmd) && (ex3(cmd, 'extended_edit') || 3<=id) 
              ? cmd.menus[id].target 
              : defaultStorage.menus[id].target;
+  cmd.frameUrl = info.frameUrl;
   cmd.selectionText = info.selectionText;
   cmd.linkText = info.linkText;  // Firefox56+(Chromeは、対象外)
   cmd.linkUrl = info.linkUrl;
@@ -49,19 +53,19 @@ const onContextMenus = async (info, tab) => {
   cmd.tab = tab;
   onCopy(cmd);
 };
-chrome.contextMenus.onClicked.addListener(onContextMenus);
+chrome.contextMenus?.onClicked.addListener(onContextMenus);
 
 
 // キーボードショートカット
-chrome.commands.onCommand.addListener(async (command) => {
+chrome.commands?.onCommand.addListener(async (name, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
-  if (command === 'shortcut_action') {
+  if (name === 'shortcut_action') {
     const id = 3;
     cmd.id = id;
     cmd.format = cmd.formats[id];
     cmd.target = 'tab';
     onCopy(cmd);
-  } else if (command === 'shortcut_action2') {
+  } else if (name === 'shortcut_action2') {
     const id = 4;
     cmd.id = id;
     cmd.format = cmd.formats[id];
@@ -100,6 +104,8 @@ const updateAction = (cmd) => {
 
 // コンテキストメニュー
 const updateContextMenus = async (cmd) => {
+  if (!chrome.contextMenus) { return; }
+  
   // メニュー削除 && ストレージ取得
   await chrome.contextMenus.removeAll();
   

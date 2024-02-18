@@ -34,7 +34,10 @@ function updateOptionPage() {
     const key = id.replace(/(^[a-z]|_[a-z])/g, m => m.at(-1).toUpperCase());
     
     const content = getMessage('options'+key+'Content');
-    if (content) { v.textContent =  content; }
+    if (content) { v.textContent = content; }
+    
+    const inner = getMessage('options'+key+'InnerText');
+    if (inner) { v.innerText = inner; }
     
     const title = getMessage('options'+key+'Title');
     if (title) { v.title = title; }
@@ -46,7 +49,7 @@ function updateOptionPage() {
   
   
   // ブラウザアクション
-  const action = document.querySelector('[name="browser_action"][value="action"]').checked;
+  const action = document.getElementById('browser_action_action').checked;
   checkbox('popup_format2').disabled = action;
   document.getElementById('browser_action_target').disabled = !action;
   checkbox('popup_comlate').disabled = !action;
@@ -73,21 +76,37 @@ function updateOptionPage() {
   
   
   // 拡張モード選択時
-  const extension = checkbox('extended_mode').checked;
-  document.body.dataset.mode = extension ? 'extended' : 'normal';
-  document.body.dataset.edit = extension ? checkbox('extended_edit').checked : false;
+  const exmode = checkbox('extended_mode').checked;
+  const exedit = exmode && checkbox('extended_edit').checked;
+  document.body.dataset.exmode = exmode;
+  document.body.dataset.exedit = exedit;
   
   document.getElementById('copy_html').disabled = isFirefox() && checkbox('copy_clipboard_api').checked;
   
   // タイトル編集
   const edit = checkbox('menus_edit_title').checked;
-  document.getElementById('menus').dataset.edit = extension && edit;
-  document.getElementById('popup_title').disabled = !(extension && edit && !action);
-  document.getElementById('popup_tooltip').disabled = !(extension && !action);
+  document.getElementById('menus').dataset.edit = exmode && edit;
+  document.getElementById('popup_title').disabled = !(exmode && edit && !action);
+  document.getElementById('popup_tooltip').disabled = !(exmode && !action);
   
   // フォーマット関数
   const programmable = checkbox('copy_programmable').checked;
   document.getElementById('programmable').dataset.enable = programmable;
+  
+  // モバイル環境
+  const isMobile = !chrome.contextMenus;
+  if (isMobile) {
+    if (exedit) {
+      document.querySelectorAll('.mobile').forEach(v => v.classList.remove('hide'));
+    } else {
+      document.querySelectorAll('.mobile').forEach(v => v.classList.add('hide'));
+    }
+    // 備考：モバイル環境は、コンテキストメニュー・キーボードショートカットが動作しない
+    //       だが、ブラウザアクションのタイトル編集でコンテキストメニューの項目が必要になる。
+    //       なので、 exedit 時のみ全項目にアクセスを許可する。
+    //       （項目は変更できるが、動作部分は動かないため、動作しない項目を変更できるだけとなる）
+    //       （非表示機能は、動作しない挙動を正とするが、例外的にタイトル編集だけ非表示でも動作する）
+  }
 };
 
 
@@ -114,7 +133,7 @@ async function onUpdateOptions() {
 async function onUpdateMenus() {
   const cmd = await chrome.storage.local.get({menus: defaultStorage.menus});
   for (let i=0; i<MENUS_LEN; i++) {
-    cmd.menus[i].enable = document.getElementById('menu'+i).checked;
+    cmd.menus[i].enable = document.getElementById('menu'+i+'_enable').checked;
     cmd.menus[i].title = document.getElementById('menu'+i+'_title').value;
     cmd.menus[i].target = document.getElementById('menu'+i+'_target').value;
   }
@@ -163,7 +182,7 @@ async function setupOptionPage() {
   document.getElementById('separator').value  = cmd.separator;
   
   for (let i=0; i<MENUS_LEN; i++) {
-    document.getElementById('menu'+i).checked  = !!cmd.menus[i].enable;
+    document.getElementById('menu'+i+'_enable').checked  = !!cmd.menus[i].enable;
     document.getElementById('menu'+i+'_title').value = cmd.menus[i].title;
     document.getElementById('menu'+i+'_target').value = cmd.menus[i].target;
   }
@@ -219,26 +238,63 @@ async function onReset() {
 
 
 
+function startupOptionPage() {
+  // template: checkbox
+  const checkbox = document.getElementById('template_checkbox');
+  document.querySelectorAll('[data-template="checkbox"]').forEach((element) => {
+    const clone = checkbox.content.cloneNode(true);
+    clone.querySelector('input').id = element.dataset.id;
+    clone.querySelector('label').setAttribute('for', element.dataset.id);
+    element.appendChild(clone);
+  });
+  
+  // template: menu
+  const menu = document.getElementById('template_menu');
+  document.querySelectorAll('[data-template="menu"]').forEach((element, index) => {
+    const clone = menu.content.cloneNode(true);
+    const id = element.dataset.id;
+    clone.querySelector('.menu_enable').id = id+'_enable';
+    clone.querySelector('.menu_label').setAttribute('for', id+'_enable');
+    clone.querySelector('.menu_label').textContent = element.dataset.text;
+    clone.querySelector('.menu_title').id = id+'_title';
+    clone.querySelector('.menu_target').id = id+'_target';
+    if (element.dataset.edit === 'exedit') {
+      clone.querySelector('.menu_target').classList.add('exedit');
+    }
+    element.classList.add('clearfix');
+    element.appendChild(clone);
+  });
+  
+  // add: <input maxlength="...">
+  document.querySelectorAll('input[type="text"]').forEach((element) => {
+    // menu_title, format, text, separator
+    const max = element.classList.contains('menu_title')
+              ? "64" : "256";
+    element.setAttribute('maxlength', max);
+  });
+  
+  // hide: .chrome or .firefox 
+  const query = isFirefox() ? '.chrome' : '.firefox';
+  document.querySelectorAll(query).forEach(v => v.classList.add('hide'));
+};
+
+
+
 // ページ初期化
 document.addEventListener("DOMContentLoaded", async () => {
   en = await (await fetch('/_locales/en/messages.json')).json();
+  startupOptionPage();
   await setupOptionPage();
   
-  if (isFirefox()) {
-    document.querySelectorAll('.chrome').forEach(v => v.classList.add('hide'));
-  } else {
-    document.querySelectorAll('.firefox').forEach(v => v.classList.add('hide'));
-  }
-  
   // イベント設定
-  document.querySelectorAll('[type="checkbox"]:not(.menu)').forEach((element) => {
+  document.querySelectorAll('[type="checkbox"]:not(.menu_enable)').forEach((element) => {
     element.addEventListener('change', onUpdateOptions);
   });
   document.querySelectorAll('[type="radio"], .action_target').forEach((element) => {
     element.addEventListener('change', onUpdateOptions);
   });
   document.getElementById('newline').addEventListener('change', onUpdateOptions);
-  document.querySelectorAll('.menu, .menu_target').forEach((element) => {
+  document.querySelectorAll('.menu_enable, .menu_target').forEach((element) => {
     element.addEventListener('change', onUpdateMenus);
   });
   document.querySelectorAll('.menu_title').forEach((element) => {
@@ -254,15 +310,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById('reset').addEventListener('click', onReset);
   
 //  // ショートカット
-//  const shortcuts = [];
-//  for (const command of await chrome.commands.getAll()) {
-//    if (command.description.startsWith('format')) {
-//      shortcuts.push(command.description+': '+command.shortcut);
+//  if (chrome.commands) {
+//    const shortcuts = [];
+//    for (const command of await chrome.commands.getAll()) {
+//      if (command.description.startsWith('format')) {
+//        shortcuts.push(command.description+': '+command.shortcut);
+//      }
 //    }
-//  }
-//  if (shortcuts.length) {
-//    // '\n'改行を挿入するため、innerTextとする
-//    document.getElementById('shortcut_commands').innerText = shortcuts.join('\n');
+//    if (shortcuts.length) {
+//      // '\n'改行を挿入するため、innerTextとする
+//      document.getElementById('shortcut_commands').innerText = shortcuts.join('\n');
+//    }
 //  }
   
   // 開発者用

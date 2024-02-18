@@ -9,13 +9,26 @@
  * 
  * Firefox 115.0+
  *   manifest.json
- *     browser_specific_settings.strict_min_version = "115.0";
+ *     browser_specific_settings.gecko.strict_min_version = "115.0";
  *   109: Manifest V3 対応（既定で有効化）
+ *   102: browser.scripting.executeScript()
  *   115: ESR
  *   ???: background module 対応
- *
+ * 
+ * Android Firefox 121.0+
+ *   manifest.json
+ *     browser_specific_settings.gecko_android.strict_min_version = "121.0";
+ *   107: Android Firefox Bate: Supports WebExtension API
+ *   121: Android Firefox:      Supports WebExtension API
+ *   There is no following function:
+ *     chrome.contextMenus
+ *     chrome.commands
+ * 
  * Chrome 116+
+ *   manifest.json
+ *     minimum_chrome_version = "116.0"
  *   88:  Manifest v3 対応
+ *   88:  chrome.scripting.executeScript()
  *   94:  structuredClone()
  *   103: chrome.i18n.getMessage 不具合対応
  *   109: chrome.offscreen
@@ -30,6 +43,9 @@ const module = {};
 // ブラウザ判定
 const isFirefox = () => 'browser' in globalThis;
 const isChrome = () => !isFirefox();
+const isKiwi = () => isChrome() && /(Android)/i.test(navigator.userAgent);
+const isMobile = () => /(Mobile|Android|iPhone)/i.test(navigator.userAgent);
+// 備考：非モバイルの Android 端末が存在する。（大画面端末のタブレット）
 
 
 
@@ -190,6 +206,7 @@ const defaultStorageVersion3 = {
     
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
+    copy_scripting: false,              // v3.1.0
     copy_clipboard_api: false,
     copy_html: false,
     copy_programmable: false,           // v3.1.0
@@ -273,6 +290,7 @@ const extendedMode = [
   
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+
+  'copy_scripting',
   'copy_clipboard_api',
   'copy_html',
   'copy_programmable',

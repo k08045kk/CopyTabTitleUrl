@@ -1,7 +1,7 @@
 ﻿CopyTabTitleUrl
 ===============
 
-It is a browser extension in WebExtension format.  
+This is a browser extension in WebExtensions.  
 You can install it from the following site.
 
 CopyTabTitleUrl – Add-ons for Firefox  
@@ -34,14 +34,15 @@ You can perform actions from the following operations.
 
 You can perform actions in combination with the following auxiliary functions.
 + Decode the URL
-+ Decode the punycode
++ Decode the Punycode
 
 
 
 ## Options
-You can customize the extension by changing the extension settings from the Options page.  
-For additional information on customization, see [here](https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options).
+You can customize the extension by changing the extension settings from the Options page.
 
+Please refer to following URL for details on options.  
+see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options
 
 
 

@@ -2,11 +2,12 @@
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "default_locale": "en",
   
   "author": "toshi",
   "homepage_url": "https://github.com/k08045kk/CopyTabTitleUrl",
+  "minimum_chrome_version": "116.0",
   
   "background": {
     "service_worker": "/background/background.js"
@@ -47,6 +48,7 @@
     "clipboardWrite",
     "contextMenus",
     "offscreen",
+    "scripting",
     "storage",
     "tabs"
   ]
