@@ -11,16 +11,16 @@ async function executeScript(tab, cmd) {
     const target = {tabId:tab.id};
     const func = (isPrompt) => {
       return {
-        pageTitle: document.title ?? '',
-        pageURL: document.URL ?? '',
-        pageCharset: document.characterSet ?? '',
-        pageContentType: document.contentType ?? '',
-        pageCookie: document.cookie ?? '',
-        pageDir: document.dir ?? '',
-        pageDoctype: document.doctype ?? '',
-        pageLastModified: document.lastModified ?? '',
-        pageReferrer: document.referrer ?? '',
-        pageLang: document.documentElement.lang ?? '',
+        pageTitle: (document.title ?? '')+'',
+        pageURL: (document.URL ?? '')+'',
+        pageCharset: (document.characterSet ?? '')+'',
+        pageContentType: (document.contentType ?? '')+'',
+        pageCookie: (document.cookie ?? '')+'',
+        pageDir: (document.dir ?? '')+'',
+        pageDoctype: (document.doctype ?? '')+'',
+        pageLastModified: (document.lastModified ?? '')+'',
+        pageReferrer: (document.referrer ?? '')+'',
+        pageLang: (document.documentElement.lang ?? '')+'',
         
         pageCanonicalUrl: document.querySelector('link[rel="canonical" i]')?.href ?? '',
         pageImageSrc: document.querySelector('link[rel="image_src" i]')?.href ?? '',
@@ -91,7 +91,7 @@ async function executeScript(tab, cmd) {
         return {
           pageSelectionText: window.getSelection().toString(),
           
-          //pageURL: document.URL ?? '',
+          //pageURL: (document.URL ?? '')+'',
         };
       };
       const results = await chrome.scripting.executeScript({target, func});
