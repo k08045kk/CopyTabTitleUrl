@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (ex3(cmd, 'popup_format2')) {
       document.querySelectorAll('.format2').forEach(v => v.hidden = false);
     }
-    if (ex3(cmd, 'popup_title') && ex3(cmd, 'menus_edit_title')) {
+    if (ex3(cmd, 'popup_title')) {
       // [title and URL] のみ表示が特別なため
       if (cmd.menus[0].title !== defaultStorage.menus[0].title) {
         document.getElementById('format0').textContent = cmd.menus[0].title;

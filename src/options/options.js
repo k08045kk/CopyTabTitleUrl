@@ -7,8 +7,6 @@
 
 
 const MENUS_LEN = 12;
-const FORMATS1 = 3;
-const FORMATS9 = 11;
 const FORMATS_LEN = 12;
 const TEXTS_LEN = 10;
 
@@ -38,9 +36,6 @@ function updateOptionPage() {
     
     const inner = getMessage('options'+key+'InnerText');
     if (inner) { v.innerText = inner; }
-    
-    const title = getMessage('options'+key+'Title');
-    if (title) { v.title = title; }
   });
   const reset = document.getElementById('reset');
   reset.dataset.reset = getMessage('optionsResetContent');
@@ -83,10 +78,8 @@ function updateOptionPage() {
   
   document.getElementById('copy_html').disabled = isFirefox() && checkbox('copy_clipboard_api').checked;
   
-  // タイトル編集
-  const edit = checkbox('menus_edit_title').checked;
-  document.getElementById('menus').dataset.edit = exmode && edit;
-  document.getElementById('popup_title').disabled = !(exmode && edit && !action);
+  // ポップアップ
+  document.getElementById('popup_title').disabled = !(exmode && !action);
   document.getElementById('popup_tooltip').disabled = !(exmode && !action);
   
   // フォーマット関数

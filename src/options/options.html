@@ -82,8 +82,8 @@ p {
 body[data-exmode="false"] .exmode,
 body[data-exmode="true"] .normal,
 body[data-exedit="false"] .exedit,
-#menus[data-edit="false"] .menu_title,
-#menus[data-edit="true"] .menu_label,
+body[data-exmode="false"] .menu_title,
+body[data-exmode="true"] .menu_label,
 #programmable[data-enable="true"] .disalbe,
 #programmable[data-enable="false"] .enable {
   display: none;
@@ -122,7 +122,7 @@ body[data-exedit="false"] .exedit,
 
 
   <!-- コンテキストメニュー -->
-  <fieldset class="mobile" id="menus" data-edit="false">
+  <fieldset class="mobile" id="menus">
     <legend id="menus_legend" data-i18n></legend>
     <p                  data-template="checkbox" data-id="context_all">
     <p                  data-template="checkbox" data-id="context_page">
@@ -258,7 +258,6 @@ body[data-exedit="false"] .exedit,
     <p class="mobile firefox" data-template="checkbox" data-id="exclude_hidden">
 
     <hr class="exmode mobile">
-    <p class="exmode mobile"      data-template="checkbox" data-id="menus_edit_title">
     <p class="exmode mobile exam" data-template="checkbox" data-id="menus_format9">
 
     <hr><!-- ---------- -->

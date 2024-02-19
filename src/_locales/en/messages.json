@@ -92,26 +92,14 @@
   "optionsCopyDecodeContent": {
     "message": "Decode the URL"
   },
-  "optionsCopyDecodeTitle": {
-    "message": "Interprets percent encoding."
-  },
   "optionsCopyPunycodeContent": {
     "message": "Decode the Punycode"
-  },
-  "optionsCopyPunycodeTitle": {
-    "message": "Interpret the Punycode."
   },
   "optionsCopyClipboardApiContent": {
     "message": "Use Clipboard API"
   },
-  "optionsCopyClipboardApiTitle": {
-    "message": "dom.event.clipboardevents.enabled=false Countermeasure."
-  },
   "optionsCopyHtmlContent": {
     "message": "Copy format in text/html format"
-  },
-  "optionsCopyHtmlTitle": {
-    "message": "When matching the regular expression /<.+>/"
   },
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
@@ -125,17 +113,8 @@
   "optionsExcludeHiddenContent": {
     "message": "Exclude hidden tabs"
   },
-  "optionsMenusEditTitleContent": {
-    "message": "Edit the context menu title"
-  },
-  "optionsMenusEditTitleTitle": {
-    "message": "Make the title of the context menu editable."
-  },
   "optionsMenusFormat9Content": {
     "message": "Set only format9 in specific context menu"
-  },
-  "optionsMenusFormat9Title": {
-    "message": "Selection, Link, Image Set only format9 in context menus."
   },
   "optionsExtendedEditContent": {
     "message": "Use Extended Edit Mode"

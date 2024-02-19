@@ -14,7 +14,7 @@
     "message": "format2 を使用する"
   },
   "optionsPopupTitleContent": {
-    "message": "コンテキストメニューのタイトルを使用する"
+    "message": "メニュータイトルを使用する"
   },
   "optionsPopupTooltipContent": {
     "message": "format のツールチップを表示する"
@@ -61,9 +61,6 @@
   },
   "optionsExcludeHiddenContent": {
     "message": "非表示タブを除外する"
-  },
-  "optionsMenusEditTitleContent": {
-    "message": "コンテキストメニューのタイトルを編集する"
   },
   
   

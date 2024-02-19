@@ -109,9 +109,8 @@ const updateContextMenus = async (cmd) => {
   // メニュー削除 && ストレージ取得
   await chrome.contextMenus.removeAll();
   
-  const extension = ex3(cmd);
+  const exmode = ex3(cmd);
   const format9 = ex3(cmd, 'menus_format9');
-  const edit = ex3(cmd, 'menus_edit_title');
   
   // メニュー追加
   const contexts = [];
@@ -124,7 +123,7 @@ const updateContextMenus = async (cmd) => {
   if (isFirefox() && ex3(cmd, 'context_tab')) { contexts.push('tab'); }
   
   if (contexts.length) {
-    const len = extension ? cmd.menus.length : 5;
+    const len = exmode ? cmd.menus.length : 5;
     for (let i=0; i<len; i++) {
       if (cmd.menus[i].enable) {
         if (cmd.menus[i].target === 'separator') {
@@ -136,7 +135,7 @@ const updateContextMenus = async (cmd) => {
         } else {
           chrome.contextMenus.create({
             id: 'menu'+i,
-            title: edit ? cmd.menus[i].title : defaultStorage.menus[i].title,
+            title: exmode ? cmd.menus[i].title : defaultStorage.menus[i].title,
             contexts: contexts,
           });
         }
@@ -147,7 +146,7 @@ const updateContextMenus = async (cmd) => {
     const id = 11;
     chrome.contextMenus.create({
       id: 'exmenu'+id,
-      title: edit ? cmd.menus[id].title : defaultStorage.menus[id].title,
+      title: exmode ? cmd.menus[id].title : defaultStorage.menus[id].title,
       contexts: ['selection', 'link', 'image'],
     });
   }
