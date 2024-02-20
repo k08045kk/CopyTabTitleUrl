@@ -22,6 +22,9 @@
   "optionsBrowserActionActionContent": {
     "message": "format をコピーする"
   },
+  "optionsPopupRememberContent": {
+    "message": "ポップアップを記憶する"
+  },
   "optionsPopupComlateContent": {
     "message": "コピー完了を表示する"
   },

@@ -22,6 +22,9 @@
   "optionsPopupTooltipContent": {
     "message": "Show format tooltip"
   },
+  "optionsPopupRememberContent": {
+    "message": "Remember popup"
+  },
   "optionsBrowserActionActionContent": {
     "message": "Copy format"
   },

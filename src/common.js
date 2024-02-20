@@ -190,10 +190,14 @@ const defaultStorageVersion3 = {
   browser_action_target: 'tab',         // tab / window / all
   newline: 'default',                   // default / CRLF / CR / LF
   separator: '${enter}',                // $text
+  popup: {                              // v3.3.1
+    target: 'tab',
+  },
   options: {
     popup_format2: false,               // v3.0.0 （標準モードへ移行）
     popup_title: false,                 // v3.1.0
     popup_tooltip: false,               // v3.1.0
+    popup_remember: false,              // v3.3.1
     popup_comlate: true,                // v3.0.0 （初期設定を変更）
     
     context_all: false,
@@ -278,6 +282,7 @@ const extendedMode = [
   //'popup_format2',                    // standard v3.0.0+
   'popup_title',
   'popup_tooltip',
+  'popup_remember',
   //'popup_comlate',                    // standard
   
   //'context_all',                      // standard

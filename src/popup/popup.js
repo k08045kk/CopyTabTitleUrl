@@ -6,7 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", async () => {
   // チェックボックスイベント設定
-  const onClickCheckbox = function() {
+  const onClickCheckbox = async function() {
     const element = this;
     const win = document.getElementById('target_win');
     const all = document.getElementById('target_all');
@@ -17,6 +17,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (element.id == 'target_all_label' && !all.checked && win.checked) {
       win.checked = false;
     }
+    
+    // popup_remember
+    let target = 'tab';
+    if (element.id == 'target_win_label' && !win.checked) { target = 'window'; }
+    if (element.id == 'target_all_label' && !all.checked) { target = 'all'; }
+    await chrome.storage.local.set({popup: {target}});
+    // 備考：無効でも覚える
   };
   document.getElementById('target_win_label').addEventListener('click', onClickCheckbox);
   document.getElementById('target_all_label').addEventListener('click', onClickCheckbox);
@@ -63,6 +70,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       for (let i=0; i<5; i++) {
         document.getElementById('format'+i).setAttribute('title', cmd.formats[i]);
       }
+    }
+    if (ex3(cmd, 'popup_remember')) {
+      if (cmd.popup.target === 'window') {  document.getElementById('target_win').checked = true; }
+      if (cmd.popup.target === 'all') {     document.getElementById('target_all').checked = true; }
     }
     document.getElementById('panel').hidden = false;
   } else {
