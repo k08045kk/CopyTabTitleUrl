@@ -59,16 +59,6 @@ function updateOptionPage() {
   checkbox('context_link').disabled = all || format9;
   checkbox('context_image').disabled = all || format9;
   
-  // コンテキストメニュー選択時
-  const contexts = checkbox('context_all').checked
-                || checkbox('context_page').checked
-                || checkbox('context_selection').checked
-                || checkbox('context_link').checked
-                || checkbox('context_image').checked
-                || checkbox('context_action').checked
-                || (isFirefox() && checkbox('context_tab').checked);
-  document.getElementById('menu_item').hidden = !contexts;
-  
   
   // 拡張モード選択時
   const exmode = checkbox('extended_mode').checked;
