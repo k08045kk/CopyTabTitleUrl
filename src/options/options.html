@@ -84,8 +84,8 @@ body[data-exmode="true"] .normal,
 body[data-exedit="false"] .exedit,
 body[data-exmode="false"] .menu_title,
 body[data-exmode="true"] .menu_label,
-#programmable[data-enable="true"] .disalbe,
-#programmable[data-enable="false"] .enable {
+#programmable[data-programmable="false"] .programmable,
+#programmable[data-text="false"] .text {
   display: none;
 }
 .exam::after {
@@ -204,29 +204,28 @@ body[data-exmode="true"] .menu_label,
 
 
   <!-- プログラム -->
-  <fieldset class="exmode" id="programmable" data-enable="false">
+  <fieldset class="exmode" id="programmable" data-programmable="false" data-text="false">
     <legend id="programmable_legend" data-i18n></legend>
     <p class="exmode exam" data-template="checkbox" data-id="copy_programmable">
+    <p class="exmode exam" data-template="checkbox" data-id="copy_text">
     <p class="exmode exam" data-template="checkbox" data-id="copy_scripting">
-    <div class="enable">
-      <hr><!-- ---------- -->
-      <p>
-        This feature is currently being tested. 🧪<br>
-        Backward compatibility of format is not guaranteed.<br>
-        Please read the source directly for usage details.<br>
-        see /background/compiler.js
-      <hr><!-- ---------- -->
-      <p> ${text0} = <input class="text" id="text0" type="text">
-      <p> ${text1} = <input class="text" id="text1" type="text">
-      <p> ${text2} = <input class="text" id="text2" type="text">
-      <p> ${text3} = <input class="text" id="text3" type="text">
-      <p> ${text4} = <input class="text" id="text4" type="text">
-      <p> ${text5} = <input class="text" id="text5" type="text">
-      <p> ${text6} = <input class="text" id="text6" type="text">
-      <p> ${text7} = <input class="text" id="text7" type="text">
-      <p> ${text8} = <input class="text" id="text8" type="text">
-      <p> ${text9} = <input class="text" id="text9" type="text">
-    </div>
+    <hr class="programmable"><!-- ---------- -->
+    <p class="programmable">
+      This feature is currently being tested. 🧪<br>
+      Backward compatibility of format is not guaranteed.<br>
+      Please read the source directly for usage details.<br>
+      see /background/compiler.js
+    <hr class="text"><!-- ---------- -->
+    <p class="text"> ${text0} = <input class="text" id="text0" type="text">
+    <p class="text"> ${text1} = <input class="text" id="text1" type="text">
+    <p class="text"> ${text2} = <input class="text" id="text2" type="text">
+    <p class="text"> ${text3} = <input class="text" id="text3" type="text">
+    <p class="text"> ${text4} = <input class="text" id="text4" type="text">
+    <p class="text"> ${text5} = <input class="text" id="text5" type="text">
+    <p class="text"> ${text6} = <input class="text" id="text6" type="text">
+    <p class="text"> ${text7} = <input class="text" id="text7" type="text">
+    <p class="text"> ${text8} = <input class="text" id="text8" type="text">
+    <p class="text"> ${text9} = <input class="text" id="text9" type="text">
   </fieldset>
 
 

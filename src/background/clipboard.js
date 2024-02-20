@@ -174,9 +174,6 @@ const createFormatText = (cmd, tabs) => {
     
     // Programmable Format
     if (ex3(cmd, 'copy_programmable')) {
-      for (let i=0; i<10; i++) {
-        keyset['${text'+i+'}'] = cmd.texts[i];
-      }
       //keyset['${Math}'] = 'Math';
       //keyset['${String}'] = 'String';
       // 未定義の方が違和感がない？
@@ -188,6 +185,11 @@ const createFormatText = (cmd, tabs) => {
       keyset['${Infinity}'] = Infinity;
       //keyset['${tabs.length}'] = tabs.length;
       keyset['${tabsLength}'] = tabs.length;
+    }
+    if (ex3(cmd, 'copy_text')) {
+      for (let i=0; i<10; i++) {
+        keyset['${text'+i+'}'] = cmd.texts[i];
+      }
     }
   }
   const sep = ex3(cmd, 'copy_programmable')

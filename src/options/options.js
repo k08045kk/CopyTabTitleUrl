@@ -72,9 +72,9 @@ function updateOptionPage() {
   document.getElementById('popup_title').disabled = !(exmode && !action);
   document.getElementById('popup_tooltip').disabled = !(exmode && !action);
   
-  // フォーマット関数
-  const programmable = checkbox('copy_programmable').checked;
-  document.getElementById('programmable').dataset.enable = programmable;
+  // Programmable Format
+  document.getElementById('programmable').dataset.programmable = checkbox('copy_programmable').checked;
+  document.getElementById('programmable').dataset.text = checkbox('copy_text').checked;
   
   // モバイル環境
   const isMobile = !chrome.contextMenus;

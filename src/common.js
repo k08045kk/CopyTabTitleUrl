@@ -210,12 +210,14 @@ const defaultStorageVersion3 = {
     
     shortcut_target: false,             // v3.3.2
     
+    copy_programmable: false,           // v3.1.0
+    copy_text: false,                   // v3.3.4
+    copy_scripting: false,              // v3.1.0
+    
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
-    copy_scripting: false,              // v3.1.0
     copy_clipboard_api: false,
     copy_html: false,
-    copy_programmable: false,           // v3.1.0
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
     //menus_edit_title: false,          // v3.3.0 （廃止、拡張モードと統合）
@@ -297,12 +299,14 @@ const extendedMode = [
   
   'shortcut_target',
   
+  'copy_programmable',
+  'copy_text',
+  'copy_scripting',
+  
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+
-  'copy_scripting',
   'copy_clipboard_api',
   'copy_html',
-  'copy_programmable',
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
   //'menus_edit_title',                 // 廃止済み

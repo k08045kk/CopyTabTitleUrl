@@ -87,6 +87,9 @@
   "optionsCopyProgrammableContent": {
     "message": "Enable programmable format"
   },
+  "optionsCopyTextContent": {
+    "message": "Enable $${text0} - $${text9}"
+  },
   "optionsCopyScriptingContent": {
     "message": "Enable content script for active tab"
   },
