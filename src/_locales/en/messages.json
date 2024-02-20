@@ -23,7 +23,7 @@
     "message": "Show format tooltip"
   },
   "optionsPopupRememberContent": {
-    "message": "Remember popup"
+    "message": "Remember target"
   },
   "optionsBrowserActionActionContent": {
     "message": "Copy format"
@@ -52,7 +52,7 @@
     "message": "Image context"
   },
   "optionsContextActionContent": {
-    "message": "Browser action context"
+    "message": "Browser Action context"
   },
   "optionsContextTabContent": {
     "message": "Tab context"
@@ -82,7 +82,7 @@
   
   
   "optionsProgrammableLegendContent": {
-    "message": "Programmable Format"
+    "message": "Extended Format"
   },
   "optionsCopyProgrammableContent": {
     "message": "Enable programmable format"
@@ -105,10 +105,10 @@
     "message": "Decode the Punycode"
   },
   "optionsCopyClipboardApiContent": {
-    "message": "Use Clipboard API"
+    "message": "Copy using Clipboard API"
   },
   "optionsCopyHtmlContent": {
-    "message": "Copy format in text/html format"
+    "message": "Copy in text/html format"
   },
   "optionsCopyEmptyContent": {
     "message": "Copy space if empty string"
@@ -126,7 +126,7 @@
     "message": "Exclude hidden tabs"
   },
   "optionsMenusFormat9Content": {
-    "message": "Set only format9 in specific context menu"
+    "message": "Set only format9 in specific"
   },
   "optionsExtendedEditContent": {
     "message": "Use Extended Edit Mode"

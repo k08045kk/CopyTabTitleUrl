@@ -324,12 +324,30 @@ const extendedMode = [
   //'newline',                          // extended
   //'separator',                        // extended
 ];
+const extendedEditMode = [
+  'copy_programmable',
+  'copy_text',
+  'copy_scripting',
+  
+  'copy_empty',
+  
+  'menus_format9', 
+];
 Object.freeze(extendedMode);
+Object.freeze(extendedEditMode);
 const ex3 = (cmd, name) => {
   if (name) {
-    return extendedMode.includes(name)
-         ?(cmd.options.extended_mode ? cmd.options[name] : defaultStorage.options[name])
-         : cmd.options[name];
+    if (extendedMode.includes(name)) {
+      if (!cmd.options.extended_mode) {
+        return defaultStorage.options[name];
+      } if (extendedEditMode.includes(name)) {
+        return cmd.options.extended_edit ? cmd.options[name] : defaultStorage.options[name];
+      } else {
+        return cmd.options[name];
+      }
+    } else {
+      return cmd.options[name];
+    }
   }
   return cmd.options.extended_mode;
 };

@@ -6,6 +6,8 @@
 <head>
   <meta charset="UFT-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/common.js" defer></script>
+  <script src="./options.js" defer></script>
   <style>
 .hide, 
 [hidden] {
@@ -13,6 +15,9 @@
 }
 body {
   max-width: 600px;
+  min-width: 400px;           /* Chrome 400px */
+  min-height: 250px;          /* Firefox 242px */
+  background: #fafafa;
 }
 body, button, input, select {
   font-size: 14px;
@@ -79,12 +84,10 @@ p {
   }
 }
 
+body[data-exmode="true"]  .normal,
 body[data-exmode="false"] .exmode,
-body[data-exmode="true"] .normal,
 body[data-exedit="false"] .exedit,
-body[data-exmode="false"] .menu_title,
-body[data-exmode="true"] .menu_label,
-#programmable[data-programmable="false"] .programmable,
+body[data-exedit="false"][data-mobile="true"] .mobile,
 #programmable[data-text="false"] .text {
   display: none;
 }
@@ -92,12 +95,11 @@ body[data-exmode="true"] .menu_label,
   content: '🧪';
 }
   </style>
-  <script src="/common.js"></script>
-  <script src="./options.js"></script>
 
 
 
-<body>
+<body data-exmode="false" data-exedit="false">
+<main hidden>
 
   <!-- ブラウザアクション -->
   <fieldset id="browser_action">
@@ -125,20 +127,21 @@ body[data-exmode="true"] .menu_label,
   <!-- コンテキストメニュー -->
   <fieldset class="mobile" id="menus">
     <legend id="menus_legend" data-i18n></legend>
-    <p                  data-template="checkbox" data-id="context_all">
-    <p                  data-template="checkbox" data-id="context_page">
-    <p class="exmode"   data-template="checkbox" data-id="context_selection">
-    <p class="exmode"   data-template="checkbox" data-id="context_link">
-    <p class="exmode"   data-template="checkbox" data-id="context_image">
-    <p                  data-template="checkbox" data-id="context_action">
-    <p class="firefox"  data-template="checkbox" data-id="context_tab">
+    <p                       data-template="checkbox" data-id="context_all">
+    <p class="       indent" data-template="checkbox" data-id="context_page">
+    <p class="exmode indent" data-template="checkbox" data-id="context_selection">
+    <p class="exmode indent" data-template="checkbox" data-id="context_link">
+    <p class="exmode indent" data-template="checkbox" data-id="context_image">
+    <p class="       indent" data-template="checkbox" data-id="context_action">
+    <p class="firefox"       data-template="checkbox" data-id="context_tab">
+
     <fieldset id="menu_item">
       <legend id="menu_item_legend" data-i18n></legend>
       <!-- Template: menu -->
       <template class="clearfix" id="template_menu">
         <input class="menu_enable" id="" type="checkbox">
-        <label class="menu_label" for=""></label>
-        <input class="menu_title" id="" type="text">
+        <label class="normal menu_label" for=""></label>
+        <input class="exmode menu_title" id="" type="text">
         <select class="exmode menu_target" id="">
           <option value="tab">tab</option>
           <option value="window">window</option>
@@ -161,6 +164,10 @@ body[data-exmode="true"] .menu_label,
       <hr class="exmode"><!-- ---------- -->
       <p class="exmode" data-template="menu" data-id="menu11" data-text="format9">
     </fieldset>
+
+    <fieldset class="exmode exedit mobile" id="menus_others">
+      <p class="exmode exedit mobile exam" data-template="checkbox" data-id="menus_format9">
+    </fieldset>
   </fieldset>
 
 
@@ -170,12 +177,12 @@ body[data-exmode="true"] .menu_label,
     <p class="chrome" id="shortcut_chrome" data-i18n>
     <p class="firefox" id="shortcut_firefox" data-i18n>
     <!--p id="shortcut_commands"-->
-    <hr class="exmode"><!-- ---------- -->
+    <hr class="exmode mobile"><!-- ---------- -->
     <p class="exmode mobile" data-template="checkbox" data-id="shortcut_target">
   </fieldset>
 
 
-  <!-- フォーマット -->
+  <!-- Format -->
   <fieldset id="format">
     <legend id="format_legend" data-i18n></legend>
     <p class="normal">
@@ -203,18 +210,12 @@ body[data-exmode="true"] .menu_label,
   </fieldset>
 
 
-  <!-- プログラム -->
-  <fieldset class="exmode" id="programmable" data-programmable="false" data-text="false">
-    <legend id="programmable_legend" data-i18n></legend>
-    <p class="exmode exam" data-template="checkbox" data-id="copy_programmable">
-    <p class="exmode exam" data-template="checkbox" data-id="copy_text">
-    <p class="exmode exam" data-template="checkbox" data-id="copy_scripting">
-    <hr class="programmable"><!-- ---------- -->
-    <p class="programmable">
-      This feature is currently being tested. 🧪<br>
-      Backward compatibility of format is not guaranteed.<br>
-      Please read the source directly for usage details.<br>
-      see /background/compiler.js
+  <!-- Extended Format -->
+  <fieldset class="exmode exedit" id="programmable" data-text="false">
+  <legend id="programmable_legend" data-i18n></legend>
+    <p class="exmode exedit exam" data-template="checkbox" data-id="copy_programmable">
+    <p class="exmode exedit exam" data-template="checkbox" data-id="copy_scripting">
+    <p class="exmode exedit exam" data-template="checkbox" data-id="copy_text">
     <hr class="text"><!-- ---------- -->
     <p class="text"> ${text0} = <input class="text" id="text0" type="text">
     <p class="text"> ${text1} = <input class="text" id="text1" type="text">
@@ -241,7 +242,7 @@ body[data-exmode="true"] .menu_label,
     <p data-template="checkbox" data-id="copy_punycode">
     <p class="exmode firefox" data-template="checkbox" data-id="copy_clipboard_api">
     <p class="exmode"         data-template="checkbox" data-id="copy_html">
-    <p class="exmode exam"    data-template="checkbox" data-id="copy_empty">
+    <p class="exmode exedit exam" data-template="checkbox" data-id="copy_empty">
 
     <hr class="exmode"><!-- ---------- -->
     <p class="exmode indent2">
@@ -260,15 +261,12 @@ body[data-exmode="true"] .menu_label,
     <p class="mobile"         data-template="checkbox" data-id="exclude_pin">
     <p class="mobile firefox" data-template="checkbox" data-id="exclude_hidden">
 
-    <hr class="exmode mobile">
-    <p class="exmode mobile exam" data-template="checkbox" data-id="menus_format9">
-
     <hr><!-- ---------- -->
     <p>
       <input id="use_english" type="checkbox">
       <label for="use_english"> Use English on Options page </label>
     <p class="exmode exam" data-template="checkbox" data-id="extended_edit">
-    <p data-template="checkbox" data-id="extended_mode">
+    <p                     data-template="checkbox" data-id="extended_mode">
   </fieldset>
 
 
@@ -293,3 +291,5 @@ body[data-exmode="true"] .menu_label,
     <input id="" type="checkbox">
     <label for="" data-i18n></label>
   </template>
+
+</main>
