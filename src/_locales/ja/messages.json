@@ -14,7 +14,7 @@
     "message": "format2 を使用する"
   },
   "optionsPopupTitleContent": {
-    "message": "メニュータイトルを使用する"
+    "message": "メニューのタイトルを使用する"
   },
   "optionsPopupTooltipContent": {
     "message": "format のツールチップを表示する"
@@ -35,6 +35,9 @@
   },
   "optionsShortcutFirefoxInnerText": {
     "message": "ブラウザの設定ページから変更してください。\n[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]"
+  },
+  "optionsShortcutTargetContent": {
+    "message": "メニューのターゲットを使用する"
   },
   
   

@@ -71,6 +71,9 @@
   "optionsShortcutFirefoxInnerText": {
     "message": "Please change it from browser settings page.\n[about:addons] > [⚙] > [Manage Extension Shortcuts]"
   },
+  "optionsShortcutTargetContent": {
+    "message": "Use context menu target"
+  },
   
   
   "optionsFormatLegendContent": {

@@ -208,6 +208,8 @@ const defaultStorageVersion3 = {
     context_action: true,
     context_tab: true,                  // Firefox only
     
+    shortcut_target: false,             // v3.3.2
+    
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
     copy_scripting: false,              // v3.1.0
@@ -292,6 +294,8 @@ const extendedMode = [
   'context_image',
   //'context_action',                   // standard
   //'context_tab',                      // standard
+  
+  'shortcut_target',
   
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+

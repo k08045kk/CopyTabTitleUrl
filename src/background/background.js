@@ -63,13 +63,13 @@ chrome.commands?.onCommand.addListener(async (name, tab) => {
     const id = 3;
     cmd.id = id;
     cmd.format = cmd.formats[id];
-    cmd.target = 'tab';
+    cmd.target = ex3(cmd, 'shortcut_target') ? cmd.menus[id].target : 'tab';
     onCopy(cmd);
   } else if (name === 'shortcut_action2') {
     const id = 4;
     cmd.id = id;
     cmd.format = cmd.formats[id];
-    cmd.target = 'tab';
+    cmd.target = ex3(cmd, 'shortcut_target') ? cmd.menus[id].target : 'tab';
     onCopy(cmd);
   }
 });
