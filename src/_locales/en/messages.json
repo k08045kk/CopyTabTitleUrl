@@ -110,6 +110,9 @@
   "optionsCopyHtmlContent": {
     "message": "Copy format in text/html format"
   },
+  "optionsCopyEmptyContent": {
+    "message": "Copy space if empty string"
+  },
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
   },

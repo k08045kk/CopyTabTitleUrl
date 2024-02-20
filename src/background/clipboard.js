@@ -318,6 +318,14 @@ const copyToClipboard = async (cmd, tabs) => {
     html: ex3(cmd, 'copy_html') && cmd.id >= 3 && /<.+>/.test(cmd.format),
     api: ex3(cmd, 'copy_clipboard_api'),
   };
+  if (ex3(cmd, 'copy_empty') && data.text == '') {
+    data.text = ' ';
+    // 備考：空文字をコピーした場合、コピーは成功します。
+    //       ですが、ペースト時に選択範囲を空文字で上書きせずに、元の文字列を残します。（Windows）
+    //       スペースをコピーすることで、元の文字列を消すことができます。
+    //       スペースよりも、良い文字列があれば再考する。（エラーメッセージとか？）
+    // 備考：別途、コピータブなし時、アクティブタグをコピーする仕様あり
+  }
   
   if (isFirefox()) {
     if (data.api) {

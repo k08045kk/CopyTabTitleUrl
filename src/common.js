@@ -218,10 +218,14 @@ const defaultStorageVersion3 = {
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
     copy_clipboard_api: false,
     copy_html: false,
+    copy_empty: false,                  // v3.3.5
+    
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
+    
     //menus_edit_title: false,          // v3.3.0 （廃止、拡張モードと統合）
     menus_format9: false,
+    
     use_english: false,                 // v3.1.0 (others_language 後継機能)
     extended_edit: false,               // v3.1.0
     extended_mode: false,
@@ -307,6 +311,7 @@ const extendedMode = [
   //'copy_punycode',                    // standard v3.1.0+
   'copy_clipboard_api',
   'copy_html',
+  'copy_empty',
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
   //'menus_edit_title',                 // 廃止済み
