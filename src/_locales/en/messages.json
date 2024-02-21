@@ -7,9 +7,6 @@
   },
   
   
-  "optionsBrowserActionLegendContent": {
-    "message": "Browser Action"
-  },
   "optionsBrowserActionPopupContent": {
     "message": "Show popup"
   },
@@ -33,9 +30,6 @@
   },
   
   
-  "optionsMenusLegendContent": {
-    "message": "Context Menu"
-  },
   "optionsContextAllContent": {
     "message": "All context"
   },
@@ -57,33 +51,25 @@
   "optionsContextTabContent": {
     "message": "Tab context"
   },
-  "optionsMenuItemLegendContent": {
-    "message": "Menu Item"
+  "optionsMenusFormat9Content": {
+    "message": "Set only format9 in specific"
   },
   
   
-  "optionsShortcutLegendContent": {
-    "message": "Keyboard Shortcut"
+  "optionsShortcutDescriptionContent": {
+    "message": "Please change it from browser settings page."
   },
-  "optionsShortcutChromeInnerText": {
-    "message": "Please change it from browser settings page.\nchrome://extensions/shortcuts"
+  "optionsShortcutChromeDescriptionContent": {
+    "message": "see chrome://extensions/shortcuts"
   },
-  "optionsShortcutFirefoxInnerText": {
-    "message": "Please change it from browser settings page.\n[about:addons] > [⚙] > [Manage Extension Shortcuts]"
+  "optionsShortcutFirefoxDescriptionContent": {
+    "message": "[about:addons] > [⚙] > [Manage Extension Shortcuts]"
   },
   "optionsShortcutTargetContent": {
     "message": "Use context menu target"
   },
   
   
-  "optionsFormatLegendContent": {
-    "message": "Format"
-  },
-  
-  
-  "optionsProgrammableLegendContent": {
-    "message": "Extended Format"
-  },
   "optionsCopyProgrammableContent": {
     "message": "Enable programmable format"
   },
@@ -124,9 +110,6 @@
   },
   "optionsExcludeHiddenContent": {
     "message": "Exclude hidden tabs"
-  },
-  "optionsMenusFormat9Content": {
-    "message": "Set only format9 in specific"
   },
   "optionsExtendedEditContent": {
     "message": "Use Extended Edit Mode"

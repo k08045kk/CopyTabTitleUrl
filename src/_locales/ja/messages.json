@@ -30,11 +30,11 @@
   },
   
   
-  "optionsShortcutChromeInnerText": {
-    "message": "ブラウザの設定ページから変更してください。\nchrome://extensions/shortcuts"
+  "optionsShortcutDescriptionContent": {
+    "message": "ブラウザの設定ページから変更してください。"
   },
-  "optionsShortcutFirefoxInnerText": {
-    "message": "ブラウザの設定ページから変更してください。\n[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]"
+  "optionsShortcutFirefoxDescriptionContent": {
+    "message": "[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]"
   },
   "optionsShortcutTargetContent": {
     "message": "メニューのターゲットを使用する"
