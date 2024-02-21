@@ -37,6 +37,8 @@ body {
 }
 .copy {
   padding: .5em 1.5em;
+  
+  /* menus_edit_title の文字漏れ対策（拡がってから、...省略） */
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -79,8 +81,8 @@ body {
     background: #ddd;
   }
 }
-#target_win:checked ~ .box .item.win, 
-#target_all:checked ~ .box .item.all,
+#target_win:checked ~ .box > #target_win_label, 
+#target_all:checked ~ .box > #target_all_label,
 .title,
 .item.copy:active {
   color: #fff;
@@ -109,17 +111,17 @@ body {
 <body>
   <div id="panel" hidden>
     <div class="box title">CopyTabTitleUrl</div>
-    <div class="box item copy" id="format0">title<br/>URL</div>
+    <div class="box item copy" id="format0">title<br>URL</div>
     <div class="box item copy" id="format1">title</div>
     <div class="box item copy" id="format2">URL</div>
     <div class="box item copy" id="format3">format</div>
     <div class="box item copy format2" id="format4" hidden>format2</div>
     
-    <input class="hide" id="target_win" type="checkbox"/>
-    <input class="hide" id="target_all" type="checkbox"/>
+    <input class="hide" id="target_win" type="checkbox">
+    <input class="hide" id="target_all" type="checkbox">
     <div class="box clearfix">
-      <label class="item target win" id="target_win_label" for="target_win">window</label>
-      <label class="item target all" id="target_all_label" for="target_all">all</label>
+      <label class="item target" id="target_win_label" for="target_win">window</label>
+      <label class="item target" id="target_all_label" for="target_all">all</label>
     </div>
     <div class="title" id="footer"></div>
   </div>

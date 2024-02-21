@@ -50,6 +50,7 @@ const isMobile = () => /(Mobile|Android|iPhone)/i.test(navigator.userAgent);
 
 
 // ストレージの初期値
+/*
 const defaultStorageVersion1 = {
   menu_all: false,                      // v0.0.5+
   menu_page: false,                     // v0.0.5+
@@ -89,9 +90,9 @@ const defaultStorageVersion1 = {
   format_extension: false               // v0.0.9+
 };
 Object.freeze(defaultStorageVersion1);
+*/
 
-
-
+/*
 const defaultStorageVersion2 = {
   version: 2,                           // v2.0.0+
   // id
@@ -172,7 +173,7 @@ const defaultStorageVersion2 = {
   newline: 'default',                           // v2.3.2+
 };
 Object.freeze(defaultStorageVersion2);
-
+*/
 
 
 const defaultStorageVersion3 = {
@@ -335,6 +336,8 @@ const extendedEditMode = [
 ];
 Object.freeze(extendedMode);
 Object.freeze(extendedEditMode);
+
+
 const ex3 = (cmd, name) => {
   if (name) {
     if (extendedMode.includes(name)) {

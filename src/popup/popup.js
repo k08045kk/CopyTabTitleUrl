@@ -4,9 +4,15 @@
  */
 'use strict';
 
+
+const cmdPromise = chrome.storage.local.get(defaultStorage);
+
+
 document.addEventListener("DOMContentLoaded", async () => {
+  const cmd = await cmdPromise;
+  
   // チェックボックスイベント設定
-  const onClickCheckbox = async function() {
+  const onClickCheckbox = function() {
     const element = this;
     const win = document.getElementById('target_win');
     const all = document.getElementById('target_all');
@@ -22,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let target = 'tab';
     if (element.id == 'target_win_label' && !win.checked) { target = 'window'; }
     if (element.id == 'target_all_label' && !all.checked) { target = 'all'; }
-    await chrome.storage.local.set({popup: {target}});
+    chrome.storage.local.set({popup: {target}});
     // 備考：無効でも覚える
   };
   document.getElementById('target_win_label').addEventListener('click', onClickCheckbox);
@@ -32,9 +38,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   // コピーイベント設定
   document.querySelectorAll('.copy').forEach((element) => {
     const id = element.id.match(/\d+$/)[0]-0;
-    element.addEventListener('click', async () => {
+    element.addEventListener('click', () => {
       // ポップアップ表示のイベント
-      const cmd = await chrome.storage.local.get(defaultStorage);
       const win = document.getElementById('target_win');
       const all = document.getElementById('target_all');
       let target = 'tab';
@@ -51,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   
   // アクション
-  const cmd = await chrome.storage.local.get(defaultStorage);
   if (cmd.browser_action === 'popup') {
     // ポップアップ表示する
     if (ex3(cmd, 'popup_format2')) {
