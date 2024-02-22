@@ -32,6 +32,7 @@ chrome.action.onClicked.addListener(async (tab) => {
   cmd.id = id;
   cmd.format = cmd.formats[id];
   cmd.target = cmd.browser_action_target;
+  cmd.tab = tab;
   onCopy(cmd);
 });
 
@@ -45,13 +46,10 @@ const onContextMenus = async (info, tab) => {
   cmd.target = ex3(cmd) && (ex3(cmd, 'extended_edit') || 3<=id) 
              ? cmd.menus[id].target 
              : defaultStorage.menus[id].target;
-  cmd.frameUrl = info.frameUrl;
-  cmd.selectionText = info.selectionText;
-  cmd.linkText = info.linkText;  // Firefox56+(Chromeは、対象外)
-  cmd.linkUrl = info.linkUrl;
-  cmd.srcUrl = info.srcUrl;
   cmd.tab = tab;
+  cmd.info = info;
   onCopy(cmd);
+  // 備考：標準モードは、ターゲット設定不可（セパレーターの扱いにこまるため）
 };
 chrome.contextMenus?.onClicked.addListener(onContextMenus);
 
@@ -59,17 +57,12 @@ chrome.contextMenus?.onClicked.addListener(onContextMenus);
 // キーボードショートカット
 chrome.commands?.onCommand.addListener(async (name, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
-  if (name === 'shortcut_action') {
-    const id = 3;
+  const id = {'shortcut_action':3, 'shortcut_action2':4}[name] ?? -1;
+  if (0 <= id) {
     cmd.id = id;
     cmd.format = cmd.formats[id];
     cmd.target = ex3(cmd, 'shortcut_target') ? cmd.menus[id].target : 'tab';
-    onCopy(cmd);
-  } else if (name === 'shortcut_action2') {
-    const id = 4;
-    cmd.id = id;
-    cmd.format = cmd.formats[id];
-    cmd.target = ex3(cmd, 'shortcut_target') ? cmd.menus[id].target : 'tab';
+    cmd.tab = tab;
     onCopy(cmd);
   }
 });

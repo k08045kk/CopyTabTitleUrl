@@ -181,11 +181,13 @@ const defaultStorageVersion3 = {
   // id
   // format
   // target
-  // selectionText
-  // linkText
-  // linkUrl
-  // srcUrl
   // tab
+  // info                               // v3.3.6
+  //   selectionText
+  //   linkText
+  //   linkUrl
+  //   srcUrl
+  // selectionText
   // enter
   browser_action: 'popup',              // popup / action
   browser_action_target: 'tab',         // tab / window / all
