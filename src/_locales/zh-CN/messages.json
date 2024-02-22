@@ -1,0 +1,159 @@
+{
+  "extensionName": {
+    "message": "CopyTabTitleUrl"
+  },
+  "extensionDescription": {
+    "message": "将网页标题和链接复制到剪贴板。"
+  },
+  
+  
+  "optionsBrowserActionLegendContent": {
+    "message": "点击拓展图标"
+  },
+  "optionsBrowserActionPopupContent": {
+    "message": "显示弹出菜单"
+  },
+  "optionsPopupFormat2Content": {
+    "message": "按格式复制时使用 format2"
+  },
+  "optionsPopupTitleContent": {
+    "message": "使用自定义菜单项标题"
+  },
+  "optionsPopupTooltipContent": {
+    "message": "鼠标悬停在菜单项上时显示格式"
+  },
+  "optionsBrowserActionActionContent": {
+    "message": "直接按格式复制"
+  },
+  "optionsPopupComlateContent": {
+    "message": "显示复制完成弹窗"
+  },
+  
+  
+  "optionsMenusLegendContent": {
+    "message": "右键菜单"
+  },
+  "optionsContextAllContent": {
+    "message": "全部上下文"
+  },
+  "optionsContextPageContent": {
+    "message": "页面"
+  },
+  "optionsContextSelectionContent": {
+    "message": "选中区域"
+  },
+  "optionsContextLinkContent": {
+    "message": "超链接"
+  },
+  "optionsContextImageContent": {
+    "message": "图片"
+  },
+  "optionsContextActionContent": {
+    "message": "拓展图标"
+  },
+  "optionsContextTabContent": {
+    "message": "标签页"
+  },
+  "optionsMenuItemLegendContent": {
+    "message": "菜单项"
+  },
+  
+  
+  "optionsShortcutLegendContent": {
+    "message": "快捷键"
+  },
+  "optionsShortcutChromeInnerText": {
+    "message": "请访问浏览器的有关设置页面。\nchrome://extensions/shortcuts"
+  },
+  "optionsShortcutFirefoxInnerText": {
+    "message": "请访问浏览器的有关设置页面。\n[about:addons] > [⚙] > [管理拓展快捷键]"
+  },
+  
+  
+  "optionsFormatLegendContent": {
+    "message": "格式"
+  },
+  
+  
+  "optionsProgrammableLegendContent": {
+    "message": "可编程格式"
+  },
+  "optionsCopyProgrammableContent": {
+    "message": "启用可编程格式"
+  },
+  "optionsCopyScriptingContent": {
+    "message": "为活跃标签页启用内容脚本（content script）"
+  },
+  
+  
+  "optionsOptionsPageDetailsContent": {
+    "message": "请参阅此页面以了解有关设置选项的详细信息。"
+  },
+  "optionsCopyDecodeContent": {
+    "message": "解码 URL 编码"
+  },
+  "optionsCopyDecodeTitle": {
+    "message": "解码链接中的百分号编码。"
+  },
+  "optionsCopyPunycodeContent": {
+    "message": "解码 Punycode"
+  },
+  "optionsCopyPunycodeTitle": {
+    "message": "解码 Punycode 域名代码。"
+  },
+  "optionsCopyClipboardApiContent": {
+    "message": "使用 Clipboard API"
+  },
+  "optionsCopyClipboardApiTitle": {
+    "message": "支持在设置了 dom.event.clipboardevents.enabled=false 的 Firefox 浏览器中进行复制。"
+  },
+  "optionsCopyHtmlContent": {
+    "message": "按格式复制时复制为 text/html 格式"
+  },
+  "optionsCopyHtmlTitle": {
+    "message": "仅限复制结果匹配正则表达式 /<.+>/ 时"
+  },
+  "optionsNewlineLabelContent": {
+    "message": "换行符：$${enter} ="
+  },
+  "optionsSeparatorLabelContent": {
+    "message": "使用此字符串分隔多个标签页："
+  },
+  "optionsExcludePinContent": {
+    "message": "排除固定标签页"
+  },
+  "optionsExcludeHiddenContent": {
+    "message": "排除隐藏标签页"
+  },
+  "optionsMenusEditTitleContent": {
+    "message": "自定义菜单项标题"
+  },
+  "optionsMenusEditTitleTitle": {
+    "message": "允许自定义右键菜单下各个菜单项的标题"
+  },
+  "optionsMenusFormat9Content": {
+    "message": "在特定几种上下文的右键菜单下仅显示 format9"
+  },
+  "optionsMenusFormat9Title": {
+    "message": "在选中区域、超链接和图片的右键菜单下仅显示 format9。"
+  },
+  "optionsExtendedEditContent": {
+    "message": "启用拓展编辑模式"
+  },
+  "optionsExtendedModeContent": {
+    "message": "启用拓展模式"
+  },
+  
+  
+  "optionsResetContent": {
+    "message": "恢复默认设置"
+  },
+  "optionsResetConfirmContent": {
+    "message": "真的要恢复默认设置吗？"
+  },
+  
+  
+  "lang": {
+    "message": "zh-CN"
+  }
+}
