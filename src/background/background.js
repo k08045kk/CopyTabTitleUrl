@@ -32,6 +32,7 @@ chrome.action.onClicked.addListener(async (tab) => {
   cmd.id = id;
   cmd.format = cmd.formats[id];
   cmd.target = cmd.browser_action_target;
+  cmd.tab = tab;
   onCopy(cmd);
 });
 
@@ -45,13 +46,10 @@ const onContextMenus = async (info, tab) => {
   cmd.target = ex3(cmd) && (ex3(cmd, 'extended_edit') || 3<=id) 
              ? cmd.menus[id].target 
              : defaultStorage.menus[id].target;
-  cmd.frameUrl = info.frameUrl;
-  cmd.selectionText = info.selectionText;
-  cmd.linkText = info.linkText;  // Firefox56+(Chromeは、対象外)
-  cmd.linkUrl = info.linkUrl;
-  cmd.srcUrl = info.srcUrl;
   cmd.tab = tab;
+  cmd.info = info;
   onCopy(cmd);
+  // 備考：標準モードは、ターゲット設定不可（セパレーターの扱いにこまるため）
 };
 chrome.contextMenus?.onClicked.addListener(onContextMenus);
 
@@ -59,17 +57,12 @@ chrome.contextMenus?.onClicked.addListener(onContextMenus);
 // キーボードショートカット
 chrome.commands?.onCommand.addListener(async (name, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
-  if (name === 'shortcut_action') {
-    const id = 3;
+  const id = {'shortcut_action':3, 'shortcut_action2':4}[name] ?? -1;
+  if (0 <= id) {
     cmd.id = id;
     cmd.format = cmd.formats[id];
-    cmd.target = 'tab';
-    onCopy(cmd);
-  } else if (name === 'shortcut_action2') {
-    const id = 4;
-    cmd.id = id;
-    cmd.format = cmd.formats[id];
-    cmd.target = 'tab';
+    cmd.target = ex3(cmd, 'shortcut_target') ? cmd.menus[id].target : 'tab';
+    cmd.tab = tab;
     onCopy(cmd);
   }
 });
@@ -109,9 +102,8 @@ const updateContextMenus = async (cmd) => {
   // メニュー削除 && ストレージ取得
   await chrome.contextMenus.removeAll();
   
-  const extension = ex3(cmd);
+  const exmode = ex3(cmd);
   const format9 = ex3(cmd, 'menus_format9');
-  const edit = ex3(cmd, 'menus_edit_title');
   
   // メニュー追加
   const contexts = [];
@@ -124,7 +116,7 @@ const updateContextMenus = async (cmd) => {
   if (isFirefox() && ex3(cmd, 'context_tab')) { contexts.push('tab'); }
   
   if (contexts.length) {
-    const len = extension ? cmd.menus.length : 5;
+    const len = exmode ? cmd.menus.length : 5;
     for (let i=0; i<len; i++) {
       if (cmd.menus[i].enable) {
         if (cmd.menus[i].target === 'separator') {
@@ -136,7 +128,7 @@ const updateContextMenus = async (cmd) => {
         } else {
           chrome.contextMenus.create({
             id: 'menu'+i,
-            title: edit ? cmd.menus[i].title : defaultStorage.menus[i].title,
+            title: exmode ? cmd.menus[i].title : defaultStorage.menus[i].title,
             contexts: contexts,
           });
         }
@@ -147,7 +139,7 @@ const updateContextMenus = async (cmd) => {
     const id = 11;
     chrome.contextMenus.create({
       id: 'exmenu'+id,
-      title: edit ? cmd.menus[id].title : defaultStorage.menus[id].title,
+      title: exmode ? cmd.menus[id].title : defaultStorage.menus[id].title,
       contexts: ['selection', 'link', 'image'],
     });
   }

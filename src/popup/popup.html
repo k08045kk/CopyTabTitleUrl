@@ -1,8 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
+
+
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/common.js" defer></script>
+  <script src="./popup.js" defer></script>
   <style>
 * {
   box-sizing: border-box;
@@ -10,10 +15,8 @@
 body {
   min-width: 160px; /* 10em - 3em = 7em */
   max-width: 250px; /* 15em - 3em = 12em */
-  color: #000;
   pading: 0;
   margin: auto;      /* mobile 対策 モバイルの左右はいろいろ怪しいため、中央寄せ */
-  border: 1px solid #aaa;
   font-size: 16px;
   user-select: none;
 }
@@ -32,11 +35,10 @@ body {
   font-size: 12px;
   padding: .25em;
 }
-.box {
-  border-bottom: 1px solid #aaa;
-}
 .copy {
   padding: .5em 1.5em;
+  
+  /* menus_edit_title の文字漏れ対策（拡がってから、...省略） */
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -55,22 +57,6 @@ body {
 .complete {
   text-align: center;
 }
-.item:hover {
-  background: #b995c5;
-  color: #fff;
-}
-#target_win_label {
-  border-right: 1px solid #aaa;
-}
-#target_win:checked ~ .box .item.win, 
-#target_all:checked ~ .box .item.all,
-#target_win:checked ~ .title, 
-#target_all:checked ~ .title,
-.title, 
-.item:active {
-  background: #A374B3;
-  color: #fff;
-}
 #footer::after {
   content: 'tab';
 }
@@ -79,30 +65,63 @@ body {
   content: 'tabs';
 }
 
+
+
+body {
+  border: 1px solid #aaa;
+  color: #000;
+  background: #fff;
+}
+.box {
+  border-bottom: 1px solid #aaa;
+}
+@media (hover: hover) { /* モバイルで :hover が残る対策 */
+  .item:hover {
+    color: #000;
+    background: #ddd;
+  }
+}
+#target_win:checked ~ .box > #target_win_label, 
+#target_all:checked ~ .box > #target_all_label,
+.title,
+.item.copy:active {
+  color: #fff;
+  background: #A374B3;
+}
+#target_win_label {
+  border-right: 1px solid #aaa;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     color: #E8EAED;
     background: #444;
   }
+  @media (hover: hover) {
+    .item:hover {
+      color: #E8EAED;
+      background: #666;
+    }
+  }
 }
   </style>
-  <script src="/common.js"></script>
-  <script src="./popup.js"></script>
-</head>
+
+
+
 <body>
   <div id="panel" hidden>
     <div class="box title">CopyTabTitleUrl</div>
-    <div class="box item copy" id="format0">title<br/>URL</div>
+    <div class="box item copy" id="format0">title<br>URL</div>
     <div class="box item copy" id="format1">title</div>
     <div class="box item copy" id="format2">URL</div>
     <div class="box item copy" id="format3">format</div>
     <div class="box item copy format2" id="format4" hidden>format2</div>
     
-    <input class="hide" id="target_win" type="checkbox"/>
-    <input class="hide" id="target_all" type="checkbox"/>
+    <input class="hide" id="target_win" type="checkbox">
+    <input class="hide" id="target_all" type="checkbox">
     <div class="box clearfix">
-      <label class="item target win" id="target_win_label" for="target_win">window</label>
-      <label class="item target all" id="target_all_label" for="target_all">all</label>
+      <label class="item target" id="target_win_label" for="target_win">window</label>
+      <label class="item target" id="target_all_label" for="target_all">all</label>
     </div>
     <div class="title" id="footer"></div>
   </div>
@@ -113,5 +132,3 @@ body {
     <p class="complete">Completed</p>
     <div class="title"></div>
   </div>
-</body>
-</html>

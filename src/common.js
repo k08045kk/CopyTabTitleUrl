@@ -50,6 +50,7 @@ const isMobile = () => /(Mobile|Android|iPhone)/i.test(navigator.userAgent);
 
 
 // ストレージの初期値
+/*
 const defaultStorageVersion1 = {
   menu_all: false,                      // v0.0.5+
   menu_page: false,                     // v0.0.5+
@@ -89,9 +90,9 @@ const defaultStorageVersion1 = {
   format_extension: false               // v0.0.9+
 };
 Object.freeze(defaultStorageVersion1);
+*/
 
-
-
+/*
 const defaultStorageVersion2 = {
   version: 2,                           // v2.0.0+
   // id
@@ -172,7 +173,7 @@ const defaultStorageVersion2 = {
   newline: 'default',                           // v2.3.2+
 };
 Object.freeze(defaultStorageVersion2);
-
+*/
 
 
 const defaultStorageVersion3 = {
@@ -180,20 +181,26 @@ const defaultStorageVersion3 = {
   // id
   // format
   // target
-  // selectionText
-  // linkText
-  // linkUrl
-  // srcUrl
   // tab
+  // info                               // v3.3.6
+  //   selectionText
+  //   linkText
+  //   linkUrl
+  //   srcUrl
+  // selectionText
   // enter
   browser_action: 'popup',              // popup / action
   browser_action_target: 'tab',         // tab / window / all
   newline: 'default',                   // default / CRLF / CR / LF
   separator: '${enter}',                // $text
+  popup: {                              // v3.3.1
+    target: 'tab',
+  },
   options: {
     popup_format2: false,               // v3.0.0 （標準モードへ移行）
     popup_title: false,                 // v3.1.0
     popup_tooltip: false,               // v3.1.0
+    popup_remember: false,              // v3.3.1
     popup_comlate: true,                // v3.0.0 （初期設定を変更）
     
     context_all: false,
@@ -204,16 +211,25 @@ const defaultStorageVersion3 = {
     context_action: true,
     context_tab: true,                  // Firefox only
     
+    shortcut_target: false,             // v3.3.2
+    
+    copy_programmable: false,           // v3.1.0
+    copy_text: false,                   // v3.3.4
+    copy_scripting: false,              // v3.1.0
+    copy_scripting_main: false,         // v3.3.6
+    
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
-    copy_scripting: false,              // v3.1.0
     copy_clipboard_api: false,
     copy_html: false,
-    copy_programmable: false,           // v3.1.0
+    copy_empty: false,                  // v3.3.5
+    
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
-    menus_edit_title: false,
+    
+    //menus_edit_title: false,          // v3.3.0 （廃止、拡張モードと統合）
     menus_format9: false,
+    
     use_english: false,                 // v3.1.0 (others_language 後継機能)
     extended_edit: false,               // v3.1.0
     extended_mode: false,
@@ -278,6 +294,7 @@ const extendedMode = [
   //'popup_format2',                    // standard v3.0.0+
   'popup_title',
   'popup_tooltip',
+  'popup_remember',
   //'popup_comlate',                    // standard
   
   //'context_all',                      // standard
@@ -288,15 +305,21 @@ const extendedMode = [
   //'context_action',                   // standard
   //'context_tab',                      // standard
   
+  'shortcut_target',
+  
+  'copy_programmable',
+  'copy_text',
+  'copy_scripting',
+  'copy_scripting_main',
+  
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+
-  'copy_scripting',
   'copy_clipboard_api',
   'copy_html',
-  'copy_programmable',
+  'copy_empty',
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
-  'menus_edit_title',
+  //'menus_edit_title',                 // 廃止済み
   'menus_format9', 
   //'use_english',                      // standard
   'extended_edit', 
@@ -306,12 +329,33 @@ const extendedMode = [
   //'newline',                          // extended
   //'separator',                        // extended
 ];
+const extendedEditMode = [
+  'copy_programmable',
+  'copy_text',
+  'copy_scripting',
+  'copy_scripting_main',
+  
+  'copy_empty',
+  
+  'menus_format9', 
+];
 Object.freeze(extendedMode);
+Object.freeze(extendedEditMode);
+
+
 const ex3 = (cmd, name) => {
   if (name) {
-    return extendedMode.includes(name)
-         ?(cmd.options.extended_mode ? cmd.options[name] : defaultStorage.options[name])
-         : cmd.options[name];
+    if (extendedMode.includes(name)) {
+      if (!cmd.options.extended_mode) {
+        return defaultStorage.options[name];
+      } if (extendedEditMode.includes(name)) {
+        return cmd.options.extended_edit ? cmd.options[name] : defaultStorage.options[name];
+      } else {
+        return cmd.options[name];
+      }
+    } else {
+      return cmd.options[name];
+    }
   }
   return cmd.options.extended_mode;
 };

@@ -5,6 +5,39 @@
   "extensionDescription": {
     "message": "タイトルと URL をクリップボードにコピーします。"
   },
+  "extensionOverview": {
+    "message": "Dummy",
+    "description": "Overview: Chrome Web Store / AMO (addons.mozilla.org)"
+  },
+  "overviewL1":   {"message": "オプション設定から、拡張機能をカスタマイズできます。"},
+  "overviewL2":   {"message": ""},
+  "overviewL3":   {"message": "次のアクションを実行できます。"},
+  "overviewL4":   {"message": "+ タイトルと URL をコピー"},
+  "overviewL5":   {"message": "+ タイトルをコピー"},
+  "overviewL6":   {"message": "+ URL をコピー"},
+  "overviewL7":   {"message": "+ フォーマットをコピー（例：Markdown、ハイパーリンク、など）"},
+  "overviewL8":   {"message": ""},
+  "overviewL9":   {"message": "次のタブでアクションを実行できます。"},
+  "overviewL10":  {"message": "+ カレントタブ"},
+  "overviewL11":  {"message": "+ 複数の選択したタブ"},
+  "overviewL12":  {"message": "+ カレントウィンドウのタブ"},
+  "overviewL13":  {"message": "+ すべてのタブ"},
+  "overviewL14":  {"message": ""},
+  "overviewL15":  {"message": "次の操作でアクションを実行できます。"},
+  "overviewL16":  {"message": "+ ブラウザアクション（ポップアップ、クリック）"},
+  "overviewL17":  {"message": "+ コンテキストメニュー（すべて、ページ、ブラウザアクション）"},
+  "overviewL17ff":{"message": "+ コンテキストメニュー（すべて、ページ、ブラウザアクション、タブ）"},
+  "overviewL18":  {"message": "+ キーボードショートカット"},
+  "overviewL19":  {"message": ""},
+  "overviewL20":  {"message": "次の補助機能と組み合わせてアクションを実行できます。"},
+  "overviewL21":  {"message": "+ URL をデコード"},
+  "overviewL22":  {"message": "+ Punycode をデコード"},
+  "overviewL23":  {"message": ""},
+  "overviewL24":  {"message": "Chrome 版"},
+  "overviewL24ff":{"message": "Firefox 版"},
+  "overviewL25":  {"message": "https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgjpaohjfeapp"},
+  "overviewL25ff":{"message": "https://addons.mozilla.org/firefox/addon/copytabtitleurl/"},
+  "overviewEnd":  {"message": ""},
   
   
   "optionsBrowserActionPopupContent": {
@@ -14,7 +47,7 @@
     "message": "format2 を使用する"
   },
   "optionsPopupTitleContent": {
-    "message": "コンテキストメニューのタイトルを使用する"
+    "message": "メニューのタイトルを使用する"
   },
   "optionsPopupTooltipContent": {
     "message": "format のツールチップを表示する"
@@ -22,16 +55,22 @@
   "optionsBrowserActionActionContent": {
     "message": "format をコピーする"
   },
+  "optionsPopupRememberContent": {
+    "message": "ターゲットを記憶する"
+  },
   "optionsPopupComlateContent": {
     "message": "コピー完了を表示する"
   },
   
   
-  "optionsShortcutChromeInnerText": {
-    "message": "ブラウザの設定ページから変更してください。\nchrome://extensions/shortcuts"
+  "optionsShortcutDescriptionContent": {
+    "message": "ブラウザの設定ページから変更してください。"
   },
-  "optionsShortcutFirefoxInnerText": {
-    "message": "ブラウザの設定ページから変更してください。\n[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]"
+  "optionsShortcutFirefoxDescriptionContent": {
+    "message": "[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]"
+  },
+  "optionsShortcutTargetContent": {
+    "message": "メニューのターゲットを使用する"
   },
   
   
@@ -45,10 +84,10 @@
     "message": "Punycode をデコードする"
   },
   "optionsCopyClipboardApiContent": {
-    "message": "Clipboard API を使用する"
+    "message": "Clipboard API でコピーする"
   },
   "optionsCopyHtmlContent": {
-    "message": "text/html 形式でも format をコピーする"
+    "message": "text/html 形式でコピーする"
   },
   "optionsNewlineLabelContent": {
     "message": "改行文字: $${enter} ="
@@ -61,9 +100,6 @@
   },
   "optionsExcludeHiddenContent": {
     "message": "非表示タブを除外する"
-  },
-  "optionsMenusEditTitleContent": {
-    "message": "コンテキストメニューのタイトルを編集する"
   },
   
   

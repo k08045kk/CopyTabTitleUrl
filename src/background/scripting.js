@@ -84,8 +84,8 @@ async function executeScript(tab, cmd) {
     // 備考：「chrome://」「about:」「mozilla.org」（特権ページ）では動作しない
   }
   
-  try {
-    if (data?.pageSelectionText == '') {
+  if (data?.pageSelectionText == '') {
+    try {
       const target = {tabId:tab.id, allFrames:true};
       const func = () => {
         return {
@@ -99,8 +99,33 @@ async function executeScript(tab, cmd) {
                             || '';
       // 備考：サブフレームの選択テキスト対応
       //data.pageURLs = results.map(v => v.result.pageURL || '');
-    }
-  } catch {}
+    } catch {}
+  }
+  
+  if (data && cmd.options.ex_copy_scripting_main) {
+    try {
+      const target = {tabId:tab.id};
+      const func = () => {
+        return {
+          pageText0: window.CopyTabTitleUrl?.text0?.toString() ?? '',
+          pageText1: window.CopyTabTitleUrl?.text1?.toString() ?? '',
+          pageText2: window.CopyTabTitleUrl?.text2?.toString() ?? '',
+          pageText3: window.CopyTabTitleUrl?.text3?.toString() ?? '',
+          pageText4: window.CopyTabTitleUrl?.text4?.toString() ?? '',
+          pageText5: window.CopyTabTitleUrl?.text5?.toString() ?? '',
+          pageText6: window.CopyTabTitleUrl?.text6?.toString() ?? '',
+          pageText7: window.CopyTabTitleUrl?.text7?.toString() ?? '',
+          pageText8: window.CopyTabTitleUrl?.text8?.toString() ?? '',
+          pageText9: window.CopyTabTitleUrl?.text9?.toString() ?? '',
+          // 備考：ユーザースクリプト（or 外部拡張機能）を想定する。
+          //       Example: window.CopyTabTitleUrl = {text0: input};
+        };
+      };
+      const world = 'MAIN';
+      const results = await chrome.scripting.executeScript({target, func, world});
+      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+    } catch {}
+  }
   
   return data;
   // 備考：非アクティブ（タブコンテキストメニュー）で動作する（copy_scripting を実施できる）

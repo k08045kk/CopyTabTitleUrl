@@ -162,8 +162,8 @@ const createFormatText = (cmd, tabs) => {
     keyset['${W}']    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
     keyset['${WWW}']  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()];
     keyset['${day}']  = ''+now.getDay();
-    keyset['${time}']  = ''+now.getTime();      // milliseconds
-    keyset['${timezoneOffset}']  = ''+now.getTimezoneOffset();  // minute offset from UTC
+    keyset['${time}'] = ''+now.getTime();       // milliseconds
+    keyset['${timezoneOffset}'] = ''+now.getTimezoneOffset(); // minute offset from UTC
     
     keyset['${YYYY}'] = keyset['${yyyy}'];
     keyset['${YY}']   = keyset['${yy}'];
@@ -174,9 +174,6 @@ const createFormatText = (cmd, tabs) => {
     
     // Programmable Format
     if (ex3(cmd, 'copy_programmable')) {
-      for (let i=0; i<10; i++) {
-        keyset['${text'+i+'}'] = cmd.texts[i];
-      }
       //keyset['${Math}'] = 'Math';
       //keyset['${String}'] = 'String';
       // 未定義の方が違和感がない？
@@ -189,6 +186,11 @@ const createFormatText = (cmd, tabs) => {
       //keyset['${tabs.length}'] = tabs.length;
       keyset['${tabsLength}'] = tabs.length;
     }
+    if (ex3(cmd, 'copy_text')) {
+      for (let i=0; i<10; i++) {
+        keyset['${text'+i+'}'] = cmd.texts[i];
+      }
+    }
   }
   const sep = ex3(cmd, 'copy_programmable')
             ? compile(separator, keyset, now)
@@ -196,7 +198,6 @@ const createFormatText = (cmd, tabs) => {
   
   // 本処理
   const temp = [];
-  const isSingle = tabs.length == 1;
   const urlkeys = ['href', 'origin', 'protocol', 'username', 'password', 
                    'host', 'hostname', 'port', 'pathname', 'search', 'hash'];
   const tabkeys = ['active','attention','audible','autoDiscardable','cookieStoreId','discarded',
@@ -213,38 +214,39 @@ const createFormatText = (cmd, tabs) => {
     
     if (isExtendedMode) {
       // Basic
-      keyset['${frameUrl}'] = isSingle && cmd.frameUrl || tab.url;
+      const active = tabs.length == 1 && tab.id == cmd.tab?.id;
+      keyset['${frameUrl}'] = active && cmd.info?.frameUrl || tab.url;
       keyset['${frameUrl}'] = decodeURL(keyset['${frameUrl}'], isDecode, isPunycode);
-      keyset['${text}']     = isSingle && cmd.selectionText || tab.title;
-      keyset['${selectionText}'] = isSingle && cmd.selectionText || '';
-      keyset['${selectedText}']  = isSingle && cmd.selectionText || '';
-      keyset['${linkText}'] = isSingle && cmd.linkText || tab.title;
-      keyset['${linkUrl}']  = isSingle && cmd.linkUrl || tab.url;
+      keyset['${text}']     = active && cmd.selectionText || tab.title;
+      keyset['${selectionText}'] = active && cmd.selectionText || '';
+      keyset['${selectedText}']  = active && cmd.selectionText || '';
+      keyset['${linkText}'] = active && cmd.info?.linkText || tab.title;
+      keyset['${linkUrl}']  = active && cmd.info?.linkUrl || tab.url;
       keyset['${linkUrl}']  = decodeURL(keyset['${linkUrl}'], isDecode, isPunycode);
       keyset['${link}']     = keyset['${linkUrl}'];
-      keyset['${src}']      = isSingle && cmd.srcUrl || tab.url;
+      keyset['${src}']      = active && cmd.info?.srcUrl || tab.url;
       keyset['${src}']      = decodeURL(keyset['${src}'], isDecode, isPunycode);
       
-      keyset['${linkSelectionTitle}']   = isSingle && (cmd.linkText || cmd.selectionText) || tab.title;
-      keyset['${selectionLinkTitle}']   = isSingle && (cmd.selectionText || cmd.linkText) || tab.title;
-      keyset['${linkSrcUrl}']    = isSingle && (cmd.linkUrl || cmd.srcUrl) || tab.url;
-      keyset['${linkSrcUrl}']    = decodeURL(keyset['${linkSrcUrl}'], isDecode, isPunycode);
-      keyset['${srcLinkUrl}']    = isSingle && (cmd.srcUrl || cmd.linkUrl) || tab.url;
-      keyset['${srcLinkUrl}']    = decodeURL(keyset['${srcLinkUrl}'], isDecode, isPunycode);
+      keyset['${linkSelectionTitle}'] = active && (cmd.info?.linkText || cmd.selectionText) || tab.title;
+      keyset['${selectionLinkTitle}'] = active && (cmd.selectionText || cmd.info?.linkText) || tab.title;
+      keyset['${linkSrcUrl}'] = active && (cmd.info?.linkUrl || cmd.info?.srcUrl) || tab.url;
+      keyset['${linkSrcUrl}'] = decodeURL(keyset['${linkSrcUrl}'], isDecode, isPunycode);
+      keyset['${srcLinkUrl}'] = active && (cmd.info?.srcUrl || cmd.info?.linkUrl) || tab.url;
+      keyset['${srcLinkUrl}'] = decodeURL(keyset['${srcLinkUrl}'], isDecode, isPunycode);
       
-      keyset['${index}']    = tab.index;
-      keyset['${id}']       = tab.id;
-      keyset['${tabId}']    = tab.id;
-      keyset['${windowId}'] = tab.windowId;
-      keyset['${favIconUrl}'] = tab.favIconUrl != null ? tab.favIconUrl : '';
+      keyset['${index}']      = tab.index;
+      keyset['${id}']         = tab.id;
+      keyset['${tabId}']      = tab.id;
+      keyset['${windowId}']   = tab.windowId;
+      keyset['${favIconUrl}'] = tab.favIconUrl ?? '';
       
       // URL
       const url = new URL(tab.url);
       urlkeys.forEach(key => keyset['${'+key+'}'] = url[key]);
       keyset['${username@}'] = url.username != '' ? url.username+'@' : '';
       keyset['${username:password@}'] = url.username != '' 
-                                       ? url.username+(url.password != '' ? ':'+url.password : '')+'@'
-                                       : '';
+                                      ? url.username+(url.password != '' ? ':'+url.password : '')+'@'
+                                      : '';
       keyset['${:port}'] = url.port != '' ? ':'+url.port : '';
       if (isPunycode) {
         try { keyset['${hostname}'] = punycode.toUnicode(url.hostname); } catch {}
@@ -316,6 +318,14 @@ const copyToClipboard = async (cmd, tabs) => {
     html: ex3(cmd, 'copy_html') && cmd.id >= 3 && /<.+>/.test(cmd.format),
     api: ex3(cmd, 'copy_clipboard_api'),
   };
+  if (ex3(cmd, 'copy_empty') && data.text == '') {
+    data.text = ' ';
+    // 備考：空文字をコピーした場合、コピーは成功します。
+    //       ですが、ペースト時に選択範囲を空文字で上書きせずに、元の文字列を残します。（Windows）
+    //       スペースをコピーすることで、元の文字列を消すことができます。
+    //       スペースよりも、良い文字列があれば再考する。（エラーメッセージとか？）
+    // 備考：別途、コピータブなし時、アクティブタグをコピーする仕様あり
+  }
   
   if (isFirefox()) {
     if (data.api) {
@@ -378,7 +388,7 @@ const onCopy = async (cmd) => {
   if (ex3(cmd, 'exclude_pin')) {
     targetQuery.pinned = false;
   }
-  if (cmd.tab && cmd.target == 'window') {
+  if (cmd.info && cmd.target == 'window') {
     // 回避策：#20 ウィンドウのコピーができないことがある
     delete targetQuery.currentWindow;
   }
@@ -390,7 +400,7 @@ const onCopy = async (cmd) => {
   //const tabs = await chrome.tabs.query(targetQuery);
   const tabs = await tabsQuery(targetQuery);
   let temp = tabs;
-  if (cmd.tab && cmd.target == 'tab') {
+  if (cmd.info && cmd.target == 'tab') {
     // 未選択タブのタブコンテキストメニューは、カレントタブとして扱わない
     if (!tabs.some(tab => tab.id === cmd.tab.id)) {
       temp = [cmd.tab];
@@ -398,7 +408,7 @@ const onCopy = async (cmd) => {
     // 備考：複数選択タブ中であっても、未選択タブからのコピー対象は、未選択タブである。
     // 　　　複数選択タブ内に未選択タブが含まれない場合、未選択タブのみを選択したタブとして扱う。
   }
-  if (cmd.tab && cmd.target == 'window') {
+  if (cmd.info && cmd.target == 'window') {
     // 回避策：#20 ウィンドウのコピーができないことがある
     // 全ウィンドウを取得して、windowIdが一致するもののみとする
     temp = tabs.filter(tab => tab.windowId === cmd.tab.windowId);
@@ -408,14 +418,14 @@ const onCopy = async (cmd) => {
   }
   if (temp.length === 0) {
     // #24 コピーするタブがない場合、カレントタブをコピーする
-    //temp = await chrome.tabs.query({currentWindow:true, active:true});
-    temp = await tabsQuery({currentWindow:true, active:true});
+    temp = cmd.tab ? [cmd.tab] : await tabsQuery({currentWindow:true, active:true});
   }
   
   if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
     // コンテンツスクリプト
+    cmd.options.ex_copy_scripting_main = ex3(cmd, 'copy_scripting_main');
     cmd.scripting = await executeScript(temp[0], cmd);
-    cmd.selectionText = cmd.selectionText || cmd.scripting?.pageSelectionText || '';
+    cmd.selectionText = cmd.info?.selectionText || cmd.scripting?.pageSelectionText || '';
   }
   
   // クリップボードにコピー

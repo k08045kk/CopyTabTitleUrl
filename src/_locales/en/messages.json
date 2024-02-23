@@ -5,11 +5,41 @@
   "extensionDescription": {
     "message": "Copy the title and URL to the clipboard."
   },
-  
-  
-  "optionsBrowserActionLegendContent": {
-    "message": "Browser Action"
+  "extensionOverview": {
+    "message": "Dummy",
+    "description": "Overview: Chrome Web Store / AMO (addons.mozilla.org)"
   },
+  "overviewL1":   {"message": "You can customize the extension from setting options."},
+  "overviewL2":   {"message": ""},
+  "overviewL3":   {"message": "You can perform actions the following."},
+  "overviewL4":   {"message": "+ Copy the title and URL"},
+  "overviewL5":   {"message": "+ Copy the title"},
+  "overviewL6":   {"message": "+ Copy the URL"},
+  "overviewL7":   {"message": "+ Copy the format (Example: Markdown, Hyperlink, etc)"},
+  "overviewL8":   {"message": ""},
+  "overviewL9":   {"message": "You can perform actions on the following tabs."},
+  "overviewL10":  {"message": "+ Current tab"},
+  "overviewL11":  {"message": "+ Multiple selected tabs"},
+  "overviewL12":  {"message": "+ Current window tabs"},
+  "overviewL13":  {"message": "+ All tabs"},
+  "overviewL14":  {"message": ""},
+  "overviewL15":  {"message": "You can perform actions from the following operations."},
+  "overviewL16":  {"message": "+ Browser action (popup, click)"},
+  "overviewL17":  {"message": "+ Context menu (all, page, browser action)"},
+  "overviewL17ff":{"message": "+ Context menu (all, page, browser action, tab)"},
+  "overviewL18":  {"message": "+ Keyboard shortcut"},
+  "overviewL19":  {"message": ""},
+  "overviewL20":  {"message": "You can perform actions in combination with the following auxiliary functions."},
+  "overviewL21":  {"message": "+ Decode the URL"},
+  "overviewL22":  {"message": "+ Decode the Punycode"},
+  "overviewL23":  {"message": ""},
+  "overviewL24":  {"message": "Chrome version"},
+  "overviewL24ff":{"message": "Firefox version"},
+  "overviewL25":  {"message": "https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgjpaohjfeapp"},
+  "overviewL25ff":{"message": "https://addons.mozilla.org/firefox/addon/copytabtitleurl/"},
+  "overviewEnd":  {"message": ""},
+  
+  
   "optionsBrowserActionPopupContent": {
     "message": "Show popup"
   },
@@ -22,6 +52,9 @@
   "optionsPopupTooltipContent": {
     "message": "Show format tooltip"
   },
+  "optionsPopupRememberContent": {
+    "message": "Remember target"
+  },
   "optionsBrowserActionActionContent": {
     "message": "Copy format"
   },
@@ -30,9 +63,6 @@
   },
   
   
-  "optionsMenusLegendContent": {
-    "message": "Context Menu"
-  },
   "optionsContextAllContent": {
     "message": "All context"
   },
@@ -49,40 +79,41 @@
     "message": "Image context"
   },
   "optionsContextActionContent": {
-    "message": "Browser action context"
+    "message": "Browser Action context"
   },
   "optionsContextTabContent": {
     "message": "Tab context"
   },
-  "optionsMenuItemLegendContent": {
-    "message": "Menu Item"
+  "optionsMenusFormat9Content": {
+    "message": "Set only format9 in specific"
   },
   
   
-  "optionsShortcutLegendContent": {
-    "message": "Keyboard Shortcut"
+  "optionsShortcutDescriptionContent": {
+    "message": "Please change it from browser settings page."
   },
-  "optionsShortcutChromeInnerText": {
-    "message": "Please change it from browser settings page.\nchrome://extensions/shortcuts"
+  "optionsShortcutChromeDescriptionContent": {
+    "message": "see chrome://extensions/shortcuts"
   },
-  "optionsShortcutFirefoxInnerText": {
-    "message": "Please change it from browser settings page.\n[about:addons] > [⚙] > [Manage Extension Shortcuts]"
+  "optionsShortcutFirefoxDescriptionContent": {
+    "message": "[about:addons] > [⚙] > [Manage Extension Shortcuts]"
   },
-  
-  
-  "optionsFormatLegendContent": {
-    "message": "Format"
+  "optionsShortcutTargetContent": {
+    "message": "Use context menu target"
   },
   
   
-  "optionsProgrammableLegendContent": {
-    "message": "Programmable Format"
-  },
   "optionsCopyProgrammableContent": {
     "message": "Enable programmable format"
   },
   "optionsCopyScriptingContent": {
     "message": "Enable content script for active tab"
+  },
+  "optionsCopyScriptingMainContent": {
+    "message": "Enable main world content script"
+  },
+  "optionsCopyTextContent": {
+    "message": "Enable $${text0} - $${text9}"
   },
   
   
@@ -92,26 +123,17 @@
   "optionsCopyDecodeContent": {
     "message": "Decode the URL"
   },
-  "optionsCopyDecodeTitle": {
-    "message": "Interprets percent encoding."
-  },
   "optionsCopyPunycodeContent": {
     "message": "Decode the Punycode"
   },
-  "optionsCopyPunycodeTitle": {
-    "message": "Interpret the Punycode."
-  },
   "optionsCopyClipboardApiContent": {
-    "message": "Use Clipboard API"
-  },
-  "optionsCopyClipboardApiTitle": {
-    "message": "dom.event.clipboardevents.enabled=false Countermeasure."
+    "message": "Copy using Clipboard API"
   },
   "optionsCopyHtmlContent": {
-    "message": "Copy format in text/html format"
+    "message": "Copy in text/html format"
   },
-  "optionsCopyHtmlTitle": {
-    "message": "When matching the regular expression /<.+>/"
+  "optionsCopyEmptyContent": {
+    "message": "Copy space if empty string"
   },
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
@@ -124,18 +146,6 @@
   },
   "optionsExcludeHiddenContent": {
     "message": "Exclude hidden tabs"
-  },
-  "optionsMenusEditTitleContent": {
-    "message": "Edit the context menu title"
-  },
-  "optionsMenusEditTitleTitle": {
-    "message": "Make the title of the context menu editable."
-  },
-  "optionsMenusFormat9Content": {
-    "message": "Set only format9 in specific context menu"
-  },
-  "optionsMenusFormat9Title": {
-    "message": "Selection, Link, Image Set only format9 in context menus."
   },
   "optionsExtendedEditContent": {
     "message": "Use Extended Edit Mode"
