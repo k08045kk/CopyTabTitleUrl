@@ -423,6 +423,7 @@ const onCopy = async (cmd) => {
   
   if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
     // コンテンツスクリプト
+    cmd.options.ex_copy_scripting_main = ex3(cmd, 'copy_scripting_main');
     cmd.scripting = await executeScript(temp[0], cmd);
     cmd.selectionText = cmd.info?.selectionText || cmd.scripting?.pageSelectionText || '';
   }

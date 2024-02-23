@@ -45,6 +45,7 @@ function updateOptionPage(cmd) {
   document.body.dataset.exmode = exmode;
   document.body.dataset.exedit = exedit;
   document.getElementById('programmable').dataset.text = ex3(cmd, 'copy_text');
+  document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_html').disabled = ex3(cmd, 'copy_clipboard_api');
   
   
