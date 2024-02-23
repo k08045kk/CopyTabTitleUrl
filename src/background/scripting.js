@@ -1,6 +1,7 @@
 /**
- * Scripting
- * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options
+ * Scripting (Content Script)
+ * コンテンツスクリプトを実行します。
+ * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Format
  */
 'use strict';
 
@@ -102,7 +103,7 @@ async function executeScript(tab, cmd) {
     } catch {}
   }
   
-  if (data && cmd.options.ex_copy_scripting_main) {
+  if (data && cmd.exoptions.copy_scripting_main) {
     try {
       const target = {tabId:tab.id};
       const func = () => {

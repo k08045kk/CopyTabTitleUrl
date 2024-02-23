@@ -1,6 +1,7 @@
 /**
  * Programmable Format
- * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options
+ * フォーマットをプログラム可能にします。
+ * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Format
  */
 'use strict';
 

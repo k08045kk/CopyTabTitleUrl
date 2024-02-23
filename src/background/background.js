@@ -13,9 +13,11 @@ if (globalThis.importScripts) {
   importScripts('/lib/punycode.js/punycode.js');
   // clipboard.js - punycode
   importScripts('/background/compiler.js');
-  // clipboard.js - compile
+  // format.js - compile
   importScripts('/background/scripting.js');
   // clipboard.js - executeScript
+  importScripts('/background/format.js');
+  // clipboard.js - createFormatText
   importScripts('/background/clipboard.js');
   // background.js - onCopy
 }
