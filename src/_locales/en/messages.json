@@ -5,6 +5,39 @@
   "extensionDescription": {
     "message": "Copy the title and URL to the clipboard."
   },
+  "extensionOverview": {
+    "message": "Dummy",
+    "description": "Overview: Chrome Web Store / AMO (addons.mozilla.org)"
+  },
+  "overviewL1":   {"message": "You can customize the extension from setting options."},
+  "overviewL2":   {"message": ""},
+  "overviewL3":   {"message": "You can perform actions the following."},
+  "overviewL4":   {"message": "+ Copy the title and URL"},
+  "overviewL5":   {"message": "+ Copy the title"},
+  "overviewL6":   {"message": "+ Copy the URL"},
+  "overviewL7":   {"message": "+ Copy the format (Example: Markdown, Hyperlink, etc)"},
+  "overviewL8":   {"message": ""},
+  "overviewL9":   {"message": "You can perform actions on the following tabs."},
+  "overviewL10":  {"message": "+ Current tab"},
+  "overviewL11":  {"message": "+ Multiple selected tabs"},
+  "overviewL12":  {"message": "+ Current window tabs"},
+  "overviewL13":  {"message": "+ All tabs"},
+  "overviewL14":  {"message": ""},
+  "overviewL15":  {"message": "You can perform actions from the following operations."},
+  "overviewL16":  {"message": "+ Browser action (popup, click)"},
+  "overviewL17":  {"message": "+ Context menu (all, page, browser action)"},
+  "overviewL17ff":{"message": "+ Context menu (all, page, browser action, tab)"},
+  "overviewL18":  {"message": "+ Keyboard shortcut"},
+  "overviewL19":  {"message": ""},
+  "overviewL20":  {"message": "You can perform actions in combination with the following auxiliary functions."},
+  "overviewL21":  {"message": "+ Decode the URL"},
+  "overviewL22":  {"message": "+ Decode the Punycode"},
+  "overviewL23":  {"message": ""},
+  "overviewL24":  {"message": "Chrome version"},
+  "overviewL24ff":{"message": "Firefox version"},
+  "overviewL25":  {"message": "https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgjpaohjfeapp"},
+  "overviewL25ff":{"message": "https://addons.mozilla.org/firefox/addon/copytabtitleurl/"},
+  "overviewEnd":  {"message": ""},
   
   
   "optionsBrowserActionPopupContent": {
