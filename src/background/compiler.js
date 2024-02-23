@@ -181,10 +181,19 @@ function compile(format, keyset, now) {
           // ありえない？
         } else if (m.groups.idx != null) {
           const idx = toValue(m.groups.idx);
-          const obj = JSON.parse(input);
-          if (typeof obj === "object" && obj !== null && obj[idx] !== void 0) {
-            ret = obj[idx];
+          if (input == '') {
+            ret = '';
             success = true;
+          } else {
+            const obj = JSON.parse(input);
+            if (typeof obj === "object" && obj !== null) {
+              if (obj[idx] !== void 0) {
+                ret = obj[idx];
+              } else {
+                ret = '';
+              }
+              success = true;
+            }
           }
           // ${array[index]}, ${object[propety]}
           // ${x=array[0]}, ${x=object[propety]}
@@ -217,7 +226,8 @@ function compile(format, keyset, now) {
           case 'match':         // in.match(regexp: RegExp, flags: string)
             if (arg1 != null) {
               const flags = arg2 == 'g' ? 'g' : '';
-              ret = JSON.stringify(input[func](new RegExp(arg1, flags)));
+              ret = input[func](new RegExp(arg1, flags));
+              ret = ret && JSON.stringify(ret) || '';
               success = true;
             }
             break;
