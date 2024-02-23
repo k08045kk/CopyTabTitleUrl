@@ -137,6 +137,20 @@ const createFormatText = (cmd, tabs) => {
                          .replace(/\${(cr|\\r|r)}/ig,  '${CR}')
                          .replace(/\${(lf|\\n|n)}/ig,  '${LF}')
     
+    // info
+    keyset['${infoButton}'] = cmd.info?.button ?? 0;            // Firefox Only
+    keyset['${infoEditable}'] = cmd.info?.editable;
+    keyset['${infoFrameId}'] = cmd.info?.frameId ?? '';
+    keyset['${infoFrameUrl}'] = cmd.info?.frameUrl ?? '';
+    keyset['${infoLinkText}'] = cmd.info?.linkText ?? '';       // Firefox Only
+    keyset['${infoLinkUrl}'] = cmd.info?.linkUrl ?? '';
+    keyset['${infoMediaType}'] = cmd.info?.mediaType ?? '';
+    keyset['${infoModifiers}'] = cmd.info?.modifiers && JSON.stringify(cmd.info.modifiers) || ''; // FF
+    keyset['${infoPageUrl}'] = cmd.info?.pageUrl ?? '';
+    keyset['${infoSelectionText}'] = cmd.info?.selectionText ?? '';
+    keyset['${infoSrcUrl}'] = cmd.info?.srcUrl ?? '';
+    keyset['${infoTargetElementId}'] = cmd.info?.targetElementId ?? ''; // Firefox Only
+    
     // Date
     keyset['${yyyy}'] =('000'+ now.getFullYear()).slice(-4);
     keyset['${yy}']   =('0' + now.getFullYear()).slice(-2);
