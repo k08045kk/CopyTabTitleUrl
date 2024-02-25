@@ -213,3 +213,4 @@ const onUpdateContextMenus = async () => {
 chrome.runtime.onInstalled.addListener(converteStorageVersion3);
 //chrome.runtime.onStartup.addListener(onUpdate);
 onUpdate();
+// 備考：Chrome の有効・無効に対応

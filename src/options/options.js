@@ -28,8 +28,8 @@ function updateOptionPage(cmd) {
       const content = getMessage('options'+key+'Content');
       if (content) { v.textContent = content; }
       
-      const inner = getMessage('options'+key+'InnerText');
-      if (inner) { v.innerText = inner; }
+      //const inner = getMessage('options'+key+'InnerText');
+      //if (inner) { v.innerText = inner; }
     });
     const reset = document.getElementById('reset');
     reset.dataset.reset = getMessage('optionsResetContent');

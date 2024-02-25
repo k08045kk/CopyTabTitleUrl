@@ -90,9 +90,6 @@
   "optionsShortcutDescriptionContent": {
     "message": "Please change it from browser settings page."
   },
-  "optionsShortcutChromeDescriptionContent": {
-    "message": "see chrome://extensions/shortcuts"
-  },
   "optionsShortcutFirefoxDescriptionContent": {
     "message": "[about:addons] > [⚙] > [Manage Extension Shortcuts]"
   },

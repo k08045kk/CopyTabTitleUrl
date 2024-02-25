@@ -87,12 +87,14 @@
   "optionsCopyHtmlContent": {
     "message": "text/html 形式でコピーする"
   },
+  
   "optionsNewlineLabelContent": {
     "message": "改行文字: $${enter} ="
   },
   "optionsSeparatorLabelContent": {
     "message": "複数タブの区切り文字:"
   },
+  
   "optionsExcludePinContent": {
     "message": "固定タブを除外する"
   },

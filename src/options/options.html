@@ -123,7 +123,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- ブラウザアクション -->
   <fieldset id="browser_action">
-    <legend id="browser_action_legend" data-i18n>Browser Action</legend>
+    <legend>Browser Action</legend>
 
     <p>
       <input id="browser_action_popup" type="radio" name="browser_action" value="popup">
@@ -147,7 +147,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- コンテキストメニュー -->
   <fieldset class="mobile" id="menus">
-    <legend id="menus_legend" data-i18n>Context Menu</legend>
+    <legend>Context Menu</legend>
 
     <p                       data-template="checkbox" data-id="context_all">
     <p class="       indent" data-template="checkbox" data-id="context_page">
@@ -158,7 +158,7 @@ body[data-browser="chrome"] .firefox,
     <p class="firefox"       data-template="checkbox" data-id="context_tab">
 
     <fieldset id="menu_item">
-      <legend id="menu_item_legend" data-i18n>Menu Item</legend>
+      <legend>Menu Item</legend>
 
       <!-- Template: menu -->
       <template class="clearfix" id="template_menu">
@@ -199,10 +199,11 @@ body[data-browser="chrome"] .firefox,
 
   <!-- キーボードショートカット -->
   <fieldset class="mobile" id="shortcut">
-    <legend id="shortcut_legend" data-i18n>Keyboard Shortcut</legend>
+    <legend>Keyboard Shortcut</legend>
 
     <p id="shortcut_description" data-i18n>
-    <p class="chrome" id="shortcut_chrome_description" data-i18n>
+    <p class="chrome" id="shortcut_chrome_description">
+      chrome://extensions/shortcuts
     <p class="firefox" id="shortcut_firefox_description" data-i18n>
 
     <hr class="exmode mobile"><!-- ---------- -->
@@ -212,7 +213,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- Format -->
   <fieldset id="format">
-    <legend id="format_legend" data-i18n>Format</legend>
+    <legend>Format</legend>
 
     <p class="normal">
       ${title}, ${url}, ${enter}, ${$}
@@ -244,7 +245,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- Extended Format -->
   <fieldset class="exmode exedit" id="programmable" data-text="false">
-    <legend id="programmable_legend" data-i18n>Extended Format</legend>
+    <legend>Extended Format</legend>
 
     <p class="exmode exedit exam" data-template="checkbox" data-id="copy_programmable">
     <p class="exmode exedit exam" data-template="checkbox" data-id="copy_scripting">
@@ -278,8 +279,8 @@ body[data-browser="chrome"] .firefox,
   <fieldset>
     <p class="exmode" id="options_page_details" data-i18n>
     <p class="exmode">
-      <small class="chrome">see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</small>
-      <span class="firefox">see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</span>
+      <small class="chrome">https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</small>
+      <span class="firefox">https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options</span>
 
     <hr class="exmode"><!-- ---------- -->
     <p data-template="checkbox" data-id="copy_decode">
