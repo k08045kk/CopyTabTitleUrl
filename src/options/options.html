@@ -82,6 +82,11 @@ p {
 .exam::after {
   content: '🧪';
 }
+#format > p > span {
+  display: inline-block;
+  min-width: 4em;
+  margin-right: .25em;
+}
 
 
 @media (prefers-color-scheme: dark) {
@@ -218,22 +223,22 @@ body[data-browser="chrome"] .firefox,
       ${protocol}//${host}${pathname}${search}${hash}<br>
 
     <hr><!-- ---------- -->
-    <p class="exedit"> title and URL: <input class="format" id="format0" type="text">
-    <p class="exedit"> title: <input class="format" id="format1" type="text">
-    <p class="exedit"> URL:   <input class="format" id="format2" type="text">
-    <p> format:&ensp; <input class="format" id="format3" type="text">
-    <p> format2:      <input class="format" id="format4" type="text">
+    <p class="exedit"><span>title and URL:</span><input class="format" id="format0" type="text">
+    <p class="exedit"><span>title:  </span><input class="format" id="format1" type="text">
+    <p class="exedit"><span>URL:    </span><input class="format" id="format2" type="text">
+    <p               ><span>format: </span><input class="format" id="format3" type="text">
+    <p               ><span>format2:</span><input class="format" id="format4" type="text">
 
     <hr class="exmode"><!-- ---------- -->
-    <p class="exmode"> format3: <input class="format" id="format5"  type="text">
-    <p class="exmode"> format4: <input class="format" id="format6"  type="text">
-    <p class="exmode"> format5: <input class="format" id="format7"  type="text">
-    <p class="exmode"> format6: <input class="format" id="format8"  type="text">
-    <p class="exmode"> format7: <input class="format" id="format9"  type="text">
-    <p class="exmode"> format8: <input class="format" id="format10" type="text">
+    <p class="exmode"><span>format3:</span><input class="format" id="format5"  type="text">
+    <p class="exmode"><span>format4:</span><input class="format" id="format6"  type="text">
+    <p class="exmode"><span>format5:</span><input class="format" id="format7"  type="text">
+    <p class="exmode"><span>format6:</span><input class="format" id="format8"  type="text">
+    <p class="exmode"><span>format7:</span><input class="format" id="format9"  type="text">
+    <p class="exmode"><span>format8:</span><input class="format" id="format10" type="text">
 
     <hr class="exmode"><!-- ---------- -->
-    <p class="exmode"> format9: <input class="format" id="format11" type="text">
+    <p class="exmode"><span>format9:</span><input class="format" id="format11" type="text">
   </fieldset>
 
 
