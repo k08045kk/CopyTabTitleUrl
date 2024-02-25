@@ -46,14 +46,14 @@ const createFormatText = (cmd, tabs) => {
   const isScripting = cmd.exoptions.copy_scripting;
   const isText = cmd.exoptions.copy_text;
   const enter = cmd.enter;
-  const keyset = {};
+  const keyset = createDefaltKeyset(cmd);
   const now = new Date();
   let format = cmd.format;
   let separator = cmd.separator;
   
   // Standard
-  keyset['${enter}'] = enter;
-  keyset['${$}'] = '$';
+  //keyset['${enter}'] = enter;                 // createDefaltKeyset
+  //keyset['${$}'] = '$';                       // createDefaltKeyset
   format = format.replace(/\${(title|url|enter)}/ig, (m) => m.toLowerCase());
   separator = separator.replace(/\${(title|url|enter)}/ig, (m) => m.toLowerCase());
   
@@ -63,9 +63,9 @@ const createFormatText = (cmd, tabs) => {
     separator = separator.replace(/\${(text|index|id)}/ig, (m) => m.toLowerCase());
     
     // Character code
-    keyset['${TAB}'] = keyset['${t}'] = '\t';
-    keyset['${CR}']  = keyset['${r}'] = '\r';
-    keyset['${LF}']  = keyset['${n}'] = '\n';
+    //keyset['${TAB}'] = keyset['${t}'] = '\t'; // createDefaltKeyset
+    //keyset['${CR}']  = keyset['${r}'] = '\r'; // createDefaltKeyset
+    //keyset['${LF}']  = keyset['${n}'] = '\n'; // createDefaltKeyset
     format = format.replace(/\${(tab|\\t|t)}/ig, '${TAB}')
                    .replace(/\${(cr|\\r|r)}/ig,  '${CR}')
                    .replace(/\${(lf|\\n|n)}/ig,  '${LF}')
@@ -121,27 +121,28 @@ const createFormatText = (cmd, tabs) => {
     keyset['${DD}']   = keyset['${dd}'];
     keyset['${D}']    = keyset['${d}'];
     keyset['${dayOfWeek}']  = keyset['${day}'];
-    
-    // Programmable Format
-    if (isProgrammable) {
-      //keyset['${Math}'] = 'Math';
-      //keyset['${String}'] = 'String';
-      // 未定義の方が違和感がない？
-      keyset['${undefined}'] = undefined;
-      keyset['${null}'] = null;
-      keyset['${true}'] = true;
-      keyset['${false}'] = false;
-      keyset['${NaN}'] = NaN;
-      keyset['${Infinity}'] = Infinity;
-      //keyset['${tabs.length}'] = tabs.length;
-      keyset['${tabsLength}'] = tabs.length;
-    }
-    if (isText) {
-      for (let i=0; i<10; i++) {
-        keyset['${text'+i+'}'] = cmd.texts[i];
-      }
+  }
+  
+  // Programmable Format
+  if (isProgrammable) {
+    //keyset['${undefined}'] = undefined;     // createDefaltKeyset
+    //keyset['${null}'] = null;               // createDefaltKeyset
+    //keyset['${true}'] = true;               // createDefaltKeyset
+    //keyset['${false}'] = false;             // createDefaltKeyset
+    //keyset['${NaN}'] = NaN;                 // createDefaltKeyset
+    //keyset['${Infinity}'] = Infinity;       // createDefaltKeyset
+    //keyset['${Math}'] = 'Math';
+    //keyset['${String}'] = 'String';
+    // 未定義の方が違和感がない？
+    //keyset['${tabs.length}'] = tabs.length;
+    keyset['${tabsLength}'] = tabs.length;
+  }
+  if (isText) {
+    for (let i=0; i<cmd.texts.length; i++) {
+      keyset['${text'+i+'}'] = cmd.texts[i];
     }
   }
+  
   const sep = isProgrammable
             ? compile(separator, keyset, now)
             : separator.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m);

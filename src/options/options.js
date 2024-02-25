@@ -47,6 +47,8 @@ function updateOptionPage(cmd) {
   document.getElementById('programmable').dataset.text = ex3(cmd, 'copy_text');
   document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_html').disabled = ex3(cmd, 'copy_clipboard_api');
+  document.getElementById('extended_menus').disabled = 
+                          !(ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text'));
   
   
   // ブラウザアクション
@@ -75,6 +77,7 @@ function updateOptionPage(cmd) {
 // オプション全般変更イベント
 async function onUpdateOptions() {
   const cmd = await chrome.storage.local.get(defaultStorage);
+  const cmd2 = structuredClone(cmd);
   for (const key of Object.keys(defaultStorage.options)) {
     cmd.options[key] = document.getElementById(key).checked;
   }
@@ -84,7 +87,21 @@ async function onUpdateOptions() {
   
   // ストレージへ設定を保存
   await chrome.storage.local.set(cmd);
-  await chrome.runtime.sendMessage({target:'background', type:'update'});
+  
+  if (cmd.browser_action != cmd2.browser_action
+   || cmd.options.popup_comlate != cmd2.options.popup_comlate) {
+    await chrome.runtime.sendMessage({target:'background', type:'updateAction'});
+  }
+  if (cmd.options.extended_mode != cmd2.options.extended_mode
+   || cmd.options.extended_edit != cmd2.options.extended_edit
+   || cmd.options.copy_programmable != cmd2.options.copy_programmable
+   || cmd.options.copy_text         != cmd2.options.copy_text
+   || cmd.options.extended_menus    != cmd2.options.extended_menus
+   || cmd.options.menus_format9 != cmd2.options.menus_format9) {
+    await chrome.runtime.sendMessage({target:'background', type:'updateContextMenus'});
+  }
+  // 備考：menus_format9, menus_extended
+  
   updateOptionPage(cmd);
 };
 
@@ -97,7 +114,7 @@ async function onUpdateMenus() {
     cmd.menus[i].target = document.getElementById('menu'+i+'_target').value;
   }
   await chrome.storage.local.set(cmd);
-  await chrome.runtime.sendMessage({target:'background', type:'update'});
+  await chrome.runtime.sendMessage({target:'background', type:'updateContextMenus'});
 };
 
 // 文字列更新イベント
@@ -110,11 +127,16 @@ async function onUpdateFormat() {
 };
 
 async function onUpdateText() {
-  const cmd = await chrome.storage.local.get({texts: defaultStorage.texts});
+  const cmd = await chrome.storage.local.get(defaultStorage);
+  const cmdTexts = {texts:cmd.texts};
   for (let i=0; i<defaultStorage.texts.length; i++) {
-    cmd.texts[i] = document.getElementById('text'+i).value;
+    cmdTexts.texts[i] = document.getElementById('text'+i).value;
   }
-  await chrome.storage.local.set(cmd);
+  await chrome.storage.local.set(cmdTexts);
+  
+  if (ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text')) {
+    await chrome.runtime.sendMessage({target:'background', type:'updateContextMenus'});
+  }
 };
 
 async function onUpdateSeparator() {

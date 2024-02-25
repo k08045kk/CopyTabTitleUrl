@@ -8,12 +8,13 @@ if (globalThis.importScripts) {
   importScripts('/common.js');
   // punycode.js - module
   // scripting.js - isMobile
-  // clipboard.js - isFirefox, isWiki, ex3, defaultStorage
-  // background.js - isFirefox, ex3, defaultStorage, converteStorageVersion3
+  // clipboard.js - isFirefox, isWiki, ex3, exOptions, defaultStorage
+  // background.js - isFirefox, ex3, exOptions, defaultStorage, converteStorageVersion3
   importScripts('/lib/punycode.js/punycode.js');
   // clipboard.js - punycode
   importScripts('/background/compiler.js');
-  // format.js - compile
+  // format.js - compile, createDefaltKeyset
+  // background.js - compile, createDefaltKeyset, getStringArray
   importScripts('/background/scripting.js');
   // clipboard.js - executeScript
   importScripts('/background/format.js');
@@ -44,10 +45,15 @@ const onContextMenus = async (info, tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   const id = info.menuItemId.match(/\d+$/)[0]-0;
   cmd.id = id;
-  cmd.format = ex3(cmd, 'extended_edit') || 3<=id ? cmd.formats[id] : defaultStorage.formats[id];
-  cmd.target = ex3(cmd) && (ex3(cmd, 'extended_edit') || 3<=id) 
-             ? cmd.menus[id].target 
-             : defaultStorage.menus[id].target;
+  if (id < defaultStorage.formats.length) {
+    cmd.format = ex3(cmd, 'extended_edit') || 3<=id ? cmd.formats[id] : defaultStorage.formats[id];
+    cmd.target = ex3(cmd) && (ex3(cmd, 'extended_edit') || 3<=id) 
+               ? cmd.menus[id].target 
+               : defaultStorage.menus[id].target;
+  } else {
+    cmd.format = cmd.texts[id-defaultStorage.formats.length];
+    cmd.target = info.menuItemId.match(/^exmenu_(\w+)_/)[1];
+  }
   cmd.tab = tab;
   cmd.info = info;
   onCopy(cmd);
@@ -75,7 +81,13 @@ chrome.runtime.onMessage.addListener((data, sender) => {
   if (data.target !== 'background') { return; }
   switch (data.type) {
   case 'update':                // options.js
-    update();
+    onUpdate();
+    break;
+  case 'updateAction':          // options.js
+    onAction();
+    break;
+  case 'updateContextMenus':    // options.js
+    onUpdateContextMenus();
     break;
   case 'copy':                  // popup.js
     onCopy(data.cmd);
@@ -98,8 +110,30 @@ const updateAction = (cmd) => {
 
 
 // コンテキストメニュー
+const createExContextMenu = (format, menu) => {
+  const keyset = createDefaltKeyset();  // ${enter} = '\n'
+  const text = compile(format, keyset, null);
+  
+  const exmenu = keyset['${menu}'];
+  if (exmenu == 'true' || exmenu === true) {
+    menu.type = {normal:'normal', separator:'separator'}[keyset['${menuType}']] ?? menu.type;
+    menu.title = keyset['${menuTitle}'] ?? menu.title;
+    menu.contexts = getStringArray(keyset['${menuContexts}'], menu.contexts);
+    menu.documentUrlPatterns = 
+        getStringArray(keyset['${menuDocumentUrlPatterns}'], menu.documentUrlPatterns);
+    menu.targetUrlPatterns = 
+        getStringArray(keyset['${menuTargetUrlPatterns}'], menu.targetUrlPatterns);
+    
+    const target = {tab:'tab', window:'window', all:'all'}[keyset['${menuTarget}']] ?? 'tab';
+    menu.id = 'exmenu_'+target+'_'+menu.id;
+    chrome.contextMenus.create(menu);
+    // ${menu=true}
+    // ${menu=true}${title}${enter}${url}
+    // ${menu=true}${menuTitle='exmenu test'}${menuDocumentUrlPatterns='["*://*.example.com/*"]'}test:${title}${enter}${url}
+  }
+};
 const updateContextMenus = async (cmd) => {
-  if (!chrome.contextMenus) { return; }
+  if (!chrome.contextMenus) { return; }         // モバイル対策
   
   // メニュー削除 && ストレージ取得
   await chrome.contextMenus.removeAll();
@@ -145,13 +179,30 @@ const updateContextMenus = async (cmd) => {
       contexts: ['selection', 'link', 'image'],
     });
   }
+  if (ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text') && ex3(cmd, 'extended_menus')) {
+    const id0 = defaultStorage.formats.length;
+    const menu = {type:'normal', contexts, documentUrlPatterns:null, targetUrlPatterns:null};
+    for (let i=0; i<cmd.texts.length; i++) {
+      menu.id = (id0+i);
+      menu.title = 'format'+(id0+i);
+      createExContextMenu(cmd.texts[i], menu);
+    }
+  }
 };
 
 
-// 全体
-const update = async () => {
+// 更新
+const onUpdate = async () => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   updateAction(cmd);
+  updateContextMenus(cmd);
+};
+const onAction = async () => {
+  const cmd = await chrome.storage.local.get(defaultStorage);
+  updateAction(cmd);
+};
+const onUpdateContextMenus = async () => {
+  const cmd = await chrome.storage.local.get(defaultStorage);
   updateContextMenus(cmd);
 };
 
@@ -161,5 +212,5 @@ const update = async () => {
 /* main                                                                       */
 /* ========================================================================== */
 chrome.runtime.onInstalled.addListener(converteStorageVersion3);
-//chrome.runtime.onStartup.addListener(update);
-update();
+//chrome.runtime.onStartup.addListener(onUpdate);
+onUpdate();

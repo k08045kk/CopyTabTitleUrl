@@ -115,6 +115,9 @@
   "optionsCopyTextContent": {
     "message": "Enable $${text0} - $${text9}"
   },
+  "optionsExtendedMenusContent": {
+    "message": "Enable $${menu}"
+  },
   
   
   "optionsOptionsPageDetailsContent": {
@@ -135,18 +138,21 @@
   "optionsCopyEmptyContent": {
     "message": "Copy space if empty string"
   },
+  
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
   },
   "optionsSeparatorLabelContent": {
     "message": "Separate multiple tabs:"
   },
+  
   "optionsExcludePinContent": {
     "message": "Exclude pinned tabs"
   },
   "optionsExcludeHiddenContent": {
     "message": "Exclude hidden tabs"
   },
+  
   "optionsExtendedEditContent": {
     "message": "Use Extended Edit Mode"
   },

@@ -148,7 +148,7 @@ function compile(format, keyset, now) {
           // String.fromCharCode(num1: number, num2: number)
           // ${String.fromCharCode(65,66)} => AB
         }
-      } else if (m.groups.in === 'Date' && m.groups.args != null) {
+      } else if (m.groups.in === 'Date' && m.groups.args != null && now) {
         const arg1 = toValue(m.groups.arg1);
         const arg2 = toValue(m.groups.arg2);
         switch (m.groups.fn) {
@@ -333,4 +333,42 @@ function compile(format, keyset, now) {
     }
     return ret;
   });
+};
+
+
+
+function createDefaltKeyset(cmd) {
+  const keyset = {};
+  
+  keyset['${enter}'] = cmd?.enter ?? '\n';
+  keyset['${$}'] = '$';
+  
+  if (cmd?.exoptions?.extended_mode ?? true) {
+    keyset['${TAB}'] = keyset['${t}'] = '\t';
+    keyset['${CR}']  = keyset['${r}'] = '\r';
+    keyset['${LF}']  = keyset['${n}'] = '\n';
+  }
+  if (cmd?.exoptions?.copy_programmable ?? true) {
+    keyset['${undefined}'] = undefined;
+    keyset['${null}'] = null;
+    keyset['${true}'] = true;
+    keyset['${false}'] = false;
+    keyset['${NaN}'] = NaN;
+    keyset['${Infinity}'] = Infinity;
+  }
+  return keyset;
+  // 備考：cmd なしでも動作する
+  //       cmd ありは、 format.js 用
+};
+
+
+
+function getStringArray(input, def) {
+  try {
+    const array = JSON.parse(input);
+    const check = Array.isArray(array) && array.every((value) => typeof value === 'string');
+    if (check) { return array; }
+    if (typeof array === 'string') { return [array]; }
+  } catch {};
+  return def;
 };

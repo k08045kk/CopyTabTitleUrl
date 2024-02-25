@@ -144,10 +144,7 @@ const tabsQuery = async (query) => {
 const onCopy = async (cmd) => {
   cmd.enter = await getEnterCode(cmd);
   cmd.separator = ex3(cmd) ? cmd.separator : defaultStorage.separator;
-  cmd.exoptions = {};
-  for (const key of Object.keys(defaultStorage.options)) {
-    cmd.exoptions[key] = ex3(cmd, key);
-  }
+  cmd.exoptions = exOptions(cmd);
   
   const targetQuery = {
     'tab': {currentWindow:true, highlighted:true}, 
