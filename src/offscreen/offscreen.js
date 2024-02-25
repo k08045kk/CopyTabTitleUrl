@@ -1,7 +1,8 @@
 'use strict';
 
 chrome.runtime.onMessage.addListener((data, sender) => {
-  if (data.target === 'offscreen' && data.type === 'clipboardWrite') {  // clipboard.js
+  switch (data.target) {
+  case 'offscreen.clipboardWrite':      // clipboard.js
 /**/// a. document.execCommand('copy') ----------------------------------------
     window.addEventListener('copy', function(event) {
       event.preventDefault();
@@ -22,5 +23,6 @@ chrome.runtime.onMessage.addListener((data, sender) => {
       console.log('failed', error);
     });
 /**/// ------------------------------------------------------------------------
+    break;
   }
 });

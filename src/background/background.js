@@ -78,18 +78,17 @@ chrome.commands?.onCommand.addListener(async (name, tab) => {
 
 // メッセージ
 chrome.runtime.onMessage.addListener((data, sender) => {
-  if (data.target !== 'background') { return; }
-  switch (data.type) {
-  case 'update':                // options.js
+  switch (data.target) {
+  case 'background.update':             // options.js
     onUpdate();
     break;
-  case 'updateAction':          // options.js
+  case 'background.updateAction':       // options.js
     onAction();
     break;
-  case 'updateContextMenus':    // options.js
+  case 'background.updateContextMenus': // options.js
     onUpdateContextMenus();
     break;
-  case 'copy':                  // popup.js
+  case 'background.copy':               // popup.js
     onCopy(data.cmd);
     break;
   }

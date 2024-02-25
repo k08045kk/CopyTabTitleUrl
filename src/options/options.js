@@ -90,7 +90,7 @@ async function onUpdateOptions() {
   
   if (cmd.browser_action != cmd2.browser_action
    || cmd.options.popup_comlate != cmd2.options.popup_comlate) {
-    await chrome.runtime.sendMessage({target:'background', type:'updateAction'});
+    await chrome.runtime.sendMessage({target:'background.updateAction'});
   }
   if (cmd.options.extended_mode != cmd2.options.extended_mode
    || cmd.options.extended_edit != cmd2.options.extended_edit
@@ -98,7 +98,7 @@ async function onUpdateOptions() {
    || cmd.options.copy_text         != cmd2.options.copy_text
    || cmd.options.extended_menus    != cmd2.options.extended_menus
    || cmd.options.menus_format9 != cmd2.options.menus_format9) {
-    await chrome.runtime.sendMessage({target:'background', type:'updateContextMenus'});
+    await chrome.runtime.sendMessage({target:'background.updateContextMenus'});
   }
   // 備考：menus_format9, menus_extended
   
@@ -114,7 +114,7 @@ async function onUpdateMenus() {
     cmd.menus[i].target = document.getElementById('menu'+i+'_target').value;
   }
   await chrome.storage.local.set(cmd);
-  await chrome.runtime.sendMessage({target:'background', type:'updateContextMenus'});
+  await chrome.runtime.sendMessage({target:'background.updateContextMenus'});
 };
 
 // 文字列更新イベント
@@ -135,7 +135,7 @@ async function onUpdateText() {
   await chrome.storage.local.set(cmdTexts);
   
   if (ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text')) {
-    await chrome.runtime.sendMessage({target:'background', type:'updateContextMenus'});
+    await chrome.runtime.sendMessage({target:'background.updateContextMenus'});
   }
 };
 
@@ -178,7 +178,7 @@ async function onReset() {
     onStop();
     await chrome.storage.local.clear();
     await chrome.storage.local.set(defaultStorage);
-    await chrome.runtime.sendMessage({target:'background', type:'update'});
+    await chrome.runtime.sendMessage({target:'background.update'});
     setupOptionPage(defaultStorage);
   }
 };

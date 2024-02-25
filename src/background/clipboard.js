@@ -77,8 +77,7 @@ const getEnterCode = async (cmd) => {
 // クリップボードにコピー
 const copyToClipboard = async (cmd, tabs) => {
   const data = {
-    target: 'offscreen',
-    type: 'clipboardWrite',
+    target: 'offscreen.clipboardWrite',
     text: createFormatText(cmd, tabs),
     html: ex3(cmd, 'copy_html') && cmd.id >= 3 && /<.+>/.test(cmd.format),
     api: ex3(cmd, 'copy_clipboard_api'),
@@ -197,7 +196,7 @@ const onCopy = async (cmd) => {
   await copyToClipboard(cmd, temp);
   if (cmd.callback) {
     try {
-      await chrome.runtime.sendMessage({target:'popup', type:cmd.callback});
+      await chrome.runtime.sendMessage({target:'popup.'+cmd.callback});
     } catch {
       // 備考：window.prompt() でポップアップが閉じる
     }
