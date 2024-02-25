@@ -77,7 +77,6 @@ function updateOptionPage(cmd) {
 // オプション全般変更イベント
 async function onUpdateOptions() {
   const cmd = await chrome.storage.local.get(defaultStorage);
-  const cmd2 = structuredClone(cmd);
   for (const key of Object.keys(defaultStorage.options)) {
     cmd.options[key] = document.getElementById(key).checked;
   }
@@ -87,21 +86,7 @@ async function onUpdateOptions() {
   
   // ストレージへ設定を保存
   await chrome.storage.local.set(cmd);
-  
-  if (cmd.browser_action != cmd2.browser_action
-   || cmd.options.popup_comlate != cmd2.options.popup_comlate) {
-    await chrome.runtime.sendMessage({target:'background.updateAction'});
-  }
-  if (cmd.options.extended_mode != cmd2.options.extended_mode
-   || cmd.options.extended_edit != cmd2.options.extended_edit
-   || cmd.options.copy_programmable != cmd2.options.copy_programmable
-   || cmd.options.copy_text         != cmd2.options.copy_text
-   || cmd.options.extended_menus    != cmd2.options.extended_menus
-   || cmd.options.menus_format9 != cmd2.options.menus_format9) {
-    await chrome.runtime.sendMessage({target:'background.updateContextMenus'});
-  }
-  // 備考：menus_format9, menus_extended
-  
+  await chrome.runtime.sendMessage({target:'background.update'});
   updateOptionPage(cmd);
 };
 
