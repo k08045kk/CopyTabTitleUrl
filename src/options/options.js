@@ -20,16 +20,22 @@ function updateOptionPage(cmd) {
   const i18n = lang !== 'en' && !ex3(cmd, 'use_english');
   const lang2 = i18n ? lang : 'en';
   if (document.body.dataset.lang != lang2) {
-    const getMessage = key => i18n ? chrome.i18n.getMessage(key) : en[key]?.message.replace(/\$\$/g, '$');
-    document.querySelectorAll('*[data-i18n]').forEach(v => {
-      const id = v.id || v.getAttribute('for') || '';
+    const getMessage = (key, translate) => {
+      return i18n && translate !== false 
+           ? chrome.i18n.getMessage(key) 
+           : en[key]?.message.replace(/\$\$/g, '$');
+    };
+    document.querySelectorAll('*[data-i18n]').forEach((element) => {
+      const id = element.id || element.getAttribute('for') || '';
       const key = id.replace(/(^[a-z]|_[a-z])/g, m => m.at(-1).toUpperCase());
+      const isTranslate =!(element.parentElement.classList.contains('notranslate')
+                        || element.parentElement.classList.contains('exam'));
       
-      const content = getMessage('options'+key+'Content');
-      if (content) { v.textContent = content; }
+      const content = getMessage('options'+key+'Content', isTranslate);
+      if (content) { element.textContent = content; }
       
-      //const inner = getMessage('options'+key+'InnerText');
-      //if (inner) { v.innerText = inner; }
+      //const inner = getMessage('options'+key+'InnerText', isTranslate);
+      //if (inner) { element.innerText = inner; }
     });
     const reset = document.getElementById('reset');
     reset.dataset.reset = getMessage('optionsResetContent');
