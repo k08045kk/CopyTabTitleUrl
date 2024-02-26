@@ -89,6 +89,20 @@ function compile(format, keyset, options) {
         success = true;
         // Deprecated: The feature will be deprecated if a better way to access the element is found.
         // ${out=globalThis["tab.status"]} => ${tab.status}
+//      } else if (m.groups.in === 'System' && m.groups.args != null) {
+//        const arg1 = toValue(m.groups.arg1);
+//        switch (m.groups.fn) {
+//        case 'compile':
+//          if (arg1 != null && options?.compile !== true) {
+//            const opt = structuredClone(options);
+//            opt.compile = true;
+//            ret = compile(arg1, keyset, opt);
+//            success = true;
+//            // 備考：${pageText0} と同時に実行してもセキュリティ的に問題ないか要検討
+//            // 備考：再帰処理は、許容しない。
+//          }
+//          break;
+//        }
       } else if (m.groups.in === 'Math' && m.groups.args != null) {
         const arg1 = toValue(m.groups.arg1);
         const arg2 = toValue(m.groups.arg2);
