@@ -6,9 +6,13 @@
 'use strict';
 
 
+
 async function executeScript(tab, cmd) {
-  let data = {};
+  if (!cmd.exoptions.copy_scripting) { return null; }
+  
+  let data = null;
   try {
+    data = {}
     const target = {tabId:tab.id};
     const func = (isPrompt) => {
       return {
@@ -134,3 +138,28 @@ async function executeScript(tab, cmd) {
   // 備考：モバイルの ${pagePrompt} は、ポップアップ（完了通知含む）で非対応
   // 備考：separator では、動作しない
 };
+
+
+
+// ${console.log()}
+function executeConsoleLog(tab, cmd, args) {
+  if (cmd.exoptions.copy_scripting && cmd.exoptions.copy_scripting_main) {
+    const target = {tabId:tab.id};
+    const func = (text) => console.log(text);
+    const world = 'MAIN';
+    chrome.scripting.executeScript({target, func, args, world});
+    return true;
+  }
+  return false;
+}
+// ${window.prompt()}
+async function executePrompt(tab, cmd, args) {
+  if (cmd.exoptions.copy_scripting && cmd.exoptions.copy_scripting_main) {
+    const target = {tabId:tab.id};
+    const func = (msg, def) => window.prompt(msg, def);
+    const world = 'MAIN';
+    const results = await chrome.scripting.executeScript({target, func, args, world});
+    return results[0].result;
+  }
+  return null;
+}

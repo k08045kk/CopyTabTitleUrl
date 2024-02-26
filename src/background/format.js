@@ -246,7 +246,7 @@ const createFormatText = (cmd, tabs) => {
       tabkeys.forEach(key => keyset['${tab'+(key.at(0).toUpperCase()+key.slice(1))+'}'] = tab[key]);
       // 備考：tab 情報をそのまま提供する（url のデコード等は、実施しない）
       
-      temp.push(compile(format, keyset, {now}));
+      temp.push(compile(format, keyset, {cmd, tab, tabs, now}));
     } else {
       temp.push(format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m));
     }

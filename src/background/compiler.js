@@ -103,6 +103,23 @@ function compile(format, keyset, options) {
 //          }
 //          break;
 //        }
+//      } else if ((m.groups.in === 'console' || m.groups.in === 'window') && m.groups.args != null) {
+//        if (options?.cmd && options?.tab && options?.tabs?.length === 1) {
+//          const arg1 = toValue(m.groups.arg1);
+//          const arg2 = toValue(m.groups.arg2);
+//          switch (m.groups.in+'.'+m.groups.fn) {
+//          case 'console.log':
+//            success = executeConsoleLog(options.tab, options.cmd, [arg1]);
+//            ret = '';
+//            break;
+//          case 'window.prompt':
+//            ret = await executePrompt(options.tab, options.cmd, [arg1, arg2]);
+//            success = ret != null;
+//            ret = ret ?? '';
+//            // 備考：string.replace async 問題あり
+//            break;
+//          }
+//        }
       } else if (m.groups.in === 'Math' && m.groups.args != null) {
         const arg1 = toValue(m.groups.arg1);
         const arg2 = toValue(m.groups.arg2);
