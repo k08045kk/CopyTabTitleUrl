@@ -109,7 +109,7 @@ function compile(format, keyset, options) {
 //          const arg2 = toValue(m.groups.arg2);
 //          switch (m.groups.in+'.'+m.groups.fn) {
 //          case 'console.log':
-//            success = executeConsoleLog(options.tab, options.cmd, [arg1]);
+//            success = await executeConsoleLog(options.tab, options.cmd, [arg1]);
 //            ret = '';
 //            break;
 //          case 'window.prompt':
