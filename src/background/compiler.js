@@ -124,9 +124,10 @@ function compile(format, keyset, now) {
         }
         if ((arg1 == null && arg2 == null) || (isInteger(arg1) && (arg2 == null || isInteger(arg2)))) {
           switch (m.groups.fn) {
-          case 'random':        // Math.random()
-                                // Math.random(max)
-                                // Math.random(max,min) or Math.random(min,max)
+          case 'random':        // Math.random(): number
+                                // Math.random(max: number): number
+                                // Math.random(max: number, min: number): number
+                                // Math.random(min: number, max: number): number
             const max = isInteger(arg1) ? arg1 : 2_147_483_647;   // 32bit 符号付き整数の最大値
             const min = isInteger(arg2) ? arg2 : 0;
             ret = Math.floor(Math.random() * (max - min)) + min;  // min <= ret < max
@@ -200,10 +201,11 @@ function compile(format, keyset, now) {
           // ${x=array[0]}, ${x=object[propety]}
           // Error: ${'abc'[0]} -> ${'abc'.at(0)}
           // Error: ${'["abc","xyz"]'.length} -> 13 instead of 2
+          // 備考：undefined / エラーを極力出力しない。空文字を出力する。
         } else if (m.groups.args == null) {
           const func = m.groups.fn;
           switch (func) {
-          case 'length':        // in.length
+          case 'length':        // in.length: number
             ret = input[func];
             success = true;
             break;
@@ -216,106 +218,110 @@ function compile(format, keyset, now) {
           const arg2 = toValue(m.groups.arg2);
 //console.log('fn()', input, func, arg1, arg2);
           switch (func) {
-          case 'replace':       // in.replace(pattern: RegExp, replacement: string)
-          case 'replaceAll':    // in.replaceAll(pattern: RegExp, replacement: string)
+          case 'replace':       // in.replace(pattern: RegExp, replacement: string): string
+          case 'replaceAll':    // in.replaceAll(pattern: RegExp, replacement: string): string
             if (arg1 != null && arg2 != null) {
               const flags = func === 'replace' ? '' : 'g';
               ret = input.replace(new RegExp(arg1, flags), arg2);
               success = true;
             }
             break;
-          case 'match':         // in.match(regexp: RegExp, flags: string)
+          case 'match':         // in.match(regexp: RegExp, flags: string): string[]
             if (arg1 != null) {
               const flags = arg2 == 'g' ? 'g' : '';
               ret = input[func](new RegExp(arg1, flags));
               ret = ret && JSON.stringify(ret) || '';
               success = true;
+              // '', '["abc","def"]'
+              // 備考：マッチなしは、空文字を返す。 null を出力しない。
             }
             break;
-          case 'search':        // in.search(regexp: RegExp)
+          case 'search':        // in.search(regexp: RegExp): number
             if (arg1 != null) {
               ret = input[func](new RegExp(arg1));
               success = true;
             }
             break;
-          case 'substring':     // in.substring(indexStart: number)
-                                // in.substring(indexStart: number, indexEnd: number)
-          case 'slice':         // in.slice(indexStart: number)
-                                // in.slice(indexStart: number, indexEnd: number)
+          case 'substring':     // in.substring(indexStart: number): string
+                                // in.substring(indexStart: number, indexEnd: number): string
+          case 'slice':         // in.slice(indexStart: number): string
+                                // in.slice(indexStart: number, indexEnd: number): string
             if (isInteger(arg1) && (arg2 == null || isInteger(arg2))) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'padStart':      // in.padStart(targetLength: number)
-                                // in.padStart(targetLength: number, padString: string)
-          case 'padEnd':        // in.padEnd(targetLength: number)
-                                // in.padEnd(targetLength: number, padString: string)
+          case 'padStart':      // in.padStart(targetLength: number): string
+                                // in.padStart(targetLength: number, padString: string): string
+          case 'padEnd':        // in.padEnd(targetLength: number): string
+                                // in.padEnd(targetLength: number, padString: string): string
             if (isInteger(arg1)) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'at':            // in.at(index: number)
-          case 'charAt':        // in.charAt(index: number)
-          case 'charCodeAt':    // in.charCodeAt(index: number)
-          case 'codePointAt':   // in.codePointAt(index: number)
-          case 'repeat':        // in.repeat(count: number)
+          case 'at':            // in.at(index: number): string
+          case 'charAt':        // in.charAt(index: number): string
+          case 'charCodeAt':    // in.charCodeAt(index: number): number
+          case 'codePointAt':   // in.codePointAt(index: number): number
+          case 'repeat':        // in.repeat(count: number): string
             if (isInteger(arg1)) {
               ret = input[func](arg1);
               success = true;
             }
             break;
-          case 'startsWith':    // in.startsWith(searchString: string)
-                                // in.startsWith(searchString: string, position: number)
-          case 'endsWith':      // in.endsWith(searchString: string)
-                                // in.endsWith(searchString: string, endPosition: number)
-          case 'includes':      // in.includes(searchString: string)
-                                // in.includes(searchString: string, position: number)
-          case 'indexOf':       // in.indexOf(searchString: string)
-                                // in.indexOf(searchString: string, position: number)
-          case 'lastIndexOf':   // in.lastIndexOf(searchString: string)
-                                // in.lastIndexOf(searchString: string, position: number)
+          case 'startsWith':    // in.startsWith(searchString: string): boolean
+                                // in.startsWith(searchString: string, position: number): boolean
+          case 'endsWith':      // in.endsWith(searchString: string): boolean
+                                // in.endsWith(searchString: string, endPosition: number): boolean
+          case 'includes':      // in.includes(searchString: string): boolean
+                                // in.includes(searchString: string, position: number): boolean
+          case 'indexOf':       // in.indexOf(searchString: string): number
+                                // in.indexOf(searchString: string, position: number): number
+          case 'lastIndexOf':   // in.lastIndexOf(searchString: string): number
+                                // in.lastIndexOf(searchString: string, position: number): number
             if (arg1 != null) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'normalize':     // in.normalize()
-                                // in.normalize(form: string)
+          case 'normalize':     // in.normalize(): string
+                                // in.normalize(form: string): string
             // RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.
             ret = input[func](arg1);
             success = true;
             break;
-          case 'concat':        // in.concat(str1: string)
-                                // in.concat(str1: string, str2: string)
+          case 'concat':        // in.concat(): string
+                                // in.concat(str1: string): string
+                                // in.concat(str1: string, str2: string): string
             ret = input[func](arg1 ?? '', arg2 ?? '');
             success = true;
             // ...args 非対応
             break;
-          case 'split':         // in.split(separator: string)
-                                // in.split(separator: string, limit: number)
+          case 'split':         // in.split(separator: string): string[]
+                                // in.split(separator: string, limit: number): string[]
             if (arg1 != null) {
               ret = JSON.stringify(input[func](arg1, arg2));
               success = true;
+              // '[]', '["abc","def"]'
             }
             break;
-          case 'isWellFormed':  // in.isWellFormed()
-          case 'trim':          // in.trim()
-          case 'trimStart':     // in.trimStart()
-          case 'trimEnd':       // in.trimEnd()
-          case 'toLocaleLowerCase': // in.toLocaleLowerCase()
-          case 'toLocaleUpperCase': // in.toLocaleUpperCase()
-          case 'toLowerCase':   // in.toLowerCase()
-          case 'toString':      // in.toString()
-          case 'toUpperCase':   // in.toUpperCase()
-          case 'toWellFormed':  // in.toWellFormed()
-          case 'valueOf':       // in.valueOf()
+          case 'isWellFormed':  // in.isWellFormed(): boolean
+          case 'trim':          // in.trim(): string
+          case 'trimStart':     // in.trimStart(): string
+          case 'trimEnd':       // in.trimEnd(): string
+          case 'toLocaleLowerCase': // in.toLocaleLowerCase(): string
+          case 'toLocaleUpperCase': // in.toLocaleUpperCase(): string
+          case 'toLowerCase':   // in.toLowerCase(): string
+          case 'toString':      // in.toString(): string
+          case 'toUpperCase':   // in.toUpperCase(): string
+          case 'toWellFormed':  // in.toWellFormed(): string
+          case 'valueOf':       // in.valueOf(): string
             ret = input[func]();
             success = true;
             break;
-          //case 'localeCompare':
-          //case 'matchAll':
+          //case 'localeCompare': // in.localeCompare(compareString: string): number
+          //case 'matchAll':      // in.matchAll(regexp: RegExp): Iterator<string[]>
           // see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
           }
         }
