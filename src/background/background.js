@@ -12,11 +12,12 @@ if (globalThis.importScripts) {
   // background.js - isFirefox, ex3, exOptions, defaultStorage, converteStorageVersion3
   importScripts('/lib/punycode.js/punycode.js');
   // clipboard.js - punycode
+  importScripts('/background/scripting.js');
+  // compile.js - executeConsoleLog, executePrompt
+  // clipboard.js - executeScript
   importScripts('/background/compiler.js');
   // format.js - compile, createDefaltKeyset
   // background.js - compile, createDefaltKeyset, getStringArray
-  importScripts('/background/scripting.js');
-  // clipboard.js - executeScript
   importScripts('/background/format.js');
   // clipboard.js - createFormatText
   importScripts('/background/clipboard.js');
