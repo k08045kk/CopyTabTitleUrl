@@ -89,9 +89,14 @@ function compile(format, keyset, options) {
         success = true;
         // Deprecated: The feature will be deprecated if a better way to access the element is found.
         // ${out=globalThis["tab.status"]} => ${tab.status}
-//      } else if (m.groups.in === 'System' && m.groups.args != null) {
-//        const arg1 = toValue(m.groups.arg1);
-//        switch (m.groups.fn) {
+      } else if (m.groups.in === 'System' && m.groups.args != null) {
+        const arg1 = toValue(m.groups.arg1);
+        switch (m.groups.fn) {
+        case 'log':                     // System.log(msg: string): empty
+          console.log(arg1);    // WebExtension background DevTools Console
+          ret = '';
+          success = true;
+          break;
 //        case 'compile':
 //          if (arg1 != null && options?.compile !== true) {
 //            const opt = structuredClone(options);
@@ -102,7 +107,7 @@ function compile(format, keyset, options) {
 //            // 備考：再帰処理は、許容しない。
 //          }
 //          break;
-//        }
+        }
 //      } else if ((m.groups.in === 'console' || m.groups.in === 'window') && m.groups.args != null) {
 //        if (options?.cmd && options?.tab && options?.tabs?.length === 1) {
 //          const arg1 = toValue(m.groups.arg1);
@@ -176,8 +181,8 @@ function compile(format, keyset, options) {
           case 'fromCharCode':  ret = String.fromCharCode.apply(null, args);  success = true; break;
           case 'fromCodePoint': ret = String.fromCodePoint.apply(null, args); success = true; break;
           }
-          // String.fromCharCode(num1: number)
-          // String.fromCharCode(num1: number, num2: number)
+          // String.fromCharCode(num1: number): string
+          // String.fromCharCode(num1: number, num2: number): string
           // ${String.fromCharCode(65,66)} => AB
         }
       } else if (m.groups.in === 'Date' && m.groups.args != null && options?.now) {
@@ -212,7 +217,9 @@ function compile(format, keyset, options) {
         // ${key}, ${key[idx]}, ${key.fn()}
         if (input == null) {
           // ありえない？
-        } else if (m.groups.idx != null) {
+        } else if (m.groups.idx != null) {      // empty: empty
+                                                // array[idx]: boolean|number|string|empty
+                                                // object[idx]: boolean|number|string|empty
           const idx = toValue(m.groups.idx);
           if (input == '') {
             ret = '';
@@ -257,7 +264,7 @@ function compile(format, keyset, options) {
               success = true;
             }
             break;
-          case 'match':         // in.match(regexp: RegExp, flags: string): string[]
+          case 'match':         // in.match(regexp: RegExp, flags: string): string[]|empty
             if (arg1 != null) {
               const flags = arg2 == 'g' ? 'g' : '';
               ret = input[func](new RegExp(arg1, flags));
