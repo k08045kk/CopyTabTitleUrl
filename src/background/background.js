@@ -111,7 +111,7 @@ const updateAction = (cmd) => {
 // コンテキストメニュー
 const createExContextMenu = (format, menu) => {
   const keyset = createDefaltKeyset();  // ${enter} = '\n'
-  const text = compile(format, keyset, null);
+  const text = compile(format, keyset);
   
   const exmenu = keyset['${menu}'];
   if (exmenu == 'true' || exmenu === true) {

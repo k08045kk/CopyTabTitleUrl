@@ -7,7 +7,7 @@
 
 
 //export 
-function compile(format, keyset, now) {
+function compile(format, keyset, options) {
   const reInteger = /^[+\-]?\d+$/;
   const reString = /^("[^"}]*"|'[^'}]*')$/;
   const isInteger = (i) => {
@@ -149,18 +149,18 @@ function compile(format, keyset, now) {
           // String.fromCharCode(num1: number, num2: number)
           // ${String.fromCharCode(65,66)} => AB
         }
-      } else if (m.groups.in === 'Date' && m.groups.args != null && now) {
+      } else if (m.groups.in === 'Date' && m.groups.args != null && options?.now) {
         const arg1 = toValue(m.groups.arg1);
         const arg2 = toValue(m.groups.arg2);
         switch (m.groups.fn) {
-        case 'toDateString':  ret = now.toDateString(); success = true; break;
-        case 'toISOString':   ret = now.toISOString();  success = true; break;
-        case 'toString':      ret = now.toString();     success = true; break;
-        case 'toTimeString':  ret = now.toTimeString(); success = true; break;
-        case 'toUTCString':   ret = now.toUTCString();  success = true; break;
-        case 'toLocaleDateString':  ret = now.toLocaleDateString(arg1); success = true; break;
-        case 'toLocaleString':      ret = now.toLocaleString(arg1);     success = true; break;
-        case 'toLocaleTimeString':  ret = now.toLocaleTimeString(arg1); success = true; break;
+        case 'toDateString':  ret = options.now.toDateString(); success = true; break;
+        case 'toISOString':   ret = options.now.toISOString();  success = true; break;
+        case 'toString':      ret = options.now.toString();     success = true; break;
+        case 'toTimeString':  ret = options.now.toTimeString(); success = true; break;
+        case 'toUTCString':   ret = options.now.toUTCString();  success = true; break;
+        case 'toLocaleDateString':  ret = options.now.toLocaleDateString(arg1); success = true; break;
+        case 'toLocaleString':      ret = options.now.toLocaleString(arg1);     success = true; break;
+        case 'toLocaleTimeString':  ret = options.now.toLocaleTimeString(arg1); success = true; break;
         }
         // Date.toLocaleString()
         // Date.toLocaleString(locales: string)
