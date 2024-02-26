@@ -181,8 +181,8 @@ const updateContextMenus = async (cmd) => {
   }
   if (ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text') && ex3(cmd, 'extended_menus')) {
     const id0 = defaultStorage.formats.length;
-    const menu = {type:'normal', contexts, documentUrlPatterns:null, targetUrlPatterns:null};
     for (let i=0; i<cmd.texts.length; i++) {
+      const menu = {type:'normal', contexts, documentUrlPatterns:null, targetUrlPatterns:null};
       menu.id = (id0+i);
       menu.title = 'format'+(id0-2+i);
       createExContextMenu(cmd.texts[i], menu);
