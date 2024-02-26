@@ -125,7 +125,7 @@ async function onUpdateText() {
   }
   await chrome.storage.local.set(cmdTexts);
   
-  if (ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text')) {
+  if (ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text') && ex3(cmd, 'extended_menus')) {
     await chrome.runtime.sendMessage({target:'background.updateContextMenus'});
   }
 };
