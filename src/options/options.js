@@ -31,11 +31,11 @@ function updateOptionPage(cmd) {
       const isTranslate =!(element.parentElement.classList.contains('notranslate')
                         || element.parentElement.classList.contains('exam'));
       
+      //const innerText = getMessage('options'+key+'InnerText', isTranslate);
+      //if (innerText) { element.innerText = innerText; }
+      
       const content = getMessage('options'+key+'Content', isTranslate);
       if (content) { element.textContent = content; }
-      
-      //const inner = getMessage('options'+key+'InnerText', isTranslate);
-      //if (inner) { element.innerText = inner; }
     });
     const reset = document.getElementById('reset');
     reset.dataset.reset = getMessage('optionsResetContent');
