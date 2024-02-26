@@ -183,7 +183,7 @@ const updateContextMenus = async (cmd) => {
     const menu = {type:'normal', contexts, documentUrlPatterns:null, targetUrlPatterns:null};
     for (let i=0; i<cmd.texts.length; i++) {
       menu.id = (id0+i);
-      menu.title = 'format'+(id0+i);
+      menu.title = 'format'+(id0-2+i);
       createExContextMenu(cmd.texts[i], menu);
     }
   }
