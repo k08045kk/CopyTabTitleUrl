@@ -251,7 +251,11 @@ const createFormatText = (cmd, tabs) => {
       temp.push(format.replace(/\${.*?}/ig, (m) => keyset.hasOwnProperty(m) ? keyset[m] : m));
     }
   }
-  return temp.join(sep);
+  
+  const stext = keyset['${copyStartText}'] ?? '';
+  const etext = keyset['${copyEndText}'] ?? '';
+  const sep2  = keyset['${copySeparator}'] ?? sep;
+  return stext + temp.join(sep2) + etext;
   // ${TITLE}${enter}${URL}${enter}ABCDEF abcdef あいうえお${CR}${LF}${test}${tab}${$}
   // ${index}, ${id}, ${tabId}, ${windowId}, ${favIconUrl}
   // ${yyyy}-${MM}-${dd}T${HH}:${mm}:${ss}.${SSS}${enter}${yy}-${M}-${d}T${H}:${m}:${s}.${S}${enter}${hh}-${h}
