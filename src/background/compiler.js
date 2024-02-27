@@ -412,7 +412,6 @@ function getStringArray(input, def) {
     const array = JSON.parse(input);
     const check = Array.isArray(array) && array.every((value) => typeof value === 'string');
     if (check) { return array; }
-    if (typeof array === 'string') { return [array]; }
   } catch {};
   return def;
 };
