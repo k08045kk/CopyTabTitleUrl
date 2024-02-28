@@ -5,39 +5,33 @@
   "extensionDescription": {
     "message": "タイトルと URL をクリップボードにコピーします。"
   },
-  "extensionOverview": {
-    "message": "Dummy",
-    "description": "Overview: Chrome Web Store / AMO (addons.mozilla.org)"
-  },
-  "overviewL1":   {"message": "オプション設定から、拡張機能をカスタマイズできます。"},
-  "overviewL2":   {"message": ""},
-  "overviewL3":   {"message": "次のアクションを実行できます。"},
-  "overviewL4":   {"message": "+ タイトルと URL をコピー"},
-  "overviewL5":   {"message": "+ タイトルをコピー"},
-  "overviewL6":   {"message": "+ URL をコピー"},
-  "overviewL7":   {"message": "+ フォーマットをコピー（例：Markdown、ハイパーリンク、など）"},
-  "overviewL8":   {"message": ""},
-  "overviewL9":   {"message": "次のタブでアクションを実行できます。"},
-  "overviewL10":  {"message": "+ カレントタブ"},
-  "overviewL11":  {"message": "+ 複数の選択したタブ"},
-  "overviewL12":  {"message": "+ カレントウィンドウのタブ"},
-  "overviewL13":  {"message": "+ すべてのタブ"},
-  "overviewL14":  {"message": ""},
-  "overviewL15":  {"message": "次の操作でアクションを実行できます。"},
-  "overviewL16":  {"message": "+ ブラウザアクション（ポップアップ、クリック）"},
-  "overviewL17":  {"message": "+ コンテキストメニュー（すべて、ページ、ブラウザアクション）"},
-  "overviewL17ff":{"message": "+ コンテキストメニュー（すべて、ページ、ブラウザアクション、タブ）"},
-  "overviewL18":  {"message": "+ キーボードショートカット"},
-  "overviewL19":  {"message": ""},
-  "overviewL20":  {"message": "次の補助機能と組み合わせてアクションを実行できます。"},
-  "overviewL21":  {"message": "+ URL をデコード"},
-  "overviewL22":  {"message": "+ Punycode をデコード"},
-  "overviewL23":  {"message": ""},
-  "overviewL24":  {"message": "Chrome 版"},
-  "overviewL24ff":{"message": "Firefox 版"},
-  "overviewL25":  {"message": "https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgjpaohjfeapp"},
-  "overviewL25ff":{"message": "https://addons.mozilla.org/firefox/addon/copytabtitleurl/"},
-  "overviewEnd":  {"message": ""},
+  "storeDescriptionL1":   {"message": "オプション設定から、拡張機能をカスタマイズできます。"},
+  "storeDescriptionL2":   {"message": ""},
+  "storeDescriptionL3":   {"message": "次のアクションを実行できます。"},
+  "storeDescriptionL4":   {"message": "+ タイトルと URL をコピー"},
+  "storeDescriptionL5":   {"message": "+ タイトルをコピー"},
+  "storeDescriptionL6":   {"message": "+ URL をコピー"},
+  "storeDescriptionL7":   {"message": "+ フォーマットをコピー（例：Markdown、ハイパーリンク、など）"},
+  "storeDescriptionL8":   {"message": ""},
+  "storeDescriptionL9":   {"message": "次のタブでアクションを実行できます。"},
+  "storeDescriptionL10":  {"message": "+ カレントタブ"},
+  "storeDescriptionL11":  {"message": "+ 複数の選択したタブ"},
+  "storeDescriptionL12":  {"message": "+ カレントウィンドウのタブ"},
+  "storeDescriptionL13":  {"message": "+ すべてのタブ"},
+  "storeDescriptionL14":  {"message": ""},
+  "storeDescriptionL15":  {"message": "次の操作でアクションを実行できます。"},
+  "storeDescriptionL16":  {"message": "+ ブラウザアクション（ポップアップ、クリック）"},
+  "storeDescriptionL17":  {"message": "+ コンテキストメニュー（すべて、ページ、ブラウザアクション）"},
+  "storeDescriptionL17ff":{"message": "+ コンテキストメニュー（すべて、ページ、ブラウザアクション、タブ）"},
+  "storeDescriptionL18":  {"message": "+ キーボードショートカット"},
+  "storeDescriptionL19":  {"message": ""},
+  "storeDescriptionL20":  {"message": "次の機能と組み合わせてアクションを実行できます。"},
+  "storeDescriptionL21":  {"message": "+ URL をデコード"},
+  "storeDescriptionL22":  {"message": "+ Punycode をデコード"},
+  "storeDescriptionL23":  {"message": ""},
+  "storeDescriptionL24":  {"message": "オプションの詳細は、下記 URL を参照ください。"},
+  "storeDescriptionL25":  {"message": "https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options"},
+  "storeDescriptionEnd":  {"message": ""},
   
   
   "optionsBrowserActionPopupContent": {
@@ -63,6 +57,12 @@
   },
   
   
+  "optionsMenusFormat9Content": {
+    "message": "Set only format9 in specific",
+    "description": "Set only format9 in specific 🧪"
+  },
+  
+  
   "optionsShortcutDescriptionContent": {
     "message": "ブラウザの設定ページから変更してください。"
   },
@@ -71,6 +71,28 @@
   },
   "optionsShortcutTargetContent": {
     "message": "メニューのターゲットを使用する"
+  },
+  
+  
+  "optionsCopyProgrammableContent": {
+    "message": "Enable programmable format",
+    "description": "Enable programmable format 🧪"
+  },
+  "optionsCopyScriptingContent": {
+    "message": "Enable content script for active tab",
+    "description": "Enable content script for active tab 🧪"
+  },
+  "optionsCopyScriptingMainContent": {
+    "message": "Enable main world content script",
+    "description": "Enable main world content script 🧪"
+  },
+  "optionsCopyTextContent": {
+    "message": "Enable $${text0} - $${text9}",
+    "description": "Enable $${text0} - $${text9} 🧪"
+  },
+  "optionsExtendedMenusContent": {
+    "message": "Enable $${menu}",
+    "description": "Enable $${menu} 🧪"
   },
   
   
@@ -89,17 +111,32 @@
   "optionsCopyHtmlContent": {
     "message": "text/html 形式でコピーする"
   },
+  "optionsCopyEmptyContent": {
+    "message": "空文字の場合、スペースをコピーする",
+    "description": "Copy space if empty string 🧪"
+  },
+  
   "optionsNewlineLabelContent": {
     "message": "改行文字: $${enter} ="
   },
   "optionsSeparatorLabelContent": {
     "message": "複数タブの区切り文字:"
   },
+  
   "optionsExcludePinContent": {
     "message": "固定タブを除外する"
   },
   "optionsExcludeHiddenContent": {
     "message": "非表示タブを除外する"
+  },
+  
+  "optionsExtendedEditContent": {
+    "message": "Use Extended Edit Mode",
+    "description": "Use Extended Edit Mode 🧪"
+  },
+  "optionsExtendedModeContent": {
+    "message": "Use Extended Mode",
+    "description": "Use Extended Mode 🧪"
   },
   
   

@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       cmd.format = ex3(cmd, 'extended_edit') || 3<=id ? cmd.formats[id] : defaultStorage.formats[id];
       cmd.target = getTarget();
       cmd.callback = 'close';
-      chrome.runtime.sendMessage({target:'background', type:'copy', cmd});
+      chrome.runtime.sendMessage({target:'background.copy', cmd});
     });
   });
   
@@ -82,19 +82,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     cmd.format = cmd.formats[id];
     cmd.target = cmd.browser_action_target;
     cmd.callback = 'notice';
-    chrome.runtime.sendMessage({target:'background', type:'copy', cmd});
+    chrome.runtime.sendMessage({target:'background.copy', cmd});
   }
 });
 
 
 
 chrome.runtime.onMessage.addListener((data, sender) => {
-  if (data.target !== 'popup') { return; }
-  switch (data.type) {
-  case 'close':                         // clipboard.js
+  switch (data.target) {
+  case 'popup.close':                   // clipboard.js
     window.close();
     break;
-  case 'notice':                        // clipboard.js
+  case 'popup.notice':                  // clipboard.js
     document.getElementById('action').hidden = false;
     setTimeout(() => window.close(), 1000);
     break;

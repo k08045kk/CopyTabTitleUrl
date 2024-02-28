@@ -1,12 +1,13 @@
 /**
  * Programmable Format
- * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options
+ * フォーマットをプログラム可能にします。
+ * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Format
  */
 'use strict';
 
 
 //export 
-function compile(format, keyset, now) {
+function compile(format, keyset, options) {
   const reInteger = /^[+\-]?\d+$/;
   const reString = /^("[^"}]*"|'[^'}]*')$/;
   const isInteger = (i) => {
@@ -88,6 +89,42 @@ function compile(format, keyset, now) {
         success = true;
         // Deprecated: The feature will be deprecated if a better way to access the element is found.
         // ${out=globalThis["tab.status"]} => ${tab.status}
+      } else if (m.groups.in === 'System' && m.groups.args != null) {
+        const arg1 = toValue(m.groups.arg1);
+        switch (m.groups.fn) {
+        case 'log':                     // System.log(msg: string): empty
+          console.log(arg1);    // WebExtension background DevTools Console
+          ret = '';
+          success = true;
+          break;
+//        case 'compile':
+//          if (arg1 != null && options?.compile !== true) {
+//            const opt = structuredClone(options);
+//            opt.compile = true;
+//            ret = compile(arg1, keyset, opt);
+//            success = true;
+//            // 備考：${pageText0} と同時に実行してもセキュリティ的に問題ないか要検討
+//            // 備考：再帰処理は、許容しない。
+//          }
+//          break;
+        }
+//      } else if ((m.groups.in === 'console' || m.groups.in === 'window') && m.groups.args != null) {
+//        if (options?.cmd && options?.tab && options?.tabs?.length === 1) {
+//          const arg1 = toValue(m.groups.arg1);
+//          const arg2 = toValue(m.groups.arg2);
+//          switch (m.groups.in+'.'+m.groups.fn) {
+//          case 'console.log':
+//            success = await executeConsoleLog(options.tab, options.cmd, [arg1]);
+//            ret = '';
+//            break;
+//          case 'window.prompt':
+//            ret = await executePrompt(options.tab, options.cmd, [arg1, arg2]);
+//            success = ret != null;
+//            ret = ret ?? '';
+//            // 備考：string.replace async 問題あり
+//            break;
+//          }
+//        }
       } else if (m.groups.in === 'Math' && m.groups.args != null) {
         const arg1 = toValue(m.groups.arg1);
         const arg2 = toValue(m.groups.arg2);
@@ -123,9 +160,10 @@ function compile(format, keyset, now) {
         }
         if ((arg1 == null && arg2 == null) || (isInteger(arg1) && (arg2 == null || isInteger(arg2)))) {
           switch (m.groups.fn) {
-          case 'random':        // Math.random()
-                                // Math.random(max)
-                                // Math.random(max,min) or Math.random(min,max)
+          case 'random':        // Math.random(): number
+                                // Math.random(max: number): number
+                                // Math.random(max: number, min: number): number
+                                // Math.random(min: number, max: number): number
             const max = isInteger(arg1) ? arg1 : 2_147_483_647;   // 32bit 符号付き整数の最大値
             const min = isInteger(arg2) ? arg2 : 0;
             ret = Math.floor(Math.random() * (max - min)) + min;  // min <= ret < max
@@ -143,22 +181,22 @@ function compile(format, keyset, now) {
           case 'fromCharCode':  ret = String.fromCharCode.apply(null, args);  success = true; break;
           case 'fromCodePoint': ret = String.fromCodePoint.apply(null, args); success = true; break;
           }
-          // String.fromCharCode(num1: number)
-          // String.fromCharCode(num1: number, num2: number)
+          // String.fromCharCode(num1: number): string
+          // String.fromCharCode(num1: number, num2: number): string
           // ${String.fromCharCode(65,66)} => AB
         }
-      } else if (m.groups.in === 'Date' && m.groups.args != null) {
+      } else if (m.groups.in === 'Date' && m.groups.args != null && options?.now) {
         const arg1 = toValue(m.groups.arg1);
         const arg2 = toValue(m.groups.arg2);
         switch (m.groups.fn) {
-        case 'toDateString':  ret = now.toDateString(); success = true; break;
-        case 'toISOString':   ret = now.toISOString();  success = true; break;
-        case 'toString':      ret = now.toString();     success = true; break;
-        case 'toTimeString':  ret = now.toTimeString(); success = true; break;
-        case 'toUTCString':   ret = now.toUTCString();  success = true; break;
-        case 'toLocaleDateString':  ret = now.toLocaleDateString(arg1); success = true; break;
-        case 'toLocaleString':      ret = now.toLocaleString(arg1);     success = true; break;
-        case 'toLocaleTimeString':  ret = now.toLocaleTimeString(arg1); success = true; break;
+        case 'toDateString':  ret = options.now.toDateString(); success = true; break;
+        case 'toISOString':   ret = options.now.toISOString();  success = true; break;
+        case 'toString':      ret = options.now.toString();     success = true; break;
+        case 'toTimeString':  ret = options.now.toTimeString(); success = true; break;
+        case 'toUTCString':   ret = options.now.toUTCString();  success = true; break;
+        case 'toLocaleDateString':  ret = options.now.toLocaleDateString(arg1); success = true; break;
+        case 'toLocaleString':      ret = options.now.toLocaleString(arg1);     success = true; break;
+        case 'toLocaleTimeString':  ret = options.now.toLocaleTimeString(arg1); success = true; break;
         }
         // Date.toLocaleString()
         // Date.toLocaleString(locales: string)
@@ -179,7 +217,9 @@ function compile(format, keyset, now) {
         // ${key}, ${key[idx]}, ${key.fn()}
         if (input == null) {
           // ありえない？
-        } else if (m.groups.idx != null) {
+        } else if (m.groups.idx != null) {      // empty: empty
+                                                // array[idx]: boolean|number|string|empty
+                                                // object[idx]: boolean|number|string|empty
           const idx = toValue(m.groups.idx);
           if (input == '') {
             ret = '';
@@ -199,10 +239,11 @@ function compile(format, keyset, now) {
           // ${x=array[0]}, ${x=object[propety]}
           // Error: ${'abc'[0]} -> ${'abc'.at(0)}
           // Error: ${'["abc","xyz"]'.length} -> 13 instead of 2
+          // 備考：undefined / エラーを極力出力しない。空文字を出力する。
         } else if (m.groups.args == null) {
           const func = m.groups.fn;
           switch (func) {
-          case 'length':        // in.length
+          case 'length':        // in.length: number
             ret = input[func];
             success = true;
             break;
@@ -215,106 +256,110 @@ function compile(format, keyset, now) {
           const arg2 = toValue(m.groups.arg2);
 //console.log('fn()', input, func, arg1, arg2);
           switch (func) {
-          case 'replace':       // in.replace(pattern: RegExp, replacement: string)
-          case 'replaceAll':    // in.replaceAll(pattern: RegExp, replacement: string)
+          case 'replace':       // in.replace(pattern: RegExp, replacement: string): string
+          case 'replaceAll':    // in.replaceAll(pattern: RegExp, replacement: string): string
             if (arg1 != null && arg2 != null) {
               const flags = func === 'replace' ? '' : 'g';
               ret = input.replace(new RegExp(arg1, flags), arg2);
               success = true;
             }
             break;
-          case 'match':         // in.match(regexp: RegExp, flags: string)
+          case 'match':         // in.match(regexp: RegExp, flags: string): string[]|empty
             if (arg1 != null) {
               const flags = arg2 == 'g' ? 'g' : '';
               ret = input[func](new RegExp(arg1, flags));
               ret = ret && JSON.stringify(ret) || '';
               success = true;
+              // '', '["abc","def"]'
+              // 備考：マッチなしは、空文字を返す。 null を出力しない。
             }
             break;
-          case 'search':        // in.search(regexp: RegExp)
+          case 'search':        // in.search(regexp: RegExp): number
             if (arg1 != null) {
               ret = input[func](new RegExp(arg1));
               success = true;
             }
             break;
-          case 'substring':     // in.substring(indexStart: number)
-                                // in.substring(indexStart: number, indexEnd: number)
-          case 'slice':         // in.slice(indexStart: number)
-                                // in.slice(indexStart: number, indexEnd: number)
+          case 'substring':     // in.substring(indexStart: number): string
+                                // in.substring(indexStart: number, indexEnd: number): string
+          case 'slice':         // in.slice(indexStart: number): string
+                                // in.slice(indexStart: number, indexEnd: number): string
             if (isInteger(arg1) && (arg2 == null || isInteger(arg2))) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'padStart':      // in.padStart(targetLength: number)
-                                // in.padStart(targetLength: number, padString: string)
-          case 'padEnd':        // in.padEnd(targetLength: number)
-                                // in.padEnd(targetLength: number, padString: string)
+          case 'padStart':      // in.padStart(targetLength: number): string
+                                // in.padStart(targetLength: number, padString: string): string
+          case 'padEnd':        // in.padEnd(targetLength: number): string
+                                // in.padEnd(targetLength: number, padString: string): string
             if (isInteger(arg1)) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'at':            // in.at(index: number)
-          case 'charAt':        // in.charAt(index: number)
-          case 'charCodeAt':    // in.charCodeAt(index: number)
-          case 'codePointAt':   // in.codePointAt(index: number)
-          case 'repeat':        // in.repeat(count: number)
+          case 'at':            // in.at(index: number): string
+          case 'charAt':        // in.charAt(index: number): string
+          case 'charCodeAt':    // in.charCodeAt(index: number): number
+          case 'codePointAt':   // in.codePointAt(index: number): number
+          case 'repeat':        // in.repeat(count: number): string
             if (isInteger(arg1)) {
               ret = input[func](arg1);
               success = true;
             }
             break;
-          case 'startsWith':    // in.startsWith(searchString: string)
-                                // in.startsWith(searchString: string, position: number)
-          case 'endsWith':      // in.endsWith(searchString: string)
-                                // in.endsWith(searchString: string, endPosition: number)
-          case 'includes':      // in.includes(searchString: string)
-                                // in.includes(searchString: string, position: number)
-          case 'indexOf':       // in.indexOf(searchString: string)
-                                // in.indexOf(searchString: string, position: number)
-          case 'lastIndexOf':   // in.lastIndexOf(searchString: string)
-                                // in.lastIndexOf(searchString: string, position: number)
+          case 'startsWith':    // in.startsWith(searchString: string): boolean
+                                // in.startsWith(searchString: string, position: number): boolean
+          case 'endsWith':      // in.endsWith(searchString: string): boolean
+                                // in.endsWith(searchString: string, endPosition: number): boolean
+          case 'includes':      // in.includes(searchString: string): boolean
+                                // in.includes(searchString: string, position: number): boolean
+          case 'indexOf':       // in.indexOf(searchString: string): number
+                                // in.indexOf(searchString: string, position: number): number
+          case 'lastIndexOf':   // in.lastIndexOf(searchString: string): number
+                                // in.lastIndexOf(searchString: string, position: number): number
             if (arg1 != null) {
               ret = input[func](arg1, arg2);
               success = true;
             }
             break;
-          case 'normalize':     // in.normalize()
-                                // in.normalize(form: string)
+          case 'normalize':     // in.normalize(): string
+                                // in.normalize(form: string): string
             // RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.
             ret = input[func](arg1);
             success = true;
             break;
-          case 'concat':        // in.concat(str1: string)
-                                // in.concat(str1: string, str2: string)
+          case 'concat':        // in.concat(): string
+                                // in.concat(str1: string): string
+                                // in.concat(str1: string, str2: string): string
             ret = input[func](arg1 ?? '', arg2 ?? '');
             success = true;
             // ...args 非対応
             break;
-          case 'split':         // in.split(separator: string)
-                                // in.split(separator: string, limit: number)
+          case 'split':         // in.split(separator: string): string[]
+                                // in.split(separator: string, limit: number): string[]
             if (arg1 != null) {
               ret = JSON.stringify(input[func](arg1, arg2));
               success = true;
+              // '[]', '["abc","def"]'
             }
             break;
-          case 'isWellFormed':  // in.isWellFormed()
-          case 'trim':          // in.trim()
-          case 'trimStart':     // in.trimStart()
-          case 'trimEnd':       // in.trimEnd()
-          case 'toLocaleLowerCase': // in.toLocaleLowerCase()
-          case 'toLocaleUpperCase': // in.toLocaleUpperCase()
-          case 'toLowerCase':   // in.toLowerCase()
-          case 'toString':      // in.toString()
-          case 'toUpperCase':   // in.toUpperCase()
-          case 'toWellFormed':  // in.toWellFormed()
-          case 'valueOf':       // in.valueOf()
+          case 'isWellFormed':  // in.isWellFormed(): boolean
+          case 'trim':          // in.trim(): string
+          case 'trimStart':     // in.trimStart(): string
+          case 'trimEnd':       // in.trimEnd(): string
+          case 'toLocaleLowerCase': // in.toLocaleLowerCase(): string
+          case 'toLocaleUpperCase': // in.toLocaleUpperCase(): string
+          case 'toLowerCase':   // in.toLowerCase(): string
+          case 'toString':      // in.toString(): string
+          case 'toUpperCase':   // in.toUpperCase(): string
+          case 'toWellFormed':  // in.toWellFormed(): string
+          case 'valueOf':       // in.valueOf(): string
             ret = input[func]();
             success = true;
             break;
-          //case 'localeCompare':
-          //case 'matchAll':
+          //case 'localeCompare': // in.localeCompare(compareString: string): number
+          //case 'matchAll':      // in.matchAll(regexp: RegExp): Iterator<string[]>
           // see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
           }
         }
@@ -332,4 +377,41 @@ function compile(format, keyset, now) {
     }
     return ret;
   });
+};
+
+
+
+function createDefaltKeyset(cmd) {
+  const keyset = {};
+  
+  keyset['${enter}'] = cmd?.enter ?? '\n';
+  keyset['${$}'] = '$';
+  
+  if (cmd?.exoptions?.extended_mode ?? true) {
+    keyset['${TAB}'] = keyset['${t}'] = '\t';
+    keyset['${CR}']  = keyset['${r}'] = '\r';
+    keyset['${LF}']  = keyset['${n}'] = '\n';
+  }
+  if (cmd?.exoptions?.copy_programmable ?? true) {
+    keyset['${undefined}'] = undefined;
+    keyset['${null}'] = null;
+    keyset['${true}'] = true;
+    keyset['${false}'] = false;
+    keyset['${NaN}'] = NaN;
+    keyset['${Infinity}'] = Infinity;
+  }
+  return keyset;
+  // 備考：cmd なしでも動作する
+  //       cmd ありは、 format.js 用
+};
+
+
+
+function getStringArray(input, def) {
+  try {
+    const array = JSON.parse(input);
+    const check = Array.isArray(array) && array.every((value) => typeof value === 'string');
+    if (check) { return array; }
+  } catch {};
+  return def;
 };

@@ -32,7 +32,7 @@ You can perform actions from the following operations.
 + Context menu (all, page, browser action, tab)
 + Keyboard shortcut
 
-You can perform actions in combination with the following auxiliary functions.
+You can perform actions in combination with the following functions.
 + Decode the URL
 + Decode the Punycode
 

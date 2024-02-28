@@ -211,12 +211,16 @@ const defaultStorageVersion3 = {
     context_action: true,
     context_tab: true,                  // Firefox only
     
+    //menus_edit_title: false,          // v3.3.0 （廃止、拡張モードと統合）
+    menus_format9: false,
+    
     shortcut_target: false,             // v3.3.2
     
     copy_programmable: false,           // v3.1.0
-    copy_text: false,                   // v3.3.4
     copy_scripting: false,              // v3.1.0
     copy_scripting_main: false,         // v3.3.6
+    copy_text: false,                   // v3.3.4
+    extended_menus: false,              // v3.4.1
     
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
@@ -226,9 +230,6 @@ const defaultStorageVersion3 = {
     
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
-    
-    //menus_edit_title: false,          // v3.3.0 （廃止、拡張モードと統合）
-    menus_format9: false,
     
     use_english: false,                 // v3.1.0 (others_language 後継機能)
     extended_edit: false,               // v3.1.0
@@ -305,12 +306,16 @@ const extendedMode = [
   //'context_action',                   // standard
   //'context_tab',                      // standard
   
+  //'menus_edit_title',                 // 廃止済み
+  'menus_format9', 
+  
   'shortcut_target',
   
   'copy_programmable',
-  'copy_text',
   'copy_scripting',
   'copy_scripting_main',
+  'copy_text',
+  'extended_menus', 
   
   //'copy_decode',                      // standard v3.1.0+
   //'copy_punycode',                    // standard v3.1.0+
@@ -319,8 +324,6 @@ const extendedMode = [
   'copy_empty',
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
-  //'menus_edit_title',                 // 廃止済み
-  'menus_format9', 
   //'use_english',                      // standard
   'extended_edit', 
   //'extended_mode',                    // standard
@@ -330,14 +333,15 @@ const extendedMode = [
   //'separator',                        // extended
 ];
 const extendedEditMode = [
+  'menus_format9', 
+  
   'copy_programmable',
-  'copy_text',
   'copy_scripting',
   'copy_scripting_main',
+  'copy_text',
+  'extended_menus', 
   
   'copy_empty',
-  
-  'menus_format9', 
 ];
 Object.freeze(extendedMode);
 Object.freeze(extendedEditMode);
@@ -358,6 +362,13 @@ const ex3 = (cmd, name) => {
     }
   }
   return cmd.options.extended_mode;
+};
+const exOptions = (cmd) => {
+  const exoptions = {};
+  for (const key of Object.keys(defaultStorage.options)) {
+    exoptions[key] = ex3(cmd, key);
+  }
+  return exoptions;
 };
 
 

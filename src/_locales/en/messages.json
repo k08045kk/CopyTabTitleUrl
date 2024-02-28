@@ -5,41 +5,38 @@
   "extensionDescription": {
     "message": "Copy the title and URL to the clipboard."
   },
-  "extensionOverview": {
-    "message": "Dummy",
-    "description": "Overview: Chrome Web Store / AMO (addons.mozilla.org)"
+  "storeDescriptionL1":   {"message": "You can customize the extension from setting options."},
+  "storeDescriptionL2":   {"message": ""},
+  "storeDescriptionL3":   {"message": "You can perform actions the following."},
+  "storeDescriptionL4":   {"message": "+ Copy the title and URL"},
+  "storeDescriptionL5":   {"message": "+ Copy the title"},
+  "storeDescriptionL6":   {"message": "+ Copy the URL"},
+  "storeDescriptionL7":   {"message": "+ Copy the format (Example: Markdown, Hyperlink, etc)"},
+  "storeDescriptionL8":   {"message": ""},
+  "storeDescriptionL9":   {"message": "You can perform actions on the following tabs."},
+  "storeDescriptionL10":  {"message": "+ Current tab"},
+  "storeDescriptionL11":  {"message": "+ Multiple selected tabs"},
+  "storeDescriptionL12":  {"message": "+ Current window tabs"},
+  "storeDescriptionL13":  {"message": "+ All tabs"},
+  "storeDescriptionL14":  {"message": ""},
+  "storeDescriptionL15":  {"message": "You can perform actions from the following operations."},
+  "storeDescriptionL16":  {"message": "+ Browser action (popup, click)"},
+  "storeDescriptionL17":  {"message": "+ Context menu (all, page, browser action)"},
+  "storeDescriptionL17ff":{"message": "+ Context menu (all, page, browser action, tab)"},
+  "storeDescriptionL18":  {"message": "+ Keyboard shortcut"},
+  "storeDescriptionL19":  {"message": ""},
+  "storeDescriptionL20":  {"message": "You can perform actions in combination with the following functions."},
+  "storeDescriptionL21":  {"message": "+ Decode the URL"},
+  "storeDescriptionL22":  {"message": "+ Decode the Punycode"},
+  "storeDescriptionL23":  {"message": ""},
+  "storeDescriptionL24":  {"message": "Please refer to following URL for details on options."},
+  "storeDescriptionL25":  {"message": "https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options"},
+  "storeDescriptionEnd":  {"message": ""},
+  
+  
+  "optionsBrowserActionLegendContent": {
+    "message": "Browser Action"
   },
-  "overviewL1":   {"message": "You can customize the extension from setting options."},
-  "overviewL2":   {"message": ""},
-  "overviewL3":   {"message": "You can perform actions the following."},
-  "overviewL4":   {"message": "+ Copy the title and URL"},
-  "overviewL5":   {"message": "+ Copy the title"},
-  "overviewL6":   {"message": "+ Copy the URL"},
-  "overviewL7":   {"message": "+ Copy the format (Example: Markdown, Hyperlink, etc)"},
-  "overviewL8":   {"message": ""},
-  "overviewL9":   {"message": "You can perform actions on the following tabs."},
-  "overviewL10":  {"message": "+ Current tab"},
-  "overviewL11":  {"message": "+ Multiple selected tabs"},
-  "overviewL12":  {"message": "+ Current window tabs"},
-  "overviewL13":  {"message": "+ All tabs"},
-  "overviewL14":  {"message": ""},
-  "overviewL15":  {"message": "You can perform actions from the following operations."},
-  "overviewL16":  {"message": "+ Browser action (popup, click)"},
-  "overviewL17":  {"message": "+ Context menu (all, page, browser action)"},
-  "overviewL17ff":{"message": "+ Context menu (all, page, browser action, tab)"},
-  "overviewL18":  {"message": "+ Keyboard shortcut"},
-  "overviewL19":  {"message": ""},
-  "overviewL20":  {"message": "You can perform actions in combination with the following auxiliary functions."},
-  "overviewL21":  {"message": "+ Decode the URL"},
-  "overviewL22":  {"message": "+ Decode the Punycode"},
-  "overviewL23":  {"message": ""},
-  "overviewL24":  {"message": "Chrome version"},
-  "overviewL24ff":{"message": "Firefox version"},
-  "overviewL25":  {"message": "https://chrome.google.com/webstore/detail/copytabtitleurl/lmgbdjfoaihhgdphombpgjpaohjfeapp"},
-  "overviewL25ff":{"message": "https://addons.mozilla.org/firefox/addon/copytabtitleurl/"},
-  "overviewEnd":  {"message": ""},
-  
-  
   "optionsBrowserActionPopupContent": {
     "message": "Show popup"
   },
@@ -63,6 +60,9 @@
   },
   
   
+  "optionsMenusLegendContent": {
+    "message": "Context Menu"
+  },
   "optionsContextAllContent": {
     "message": "All context"
   },
@@ -84,16 +84,20 @@
   "optionsContextTabContent": {
     "message": "Tab context"
   },
+  "optionsMenuItemLegendContent": {
+    "message": "Menu Item"
+  },
   "optionsMenusFormat9Content": {
-    "message": "Set only format9 in specific"
+    "message": "Set only format9 in specific",
+    "description": "Set only format9 in specific 🧪"
   },
   
   
+  "optionsShortcutLegendContent": {
+    "message": "Keyboard Shortcut"
+  },
   "optionsShortcutDescriptionContent": {
     "message": "Please change it from browser settings page."
-  },
-  "optionsShortcutChromeDescriptionContent": {
-    "message": "see chrome://extensions/shortcuts"
   },
   "optionsShortcutFirefoxDescriptionContent": {
     "message": "[about:addons] > [⚙] > [Manage Extension Shortcuts]"
@@ -103,17 +107,31 @@
   },
   
   
+  "optionsFormatLegendContent": {
+    "message": "Format"
+  },
+  "optionsProgrammableLegendContent": {
+    "message": "Extended Format"
+  },
   "optionsCopyProgrammableContent": {
-    "message": "Enable programmable format"
+    "message": "Enable programmable format",
+    "description": "Enable programmable format 🧪"
   },
   "optionsCopyScriptingContent": {
-    "message": "Enable content script for active tab"
+    "message": "Enable content script for active tab",
+    "description": "Enable content script for active tab 🧪"
   },
   "optionsCopyScriptingMainContent": {
-    "message": "Enable main world content script"
+    "message": "Enable main world content script",
+    "description": "Enable main world content script 🧪"
   },
   "optionsCopyTextContent": {
-    "message": "Enable $${text0} - $${text9}"
+    "message": "Enable $${text0} - $${text9}",
+    "description": "Enable $${text0} - $${text9} 🧪"
+  },
+  "optionsExtendedMenusContent": {
+    "message": "Enable $${menu}",
+    "description": "Enable $${menu} 🧪"
   },
   
   
@@ -133,25 +151,31 @@
     "message": "Copy in text/html format"
   },
   "optionsCopyEmptyContent": {
-    "message": "Copy space if empty string"
+    "message": "Copy space if empty string",
+    "description": "Copy space if empty string 🧪"
   },
+  
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
   },
   "optionsSeparatorLabelContent": {
     "message": "Separate multiple tabs:"
   },
+  
   "optionsExcludePinContent": {
     "message": "Exclude pinned tabs"
   },
   "optionsExcludeHiddenContent": {
     "message": "Exclude hidden tabs"
   },
+  
   "optionsExtendedEditContent": {
-    "message": "Use Extended Edit Mode"
+    "message": "Use Extended Edit Mode",
+    "description": "Use Extended Edit Mode 🧪"
   },
   "optionsExtendedModeContent": {
-    "message": "Use Extended Mode"
+    "message": "Use Extended Mode",
+    "description": "Use Extended Mode 🧪"
   },
   
   

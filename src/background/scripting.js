@@ -1,13 +1,18 @@
 /**
- * Scripting
- * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options
+ * Scripting (Content Script)
+ * コンテンツスクリプトを実行します。
+ * see https://github.com/k08045kk/CopyTabTitleUrl/wiki/Format
  */
 'use strict';
 
 
+
 async function executeScript(tab, cmd) {
-  let data = {};
+  if (!cmd.exoptions.copy_scripting) { return null; }
+  
+  let data = null;
   try {
+    data = {}
     const target = {tabId:tab.id};
     const func = (isPrompt) => {
       return {
@@ -102,7 +107,7 @@ async function executeScript(tab, cmd) {
     } catch {}
   }
   
-  if (data && cmd.options.ex_copy_scripting_main) {
+  if (data && cmd.exoptions.copy_scripting_main) {
     try {
       const target = {tabId:tab.id};
       const func = () => {
@@ -133,3 +138,27 @@ async function executeScript(tab, cmd) {
   // 備考：モバイルの ${pagePrompt} は、ポップアップ（完了通知含む）で非対応
   // 備考：separator では、動作しない
 };
+
+
+
+// ${console.log(msg)}
+//async function executeConsoleLog(tab, cmd, args) {
+//  if (cmd.exoptions.copy_scripting && cmd.exoptions.copy_scripting_main) {
+//    const target = {tabId:tab.id};
+//    const func = (msg) => console.log(msg);
+//    const world = 'MAIN';
+//    await chrome.scripting.executeScript({target, func, args, world});
+//    return true;
+//  }
+//  return false;
+//}
+// ${window.prompt(msg, def)}
+//async function executePrompt(tab, cmd, args) {
+//  if (cmd.exoptions.copy_scripting) {
+//    const target = {tabId:tab.id};
+//    const func = (msg, def) => window.prompt(msg, def);
+//    const results = await chrome.scripting.executeScript({target, func, args});
+//    return results[0].result;
+//  }
+//  return null;
+//}

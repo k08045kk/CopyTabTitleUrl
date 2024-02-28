@@ -20,16 +20,22 @@ function updateOptionPage(cmd) {
   const i18n = lang !== 'en' && !ex3(cmd, 'use_english');
   const lang2 = i18n ? lang : 'en';
   if (document.body.dataset.lang != lang2) {
-    const getMessage = key => i18n ? chrome.i18n.getMessage(key) : en[key]?.message.replace(/\$\$/g, '$');
-    document.querySelectorAll('*[data-i18n]').forEach(v => {
-      const id = v.id || v.getAttribute('for') || '';
+    const getMessage = (key, translate) => {
+      return i18n && translate !== false 
+           ? chrome.i18n.getMessage(key) 
+           : en[key]?.message.replace(/\$\$/g, '$');
+    };
+    document.querySelectorAll('*[data-i18n]').forEach((element) => {
+      const id = element.id || element.getAttribute('for') || '';
       const key = id.replace(/(^[a-z]|_[a-z])/g, m => m.at(-1).toUpperCase());
+      const isTranslate =!(element.parentElement.classList.contains('notranslate')
+                        || element.parentElement.classList.contains('exam'));
       
-      const content = getMessage('options'+key+'Content');
-      if (content) { v.textContent = content; }
+      //const innerText = getMessage('options'+key+'InnerText', isTranslate);
+      //if (innerText) { element.innerText = innerText; }
       
-      const inner = getMessage('options'+key+'InnerText');
-      if (inner) { v.innerText = inner; }
+      const content = getMessage('options'+key+'Content', isTranslate);
+      if (content) { element.textContent = content; }
     });
     const reset = document.getElementById('reset');
     reset.dataset.reset = getMessage('optionsResetContent');
@@ -47,6 +53,8 @@ function updateOptionPage(cmd) {
   document.getElementById('programmable').dataset.text = ex3(cmd, 'copy_text');
   document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_html').disabled = ex3(cmd, 'copy_clipboard_api');
+  document.getElementById('extended_menus').disabled = 
+                          !(ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text'));
   
   
   // ブラウザアクション
@@ -84,7 +92,7 @@ async function onUpdateOptions() {
   
   // ストレージへ設定を保存
   await chrome.storage.local.set(cmd);
-  await chrome.runtime.sendMessage({target:'background', type:'update'});
+  await chrome.runtime.sendMessage({target:'background.update'});
   updateOptionPage(cmd);
 };
 
@@ -97,7 +105,7 @@ async function onUpdateMenus() {
     cmd.menus[i].target = document.getElementById('menu'+i+'_target').value;
   }
   await chrome.storage.local.set(cmd);
-  await chrome.runtime.sendMessage({target:'background', type:'update'});
+  await chrome.runtime.sendMessage({target:'background.updateContextMenus'});
 };
 
 // 文字列更新イベント
@@ -110,11 +118,16 @@ async function onUpdateFormat() {
 };
 
 async function onUpdateText() {
-  const cmd = await chrome.storage.local.get({texts: defaultStorage.texts});
+  const cmd = await chrome.storage.local.get(defaultStorage);
+  const cmdTexts = {texts:cmd.texts};
   for (let i=0; i<defaultStorage.texts.length; i++) {
-    cmd.texts[i] = document.getElementById('text'+i).value;
+    cmdTexts.texts[i] = document.getElementById('text'+i).value;
   }
-  await chrome.storage.local.set(cmd);
+  await chrome.storage.local.set(cmdTexts);
+  
+  if (ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text') && ex3(cmd, 'extended_menus')) {
+    await chrome.runtime.sendMessage({target:'background.updateContextMenus'});
+  }
 };
 
 async function onUpdateSeparator() {
@@ -156,7 +169,7 @@ async function onReset() {
     onStop();
     await chrome.storage.local.clear();
     await chrome.storage.local.set(defaultStorage);
-    await chrome.runtime.sendMessage({target:'background', type:'update'});
+    await chrome.runtime.sendMessage({target:'background.update'});
     setupOptionPage(defaultStorage);
   }
 };
