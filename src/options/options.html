@@ -123,7 +123,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- ブラウザアクション -->
   <fieldset id="browser_action">
-    <legend>Browser Action</legend>
+    <legend id="browser_action_legend" data-i18n></legend>
 
     <p>
       <input id="browser_action_popup" type="radio" name="browser_action" value="popup">
@@ -147,18 +147,18 @@ body[data-browser="chrome"] .firefox,
 
   <!-- コンテキストメニュー -->
   <fieldset class="mobile" id="menus">
-    <legend>Context Menu</legend>
+    <legend id="menus_legend" data-i18n></legend>
 
-    <p class="              notranslate" data-template="checkbox" data-id="context_all">
-    <p class="       indent notranslate" data-template="checkbox" data-id="context_page">
-    <p class="exmode indent notranslate" data-template="checkbox" data-id="context_selection">
-    <p class="exmode indent notranslate" data-template="checkbox" data-id="context_link">
-    <p class="exmode indent notranslate" data-template="checkbox" data-id="context_image">
-    <p class="       indent notranslate" data-template="checkbox" data-id="context_action">
-    <p class="firefox       notranslate" data-template="checkbox" data-id="context_tab">
+    <p class="             " data-template="checkbox" data-id="context_all">
+    <p class="       indent" data-template="checkbox" data-id="context_page">
+    <p class="exmode indent" data-template="checkbox" data-id="context_selection">
+    <p class="exmode indent" data-template="checkbox" data-id="context_link">
+    <p class="exmode indent" data-template="checkbox" data-id="context_image">
+    <p class="       indent" data-template="checkbox" data-id="context_action">
+    <p class="firefox      " data-template="checkbox" data-id="context_tab">
 
     <fieldset id="menu_item">
-      <legend>Menu Item</legend>
+      <legend id="menu_item_legend" data-i18n></legend>
 
       <!-- Template: menu -->
       <template class="clearfix" id="template_menu">
@@ -199,7 +199,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- キーボードショートカット -->
   <fieldset class="mobile" id="shortcut">
-    <legend>Keyboard Shortcut</legend>
+    <legend id="shortcut_legend" data-i18n></legend>
 
     <p id="shortcut_description" data-i18n>
     <p class="chrome" id="shortcut_chrome_description">
@@ -213,7 +213,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- Format -->
   <fieldset id="format">
-    <legend>Format</legend>
+    <legend id="format_legend" data-i18n></legend>
 
     <p class="normal">
       ${title}, ${url}, ${enter}, ${$}
@@ -245,7 +245,7 @@ body[data-browser="chrome"] .firefox,
 
   <!-- Extended Format -->
   <fieldset class="exmode exedit" id="programmable" data-text="false">
-    <legend>Extended Format</legend>
+    <legend id="programmable_legend" data-i18n></legend>
 
     <p class="exmode exedit exam" data-template="checkbox" data-id="copy_programmable">
     <p class="exmode exedit exam" data-template="checkbox" data-id="copy_scripting">

@@ -34,6 +34,9 @@
   "storeDescriptionEnd":  {"message": ""},
   
   
+  "optionsBrowserActionLegendContent": {
+    "message": "Browser Action"
+  },
   "optionsBrowserActionPopupContent": {
     "message": "Show popup"
   },
@@ -57,6 +60,9 @@
   },
   
   
+  "optionsMenusLegendContent": {
+    "message": "Context Menu"
+  },
   "optionsContextAllContent": {
     "message": "All context"
   },
@@ -78,12 +84,18 @@
   "optionsContextTabContent": {
     "message": "Tab context"
   },
+  "optionsMenuItemLegendContent": {
+    "message": "Menu Item"
+  },
   "optionsMenusFormat9Content": {
     "message": "Set only format9 in specific",
     "description": "Set only format9 in specific 🧪"
   },
   
   
+  "optionsShortcutLegendContent": {
+    "message": "Keyboard Shortcut"
+  },
   "optionsShortcutDescriptionContent": {
     "message": "Please change it from browser settings page."
   },
@@ -95,6 +107,12 @@
   },
   
   
+  "optionsFormatLegendContent": {
+    "message": "Format"
+  },
+  "optionsProgrammableLegendContent": {
+    "message": "Extended Format"
+  },
   "optionsCopyProgrammableContent": {
     "message": "Enable programmable format",
     "description": "Enable programmable format 🧪"
