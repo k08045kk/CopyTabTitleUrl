@@ -142,23 +142,23 @@ async function executeScript(tab, cmd) {
 
 
 // ${console.log(msg)}
-async function executeConsoleLog(tab, cmd, args) {
-  if (cmd.exoptions.copy_scripting && cmd.exoptions.copy_scripting_main) {
-    const target = {tabId:tab.id};
-    const func = (msg) => console.log(msg);
-    const world = 'MAIN';
-    await chrome.scripting.executeScript({target, func, args, world});
-    return true;
-  }
-  return false;
-}
+//async function executeConsoleLog(tab, cmd, args) {
+//  if (cmd.exoptions.copy_scripting && cmd.exoptions.copy_scripting_main) {
+//    const target = {tabId:tab.id};
+//    const func = (msg) => console.log(msg);
+//    const world = 'MAIN';
+//    await chrome.scripting.executeScript({target, func, args, world});
+//    return true;
+//  }
+//  return false;
+//}
 // ${window.prompt(msg, def)}
-async function executePrompt(tab, cmd, args) {
-  if (cmd.exoptions.copy_scripting) {
-    const target = {tabId:tab.id};
-    const func = (msg, def) => window.prompt(msg, def);
-    const results = await chrome.scripting.executeScript({target, func, args});
-    return results[0].result;
-  }
-  return null;
-}
+//async function executePrompt(tab, cmd, args) {
+//  if (cmd.exoptions.copy_scripting) {
+//    const target = {tabId:tab.id};
+//    const func = (msg, def) => window.prompt(msg, def);
+//    const results = await chrome.scripting.executeScript({target, func, args});
+//    return results[0].result;
+//  }
+//  return null;
+//}
