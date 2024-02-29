@@ -57,12 +57,6 @@
   },
   
   
-  "optionsMenusFormat9Content": {
-    "message": "Set only format9 in specific",
-    "description": "Set only format9 in specific 🧪"
-  },
-  
-  
   "optionsShortcutDescriptionContent": {
     "message": "ブラウザの設定ページから変更してください。"
   },
@@ -71,28 +65,6 @@
   },
   "optionsShortcutTargetContent": {
     "message": "メニューのターゲットを使用する"
-  },
-  
-  
-  "optionsCopyProgrammableContent": {
-    "message": "Enable programmable format",
-    "description": "Enable programmable format 🧪"
-  },
-  "optionsCopyScriptingContent": {
-    "message": "Enable content script for active tab",
-    "description": "Enable content script for active tab 🧪"
-  },
-  "optionsCopyScriptingMainContent": {
-    "message": "Enable main world content script",
-    "description": "Enable main world content script 🧪"
-  },
-  "optionsCopyTextContent": {
-    "message": "Enable $${text0} - $${text9}",
-    "description": "Enable $${text0} - $${text9} 🧪"
-  },
-  "optionsExtendedMenusContent": {
-    "message": "Enable $${menu}",
-    "description": "Enable $${menu} 🧪"
   },
   
   
@@ -129,15 +101,6 @@
   "optionsCopyEmptyContent": {
     "message": "空文字の場合、スペースをコピーする",
     "description": "Copy space if empty string 🧪"
-  },
-  
-  "optionsExtendedEditContent": {
-    "message": "Use Extended Edit Mode",
-    "description": "Use Extended Edit Mode 🧪"
-  },
-  "optionsExtendedModeContent": {
-    "message": "Use Extended Mode",
-    "description": "Use Extended Mode 🧪"
   },
   
   
