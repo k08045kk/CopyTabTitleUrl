@@ -111,10 +111,6 @@
   "optionsCopyHtmlContent": {
     "message": "text/html 形式でコピーする"
   },
-  "optionsCopyEmptyContent": {
-    "message": "空文字の場合、スペースをコピーする",
-    "description": "Copy space if empty string 🧪"
-  },
   
   "optionsNewlineLabelContent": {
     "message": "改行文字: $${enter} ="
@@ -128,6 +124,11 @@
   },
   "optionsExcludeHiddenContent": {
     "message": "非表示タブを除外する"
+  },
+  
+  "optionsCopyEmptyContent": {
+    "message": "空文字の場合、スペースをコピーする",
+    "description": "Copy space if empty string 🧪"
   },
   
   "optionsExtendedEditContent": {

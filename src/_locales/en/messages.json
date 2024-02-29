@@ -150,10 +150,6 @@
   "optionsCopyHtmlContent": {
     "message": "Copy in text/html format"
   },
-  "optionsCopyEmptyContent": {
-    "message": "Copy space if empty string",
-    "description": "Copy space if empty string 🧪"
-  },
   
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
@@ -167,6 +163,15 @@
   },
   "optionsExcludeHiddenContent": {
     "message": "Exclude hidden tabs"
+  },
+  
+  "optionsCopyEmptyContent": {
+    "message": "Copy space if empty string",
+    "description": "Copy space if empty string 🧪"
+  },
+  "optionsPasteOverwriteContent": {
+    "message": "Remove newlines when pasting on Options",
+    "description": "Remove newline characters when pasting on Options page 🧪"
   },
   
   "optionsExtendedEditContent": {

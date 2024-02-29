@@ -76,6 +76,13 @@ function updateOptionPage(cmd) {
   document.getElementById('context_selection').disabled = all || format9;
   document.getElementById('context_link').disabled = all || format9;
   document.getElementById('context_image').disabled = all || format9;
+  
+  
+  // その他
+  document.removeEventListener('paste', onPaste, true);
+  if (ex3(cmd, 'paste_overwrite')) {
+    document.addEventListener('paste', onPaste, true);
+  }
 };
 
 
@@ -171,6 +178,21 @@ async function onReset() {
     await chrome.storage.local.set(defaultStorage);
     await chrome.runtime.sendMessage({target:'background.update'});
     setupOptionPage(defaultStorage);
+  }
+};
+
+function onPaste(event) {
+  if (!(event?.target?.tagName == 'INPUT' && event?.target?.type == 'text')) { return; }
+  
+  const data = event.clipboardData || window.clipboardData;
+  const paste = data.getData('text');
+  const text = paste.replace(/\r?\n/g, '');
+  if (paste == text) { return; }
+  
+  const ret = document.execCommand('insertText', false, text)
+  if (ret) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
   }
 };
 
