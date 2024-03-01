@@ -122,8 +122,12 @@
     "description": "Enable content script for active tab 🧪"
   },
   "optionsCopyScriptingMainContent": {
-    "message": "Enable main world content script",
-    "description": "Enable main world content script 🧪"
+    "message": "Enable content script for main world",
+    "description": "Enable content script for main world 🧪"
+  },
+  "optionsCopyScriptingAllContent": {
+    "message": "Enable content script for all frames",
+    "description": "Enable content script for all frames 🧪"
   },
   "optionsCopyTextContent": {
     "message": "Enable $${text0} - $${text9}",

@@ -223,7 +223,7 @@ const createFormatText = (cmd, tabs) => {
     }
     
     // Scripting
-    keyset['${scripting}'] = !!cmd.scripting;
+    keyset['${scripting}'] = !!cmd.scripting && !cmd.scripting.pageError;
     if (cmd.scripting) {
       Object.keys(cmd.scripting).forEach(key => keyset['${'+key+'}'] = cmd.scripting[key]);
     }

@@ -6,15 +6,27 @@
 'use strict';
 
 
+function _executeScriptWithTimeout(obj, time) {
+  return new Promise((resolve, reject) => {
+    chrome.scripting.executeScript(obj)
+                    .then(results => resolve(results))
+                    .catch((e) => reject(e));
+    setTimeout(() => reject('Timeout error.'), time);
+  });
+  // 備考：現実的な時間で応答を返さない（#66）
+  //       chrome.scripting.executeScript({target:allFrames:true})
+};
+
 
 async function executeScript(tab, cmd) {
   if (!cmd.exoptions.copy_scripting) { return null; }
   
-  let data = null;
+  
+  const data = {pageError:''};
   try {
-    data = {}
+    const world = 'ISOLATED';
     const target = {tabId:tab.id};
-    const func = (isPrompt) => {
+    const func = function() {
       return {
         pageTitle: (document.title ?? '')+'',
         pageURL: (document.URL ?? '')+'',
@@ -70,12 +82,9 @@ async function executeScript(tab, cmd) {
         //pageImages: [...new Set([...document.images].map(a => a.src).filter(src => !/(^$|^data:)/i.test(src)))].join('\n'),
         pageSelectionText: window.getSelection().toString(),
         // 備考：ShadowDOM を含む場合、始点のと同じ DOM 内のみ取得する。（ShadowDOM を越境して取得しない）
-        pagePrompt: isPrompt ? window.prompt('Input string: ${pagePrompt}') ?? '' : '',
       };
     };
-    const isPrompt = tab.active && !(isMobile() && cmd.callback) && /\${(?:(?<out>\w+)=)?pagePrompt(?<supp>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\((?:(?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?:,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}/.test(cmd.format);
-    const args = [isPrompt];
-    const results = await chrome.scripting.executeScript({target, func, args});
+    const results = await chrome.scripting.executeScript({world, target, func});
     Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
     data.ogpUrl = data.ogUrl || data.pageCanonicalUrl || '';
     data.ogpImage = data.ogImage || data.pageImageSrc || '';
@@ -84,33 +93,36 @@ async function executeScript(tab, cmd) {
     data.ogpDescription = data.ogDescription || data.metaDescription || '';
     // 備考：URL 系は、以降の処理でデコードする（ここではデコードしない）
   } catch (e) {
-    data = null;
     //console.log(e);
+    data.pageError = e.toString();
     // 備考：「chrome://」「about:」「mozilla.org」（特権ページ）では動作しない
   }
   
-  if (data?.pageSelectionText == '') {
+  
+  const isPrompt = tab.active && !(isMobile() && cmd.callback) && /\${(?:(?<out>\w+)=)?pagePrompt(?<supp>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\((?:(?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?:,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}/.test(cmd.format);
+  if (!data.pageError && isPrompt) {
     try {
-      const target = {tabId:tab.id, allFrames:true};
-      const func = () => {
+      const world = 'ISOLATED';
+      const target = {tabId:tab.id};
+      const func = function() {
         return {
-          pageSelectionText: window.getSelection().toString(),
-          
-          //pageURL: (document.URL ?? '')+'',
+          pagePrompt: window.prompt('Input string: ${pagePrompt}') ?? '',
         };
       };
-      const results = await chrome.scripting.executeScript({target, func});
-      data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
-                            || '';
-      // 備考：サブフレームの選択テキスト対応
-      //data.pageURLs = results.map(v => v.result.pageURL || '');
-    } catch {}
+      const results = await chrome.scripting.executeScript({world, target, func});
+      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+    } catch (e) {
+      //console.log(e);
+      data.pageError = e.toString();
+    }
   }
   
-  if (data && cmd.exoptions.copy_scripting_main) {
+  
+  if (!data.pageError && cmd.exoptions.copy_scripting_main) {
     try {
+      const world = 'MAIN';
       const target = {tabId:tab.id};
-      const func = () => {
+      const func = function() {
         return {
           pageText0: window.CopyTabTitleUrl?.text0?.toString() ?? '',
           pageText1: window.CopyTabTitleUrl?.text1?.toString() ?? '',
@@ -126,11 +138,38 @@ async function executeScript(tab, cmd) {
           //       Example: window.CopyTabTitleUrl = {text0: input};
         };
       };
-      const world = 'MAIN';
-      const results = await chrome.scripting.executeScript({target, func, world});
+      const results = await chrome.scripting.executeScript({world, target, func});
       Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
-    } catch {}
+    } catch {
+      data.pageError = e.toString();
+    }
   }
+  
+  
+  if (!data.pageError && cmd.exoptions.copy_scripting_all && data.pageSelectionText == '') {
+    try {
+      const world = 'ISOLATED';
+      const target = {tabId:tab.id, allFrames:true};
+      const func = function() {
+        return {
+          pageSelectionText: window.getSelection().toString(),
+          
+          //pageURL: (document.URL ?? '')+'',
+        };
+      };
+      //const results = await chrome.scripting.executeScript({world, target, func});
+      const results = await _executeScriptWithTimeout({world, target, func}, 150);
+      data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
+                            || '';
+      // 備考：サブフレームの選択テキスト対応
+      //data.pageURLs = results.map(v => v.result.pageURL || '');
+    } catch (e) {
+      //console.log(e);
+      data.pageError = e.toString();
+    }
+  }
+  // 備考：allFrames が一番問題確率が高いため、最後に実行する（#66）
+  
   
   return data;
   // 備考：非アクティブ（タブコンテキストメニュー）で動作する（copy_scripting を実施できる）
