@@ -14,7 +14,7 @@ function _executeScriptWithTimeout(obj, time) {
     setTimeout(() => reject('Timeout error.'), time);
   });
   // 備考：現実的な時間で応答を返さない（#66）
-  //       chrome.scripting.executeScript({target:allFrames:true})
+  //       chrome.scripting.executeScript({target:{allFrames:true}})
 };
 
 

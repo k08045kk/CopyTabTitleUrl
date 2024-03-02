@@ -256,7 +256,39 @@ const onUpdateContextMenus = async () => {
 /* ========================================================================== */
 /* main                                                                       */
 /* ========================================================================== */
-chrome.runtime.onInstalled.addListener(converteStorageVersion3);
-//chrome.runtime.onStartup.addListener(onUpdate);
-onUpdate();
-// 備考：Chrome の有効・無効に対応
+const onInstalled = async () => {
+  await converteStorageVersion3();
+};
+const onStartup = async () => {
+  await onUpdate();
+};
+const startup = async () => {
+  const sessionStorage = await chrome.storage.session?.get({startup:false});
+  if (!sessionStorage?.startup) {
+    await chrome.storage.session?.set({startup:true});
+    
+    const manifest = await chrome.runtime.getManifest();
+    const localStorage = await chrome.storage.local.get({extension_version:''});
+    if (manifest.version != localStorage.extension_version) {
+      await chrome.storage.local.set({extension_version:manifest.version});
+      
+      await onInstalled();
+    }
+    // 備考：無効状態の拡張機能が更新しても chrome.runtime.onInstalled が呼ばれない
+    //       see https://issues.chromium.org/issues/41116832
+    
+    await onStartup();
+    // 備考：有効無効時は chrome.runtime.onStartup が呼ばれない
+  }
+  // 備考：chrome.storage.session
+  //       更新時、内容は消える
+  //       有効無効時、内容は消える
+  //       Service Worker 復帰時、内容は残る
+  //       対応時期：Chrome 102, Firefox115
+  // 備考：onInstalled, onStartup の実行順・実行タイミングを保証します
+  //       標準機能では、 onStartup > onInstalled の順で実行されることがあります
+  //       また、並行（非同期）に実行されることがあります
+};
+//chrome.runtime.onInstalled.addListener(onInstalled);
+//chrome.runtime.onStartup.addListener(onStartup);
+startup();

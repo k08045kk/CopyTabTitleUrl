@@ -12,6 +12,7 @@
  *     browser_specific_settings.gecko.strict_min_version = "115.0";
  *   109: Manifest V3 対応（既定で有効化）
  *   102: browser.scripting.executeScript()
+ *   115: chrome.storage.session
  *   115: ESR
  *   ???: background module 対応
  * 
@@ -19,6 +20,7 @@
  *   manifest.json
  *     browser_specific_settings.gecko_android.strict_min_version = "121.0";
  *   107: Android Firefox Bate: Supports WebExtension API
+ *   115: chrome.storage.session
  *   121: Android Firefox:      Supports WebExtension API
  *   There is no following function:
  *     chrome.contextMenus
@@ -30,6 +32,7 @@
  *   88:  Manifest v3 対応
  *   88:  chrome.scripting.executeScript()
  *   94:  structuredClone()
+ *   102: chrome.storage.session
  *   103: chrome.i18n.getMessage 不具合対応
  *   109: chrome.offscreen
  *   116: chrome.runtime.getContexts({contextTypes:['OFFSCREEN_DOCUMENT']});
@@ -178,6 +181,7 @@ Object.freeze(defaultStorageVersion2);
 
 const defaultStorageVersion3 = {
   version: 3,                           // v3.1.0
+  //extension_version: '',                // v3.4.5 background.startup()
   // id
   // format
   // target
