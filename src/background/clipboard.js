@@ -44,8 +44,8 @@ async function setupOffscreenDocument(path) {
         justification: 'Used for writing to the clipboard.',
       });
       await creatingOffscreenDocumentPromise;
+      creatingOffscreenDocumentPromise = null;
     }
-    creatingOffscreenDocumentPromise = null;
   }
 };
 async function closeOffscreenDocument() {
