@@ -174,8 +174,8 @@
     "description": "Copy space if empty string 🧪"
   },
   "optionsPasteOverwriteContent": {
-    "message": "Remove newlines when pasting on Options",
-    "description": "Remove newline characters when pasting on Options page 🧪"
+    "message": "Remove newlines when paste on Options",
+    "description": "Remove newline characters when paste on Options page 🧪"
   },
   
   "optionsExtendedEditContent": {
