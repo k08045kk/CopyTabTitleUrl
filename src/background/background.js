@@ -257,12 +257,15 @@ const onUpdateContextMenus = async () => {
 /* main                                                                       */
 /* ========================================================================== */
 const onInstalled = async () => {
+//console.log('onInstalled');
   await converteStorageVersion3();
 };
 const onStartup = async () => {
+//console.log('onStartup');
   await onUpdate();
 };
-const startup = async () => {
+const startuping = async () => {
+//console.log('startuping');
   const sessionStorage = await chrome.storage.session?.get({startup:false});
   if (!sessionStorage?.startup) {
     await chrome.storage.session?.set({startup:true});
@@ -274,12 +277,12 @@ const startup = async () => {
       
       await onInstalled();
     }
-    // 備考：無効状態の拡張機能が更新しても chrome.runtime.onInstalled が呼ばれない
-    //       see https://issues.chromium.org/issues/41116832
+    // 備考：無効状態の拡張機能が更新しても chrome.runtime.onInstalled が呼ばれない対策（Chrome 限定？）
+    //   see https://issues.chromium.org/issues/41116832
     
     await onStartup();
-    // 備考：有効無効時は chrome.runtime.onStartup が呼ばれない
   }
+  // 備考：有効無効時は chrome.runtime.onStartup が呼ばれない対策
   // 備考：chrome.storage.session
   //       更新時、内容は消える
   //       有効無効時、内容は消える
@@ -289,6 +292,23 @@ const startup = async () => {
   //       標準機能では、 onStartup > onInstalled の順で実行されることがあります
   //       また、並行（非同期）に実行されることがあります
 };
-//chrome.runtime.onInstalled.addListener(onInstalled);
-//chrome.runtime.onStartup.addListener(onStartup);
+let startupingPromise = null;
+const startup = async () => {
+//console.log('startup', startupingPromise);
+  if (startupingPromise) {
+    await startupingPromise;
+  } else {
+    startupingPromise = startuping();
+    await startupingPromise;
+    //startupingPromise = null;
+  }
+  // 備考：並行実行を阻止する。完了を待機する。シングルトン
+};
+//console.log('background.js');
+chrome.runtime.onInstalled.addListener(startup);
+chrome.runtime.onStartup.addListener(startup);
 startup();
+// 備考：chrome.runtime.onStartup を呼び出さないと、
+//       起動時に background.js が動作しない対策（#67, Firefox 限定？）
+// 備考：startup 関連問題のまとめ
+//   see https://www.bugbugnow.net/2024/03/webextensions-onstartup.html
