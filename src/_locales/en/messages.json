@@ -169,6 +169,10 @@
     "message": "Exclude hidden tabs"
   },
   
+  "optionsCopyNoTabContent": {
+    "message": "Copy active tab if no tab",
+    "description": "Copy active tab if no tab 🧪"
+  },
   "optionsCopyEmptyContent": {
     "message": "Copy space if empty string",
     "description": "Copy space if empty string 🧪"

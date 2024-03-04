@@ -181,7 +181,7 @@ const onCopy = async (cmd) => {
   if (isFirefox() && ex3(cmd, 'exclude_hidden')) {
     temp = temp.filter(tab => !tab.hidden);
   }
-  if (temp.length === 0) {
+  if (temp.length === 0 && ex3(cmd, 'copy_no_tab')) {
     // #24 コピーするタブがない場合、カレントタブをコピーする
     temp = cmd.tab ? [cmd.tab] : await tabsQuery({currentWindow:true, active:true});
   }

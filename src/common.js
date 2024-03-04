@@ -235,6 +235,7 @@ const defaultStorageVersion3 = {
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
     
+    copy_no_tab: true,                  // v3.4.6
     copy_empty: false,                  // v3.3.5
     paste_overwrite: false,             // v3.4.3
     
@@ -332,6 +333,7 @@ const extendedMode = [
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
   
+  'copy_no_tab',
   'copy_empty',
   'paste_overwrite',
 
@@ -353,6 +355,7 @@ const extendedEditMode = [
   'copy_text',
   'extended_menus', 
   
+  'copy_no_tab',
   'copy_empty',
   'paste_overwrite',
 ];
