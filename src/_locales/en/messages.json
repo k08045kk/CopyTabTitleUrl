@@ -174,11 +174,11 @@
     "message": "Copy space if empty string",
     "description": "Copy space if empty string 🧪"
   },
+  
   "optionsPasteOverwriteContent": {
     "message": "Remove newlines when paste on Options",
     "description": "Remove newline characters when paste on Options page 🧪"
   },
-  
   "optionsExtendedEditContent": {
     "message": "Use Extended Edit Mode",
     "description": "Use Extended Edit Mode 🧪"

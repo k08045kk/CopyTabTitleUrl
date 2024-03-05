@@ -237,8 +237,8 @@ const defaultStorageVersion3 = {
     
     copy_no_tab: true,                  // v3.4.6
     copy_empty: false,                  // v3.3.5
-    paste_overwrite: false,             // v3.4.3
     
+    paste_overwrite: false,             // v3.4.3
     use_english: false,                 // v3.1.0 (others_language 後継機能)
     extended_edit: false,               // v3.1.0
     extended_mode: false,
@@ -335,8 +335,8 @@ const extendedMode = [
   
   'copy_no_tab',
   'copy_empty',
-  'paste_overwrite',
 
+  'paste_overwrite',
   //'use_english',                      // standard
   'extended_edit', 
   //'extended_mode',                    // standard
@@ -357,6 +357,7 @@ const extendedEditMode = [
   
   'copy_no_tab',
   'copy_empty',
+  
   'paste_overwrite',
 ];
 Object.freeze(extendedMode);
