@@ -78,6 +78,17 @@ function updateOptionPage(cmd) {
   document.getElementById('context_link').disabled = all || format9;
   document.getElementById('context_image').disabled = all || format9;
   
+  const context = all
+               || ex3(cmd, 'context_page')
+               ||(ex3(cmd, 'context_selection') && !format9)
+               ||(ex3(cmd, 'context_link') && !format9)
+               ||(ex3(cmd, 'context_image') && !format9)
+               || ex3(cmd, 'context_action')
+               ||(ex3(cmd, 'context_tab') && isFirefox());
+  document.querySelectorAll('.menu_enable').forEach((element) => {
+    element.disabled = !context;
+  });
+  
   
   // その他
   document.removeEventListener('paste', onPaste, true);
