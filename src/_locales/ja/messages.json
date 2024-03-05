@@ -35,7 +35,7 @@
   
   
   "optionsBrowserActionPopupContent": {
-    "message": "ポップアップを表示する"
+    "message": "ポップアップを開く"
   },
   "optionsPopupFormat2Content": {
     "message": "format2 を使用する"
@@ -46,11 +46,11 @@
   "optionsPopupTooltipContent": {
     "message": "format のツールチップを表示する"
   },
-  "optionsBrowserActionActionContent": {
-    "message": "format をコピーする"
-  },
   "optionsPopupRememberContent": {
     "message": "ターゲットを記憶する"
+  },
+  "optionsBrowserActionActionContent": {
+    "message": "format をコピーする"
   },
   "optionsPopupComlateContent": {
     "message": "コピー完了を表示する"

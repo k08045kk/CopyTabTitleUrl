@@ -38,7 +38,7 @@
     "message": "Browser Action"
   },
   "optionsBrowserActionPopupContent": {
-    "message": "Show popup"
+    "message": "Open popup"
   },
   "optionsPopupFormat2Content": {
     "message": "Use format2"
