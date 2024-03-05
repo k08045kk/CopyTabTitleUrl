@@ -64,28 +64,25 @@
     "message": "Context Menu"
   },
   "optionsContextAllContent": {
-    "message": "All context"
+    "message": "all"
   },
   "optionsContextPageContent": {
-    "message": "Page context"
+    "message": "page"
   },
   "optionsContextSelectionContent": {
-    "message": "Selection context"
+    "message": "selection"
   },
   "optionsContextLinkContent": {
-    "message": "Link context"
+    "message": "link"
   },
   "optionsContextImageContent": {
-    "message": "Image context"
+    "message": "image"
   },
   "optionsContextActionContent": {
-    "message": "Browser Action context"
+    "message": "browser action"
   },
   "optionsContextTabContent": {
-    "message": "Tab context"
-  },
-  "optionsMenuItemLegendContent": {
-    "message": "Menu Item"
+    "message": "tab"
   },
   "optionsMenusFormat9Content": {
     "message": "Set only format9 in specific",
@@ -97,7 +94,7 @@
     "message": "Keyboard Shortcut"
   },
   "optionsShortcutDescriptionContent": {
-    "message": "Please change it from browser settings page."
+    "message": "Please change it from your browser's settings page."
   },
   "optionsShortcutFirefoxDescriptionContent": {
     "message": "[about:addons] > [⚙] > [Manage Extension Shortcuts]"
