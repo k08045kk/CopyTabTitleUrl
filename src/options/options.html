@@ -104,14 +104,24 @@ p {
   }
 }
 
+#programmable_text {
+  max-height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  transition: max-height 500ms ease;
+}
+#programmable_text.open {
+  max-height: 20em;  /* 適当な値 */
+}
 
 body[data-exmode="true"] .normal,
 body[data-exmode="false"] .exmode,
 body[data-exedit="false"] .exedit,
 body[data-exedit="false"][data-mobile="true"] .mobile,
 body[data-browser="firefox"] .chrome,
-body[data-browser="chrome"] .firefox,
-#programmable[data-text="false"] .text {
+body[data-browser="chrome"] .firefox {
   display: none;
 }
   </style>
@@ -242,7 +252,7 @@ body[data-browser="chrome"] .firefox,
 
 
   <!-- Extended Format -->
-  <fieldset class="exmode exedit" id="programmable" data-text="false">
+  <fieldset class="exmode exedit" id="programmable">
     <legend id="programmable_legend" data-i18n></legend>
 
     <p class="exmode exedit exam" data-template="checkbox" data-id="copy_programmable">
@@ -252,6 +262,20 @@ body[data-browser="chrome"] .firefox,
     <p class="exmode exedit exam" data-template="checkbox" data-id="copy_text">
     <p class="exmode exedit mobile exam indent" data-template="checkbox" data-id="extended_menus">
 
+    <fieldset id="programmable_text">
+      <hr><!-- ---------- -->
+      <p> ${text0} = <input class="text" id="text0" type="text">
+      <p> ${text1} = <input class="text" id="text1" type="text">
+      <p> ${text2} = <input class="text" id="text2" type="text">
+      <p> ${text3} = <input class="text" id="text3" type="text">
+      <p> ${text4} = <input class="text" id="text4" type="text">
+      <p> ${text5} = <input class="text" id="text5" type="text">
+      <p> ${text6} = <input class="text" id="text6" type="text">
+      <p> ${text7} = <input class="text" id="text7" type="text">
+      <p> ${text8} = <input class="text" id="text8" type="text">
+      <p> ${text9} = <input class="text" id="text9" type="text">
+    </fieldset>
+
     <hr class="exmode exedit"><!-- ---------- -->
     <p class="exmode exedit">
       This feature is currently being tested. 🧪<br>
@@ -259,18 +283,6 @@ body[data-browser="chrome"] .firefox,
       /background/format.js<br>
       /background/compiler.js<br>
       /background/scripting.js<br>
-
-    <hr class="text"><!-- ---------- -->
-    <p class="text"> ${text0} = <input id="text0" type="text">
-    <p class="text"> ${text1} = <input id="text1" type="text">
-    <p class="text"> ${text2} = <input id="text2" type="text">
-    <p class="text"> ${text3} = <input id="text3" type="text">
-    <p class="text"> ${text4} = <input id="text4" type="text">
-    <p class="text"> ${text5} = <input id="text5" type="text">
-    <p class="text"> ${text6} = <input id="text6" type="text">
-    <p class="text"> ${text7} = <input id="text7" type="text">
-    <p class="text"> ${text8} = <input id="text8" type="text">
-    <p class="text"> ${text9} = <input id="text9" type="text">
   </fieldset>
 
 

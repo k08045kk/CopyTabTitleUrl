@@ -50,13 +50,13 @@ function updateOptionPage(cmd) {
   const exedit = exmode && ex3(cmd, 'extended_edit');
   document.body.dataset.exmode = exmode;
   document.body.dataset.exedit = exedit;
-  document.getElementById('programmable').dataset.text = ex3(cmd, 'copy_text');
+  document.getElementById('programmable_text').classList.toggle('open', ex3(cmd, 'copy_text'));
+  
   document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_scripting_all').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_html').disabled = ex3(cmd, 'copy_clipboard_api');
   document.getElementById('extended_menus').disabled = 
                           !(ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text'));
-  
   
   // ブラウザアクション
   const popup = cmd.browser_action === 'popup';
