@@ -18,6 +18,9 @@
   display: block;
   clear: both;
 }
+html {
+  scrollbar-width: none;      /* Firefox アニメーション時にスクロールバーがちらつく対策 */
+}
 body {
   max-width: 600px;
 /*min-width: 360px;           /* Chrome 400px */
@@ -107,7 +110,8 @@ p {
   }
 }
 
-#programmable_text {
+#programmable_text,
+#programmable_message {
   max-height: 0;
   margin: 0;
   padding: 0;
@@ -117,6 +121,9 @@ p {
 }
 #programmable_text.open {
   max-height: 20em;  /* 適当な値 */
+}
+#programmable_message.open {
+  max-height: 10em;  /* 適当な値 */
 }
 
 body[data-exmode="true"] .normal,
@@ -279,13 +286,15 @@ body[data-browser="chrome"] .firefox {
       <p> ${text9} = <input class="text" id="text9" type="text">
     </fieldset>
 
-    <hr class="exmode exedit"><!-- ---------- -->
-    <p class="exmode exedit">
-      This feature is currently being tested. 🧪<br>
-      Please read the source directly for usage details.<br>
-      /background/format.js<br>
-      /background/compiler.js<br>
-      /background/scripting.js<br>
+    <fieldset id="programmable_message">
+      <hr class="exmode exedit"><!-- ---------- -->
+      <p class="exmode exedit">
+        This feature is currently being tested. 🧪<br>
+        Please read the source directly for usage details.<br>
+        /background/format.js<br>
+        /background/compiler.js<br>
+        /background/scripting.js<br>
+    </fieldset>
   </fieldset>
 
 

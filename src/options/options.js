@@ -48,9 +48,11 @@ function updateOptionPage(cmd) {
   // 拡張モード選択時
   const exmode = ex3(cmd);
   const exedit = exmode && ex3(cmd, 'extended_edit');
+  const exformat = ex3(cmd, 'copy_programmable') || ex3(cmd, 'copy_scripting');
   document.body.dataset.exmode = exmode;
   document.body.dataset.exedit = exedit;
   document.getElementById('programmable_text').classList.toggle('open', ex3(cmd, 'copy_text'));
+  document.getElementById('programmable_message').classList.toggle('open', exformat);
   
   document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_scripting_all').disabled = !ex3(cmd, 'copy_scripting');
