@@ -3,6 +3,7 @@
  */
 'use strict';
 
+
 /**
  * 備考
  * 最小対応バージョンの覚書
@@ -37,6 +38,22 @@
  *   109: chrome.offscreen
  *   116: chrome.runtime.getContexts({contextTypes:['OFFSCREEN_DOCUMENT']});
 */
+
+
+/*
+export {
+  module,
+  isFirefox, isChrome, isKiwi, isMobile,
+  //defaultStorageVersion1,
+  //defaultStorageVersion2,
+  //defaultStorageVersion3,
+  defaultStorage,
+  extendedMode,
+  extendedEditMode,
+  ex3, exOptions,
+  converteStorageVersion3,
+};
+/**/
 
 
 // module.exports 対策 (punycode.js)
@@ -299,6 +316,7 @@ Object.freeze(defaultStorageVersion3);
 
 
 
+const defaultStorage = defaultStorageVersion3;
 const extendedMode = [
   //'popup_format2',                    // standard v3.0.0+
   'popup_title',
@@ -383,14 +401,10 @@ const ex3 = (cmd, name) => {
 const exOptions = (cmd) => {
   const exoptions = {};
   for (const key of Object.keys(defaultStorage.options)) {
-    exoptions[key] = ex3(cmd, key);
+    exoptions[key] = ex3(cmd, key) ?? defaultStorage.options[key];
   }
   return exoptions;
 };
-
-
-
-const defaultStorage = defaultStorageVersion3;
 
 
 
