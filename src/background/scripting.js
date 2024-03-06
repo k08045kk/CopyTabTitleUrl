@@ -99,25 +99,6 @@ async function executeScript(tab, cmd) {
   }
   
   
-  const isPrompt = tab.active && !(isMobile() && cmd.callback) && /\${(?:(?<out>\w+)=)?pagePrompt(?<supp>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\((?:(?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?:,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}/.test(cmd.format);
-  if (!data.pageError && isPrompt) {
-    try {
-      const world = 'ISOLATED';
-      const target = {tabId:tab.id};
-      const func = function() {
-        return {
-          pagePrompt: window.prompt('Input string: ${pagePrompt}') ?? '',
-        };
-      };
-      const results = await chrome.scripting.executeScript({world, target, func});
-      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
-    } catch (e) {
-      //console.log(e);
-      data.pageError = e.toString();
-    }
-  }
-  
-  
   if (!data.pageError && cmd.exoptions.copy_scripting_main) {
     try {
       const world = 'MAIN';
@@ -168,7 +149,30 @@ async function executeScript(tab, cmd) {
       data.pageError = e.toString();
     }
   }
-  // 備考：allFrames が一番問題確率が高いため、最後に実行する（#66）
+  // 備考：allFrames が一番問題確率が高いため、後に実行する（#66）
+  
+  
+  const isPrompt = tab.active && !(isMobile() && cmd.callback) && /\${(?:(?<out>\w+)=)?pagePrompt(?<supp>\[(?<idx>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')\]|\.(?<fn>\w+)(?<args>\((?:(?<arg1>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*')(?:,(?<arg2>\w+|[+\-]?\d+|"[^"}]*"|'[^'}]*'))?)?\))?)?}/.test(cmd.format);
+  if (!data.pageError && isPrompt) {
+    try {
+      const world = 'ISOLATED';
+      const target = {tabId:tab.id};
+      const func = function() {
+        return {
+          pagePrompt: window.prompt('Input string: ${pagePrompt}') ?? '',
+        };
+      };
+      const results = await chrome.scripting.executeScript({world, target, func});
+      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+    } catch (e) {
+      //console.log(e);
+      data.pageError = e.toString();
+    }
+  }
+  // 備考：処理タイミングの関係でプロンプトを最後に実行する
+  // 備考：プロンプトの挙動について
+  //       [OK] or [Enter] の場合、入力文字列を出力する
+  //       [Cancel] or [ESC] or [タブ移動] or [ウィンドウ移動] の場合、空文字を出力する。
   
   
   return data;
