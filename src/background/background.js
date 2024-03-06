@@ -146,7 +146,7 @@ const createExContextMenu = async (format, menu) => {
     menu.id = 'exmenu_'+menu.target+'_'+menu.id;
     delete menu.target;
     
-    if (0 < menu.contexts.length) {
+    if (menu.contexts.length && menu.title.length) {
       await chrome.contextMenus.create(menu);
       return true;
       // 備考："Invalid url pattern": documentUrlPatterns, targetUrlPatterns
@@ -204,7 +204,7 @@ const updateContextMenus = async (cmd) => {
             type: 'separator',
             contexts,
           });
-        } else {
+        } else if (!exmode || cmd.menus[i].title.length) {
           chrome.contextMenus.create({
             id: 'menu'+i,
             title: exmode ? cmd.menus[i].title : defaultStorage.menus[i].title,
@@ -214,11 +214,10 @@ const updateContextMenus = async (cmd) => {
       }
     }
   }
-  if (format9) {
-    const id = 11;
+  if (format9 && cmd.menus[11].title.length) {
     chrome.contextMenus.create({
-      id: 'menu'+id,
-      title: exmode ? cmd.menus[id].title : defaultStorage.menus[id].title,
+      id: 'menu11',
+      title: cmd.menus[11].title,
       contexts: ['selection', 'link', 'image'],
     });
   }
