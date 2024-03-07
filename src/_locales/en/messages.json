@@ -176,7 +176,7 @@
   },
   
   "optionsPasteOverwriteContent": {
-    "message": "Remove newlines when paste on Options",
+    "message": "Remove newlines when paste",
     "description": "Remove newline characters when paste on Options page 🧪"
   },
   "optionsExtendedEditContent": {
