@@ -239,8 +239,8 @@ const defaultStorageVersion3 = {
     
     copy_programmable: false,           // v3.1.0
     copy_scripting: false,              // v3.1.0
-    copy_scripting_main: false,         // v3.3.6
     copy_scripting_all: false,          // v3.4.4
+    copy_scripting_main: false,         // v3.3.6
     copy_text: false,                   // v3.3.4
     extended_menus: false,              // v3.4.1
     
@@ -339,8 +339,8 @@ const extendedMode = [
   
   'copy_programmable',
   'copy_scripting',
-  'copy_scripting_main',
   'copy_scripting_all',
+  'copy_scripting_main',
   'copy_text',
   'extended_menus', 
   
@@ -368,8 +368,8 @@ const extendedEditMode = [
   
   'copy_programmable',
   'copy_scripting',
-  'copy_scripting_main',
   'copy_scripting_all',
+  'copy_scripting_main',
   'copy_text',
   'extended_menus', 
   

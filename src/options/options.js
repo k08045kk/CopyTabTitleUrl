@@ -54,8 +54,8 @@ function updateOptionPage(cmd) {
   document.getElementById('programmable_text').classList.toggle('open', ex3(cmd, 'copy_text'));
   document.getElementById('programmable_message').classList.toggle('open', exformat);
   
-  document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_scripting_all').disabled = !ex3(cmd, 'copy_scripting');
+  document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_html').disabled = ex3(cmd, 'copy_clipboard_api');
   document.getElementById('extended_menus').disabled = 
                           !(ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text'));
