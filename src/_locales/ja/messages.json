@@ -35,7 +35,7 @@
   
   
   "optionsBrowserActionPopupContent": {
-    "message": "ポップアップを表示する"
+    "message": "ポップアップを開く"
   },
   "optionsPopupFormat2Content": {
     "message": "format2 を使用する"
@@ -46,20 +46,14 @@
   "optionsPopupTooltipContent": {
     "message": "format のツールチップを表示する"
   },
-  "optionsBrowserActionActionContent": {
-    "message": "format をコピーする"
-  },
   "optionsPopupRememberContent": {
     "message": "ターゲットを記憶する"
   },
+  "optionsBrowserActionActionContent": {
+    "message": "format をコピーする"
+  },
   "optionsPopupComlateContent": {
     "message": "コピー完了を表示する"
-  },
-  
-  
-  "optionsMenusFormat9Content": {
-    "message": "Set only format9 in specific",
-    "description": "Set only format9 in specific 🧪"
   },
   
   
@@ -71,28 +65,6 @@
   },
   "optionsShortcutTargetContent": {
     "message": "メニューのターゲットを使用する"
-  },
-  
-  
-  "optionsCopyProgrammableContent": {
-    "message": "Enable programmable format",
-    "description": "Enable programmable format 🧪"
-  },
-  "optionsCopyScriptingContent": {
-    "message": "Enable content script for active tab",
-    "description": "Enable content script for active tab 🧪"
-  },
-  "optionsCopyScriptingMainContent": {
-    "message": "Enable main world content script",
-    "description": "Enable main world content script 🧪"
-  },
-  "optionsCopyTextContent": {
-    "message": "Enable $${text0} - $${text9}",
-    "description": "Enable $${text0} - $${text9} 🧪"
-  },
-  "optionsExtendedMenusContent": {
-    "message": "Enable $${menu}",
-    "description": "Enable $${menu} 🧪"
   },
   
   
@@ -111,10 +83,6 @@
   "optionsCopyHtmlContent": {
     "message": "text/html 形式でコピーする"
   },
-  "optionsCopyEmptyContent": {
-    "message": "空文字の場合、スペースをコピーする",
-    "description": "Copy space if empty string 🧪"
-  },
   
   "optionsNewlineLabelContent": {
     "message": "改行文字: $${enter} ="
@@ -130,13 +98,9 @@
     "message": "非表示タブを除外する"
   },
   
-  "optionsExtendedEditContent": {
-    "message": "Use Extended Edit Mode",
-    "description": "Use Extended Edit Mode 🧪"
-  },
-  "optionsExtendedModeContent": {
-    "message": "Use Extended Mode",
-    "description": "Use Extended Mode 🧪"
+  "optionsCopyEmptyContent": {
+    "message": "空文字の場合、スペースをコピーする",
+    "description": "Copy space if empty string 🧪"
   },
   
   

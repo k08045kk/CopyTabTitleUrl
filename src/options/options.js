@@ -48,14 +48,17 @@ function updateOptionPage(cmd) {
   // 拡張モード選択時
   const exmode = ex3(cmd);
   const exedit = exmode && ex3(cmd, 'extended_edit');
+  const exformat = ex3(cmd, 'copy_programmable') || ex3(cmd, 'copy_scripting');
   document.body.dataset.exmode = exmode;
   document.body.dataset.exedit = exedit;
-  document.getElementById('programmable').dataset.text = ex3(cmd, 'copy_text');
+  document.getElementById('programmable_text').classList.toggle('open', ex3(cmd, 'copy_text'));
+  document.getElementById('programmable_message').classList.toggle('open', exformat);
+  
+  document.getElementById('copy_scripting_all').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_scripting_main').disabled = !ex3(cmd, 'copy_scripting');
   document.getElementById('copy_html').disabled = ex3(cmd, 'copy_clipboard_api');
   document.getElementById('extended_menus').disabled = 
                           !(ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text'));
-  
   
   // ブラウザアクション
   const popup = cmd.browser_action === 'popup';
@@ -76,6 +79,24 @@ function updateOptionPage(cmd) {
   document.getElementById('context_selection').disabled = all || format9;
   document.getElementById('context_link').disabled = all || format9;
   document.getElementById('context_image').disabled = all || format9;
+  
+  const context = all
+               || ex3(cmd, 'context_page')
+               ||(ex3(cmd, 'context_selection') && !format9)
+               ||(ex3(cmd, 'context_link') && !format9)
+               ||(ex3(cmd, 'context_image') && !format9)
+               || ex3(cmd, 'context_action')
+               ||(ex3(cmd, 'context_tab') && isFirefox());
+  document.querySelectorAll('.menu_enable').forEach((element) => {
+    element.disabled = !context;
+  });
+  
+  
+  // その他
+  document.removeEventListener('paste', onPaste, true);
+  if (ex3(cmd, 'paste_overwrite')) {
+    document.addEventListener('paste', onPaste, true);
+  }
 };
 
 
@@ -171,6 +192,21 @@ async function onReset() {
     await chrome.storage.local.set(defaultStorage);
     await chrome.runtime.sendMessage({target:'background.update'});
     setupOptionPage(defaultStorage);
+  }
+};
+
+function onPaste(event) {
+  if (!(event?.target?.tagName == 'INPUT' && event?.target?.type == 'text')) { return; }
+  
+  const data = event.clipboardData || window.clipboardData;
+  const paste = data.getData('text');
+  const text = paste.replace(/\r?\n/g, '');
+  if (paste == text) { return; }
+  
+  const ret = document.execCommand('insertText', false, text)
+  if (ret) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
   }
 };
 

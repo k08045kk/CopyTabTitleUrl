@@ -38,7 +38,7 @@
     "message": "Browser Action"
   },
   "optionsBrowserActionPopupContent": {
-    "message": "Show popup"
+    "message": "Open popup"
   },
   "optionsPopupFormat2Content": {
     "message": "Use format2"
@@ -64,28 +64,25 @@
     "message": "Context Menu"
   },
   "optionsContextAllContent": {
-    "message": "All context"
+    "message": "all"
   },
   "optionsContextPageContent": {
-    "message": "Page context"
+    "message": "page"
   },
   "optionsContextSelectionContent": {
-    "message": "Selection context"
+    "message": "selection"
   },
   "optionsContextLinkContent": {
-    "message": "Link context"
+    "message": "link"
   },
   "optionsContextImageContent": {
-    "message": "Image context"
+    "message": "image"
   },
   "optionsContextActionContent": {
-    "message": "Browser Action context"
+    "message": "browser action"
   },
   "optionsContextTabContent": {
-    "message": "Tab context"
-  },
-  "optionsMenuItemLegendContent": {
-    "message": "Menu Item"
+    "message": "tab"
   },
   "optionsMenusFormat9Content": {
     "message": "Set only format9 in specific",
@@ -97,7 +94,7 @@
     "message": "Keyboard Shortcut"
   },
   "optionsShortcutDescriptionContent": {
-    "message": "Please change it from browser settings page."
+    "message": "Please change it from your browser's settings page."
   },
   "optionsShortcutFirefoxDescriptionContent": {
     "message": "[about:addons] > [⚙] > [Manage Extension Shortcuts]"
@@ -121,9 +118,13 @@
     "message": "Enable content script for active tab",
     "description": "Enable content script for active tab 🧪"
   },
+  "optionsCopyScriptingAllContent": {
+    "message": "Enable content script for all frames",
+    "description": "Enable content script for all frames 🧪"
+  },
   "optionsCopyScriptingMainContent": {
-    "message": "Enable main world content script",
-    "description": "Enable main world content script 🧪"
+    "message": "Enable content script for main world",
+    "description": "Enable content script for main world 🧪"
   },
   "optionsCopyTextContent": {
     "message": "Enable $${text0} - $${text9}",
@@ -150,10 +151,6 @@
   "optionsCopyHtmlContent": {
     "message": "Copy in text/html format"
   },
-  "optionsCopyEmptyContent": {
-    "message": "Copy space if empty string",
-    "description": "Copy space if empty string 🧪"
-  },
   
   "optionsNewlineLabelContent": {
     "message": "Newline character: $${enter} ="
@@ -169,6 +166,19 @@
     "message": "Exclude hidden tabs"
   },
   
+  "optionsCopyNoTabContent": {
+    "message": "Copy active tab if no tab",
+    "description": "Copy active tab if no tab 🧪"
+  },
+  "optionsCopyEmptyContent": {
+    "message": "Copy space if empty string",
+    "description": "Copy space if empty string 🧪"
+  },
+  
+  "optionsPasteOverwriteContent": {
+    "message": "Remove newlines when paste",
+    "description": "Remove newline characters when paste on Options page 🧪"
+  },
   "optionsExtendedEditContent": {
     "message": "Use Extended Edit Mode",
     "description": "Use Extended Edit Mode 🧪"

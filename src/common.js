@@ -3,6 +3,7 @@
  */
 'use strict';
 
+
 /**
  * 備考
  * 最小対応バージョンの覚書
@@ -12,6 +13,7 @@
  *     browser_specific_settings.gecko.strict_min_version = "115.0";
  *   109: Manifest V3 対応（既定で有効化）
  *   102: browser.scripting.executeScript()
+ *   115: chrome.storage.session
  *   115: ESR
  *   ???: background module 対応
  * 
@@ -19,6 +21,7 @@
  *   manifest.json
  *     browser_specific_settings.gecko_android.strict_min_version = "121.0";
  *   107: Android Firefox Bate: Supports WebExtension API
+ *   115: chrome.storage.session
  *   121: Android Firefox:      Supports WebExtension API
  *   There is no following function:
  *     chrome.contextMenus
@@ -30,10 +33,27 @@
  *   88:  Manifest v3 対応
  *   88:  chrome.scripting.executeScript()
  *   94:  structuredClone()
+ *   102: chrome.storage.session
  *   103: chrome.i18n.getMessage 不具合対応
  *   109: chrome.offscreen
  *   116: chrome.runtime.getContexts({contextTypes:['OFFSCREEN_DOCUMENT']});
 */
+
+
+/*
+export {
+  module,
+  isFirefox, isChrome, isKiwi, isMobile,
+  //defaultStorageVersion1,
+  //defaultStorageVersion2,
+  //defaultStorageVersion3,
+  defaultStorage,
+  extendedMode,
+  extendedEditMode,
+  ex3, exOptions,
+  converteStorageVersion3,
+};
+/**/
 
 
 // module.exports 対策 (punycode.js)
@@ -178,6 +198,7 @@ Object.freeze(defaultStorageVersion2);
 
 const defaultStorageVersion3 = {
   version: 3,                           // v3.1.0
+  //extension_version: '',                // v3.4.5 background.startup()
   // id
   // format
   // target
@@ -218,6 +239,7 @@ const defaultStorageVersion3 = {
     
     copy_programmable: false,           // v3.1.0
     copy_scripting: false,              // v3.1.0
+    copy_scripting_all: false,          // v3.4.4
     copy_scripting_main: false,         // v3.3.6
     copy_text: false,                   // v3.3.4
     extended_menus: false,              // v3.4.1
@@ -226,11 +248,14 @@ const defaultStorageVersion3 = {
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
     copy_clipboard_api: false,
     copy_html: false,
-    copy_empty: false,                  // v3.3.5
     
     exclude_pin: false,                 // v3.1.0 （標準モードへ移行）
     exclude_hidden: true,               // v3.0.0, v3.1.0 （初期設定を変更、標準モードへ移行）
     
+    copy_no_tab: true,                  // v3.4.6
+    copy_empty: false,                  // v3.3.5
+    
+    paste_overwrite: false,             // v3.4.3
     use_english: false,                 // v3.1.0 (others_language 後継機能)
     extended_edit: false,               // v3.1.0
     extended_mode: false,
@@ -291,6 +316,7 @@ Object.freeze(defaultStorageVersion3);
 
 
 
+const defaultStorage = defaultStorageVersion3;
 const extendedMode = [
   //'popup_format2',                    // standard v3.0.0+
   'popup_title',
@@ -313,6 +339,7 @@ const extendedMode = [
   
   'copy_programmable',
   'copy_scripting',
+  'copy_scripting_all',
   'copy_scripting_main',
   'copy_text',
   'extended_menus', 
@@ -321,9 +348,13 @@ const extendedMode = [
   //'copy_punycode',                    // standard v3.1.0+
   'copy_clipboard_api',
   'copy_html',
-  'copy_empty',
   //'exclude_pin',                      // standard v3.1.0+
   //'exclude_hidden',                   // standard v3.1.0+
+  
+  'copy_no_tab',
+  'copy_empty',
+
+  'paste_overwrite',
   //'use_english',                      // standard
   'extended_edit', 
   //'extended_mode',                    // standard
@@ -337,11 +368,15 @@ const extendedEditMode = [
   
   'copy_programmable',
   'copy_scripting',
+  'copy_scripting_all',
   'copy_scripting_main',
   'copy_text',
   'extended_menus', 
   
+  'copy_no_tab',
   'copy_empty',
+  
+  'paste_overwrite',
 ];
 Object.freeze(extendedMode);
 Object.freeze(extendedEditMode);
@@ -366,14 +401,10 @@ const ex3 = (cmd, name) => {
 const exOptions = (cmd) => {
   const exoptions = {};
   for (const key of Object.keys(defaultStorage.options)) {
-    exoptions[key] = ex3(cmd, key);
+    exoptions[key] = ex3(cmd, key) ?? defaultStorage.options[key];
   }
   return exoptions;
 };
-
-
-
-const defaultStorage = defaultStorageVersion3;
 
 
 

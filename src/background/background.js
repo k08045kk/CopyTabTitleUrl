@@ -146,7 +146,7 @@ const createExContextMenu = async (format, menu) => {
     menu.id = 'exmenu_'+menu.target+'_'+menu.id;
     delete menu.target;
     
-    if (0 < menu.contexts.length) {
+    if (menu.contexts.length && menu.title.length) {
       await chrome.contextMenus.create(menu);
       return true;
       // 備考："Invalid url pattern": documentUrlPatterns, targetUrlPatterns
@@ -204,7 +204,7 @@ const updateContextMenus = async (cmd) => {
             type: 'separator',
             contexts,
           });
-        } else {
+        } else if (!exmode || cmd.menus[i].title.length) {
           chrome.contextMenus.create({
             id: 'menu'+i,
             title: exmode ? cmd.menus[i].title : defaultStorage.menus[i].title,
@@ -214,11 +214,10 @@ const updateContextMenus = async (cmd) => {
       }
     }
   }
-  if (format9) {
-    const id = 11;
+  if (format9 && cmd.menus[11].title.length) {
     chrome.contextMenus.create({
-      id: 'menu'+id,
-      title: exmode ? cmd.menus[id].title : defaultStorage.menus[id].title,
+      id: 'menu11',
+      title: cmd.menus[11].title,
       contexts: ['selection', 'link', 'image'],
     });
   }
@@ -256,7 +255,59 @@ const onUpdateContextMenus = async () => {
 /* ========================================================================== */
 /* main                                                                       */
 /* ========================================================================== */
-chrome.runtime.onInstalled.addListener(converteStorageVersion3);
-//chrome.runtime.onStartup.addListener(onUpdate);
-onUpdate();
-// 備考：Chrome の有効・無効に対応
+const onInstalled = async () => {
+//console.log('onInstalled');
+  await converteStorageVersion3();
+};
+const onStartup = async () => {
+//console.log('onStartup');
+  await onUpdate();
+};
+const startuping = async () => {
+//console.log('startuping');
+  const sessionStorage = await chrome.storage.session?.get({startup:false});
+  if (!sessionStorage?.startup) {
+    await chrome.storage.session?.set({startup:true});
+    
+    const manifest = await chrome.runtime.getManifest();
+    const localStorage = await chrome.storage.local.get({extension_version:''});
+    if (manifest.version != localStorage.extension_version) {
+      await chrome.storage.local.set({extension_version:manifest.version});
+      
+      await onInstalled();
+    }
+    // 備考：無効状態の拡張機能が更新しても chrome.runtime.onInstalled が呼ばれない対策（Chrome 限定？）
+    //   see https://issues.chromium.org/issues/41116832
+    
+    await onStartup();
+  }
+  // 備考：有効無効時は chrome.runtime.onStartup が呼ばれない対策
+  // 備考：chrome.storage.session
+  //       更新時、内容は消える
+  //       有効無効時、内容は消える
+  //       Service Worker 復帰時、内容は残る
+  //       対応時期：Chrome 102, Firefox115
+  // 備考：onInstalled, onStartup の実行順・実行タイミングを保証します
+  //       標準機能では、 onStartup > onInstalled の順で実行されることがあります
+  //       また、並行（非同期）に実行されることがあります
+};
+let startupingPromise = null;
+const startup = async () => {
+//console.log('startup', startupingPromise);
+  if (startupingPromise) {
+    await startupingPromise;
+  } else {
+    startupingPromise = startuping();
+    await startupingPromise;
+    //startupingPromise = null;
+  }
+  // 備考：並行実行を阻止する。完了を待機する。シングルトン
+};
+//console.log('background.js');
+chrome.runtime.onInstalled.addListener(startup);
+chrome.runtime.onStartup.addListener(startup);
+startup();
+// 備考：chrome.runtime.onStartup を呼び出さないと、
+//       起動時に background.js が動作しない対策（#67, Firefox 限定？）
+// 備考：startup 関連問題のまとめ
+//   see https://www.bugbugnow.net/2024/03/webextensions-onstartup.html
