@@ -151,7 +151,7 @@ const onCopy = async (cmd) => {
     'tab': {currentWindow:true, highlighted:true}, 
     'window': {currentWindow:true}, 
     'all': {},
-  }[cmd.target];
+  }[cmd.target] ?? {currentWindow:true, highlighted:true};
   if (ex3(cmd, 'exclude_pin')) {
     targetQuery.pinned = false;
   }
