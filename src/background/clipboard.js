@@ -144,6 +144,8 @@ const onCopy = async (cmd) => {
   cmd.enter = await getEnterCode(cmd);
   cmd.separator = ex3(cmd) ? cmd.separator : defaultStorage.separator;
   cmd.exoptions = exOptions(cmd);
+  cmd.tab = cmd.tab ?? (await chrome.tabs.query({currentWindow:true, active:true}))[0];
+  // 備考：ポップアップ用（ポップアップを開く、コピー完了通知）
   
   const targetQuery = {
     'tab': {currentWindow:true, highlighted:true}, 
@@ -189,8 +191,8 @@ const onCopy = async (cmd) => {
   if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
     // コンテンツスクリプト
     cmd.scripting = await executeScript(temp[0], cmd);
-    cmd.selectionText = cmd.info?.selectionText || cmd.scripting?.pageSelectionText || '';
   }
+  cmd.selectionText = cmd.info?.selectionText || cmd.scripting?.pageSelectionText || '';
   
   // クリップボードにコピー
   await copyToClipboard(cmd, temp);

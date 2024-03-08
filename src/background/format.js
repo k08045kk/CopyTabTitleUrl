@@ -165,7 +165,7 @@ const createFormatText = (cmd, tabs) => {
     
     if (isExtendedMode) {
       // Basic
-      const active = tabs.length == 1 && tab.id == cmd.tab?.id;
+      const active = tabs.length == 1 && (!cmd.tab || tab.id == cmd.tab.id);
       keyset['${frameUrl}'] = active && cmd.info?.frameUrl || tab.url;
       keyset['${frameUrl}'] = decodeURL(keyset['${frameUrl}'], isDecode, isPunycode);
       keyset['${text}']     = active && cmd.selectionText || tab.title;
