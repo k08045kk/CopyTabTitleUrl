@@ -144,6 +144,7 @@ const onCopy = async (cmd) => {
   cmd.enter = await getEnterCode(cmd);
   cmd.separator = ex3(cmd) ? cmd.separator : defaultStorage.separator;
   cmd.exoptions = exOptions(cmd);
+  cmd.target = {tab:'tab', window:'window', all:'all'}[cmd.target] ?? 'tab';
   cmd.tab = cmd.tab ?? (await chrome.tabs.query({currentWindow:true, active:true}))[0];
   // 備考：ポップアップ用（ポップアップを開く、コピー完了通知）
   
@@ -151,7 +152,7 @@ const onCopy = async (cmd) => {
     'tab': {currentWindow:true, highlighted:true}, 
     'window': {currentWindow:true}, 
     'all': {},
-  }[cmd.target] ?? {currentWindow:true, highlighted:true};
+  }[cmd.target];
   if (ex3(cmd, 'exclude_pin')) {
     targetQuery.pinned = false;
   }
@@ -169,7 +170,7 @@ const onCopy = async (cmd) => {
   let temp = tabs;
   if (cmd.info && cmd.target == 'tab') {
     // 未選択タブのタブコンテキストメニューは、カレントタブとして扱わない
-    if (!tabs.some(tab => tab.id === cmd.tab.id)) {
+    if (!tabs.some(tab => tab.id === cmd.tab?.id)) {
       temp = [cmd.tab];
     }
     // 備考：複数選択タブ中であっても、未選択タブからのコピー対象は、未選択タブである。
@@ -178,17 +179,18 @@ const onCopy = async (cmd) => {
   if (cmd.info && cmd.target == 'window') {
     // 回避策：#20 ウィンドウのコピーができないことがある
     // 全ウィンドウを取得して、windowIdが一致するもののみとする
-    temp = tabs.filter(tab => tab.windowId === cmd.tab.windowId);
+    temp = tabs.filter(tab => tab.windowId === cmd.tab?.windowId);
   }
   if (isFirefox() && ex3(cmd, 'exclude_hidden')) {
     temp = temp.filter(tab => !tab.hidden);
   }
   if (temp.length === 0 && ex3(cmd, 'copy_no_tab')) {
     // #24 コピーするタブがない場合、カレントタブをコピーする
-    temp = cmd.tab ? [cmd.tab] : await tabsQuery({currentWindow:true, active:true});
+    temp = cmd.tab ? [cmd.tab] : [];
+    // 備考：タブコンテキストメニュー時は、タブコンテキストメニューを優先する
   }
   
-  if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1) {
+  if (ex3(cmd, 'copy_scripting') && cmd.target === 'tab' && temp.length === 1 && temp[0].id === cmd.tab?.id) {
     // コンテンツスクリプト
     cmd.scripting = await executeScript(temp[0], cmd);
   }

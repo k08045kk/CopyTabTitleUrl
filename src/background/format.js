@@ -165,7 +165,7 @@ const createFormatText = (cmd, tabs) => {
     
     if (isExtendedMode) {
       // Basic
-      const active = tabs.length == 1 && (!cmd.tab || tab.id == cmd.tab.id);
+      const active = tabs.length == 1 && tab.id == cmd.tab?.id;
       keyset['${frameUrl}'] = active && cmd.info?.frameUrl || tab.url;
       keyset['${frameUrl}'] = decodeURL(keyset['${frameUrl}'], isDecode, isPunycode);
       keyset['${text}']     = active && cmd.selectionText || tab.title;
@@ -227,7 +227,7 @@ const createFormatText = (cmd, tabs) => {
     if (cmd.scripting) {
       Object.keys(cmd.scripting).forEach(key => keyset['${'+key+'}'] = cmd.scripting[key]);
     }
-    if (isScripting && cmd.target === 'tab' && tabs.length === 1) {
+    if (isScripting && cmd.target === 'tab' && tabs.length === 1 && tab.id === cmd.tab?.id) {
       keyset['${canonicalUrl}'] = keyset['${pageCanonicalUrl}'] || keyset['${ogUrl}'] || tab.url;
       keyset['${canonicalUrl}'] = decodeURL(keyset['${canonicalUrl}'], isDecode, isPunycode);
       keyset['${ogpUrl}'] = keyset['${ogpUrl}'] || tab.url;
