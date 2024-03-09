@@ -1,0 +1,135 @@
+{
+  "extensionName": {
+    "message":    "CopyTabTitleUrl"
+  },
+  "extensionDescription": {
+    "message":    "將標題和 URL 複製到剪貼簿。",
+    "description":"Copy the title and URL to the clipboard."
+  },
+  "storeDescriptionL1":   {"message": "您可以透過設定選項自訂擴充功能。"},
+  "storeDescriptionL2":   {"message": ""},
+  "storeDescriptionL3":   {"message": "您可以執行以下操作。"},
+  "storeDescriptionL4":   {"message": "+ 複製標題和 URL"},
+  "storeDescriptionL5":   {"message": "+ 複製標題"},
+  "storeDescriptionL6":   {"message": "+ 複製 URL"},
+  "storeDescriptionL7":   {"message": "+ 複製格式（例如：Markdown、超連結等）"},
+  "storeDescriptionL8":   {"message": ""},
+  "storeDescriptionL9":   {"message": "您可以在以下選項卡上執行操作。"},
+  "storeDescriptionL10":  {"message": "+ 目前標籤"},
+  "storeDescriptionL11":  {"message": "+ 多個選定的選項卡"},
+  "storeDescriptionL12":  {"message": "+ 目前視窗選項卡"},
+  "storeDescriptionL13":  {"message": "+ 所有選項卡"},
+  "storeDescriptionL14":  {"message": ""},
+  "storeDescriptionL15":  {"message": "您可以透過以下操作執行操作。"},
+  "storeDescriptionL16":  {"message": "+ 瀏覽器操作（彈出、單擊）"},
+  "storeDescriptionL17":  {"message": "+ 上下文選單（全部、頁面、瀏覽器操作）"},
+  "storeDescriptionL17ff":{"message": "+ 上下文選單（全部、頁面、瀏覽器操作、標籤）"},
+  "storeDescriptionL18":  {"message": "+ 鍵盤快速鍵"},
+  "storeDescriptionL19":  {"message": ""},
+  "storeDescriptionL20":  {"message": "您可以與下列功能組合執行操作。"},
+  "storeDescriptionL21":  {"message": "+ 解碼 URL"},
+  "storeDescriptionL22":  {"message": "+ 解碼 Punycode"},
+  "storeDescriptionL23":  {"message": ""},
+  "storeDescriptionL24":  {"message": "有關選項的詳細信息，請參閱以下 URL。"},
+  "storeDescriptionL25":  {"message": "https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options"},
+  "storeDescriptionEnd":  {"message": ""},
+  
+  
+  "optionsBrowserActionPopupContent": {
+    "message":    "打開彈出視窗",
+    "description":"Open popup"
+  },
+  "optionsPopupFormat2Content": {
+    "message":    "使用 format2",
+    "description":"Use format2"
+  },
+  "optionsPopupTitleContent": {
+    "message":    "使用上下文選單標題",
+    "description":"Use context menu title"
+  },
+  "optionsPopupTooltipContent": {
+    "message":    "顯示 format 工具提示",
+    "description":"Show format tooltip"
+  },
+  "optionsPopupRememberContent": {
+    "message":    "記住目標",
+    "description":"Remember target"
+  },
+  "optionsBrowserActionActionContent": {
+    "message":    "複製 format",
+    "description":"Copy format"
+  },
+  "optionsPopupComlateContent": {
+    "message":    "顯示完成彈出視窗",
+    "description":"Show completion popup"
+  },
+  
+  
+  "optionsShortcutDescriptionContent": {
+    "message":    "請從瀏覽器的設定頁面進行變更。",
+    "description":"Please change it from your browser's settings page."
+  },
+  "optionsShortcutFirefoxDescriptionContent": {
+    "message":    "[about:addons] > [⚙] > [管理擴充套件快速鍵]",
+    "description":"[about:addons] > [⚙] > [Manage Extension Shortcuts]"
+  },
+  "optionsShortcutTargetContent": {
+    "message":    "使用上下文選單目標",
+    "description":"Use context menu target"
+  },
+  
+  
+  "optionsOptionsPageDetailsContent": {
+    "message":    "有關選項的詳細信息，請參閱以下 URL。",
+    "description":"Please refer to following URL for details on options."
+  },
+  "optionsCopyDecodeContent": {
+    "message":    "解碼 URL",
+    "description":"Decode the URL"
+  },
+  "optionsCopyPunycodeContent": {
+    "message":    "解碼 Punycode",
+    "description":"Decode the Punycode"
+  },
+  "optionsCopyClipboardApiContent": {
+    "message":    "複製使用 Clipboard API",
+    "description":"Copy using Clipboard API"
+  },
+  "optionsCopyHtmlContent": {
+    "message":    "複製以 text/html 格式",
+    "description":"Copy in text/html format"
+  },
+  
+  "optionsNewlineLabelContent": {
+    "message":    "換行符: $${enter} =",
+    "description":"Newline character: $${enter} ="
+  },
+  "optionsSeparatorLabelContent": {
+    "message":    "分隔多個選項卡:",
+    "description":"Separate multiple tabs:"
+  },
+  
+  "optionsExcludePinContent": {
+    "message":    "排除固定選項卡",
+    "description":"Exclude pinned tabs"
+  },
+  "optionsExcludeHiddenContent": {
+    "message":    "排除隱藏選項卡",
+    "description":"Exclude hidden tabs"
+  },
+  
+  
+  "optionsResetContent": {
+    "message":    "恢復預設設定",
+    "description":"Restore default settings"
+  },
+  "optionsResetConfirmContent": {
+    "message":    "真的重置為預設設定嗎？",
+    "description":"Really reset to default settings?"
+  },
+  
+  
+  "lang": {
+    "message": "zh-TW"
+  }
+}

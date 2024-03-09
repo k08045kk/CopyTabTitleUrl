@@ -3,30 +3,30 @@
     "message":    "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message":    "将标题和网址复制到剪贴板。",
+    "message":    "将标题和 URL 复制到剪贴板。",
     "description":"Copy the title and URL to the clipboard."
   },
   "storeDescriptionL1":   {"message": "您可以通过设置选项自定义扩展。"},
   "storeDescriptionL2":   {"message": ""},
   "storeDescriptionL3":   {"message": "您可以执行以下操作。"},
-  "storeDescriptionL4":   {"message": "+ 复制标题和网址"},
+  "storeDescriptionL4":   {"message": "+ 复制标题和 URL"},
   "storeDescriptionL5":   {"message": "+ 复制标题"},
-  "storeDescriptionL6":   {"message": "+ 复制网址"},
+  "storeDescriptionL6":   {"message": "+ 复制 URL"},
   "storeDescriptionL7":   {"message": "+ 复制格式（例如：Markdown、超链接等）"},
   "storeDescriptionL8":   {"message": ""},
   "storeDescriptionL9":   {"message": "您可以在以下选项卡上执行操作。"},
   "storeDescriptionL10":  {"message": "+ 当前标签"},
-  "storeDescriptionL11":  {"message": "+ 多个选择选项卡"},
+  "storeDescriptionL11":  {"message": "+ 多个选定的选项卡"},
   "storeDescriptionL12":  {"message": "+ 当前窗口选项卡"},
   "storeDescriptionL13":  {"message": "+ 所有选项卡"},
   "storeDescriptionL14":  {"message": ""},
-  "storeDescriptionL15":  {"message": "您可以执行以下操作。"},
+  "storeDescriptionL15":  {"message": "您可以通过以下操作执行操作。"},
   "storeDescriptionL16":  {"message": "+ 浏览器操作（弹出、点击）"},
   "storeDescriptionL17":  {"message": "+ 上下文菜单（全部、页面、浏览器操作）"},
   "storeDescriptionL17ff":{"message": "+ 上下文菜单（全部、页面、浏览器操作、标签）"},
   "storeDescriptionL18":  {"message": "+ 键盘快捷键"},
   "storeDescriptionL19":  {"message": ""},
-  "storeDescriptionL20":  {"message": "您可以结合以下功能执行操作。"},
+  "storeDescriptionL20":  {"message": "您可以与以下功能组合执行操作。"},
   "storeDescriptionL21":  {"message": "+ 解码 URL"},
   "storeDescriptionL22":  {"message": "+ 解码 Punycode"},
   "storeDescriptionL23":  {"message": ""},
@@ -92,7 +92,7 @@
     "description":"Decode the Punycode"
   },
   "optionsCopyClipboardApiContent": {
-    "message":    "复制 Clipboard API",
+    "message":    "复制使用 Clipboard API",
     "description":"Copy using Clipboard API"
   },
   "optionsCopyHtmlContent": {
