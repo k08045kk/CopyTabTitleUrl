@@ -144,6 +144,7 @@ const onCopy = async (cmd) => {
   cmd.enter = await getEnterCode(cmd);
   cmd.separator = ex3(cmd) ? cmd.separator : defaultStorage.separator;
   cmd.exoptions = exOptions(cmd);
+  cmd.target = {tab:'tab', window:'window', all:'all'}[cmd.target] ?? 'tab';
   cmd.tab = cmd.tab ?? (await chrome.tabs.query({currentWindow:true, active:true}))[0];
   // 備考：ポップアップ用（ポップアップを開く、コピー完了通知）
   
@@ -151,7 +152,7 @@ const onCopy = async (cmd) => {
     'tab': {currentWindow:true, highlighted:true}, 
     'window': {currentWindow:true}, 
     'all': {},
-  }[cmd.target] ?? {currentWindow:true, highlighted:true};
+  }[cmd.target];
   if (ex3(cmd, 'exclude_pin')) {
     targetQuery.pinned = false;
   }
