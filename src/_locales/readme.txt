@@ -1,28 +1,55 @@
-About translations other than Japanese
-
-Machine translation has been discontinued since v3.0.0. Therefore, de / es / fr / ko / pt / ru / zh-CN / zh-TW / (ar in v1.5.6) translations are lost. We are trying to provide a UI with fewer language explanations, but there are limitations. The English translation is poor in some respects.
-
-If you can help with non-Japanese translations, please speak up.
-
-The translation function can be realized by creating a messages.json file referring to the following file.
-
-/_locales/en/messages.json
-/_locales/ja/messages.json
-
-see [#62 About translations other than Japanese](https://github.com/k08045kk/CopyTabTitleUrl/issues/62)
-
-----------
+### readme
+I'm considering a translation method. #69 
 
 
-日本語以外の翻訳について
 
-v3.0.0 から機械翻訳による翻訳を廃止しました。そのため、 de / es / fr / ko / pt / ru / zh-CN / zh-TW / (ar in v1.5.6) の翻訳を失いました。言語による説明が少ない UI を心がけていますが、限界があります。英語の翻訳が稚拙である点もあります。
+### [Manage Extension Shortcuts]
+see https://support.mozilla.org/kb/manage-extension-shortcuts-firefox
 
-日本語以外の翻訳を手伝っていただけるのであれば、声を上げていただければ幸いです。
 
-次のファイルを参考に messages.json を作成することで翻訳機能を実現できます。
 
-/_locales/en/messages.json
-/_locales/ja/messages.json
+### Dictionary (ja)
+copy            コピー
+tab             タブ
+tabs            タブ
+title           タイトル
+and             と
+URL             URL
+clipboard       クリップボード
+popup           ポップアップ
+use             使用（する）
+show            表示（する）
+context menu    コンテキストメニュー、メニュー
+taraget         ターゲット、対象
+decode          デコード
+multiple        複数
+newline         改行
+separater       区切り
+exclude         除外（する）
+pinned          固定
+hidden          非表示
+format          形式、書式
 
-see [#62 About translations other than Japanese](https://github.com/k08045kk/CopyTabTitleUrl/issues/62)
+
+
+### Dictionary (zh-CN)
+copy            复制
+tab             标签
+tabs            选项卡
+title           标题
+and             和
+URL             网址, URL
+clipboard       剪贴板
+popup           弹出窗口
+use             使用
+show            显示
+context menu    上下文菜单
+taraget         目标
+decode          解码
+multiple        多个
+newline         换行符
+separater       分隔
+exclude         排除
+pinned          固定
+hidden          隐藏
+format          格式

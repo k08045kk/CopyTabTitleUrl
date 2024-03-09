@@ -1,0 +1,135 @@
+{
+  "extensionName": {
+    "message":    "CopyTabTitleUrl"
+  },
+  "extensionDescription": {
+    "message":    "将标题和网址复制到剪贴板。",
+    "description":"Copy the title and URL to the clipboard."
+  },
+  "storeDescriptionL1":   {"message": "您可以通过设置选项自定义扩展。"},
+  "storeDescriptionL2":   {"message": ""},
+  "storeDescriptionL3":   {"message": "您可以执行以下操作。"},
+  "storeDescriptionL4":   {"message": "+ 复制标题和网址"},
+  "storeDescriptionL5":   {"message": "+ 复制标题"},
+  "storeDescriptionL6":   {"message": "+ 复制网址"},
+  "storeDescriptionL7":   {"message": "+ 复制格式（例如：Markdown、超链接等）"},
+  "storeDescriptionL8":   {"message": ""},
+  "storeDescriptionL9":   {"message": "您可以在以下选项卡上执行操作。"},
+  "storeDescriptionL10":  {"message": "+ 当前标签"},
+  "storeDescriptionL11":  {"message": "+ 多个选择选项卡"},
+  "storeDescriptionL12":  {"message": "+ 当前窗口选项卡"},
+  "storeDescriptionL13":  {"message": "+ 所有选项卡"},
+  "storeDescriptionL14":  {"message": ""},
+  "storeDescriptionL15":  {"message": "您可以执行以下操作。"},
+  "storeDescriptionL16":  {"message": "+ 浏览器操作（弹出、点击）"},
+  "storeDescriptionL17":  {"message": "+ 上下文菜单（全部、页面、浏览器操作）"},
+  "storeDescriptionL17ff":{"message": "+ 上下文菜单（全部、页面、浏览器操作、标签）"},
+  "storeDescriptionL18":  {"message": "+ 键盘快捷键"},
+  "storeDescriptionL19":  {"message": ""},
+  "storeDescriptionL20":  {"message": "您可以结合以下功能执行操作。"},
+  "storeDescriptionL21":  {"message": "+ 解码 URL"},
+  "storeDescriptionL22":  {"message": "+ 解码 Punycode"},
+  "storeDescriptionL23":  {"message": ""},
+  "storeDescriptionL24":  {"message": "有关选项的详细信息，请参阅以下 URL。"},
+  "storeDescriptionL25":  {"message": "https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options"},
+  "storeDescriptionEnd":  {"message": ""},
+  
+  
+  "optionsBrowserActionPopupContent": {
+    "message":    "打开弹出窗口",
+    "description":"Open popup"
+  },
+  "optionsPopupFormat2Content": {
+    "message":    "使用 format2",
+    "description":"Use format2"
+  },
+  "optionsPopupTitleContent": {
+    "message":    "使用上下文菜单标题",
+    "description":"Use context menu title"
+  },
+  "optionsPopupTooltipContent": {
+    "message":    "显示 format 工具提示",
+    "description":"Show format tooltip"
+  },
+  "optionsPopupRememberContent": {
+    "message":    "记住目标",
+    "description":"Remember target"
+  },
+  "optionsBrowserActionActionContent": {
+    "message":    "复制 format",
+    "description":"Copy format"
+  },
+  "optionsPopupComlateContent": {
+    "message":    "显示完成弹出窗口",
+    "description":"Show completion popup"
+  },
+  
+  
+  "optionsShortcutDescriptionContent": {
+    "message":    "请在浏览器设置页面进行更改。",
+    "description":"Please change it from your browser's settings page."
+  },
+  "optionsShortcutFirefoxDescriptionContent": {
+    "message":    "[about:addons] > [⚙] > [管理扩展快捷方式]",
+    "description":"[about:addons] > [⚙] > [Manage Extension Shortcuts]"
+  },
+  "optionsShortcutTargetContent": {
+    "message":    "使用上下文菜单目标",
+    "description":"Use context menu target"
+  },
+  
+  
+  "optionsOptionsPageDetailsContent": {
+    "message":    "有关选项的详细信息，请参阅以下 URL。",
+    "description":"Please refer to following URL for details on options."
+  },
+  "optionsCopyDecodeContent": {
+    "message":    "解码 URL",
+    "description":"Decode the URL"
+  },
+  "optionsCopyPunycodeContent": {
+    "message":    "解码 Punycode",
+    "description":"Decode the Punycode"
+  },
+  "optionsCopyClipboardApiContent": {
+    "message":    "复制 Clipboard API",
+    "description":"Copy using Clipboard API"
+  },
+  "optionsCopyHtmlContent": {
+    "message":    "复制以 text/html 格式",
+    "description":"Copy in text/html format"
+  },
+  
+  "optionsNewlineLabelContent": {
+    "message":    "换行符: $${enter} =",
+    "description":"Newline character: $${enter} ="
+  },
+  "optionsSeparatorLabelContent": {
+    "message":    "分隔多个选项卡:",
+    "description":"Separate multiple tabs:"
+  },
+  
+  "optionsExcludePinContent": {
+    "message":    "排除固定选项卡",
+    "description":"Exclude pinned tabs"
+  },
+  "optionsExcludeHiddenContent": {
+    "message":    "排除隐藏选项卡",
+    "description":"Exclude hidden tabs"
+  },
+  
+  
+  "optionsResetContent": {
+    "message":    "恢复默认设置",
+    "description":"Restore default settings"
+  },
+  "optionsResetConfirmContent": {
+    "message":    "真的要恢复默认设置吗？",
+    "description":"Really reset to default settings?"
+  },
+  
+  
+  "lang": {
+    "message": "zh-CN"
+  }
+}

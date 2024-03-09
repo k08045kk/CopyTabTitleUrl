@@ -1,9 +1,10 @@
 {
   "extensionName": {
-    "message": "CopyTabTitleUrl"
+    "message":    "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message": "タイトルと URL をクリップボードにコピーします。"
+    "message":    "タイトルと URL をクリップボードにコピーします。",
+    "description":"Copy the title and URL to the clipboard."
   },
   "storeDescriptionL1":   {"message": "オプション設定から、拡張機能をカスタマイズできます。"},
   "storeDescriptionL2":   {"message": ""},
@@ -35,80 +36,101 @@
   
   
   "optionsBrowserActionPopupContent": {
-    "message": "ポップアップを開く"
+    "message":    "ポップアップを開く",
+    "description":"Open popup"
   },
   "optionsPopupFormat2Content": {
-    "message": "format2 を使用する"
+    "message":    "format2 を使用する",
+    "description":"Use format2"
   },
   "optionsPopupTitleContent": {
-    "message": "メニューのタイトルを使用する"
+    "message":    "メニューのタイトルを使用する",
+    "description":"Use context menu title"
   },
   "optionsPopupTooltipContent": {
-    "message": "format のツールチップを表示する"
+    "message":    "format のツールチップを表示する",
+    "description":"Show format tooltip"
   },
   "optionsPopupRememberContent": {
-    "message": "ターゲットを記憶する"
+    "message":    "ターゲットを記憶する",
+    "description":"Remember target"
   },
   "optionsBrowserActionActionContent": {
-    "message": "format をコピーする"
+    "message":    "format をコピーする",
+    "description":"Copy format"
   },
   "optionsPopupComlateContent": {
-    "message": "コピー完了を表示する"
+    "message":    "コピー完了を表示する",
+    "description":"Show completion popup"
   },
   
   
   "optionsShortcutDescriptionContent": {
-    "message": "ブラウザの設定ページから変更してください。"
+    "message":    "ブラウザの設定ページから変更してください。",
+    "description":"Please change it from your browser's settings page."
   },
   "optionsShortcutFirefoxDescriptionContent": {
-    "message": "[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]"
+    "message":    "[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]",
+    "description":"[about:addons] > [⚙] > [Manage Extension Shortcuts]"
   },
   "optionsShortcutTargetContent": {
-    "message": "メニューのターゲットを使用する"
+    "message":    "メニューのターゲットを使用する",
+    "description":"Use context menu target"
   },
   
   
   "optionsOptionsPageDetailsContent": {
-    "message": "オプションの詳細は、下記 URL を参照ください。"
+    "message":    "オプションの詳細は、下記 URL を参照ください。",
+    "description":"Please refer to following URL for details on options."
   },
   "optionsCopyDecodeContent": {
-    "message": "URL をデコードする"
+    "message":    "URL をデコードする",
+    "description":"Decode the URL"
   },
   "optionsCopyPunycodeContent": {
-    "message": "Punycode をデコードする"
+    "message":    "Punycode をデコードする",
+    "description":"Decode the Punycode"
   },
   "optionsCopyClipboardApiContent": {
-    "message": "Clipboard API でコピーする"
+    "message":    "Clipboard API でコピーする",
+    "description":"Copy using Clipboard API"
   },
   "optionsCopyHtmlContent": {
-    "message": "text/html 形式でコピーする"
+    "message":    "text/html 形式でコピーする",
+    "description":"Copy in text/html format"
   },
   
   "optionsNewlineLabelContent": {
-    "message": "改行文字: $${enter} ="
+    "message":    "改行文字: $${enter} =",
+    "description":"Newline character: $${enter} ="
   },
   "optionsSeparatorLabelContent": {
-    "message": "複数タブの区切り文字:"
+    "message":    "複数タブの区切り文字:",
+    "description":"Separate multiple tabs:"
   },
   
   "optionsExcludePinContent": {
-    "message": "固定タブを除外する"
+    "message":    "固定タブを除外する",
+    "description":"Exclude pinned tabs"
   },
   "optionsExcludeHiddenContent": {
-    "message": "非表示タブを除外する"
+    "message":    "非表示タブを除外する",
+    "description":"Exclude hidden tabs"
   },
   
   "optionsCopyEmptyContent": {
-    "message": "空文字の場合、スペースをコピーする",
-    "description": "Copy space if empty string 🧪"
+    "message":    "空文字の場合、スペースをコピーする",
+    "description":"Copy space if empty string 🧪"
   },
   
   
   "optionsResetContent": {
-    "message": "初期設定に戻す"
+    "message":    "初期設定に戻す",
+    "description":"Restore default settings"
   },
   "optionsResetConfirmContent": {
-    "message": "本当に初期設定に戻しますか？"
+    "message":    "本当に初期設定に戻しますか？",
+    "description":"Really reset to default settings?"
   },
   
   
