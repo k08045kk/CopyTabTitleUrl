@@ -86,8 +86,8 @@
     "description":"Copy format"
   },
   "optionsPopupComlateContent": {
-    "message":    "顯示完成彈出視窗",
-    "description":"Show completion popup"
+    "message":    "顯示複製完成彈出視窗",
+    "description":"Show copy completion popup"
   },
   
   

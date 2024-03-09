@@ -87,7 +87,7 @@
   },
   "optionsPopupComlateContent": {
     "message":    "コピー完了を表示する",
-    "description":"Show completion popup"
+    "description":"Show copy completion popup"
   },
   
   

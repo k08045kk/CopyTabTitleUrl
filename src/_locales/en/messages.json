@@ -91,7 +91,7 @@
   },
   "optionsPopupComlateContent": {
     "message":    "Show completion popup",
-    "description":"Show completion popup"
+    "description":"Show copy completion popup"
   },
   
   
