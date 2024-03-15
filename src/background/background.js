@@ -24,13 +24,15 @@ if (globalThis.importScripts) {
   // background.js - onCopy
 }
 
+// mv2 対応 #70, 71
+const chromeAction = chrome.action || chrome.browserAction;
 
 
 /* ========================================================================== */
 /* イベント                                                                   */
 /* ========================================================================== */
 // ブラウザアクション
-chrome.action.onClicked.addListener(async (tab) => {
+chromeAction.onClicked.addListener(async (tab) => {
   const cmd = await chrome.storage.local.get(defaultStorage);
   const id = 3;
   cmd.id = id;
@@ -111,7 +113,7 @@ const updateAction = (cmd) => {
   const popup = (cmd.browser_action == 'popup' || ex3(cmd, 'popup_comlate'))
               ? '/popup/popup.html'
               : '';
-  chrome.action.setPopup({popup});
+  chromeAction.setPopup({popup});
 };
 
 
@@ -179,7 +181,7 @@ const updateContextMenus = async (cmd) => {
   if (!format9 && ex3(cmd, 'context_selection')) {  contexts.push('selection'); }
   if (!format9 && ex3(cmd, 'context_link')) {   contexts.push('link'); }
   if (!format9 && ex3(cmd, 'context_image')) {  contexts.push('image'); }
-  if (ex3(cmd, 'context_action')) {             contexts.push('action'); }
+  if (ex3(cmd, 'context_action')) {     contexts.push(chrome.action ? 'action' : 'browser_action'); }
   if (isFirefox() && ex3(cmd, 'context_tab')) { contexts.push('tab'); }
   
   if (contexts.length) {
