@@ -3,58 +3,58 @@
     "message":    "CopyTabTitleUrl"
   },
   "extensionDescription": {
-    "message":    "タイトルと URL をクリップボードにコピーします。",
+    "message":    "將標題和 URL 複製到剪貼簿。",
     "description":"Copy the title and URL to the clipboard."
   },
-  "storeDescriptionL1":   {"message":     "オプション設定から、拡張機能をカスタマイズできます。",
+  "storeDescriptionL1":   {"message":     "您可以透過設定選項自訂擴充功能。",
                            "description": "You can customize the extension from setting options."},
   "storeDescriptionL2":   {"message":     "",
                            "description": ""},
-  "storeDescriptionL3":   {"message":     "次のアクションを実行できます。",
+  "storeDescriptionL3":   {"message":     "您可以執行以下操作。",
                            "description": "You can perform actions the following."},
-  "storeDescriptionL4":   {"message":     "+ タイトルと URL をコピー",
+  "storeDescriptionL4":   {"message":     "+ 複製標題和 URL",
                            "description": "+ Copy the title and URL"},
-  "storeDescriptionL5":   {"message":     "+ タイトルをコピー",
+  "storeDescriptionL5":   {"message":     "+ 複製標題",
                            "description": "+ Copy the title"},
-  "storeDescriptionL6":   {"message":     "+ URL をコピー",
+  "storeDescriptionL6":   {"message":     "+ 複製 URL",
                            "description": "+ Copy the URL"},
-  "storeDescriptionL7":   {"message":     "+ フォーマットをコピー（例：Markdown、ハイパーリンク、など）",
+  "storeDescriptionL7":   {"message":     "+ 複製格式（例如：Markdown、超連結等）",
                            "description": "+ Copy the format (Example: Markdown, Hyperlink, etc)"},
   "storeDescriptionL8":   {"message":     "",
                            "description": ""},
-  "storeDescriptionL9":   {"message":     "次のタブでアクションを実行できます。",
+  "storeDescriptionL9":   {"message":     "您可以在以下選項卡上執行操作。",
                            "description": "You can perform actions on the following tabs."},
-  "storeDescriptionL10":  {"message":     "+ カレントタブ",
+  "storeDescriptionL10":  {"message":     "+ 目前標籤",
                            "description": "+ Current tab"},
-  "storeDescriptionL11":  {"message":     "+ 複数の選択したタブ",
+  "storeDescriptionL11":  {"message":     "+ 多個選定的選項卡",
                            "description": "+ Multiple selected tabs"},
-  "storeDescriptionL12":  {"message":     "+ カレントウィンドウのタブ",
+  "storeDescriptionL12":  {"message":     "+ 目前視窗選項卡",
                            "description": "+ Current window tabs"},
-  "storeDescriptionL13":  {"message":     "+ すべてのタブ",
+  "storeDescriptionL13":  {"message":     "+ 所有選項卡",
                            "description": "+ All tabs"},
   "storeDescriptionL14":  {"message":     "",
                            "description": ""},
-  "storeDescriptionL15":  {"message":     "次の操作でアクションを実行できます。",
+  "storeDescriptionL15":  {"message":     "您可以透過以下操作執行操作。",
                            "description": "You can perform actions from the following operations."},
-  "storeDescriptionL16":  {"message":     "+ ブラウザアクション（ポップアップ、クリック）",
+  "storeDescriptionL16":  {"message":     "+ 瀏覽器操作（彈出、單擊）",
                            "description": "+ Browser action (popup, click)"},
-  "storeDescriptionL17":  {"message":     "+ コンテキストメニュー（すべて、ページ、ブラウザアクション）",
+  "storeDescriptionL17":  {"message":     "+ 上下文選單（全部、頁面、瀏覽器操作）",
                            "description": "+ Context menu (all, page, browser action)"},
-  "storeDescriptionL17ff":{"message":     "+ コンテキストメニュー（すべて、ページ、ブラウザアクション、タブ）",
+  "storeDescriptionL17ff":{"message":     "+ 上下文選單（全部、頁面、瀏覽器操作、標籤）",
                            "description": "+ Context menu (all, page, browser action, tab)"},
-  "storeDescriptionL18":  {"message":     "+ キーボードショートカット",
+  "storeDescriptionL18":  {"message":     "+ 鍵盤快速鍵",
                            "description": "+ Keyboard shortcut"},
   "storeDescriptionL19":  {"message":     "",
                            "description": ""},
-  "storeDescriptionL20":  {"message":     "次の機能と組み合わせてアクションを実行できます。",
+  "storeDescriptionL20":  {"message":     "您可以與下列功能組合執行操作。",
                            "description": "You can perform actions in combination with the following functions."},
-  "storeDescriptionL21":  {"message":     "+ URL をデコード",
+  "storeDescriptionL21":  {"message":     "+ 解碼 URL",
                            "description": "+ Decode the URL"},
-  "storeDescriptionL22":  {"message":     "+ Punycode をデコード",
+  "storeDescriptionL22":  {"message":     "+ 解碼 Punycode",
                            "description": "+ Decode the Punycode"},
   "storeDescriptionL23":  {"message":     "",
                            "description": ""},
-  "storeDescriptionL24":  {"message":     "オプションの詳細は、下記 URL を参照ください。",
+  "storeDescriptionL24":  {"message":     "有關選項的詳細信息，請參閱以下 URL。",
                            "description": "Please refer to following URL for details on options."},
   "storeDescriptionL25":  {"message":     "https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options",
                            "description": "https://github.com/k08045kk/CopyTabTitleUrl/wiki/Options"},
@@ -62,105 +62,100 @@
   
   
   "optionsBrowserActionPopupContent": {
-    "message":    "ポップアップを開く",
+    "message":    "打開彈出視窗",
     "description":"Open popup"
   },
   "optionsPopupFormat2Content": {
-    "message":    "format2 を使用する",
+    "message":    "使用 format2",
     "description":"Use format2"
   },
   "optionsPopupTitleContent": {
-    "message":    "メニューのタイトルを使用する",
+    "message":    "使用上下文選單標題",
     "description":"Use context menu title"
   },
   "optionsPopupTooltipContent": {
-    "message":    "format のツールチップを表示する",
+    "message":    "顯示 format 工具提示",
     "description":"Show format tooltip"
   },
   "optionsPopupRememberContent": {
-    "message":    "ターゲットを記憶する",
+    "message":    "記住目標",
     "description":"Remember target"
   },
   "optionsBrowserActionActionContent": {
-    "message":    "format をコピーする",
+    "message":    "複製 format",
     "description":"Copy format"
   },
   "optionsPopupComlateContent": {
-    "message":    "コピー完了を表示する",
+    "message":    "顯示複製完成彈出視窗",
     "description":"Show copy completion popup"
   },
   
   
   "optionsShortcutDescriptionContent": {
-    "message":    "ブラウザの設定ページから変更してください。",
+    "message":    "請從瀏覽器的設定頁面進行變更。",
     "description":"Please change it from your browser's settings page."
   },
   "optionsShortcutFirefoxDescriptionContent": {
-    "message":    "[about:addons] > [⚙] > [拡張機能のショートカットキーの管理]",
+    "message":    "[about:addons] > [⚙] > [管理擴充套件快速鍵]",
     "description":"[about:addons] > [⚙] > [Manage Extension Shortcuts]"
   },
   "optionsShortcutTargetContent": {
-    "message":    "メニューのターゲットを使用する",
+    "message":    "使用上下文選單目標",
     "description":"Use context menu target"
   },
   
   
   "optionsOptionsPageDetailsContent": {
-    "message":    "オプションの詳細は、下記 URL を参照ください。",
+    "message":    "有關選項的詳細信息，請參閱以下 URL。",
     "description":"Please refer to following URL for details on options."
   },
   "optionsCopyDecodeContent": {
-    "message":    "URL をデコードする",
+    "message":    "解碼 URL",
     "description":"Decode the URL"
   },
   "optionsCopyPunycodeContent": {
-    "message":    "Punycode をデコードする",
+    "message":    "解碼 Punycode",
     "description":"Decode the Punycode"
   },
   "optionsCopyClipboardApiContent": {
-    "message":    "Clipboard API でコピーする",
+    "message":    "複製使用 Clipboard API",
     "description":"Copy using Clipboard API"
   },
   "optionsCopyHtmlContent": {
-    "message":    "text/html 形式でコピーする",
+    "message":    "複製以 text/html 格式",
     "description":"Copy in text/html format"
   },
   
   "optionsNewlineLabelContent": {
-    "message":    "改行文字: $${enter} =",
+    "message":    "換行符: $${enter} =",
     "description":"Newline character: $${enter} ="
   },
   "optionsSeparatorLabelContent": {
-    "message":    "複数タブの区切り文字:",
+    "message":    "分隔多個選項卡:",
     "description":"Separate multiple tabs:"
   },
   
   "optionsExcludePinContent": {
-    "message":    "固定タブを除外する",
+    "message":    "排除固定選項卡",
     "description":"Exclude pinned tabs"
   },
   "optionsExcludeHiddenContent": {
-    "message":    "非表示タブを除外する",
+    "message":    "排除隱藏選項卡",
     "description":"Exclude hidden tabs"
-  },
-  
-  "optionsCopyEmptyContent": {
-    "message":    "空文字の場合、スペースをコピーする",
-    "description":"Copy space if empty string 🧪"
   },
   
   
   "optionsResetContent": {
-    "message":    "初期設定に戻す",
+    "message":    "恢復預設設定",
     "description":"Restore default settings"
   },
   "optionsResetConfirmContent": {
-    "message":    "本当に初期設定に戻しますか？",
+    "message":    "真的重置為預設設定嗎？",
     "description":"Really reset to default settings?"
   },
   
   
   "lang": {
-    "message": "ja"
+    "message": "zh-TW"
   }
 }

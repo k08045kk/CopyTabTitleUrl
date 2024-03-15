@@ -56,6 +56,14 @@ export {
 /**/
 
 
+try {
+  if (browser) {
+    // mv2 対応（chrome.〇〇 async / await 対策） #70, #71
+    chrome = browser;
+  }
+} catch {}
+
+
 // module.exports 対策 (punycode.js)
 const module = {};
 
