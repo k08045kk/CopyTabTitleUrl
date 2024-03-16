@@ -167,6 +167,7 @@ const updateContextMenus = async (cmd) => {
   await chrome.contextMenus.removeAll();
   
   const exmode = ex3(cmd);
+  const exedit = ex3(cmd, 'extended_edit');
   const format9 = ex3(cmd, 'menus_format9');
   const exmenu = ex3(cmd, 'copy_programmable') 
               && ex3(cmd, 'copy_text') 
@@ -187,31 +188,24 @@ const updateContextMenus = async (cmd) => {
   if (contexts.length) {
     const len = exmode ? cmd.menus.length : 5;
     for (let i=0; i<len; i++) {
-      // extended_menus_formats
-      // 備考：storage.local.formats の変更監視が必要になる
-      // 備考：extended_edit から独立する場合、 target の扱いに要注意
-//      const menu = {
-//        id: i,
-//        title: exmode ? cmd.menus[i].title : defaultStorage.menus[i].title,
-//        target: cmd.menus[i].target,
-//        contexts, 
-//      };
+      const enable = cmd.menus[i].enable;
+      const title = exmode ? cmd.menus[i].title : defaultStorage.menus[i].title;
+      const target = exmode && (exedit || 3<=i) 
+                          ? cmd.menus[i].target 
+                          : defaultStorage.menus[i].target;
+      
+//      // extended_menus_formats
+//      // 備考：storage.local.formats の変更監視が必要になる
+//      // 備考：extended_edit から独立する場合、 target の扱いに要注意
+//      const menu = {id:i, title, target, contexts};
 //      if (exmenu_formats && await createExContextMenu(cmd.formats[i], menu)) {
 //        // 処理なし
 //      } else 
-      if (cmd.menus[i].enable) {
-        if (cmd.menus[i].target === 'separator') {
-          chrome.contextMenus.create({
-            id: 'separator'+i,
-            type: 'separator',
-            contexts,
-          });
-        } else if (!exmode || cmd.menus[i].title.length) {
-          chrome.contextMenus.create({
-            id: 'menu'+i,
-            title: exmode ? cmd.menus[i].title : defaultStorage.menus[i].title,
-            contexts: contexts,
-          });
+      if (enable) {
+        if (target === 'separator') {
+          chrome.contextMenus.create({id:'separator'+i, type:'separator', contexts});
+        } else if (title.length) {
+          chrome.contextMenus.create({id:'menu'+i, title, contexts});
         }
       }
     }
