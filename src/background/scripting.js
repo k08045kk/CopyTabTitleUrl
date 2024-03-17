@@ -28,16 +28,16 @@ async function executeScript(tab, cmd) {
     const target = {tabId:tab.id};
     const func = function() {
       return {
-        pageTitle: (document.title ?? '')+'',
-        pageURL: (document.URL ?? '')+'',
-        pageCharset: (document.characterSet ?? '')+'',
-        pageContentType: (document.contentType ?? '')+'',
-        pageCookie: (document.cookie ?? '')+'',
-        pageDir: (document.dir ?? '')+'',
-        pageDoctype: (document.doctype ?? '')+'',
-        pageLastModified: (document.lastModified ?? '')+'',
-        pageReferrer: (document.referrer ?? '')+'',
-        pageLang: (document.documentElement.lang ?? '')+'',
+        pageTitle: String(document.title ?? ''),
+        pageURL: String(document.URL ?? ''),
+        pageCharset: String(document.characterSet ?? ''),
+        pageContentType: String(document.contentType ?? ''),
+        pageCookie: String(document.cookie ?? ''),
+        pageDir: String(document.dir ?? ''),
+        pageDoctype: String(document.doctype ?? ''),
+        pageLastModified: String(document.lastModified ?? ''),
+        pageReferrer: String(document.referrer ?? ''),
+        pageLang: String(document.documentElement.lang ?? ''),
         
         pageCanonicalUrl: document.querySelector('link[rel="canonical" i]')?.href ?? '',
         pageImageSrc: document.querySelector('link[rel="image_src" i]')?.href ?? '',
@@ -85,7 +85,7 @@ async function executeScript(tab, cmd) {
       };
     };
     const results = await chrome.scripting.executeScript({world, target, func});
-    Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+    Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
     data.ogpUrl = data.ogUrl || data.pageCanonicalUrl || '';
     data.ogpImage = data.ogImage || data.pageImageSrc || '';
     data.ogpTitle = data.ogTitle || data.metaTitle || data.pageTitle || '';
@@ -107,20 +107,20 @@ async function executeScript(tab, cmd) {
         const func = function() {
           const obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl);
           return {
-            pageText0: (obj?.text0 ?? '')+'',
-            pageText1: (obj?.text1 ?? '')+'',
-            pageText2: (obj?.text2 ?? '')+'',
-            pageText3: (obj?.text3 ?? '')+'',
-            pageText4: (obj?.text4 ?? '')+'',
-            pageText5: (obj?.text5 ?? '')+'',
-            pageText6: (obj?.text6 ?? '')+'',
-            pageText7: (obj?.text7 ?? '')+'',
-            pageText8: (obj?.text8 ?? '')+'',
-            pageText9: (obj?.text9 ?? '')+'',
+            pageText0: String(obj?.text0 ?? ''),
+            pageText1: String(obj?.text1 ?? ''),
+            pageText2: String(obj?.text2 ?? ''),
+            pageText3: String(obj?.text3 ?? ''),
+            pageText4: String(obj?.text4 ?? ''),
+            pageText5: String(obj?.text5 ?? ''),
+            pageText6: String(obj?.text6 ?? ''),
+            pageText7: String(obj?.text7 ?? ''),
+            pageText8: String(obj?.text8 ?? ''),
+            pageText9: String(obj?.text9 ?? ''),
           };
         };
         const results = await chrome.scripting.executeScript({world, target, func});
-        Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+        Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
         // 備考：Firefox の MAIN world 対応待ち
         //   see https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
         // 備考：次のコードは、 MAIN WORLD を直接参照します。
@@ -136,20 +136,21 @@ async function executeScript(tab, cmd) {
         const target = {tabId:tab.id};
         const func = function() {
           return {
-            pageText0: (window.CopyTabTitleUrl?.text0 ?? '')+'',
-            pageText1: (window.CopyTabTitleUrl?.text1 ?? '')+'',
-            pageText2: (window.CopyTabTitleUrl?.text2 ?? '')+'',
-            pageText3: (window.CopyTabTitleUrl?.text3 ?? '')+'',
-            pageText4: (window.CopyTabTitleUrl?.text4 ?? '')+'',
-            pageText5: (window.CopyTabTitleUrl?.text5 ?? '')+'',
-            pageText6: (window.CopyTabTitleUrl?.text6 ?? '')+'',
-            pageText7: (window.CopyTabTitleUrl?.text7 ?? '')+'',
-            pageText8: (window.CopyTabTitleUrl?.text8 ?? '')+'',
-            pageText9: (window.CopyTabTitleUrl?.text9 ?? '')+'',
+            pageText0: window.CopyTabTitleUrl?.text0 ?? '',
+            pageText1: window.CopyTabTitleUrl?.text1 ?? '',
+            pageText2: window.CopyTabTitleUrl?.text2 ?? '',
+            pageText3: window.CopyTabTitleUrl?.text3 ?? '',
+            pageText4: window.CopyTabTitleUrl?.text4 ?? '',
+            pageText5: window.CopyTabTitleUrl?.text5 ?? '',
+            pageText6: window.CopyTabTitleUrl?.text6 ?? '',
+            pageText7: window.CopyTabTitleUrl?.text7 ?? '',
+            pageText8: window.CopyTabTitleUrl?.text8 ?? '',
+            pageText9: window.CopyTabTitleUrl?.text9 ?? '',
           };
         };
         const results = await chrome.scripting.executeScript({world, target, func});
-        Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+        Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
+        // 備考：ページスクリプトの String() を信用しない
       }
       // 備考：ユーザースクリプト（or 外部拡張機能）を想定する。
       //       Example: window.CopyTabTitleUrl = {text0: input};
@@ -168,15 +169,16 @@ async function executeScript(tab, cmd) {
         return {
           pageSelectionText: window.getSelection().toString(),
           
-          //pageURL: (document.URL ?? '')+'',
+          //pageURL: String(document.URL ?? ''),
         };
       };
       //const results = await chrome.scripting.executeScript({world, target, func});
       const results = await _executeScriptWithTimeout({world, target, func}, 150);
       data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
                             || '';
+      data.pageSelectionText = String(data.pageSelectionText);
       // 備考：サブフレームの選択テキスト対応
-      //data.pageURLs = results.map(v => v.result.pageURL || '');
+      //data.pageURLs = results.map(v => String(v.result.pageURL || ''));
     } catch (e) {
       //console.log(e);
       data.pageError = e.toString();
@@ -196,7 +198,7 @@ async function executeScript(tab, cmd) {
         };
       };
       const results = await chrome.scripting.executeScript({world, target, func});
-      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+      Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
     } catch (e) {
       //console.log(e);
       data.pageError = e.toString();
