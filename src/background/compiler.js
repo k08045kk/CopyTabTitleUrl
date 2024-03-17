@@ -212,7 +212,7 @@ function compile(format, keyset, options) {
       } else {
         const input = reString.test(m.groups.in)
                     ? m.groups.in.slice(1, -1)
-                    : toProperty(m.groups.in);
+                    : toProperty(m.groups.in)+'';
         // ${'abc'.slice(1)} => bc
         // ${key}, ${key[idx]}, ${key.fn()}
         if (input == null) {
