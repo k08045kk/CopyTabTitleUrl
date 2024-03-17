@@ -7,7 +7,7 @@
 if (globalThis.importScripts) {
   importScripts('/common.js');
   // punycode.js - module
-  // scripting.js - isMobile
+  // scripting.js - isFirefox, isMobile
   // clipboard.js - isFirefox, isWiki, ex3, exOptions, defaultStorage
   // background.js - isFirefox, ex3, exOptions, defaultStorage, converteStorageVersion3
   importScripts('/lib/punycode.js/punycode.js');

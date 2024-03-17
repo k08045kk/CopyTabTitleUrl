@@ -101,26 +101,59 @@ async function executeScript(tab, cmd) {
   
   if (!data.pageError && cmd.exoptions.copy_scripting_main) {
     try {
-      const world = 'MAIN';
-      const target = {tabId:tab.id};
-      const func = function() {
-        return {
-          pageText0: window.CopyTabTitleUrl?.text0?.toString() ?? '',
-          pageText1: window.CopyTabTitleUrl?.text1?.toString() ?? '',
-          pageText2: window.CopyTabTitleUrl?.text2?.toString() ?? '',
-          pageText3: window.CopyTabTitleUrl?.text3?.toString() ?? '',
-          pageText4: window.CopyTabTitleUrl?.text4?.toString() ?? '',
-          pageText5: window.CopyTabTitleUrl?.text5?.toString() ?? '',
-          pageText6: window.CopyTabTitleUrl?.text6?.toString() ?? '',
-          pageText7: window.CopyTabTitleUrl?.text7?.toString() ?? '',
-          pageText8: window.CopyTabTitleUrl?.text8?.toString() ?? '',
-          pageText9: window.CopyTabTitleUrl?.text9?.toString() ?? '',
-          // 備考：ユーザースクリプト（or 外部拡張機能）を想定する。
-          //       Example: window.CopyTabTitleUrl = {text0: input};
+      if (isFirefox()) {
+        const world = 'ISOLATED';
+        const target = {tabId:tab.id};
+        const func = function() {
+          const obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl);
+          return {
+            pageText0: (obj?.text0 ?? '')+'',
+            pageText1: (obj?.text1 ?? '')+'',
+            pageText2: (obj?.text2 ?? '')+'',
+            pageText3: (obj?.text3 ?? '')+'',
+            pageText4: (obj?.text4 ?? '')+'',
+            pageText5: (obj?.text5 ?? '')+'',
+            pageText6: (obj?.text6 ?? '')+'',
+            pageText7: (obj?.text7 ?? '')+'',
+            pageText8: (obj?.text8 ?? '')+'',
+            pageText9: (obj?.text9 ?? '')+'',
+          };
         };
-      };
-      const results = await chrome.scripting.executeScript({world, target, func});
-      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+        const results = await chrome.scripting.executeScript({world, target, func});
+        Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+        // 備考：Firefox の MAIN world 対応待ち
+        //   see https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
+        // 備考：次のコードは、 MAIN WORLD を直接参照します。
+        //       window.wrappedJSObject.CopyTabTitleUrl
+        // 備考：次のコードを許可します：XPCNativeWrapper()
+        //       window.CopyTabTitleUrl = {text0:'main world'};
+        // 備考：次のコードをブロックします：XPCNativeWrapper()
+        //       window.CopyTabTitleUrl = new Proxy(window.CopyTabTitleUrl, {get:() => 'hack world'});
+        //       これは、特権領域（ISOLATED）を保護するための措置です。
+        //   see https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Sharing_objects_with_page_scripts
+      } else {
+        const world = 'MAIN';
+        const target = {tabId:tab.id};
+        const func = function() {
+          return {
+            pageText0: window.CopyTabTitleUrl?.text0?.toString() ?? '',
+            pageText1: window.CopyTabTitleUrl?.text1?.toString() ?? '',
+            pageText2: window.CopyTabTitleUrl?.text2?.toString() ?? '',
+            pageText3: window.CopyTabTitleUrl?.text3?.toString() ?? '',
+            pageText4: window.CopyTabTitleUrl?.text4?.toString() ?? '',
+            pageText5: window.CopyTabTitleUrl?.text5?.toString() ?? '',
+            pageText6: window.CopyTabTitleUrl?.text6?.toString() ?? '',
+            pageText7: window.CopyTabTitleUrl?.text7?.toString() ?? '',
+            pageText8: window.CopyTabTitleUrl?.text8?.toString() ?? '',
+            pageText9: window.CopyTabTitleUrl?.text9?.toString() ?? '',
+          };
+        };
+        const results = await chrome.scripting.executeScript({world, target, func});
+        Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+      }
+      // 備考：ユーザースクリプト（or 外部拡張機能）を想定する。
+      //       Example: window.CopyTabTitleUrl = {text0: input};
+      // 備考：ユーザー環境であるため、環境に破壊的変更が加えられていることを考慮する
     } catch (e) {
       data.pageError = e.toString();
     }
