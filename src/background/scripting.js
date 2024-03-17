@@ -15,6 +15,8 @@ function _executeScriptWithTimeout(obj, time) {
   });
   // 備考：現実的な時間で応答を返さない（#66）
   //       chrome.scripting.executeScript({target:{allFrames:true}})
+  //       injectImmediately = true で解決済み
+  //       本コードを一応残しておく。不要ならば、削除してよい。
 };
 
 
@@ -164,6 +166,7 @@ async function executeScript(tab, cmd) {
   if (!data.pageError && cmd.exoptions.copy_scripting_all && data.pageSelectionText == '') {
     try {
       const world = 'ISOLATED';
+      const injectImmediately = true;
       const target = {tabId:tab.id, allFrames:true};
       const func = function() {
         return {
@@ -172,13 +175,16 @@ async function executeScript(tab, cmd) {
           //pageURL: String(document.URL ?? ''),
         };
       };
-      //const results = await chrome.scripting.executeScript({world, target, func});
-      const results = await _executeScriptWithTimeout({world, target, func}, 150);
-      data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
+      const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
+      //const results = await _executeScriptWithTimeout({world, injectImmediately, target, func}, 150);
+      data.pageSelectionText = results.find(v => v.result?.pageSelectionText)?.result.pageSelectionText 
                             || '';
       data.pageSelectionText = String(data.pageSelectionText);
       // 備考：サブフレームの選択テキスト対応
-      //data.pageURLs = results.map(v => String(v.result.pageURL || ''));
+      //data.pageURLs = results.map(v => String(v.result?.pageURL || ''));
+      
+      // 備考：results[n].result = null を出力することがあります。
+      //       injectImmediately=false, iframe loading=lazy
     } catch (e) {
       //console.log(e);
       data.pageError = e.toString();
