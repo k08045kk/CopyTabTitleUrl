@@ -121,7 +121,7 @@ async function executeScript(tab, cmd) {
       };
       const results = await chrome.scripting.executeScript({world, target, func});
       Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
-    } catch {
+    } catch (e) {
       data.pageError = e.toString();
     }
   }
