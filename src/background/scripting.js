@@ -27,6 +27,7 @@ async function executeScript(tab, cmd) {
   const data = {pageError:''};
   try {
     const world = 'ISOLATED';
+    const injectImmediately = !cmd.exoptions.copy_scripting_wait;
     const target = {tabId:tab.id};
     const func = function() {
       return {
@@ -86,7 +87,7 @@ async function executeScript(tab, cmd) {
         // 備考：ShadowDOM を含む場合、始点のと同じ DOM 内のみ取得する。（ShadowDOM を越境して取得しない）
       };
     };
-    const results = await chrome.scripting.executeScript({world, target, func});
+    const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
     Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
     data.ogpUrl = data.ogUrl || data.pageCanonicalUrl || '';
     data.ogpImage = data.ogImage || data.pageImageSrc || '';
@@ -94,6 +95,10 @@ async function executeScript(tab, cmd) {
     data.pageDescription = data.metaDescription || data.ogDescription || '';
     data.ogpDescription = data.ogDescription || data.metaDescription || '';
     // 備考：URL 系は、以降の処理でデコードする（ここではデコードしない）
+    // 備考：injectImmediately=true:  run_at=document_start?
+    //       injectImmediately=false: run_at=document_idle
+    //       copy_scripting_wait=true の場合、最初のスクリプトだけページ読み込みを待機します。
+    //       ２番目以降のスクリプトは、既にページが読み込まれているはずです。
   } catch (e) {
     //console.log(e);
     data.pageError = e.toString();
@@ -105,6 +110,7 @@ async function executeScript(tab, cmd) {
     try {
       if (isFirefox()) {
         const world = 'ISOLATED';
+        const injectImmediately = true;
         const target = {tabId:tab.id};
         const func = function() {
           const obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl);
@@ -121,7 +127,7 @@ async function executeScript(tab, cmd) {
             pageText9: String(obj?.text9 ?? ''),
           };
         };
-        const results = await chrome.scripting.executeScript({world, target, func});
+        const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
         Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
         // 備考：Firefox の MAIN world 対応待ち
         //   see https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
@@ -135,6 +141,7 @@ async function executeScript(tab, cmd) {
         //   see https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Sharing_objects_with_page_scripts
       } else {
         const world = 'MAIN';
+        const injectImmediately = true;
         const target = {tabId:tab.id};
         const func = function() {
           return {
@@ -150,7 +157,7 @@ async function executeScript(tab, cmd) {
             pageText9: window.CopyTabTitleUrl?.text9 ?? '',
           };
         };
-        const results = await chrome.scripting.executeScript({world, target, func});
+        const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
         Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
         // 備考：ページスクリプトの String() を信用しない
       }
@@ -183,6 +190,10 @@ async function executeScript(tab, cmd) {
       // 備考：サブフレームの選択テキスト対応
       //data.pageURLs = results.map(v => String(v.result?.pageURL || ''));
       
+      // 備考：現実的な時間で応答を返さない（#66）
+      //       allFrames=true, injectImmediately=false の場合、 iframe loading=lazy で
+      //       document_idle まで読み込みを無限に待機する。
+      //       そのため、 allFrames=true の場合、 injectImmediately=true を確実に設定する
       // 備考：results[n].result = null を出力することがあります。
       //       injectImmediately=false, iframe loading=lazy
     } catch (e) {
@@ -197,13 +208,14 @@ async function executeScript(tab, cmd) {
   if (!data.pageError && isPrompt) {
     try {
       const world = 'ISOLATED';
+      const injectImmediately = true;
       const target = {tabId:tab.id};
       const func = function() {
         return {
           pagePrompt: window.prompt('Input string: ${pagePrompt}') ?? '',
         };
       };
-      const results = await chrome.scripting.executeScript({world, target, func});
+      const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
       Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
     } catch (e) {
       //console.log(e);
