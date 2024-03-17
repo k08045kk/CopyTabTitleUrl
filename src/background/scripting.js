@@ -136,16 +136,16 @@ async function executeScript(tab, cmd) {
         const target = {tabId:tab.id};
         const func = function() {
           return {
-            pageText0: window.CopyTabTitleUrl?.text0?.toString() ?? '',
-            pageText1: window.CopyTabTitleUrl?.text1?.toString() ?? '',
-            pageText2: window.CopyTabTitleUrl?.text2?.toString() ?? '',
-            pageText3: window.CopyTabTitleUrl?.text3?.toString() ?? '',
-            pageText4: window.CopyTabTitleUrl?.text4?.toString() ?? '',
-            pageText5: window.CopyTabTitleUrl?.text5?.toString() ?? '',
-            pageText6: window.CopyTabTitleUrl?.text6?.toString() ?? '',
-            pageText7: window.CopyTabTitleUrl?.text7?.toString() ?? '',
-            pageText8: window.CopyTabTitleUrl?.text8?.toString() ?? '',
-            pageText9: window.CopyTabTitleUrl?.text9?.toString() ?? '',
+            pageText0: (window.CopyTabTitleUrl?.text0 ?? '')+'',
+            pageText1: (window.CopyTabTitleUrl?.text1 ?? '')+'',
+            pageText2: (window.CopyTabTitleUrl?.text2 ?? '')+'',
+            pageText3: (window.CopyTabTitleUrl?.text3 ?? '')+'',
+            pageText4: (window.CopyTabTitleUrl?.text4 ?? '')+'',
+            pageText5: (window.CopyTabTitleUrl?.text5 ?? '')+'',
+            pageText6: (window.CopyTabTitleUrl?.text6 ?? '')+'',
+            pageText7: (window.CopyTabTitleUrl?.text7 ?? '')+'',
+            pageText8: (window.CopyTabTitleUrl?.text8 ?? '')+'',
+            pageText9: (window.CopyTabTitleUrl?.text9 ?? '')+'',
           };
         };
         const results = await chrome.scripting.executeScript({world, target, func});
