@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const cmd = await cmdPromise;
   
   
+  // テーマ
+  const theme = ex3(cmd) ? cmd.theme : 'default';
+  document.documentElement.classList.toggle('light', theme === 'light');
+  document.documentElement.classList.toggle('dark', theme === 'dark');
+  
+  
   // チェックボックスイベント設定
   const win = document.getElementById('target_win');
   const all = document.getElementById('target_all');

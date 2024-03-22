@@ -222,6 +222,7 @@ const defaultStorageVersion3 = {
   browser_action_target: 'tab',         // tab / window / all
   newline: 'default',                   // default / CRLF / CR / LF
   separator: '${enter}',                // $text
+  theme: 'default',                     // v3.5.11
   popup: {                              // v3.3.1
     target: 'tab',
   },

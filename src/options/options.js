@@ -49,6 +49,7 @@ function updateOptionPage(cmd) {
   const exmode = ex3(cmd);
   const exedit = exmode && ex3(cmd, 'extended_edit');
   const exformat = ex3(cmd, 'copy_programmable') || ex3(cmd, 'copy_scripting');
+  const theme = exmode ? cmd.theme : 'default';
   document.body.dataset.exmode = exmode;
   document.body.dataset.exedit = exedit;
   document.getElementById('programmable_text').classList.toggle('open', ex3(cmd, 'copy_text'));
@@ -59,6 +60,8 @@ function updateOptionPage(cmd) {
   document.getElementById('copy_html').disabled = ex3(cmd, 'copy_clipboard_api');
   document.getElementById('extended_menus').disabled = 
                           !(ex3(cmd, 'copy_programmable') && ex3(cmd, 'copy_text'));
+  document.documentElement.classList.toggle('light', theme === 'light');
+  document.documentElement.classList.toggle('dark', theme === 'dark');
   
   // ブラウザアクション
   const popup = cmd.browser_action === 'popup';
@@ -110,6 +113,7 @@ async function onUpdateOptions() {
   cmd.browser_action = [...document.getElementsByName('browser_action')].find(v => v.checked).value;
   cmd.browser_action_target = document.getElementById('browser_action_target').value;
   cmd.newline = document.getElementById('newline').value;
+  cmd.theme = document.getElementById('theme').value;
   
   // ストレージへ設定を保存
   await chrome.storage.local.set(cmd);
@@ -222,6 +226,7 @@ function setupOptionPage(cmd) {
   document.getElementById('browser_action_target').value = cmd.browser_action_target;
   document.getElementById('newline').value  = cmd.newline;
   document.getElementById('separator').value  = cmd.separator;
+  document.getElementById('theme').value  = cmd.theme;
   
   for (let i=0; i<defaultStorage.menus.length; i++) {
     document.getElementById('menu'+i+'_enable').checked  = !!cmd.menus[i].enable;
@@ -314,6 +319,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     element.addEventListener('change', onUpdateOptions);
   });
   document.getElementById('newline').addEventListener('change', onUpdateOptions);
+  document.getElementById('theme').addEventListener('change', onUpdateOptions);
   document.querySelectorAll('.menu_enable, .menu_target').forEach((element) => {
     element.addEventListener('change', onUpdateMenus);
   });

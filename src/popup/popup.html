@@ -31,7 +31,7 @@
   --background-checked-color: var(--accent-color);
 }/* ライトモード */
 @media (prefers-color-scheme: dark) {
-:root {
+:root:not(.light) {
   --text-color: var(--white-color);
   --background-color: var(--black-color);
   --background-hover-color: var(--black-light-color);
@@ -40,6 +40,15 @@
   --background-active-color: var(--accent-dark-color);
   --background-checked-color: var(--accent-color);
 }
+}
+.dark:root {
+  --text-color: var(--white-color);
+  --background-color: var(--black-color);
+  --background-hover-color: var(--black-light-color);
+  
+  --text-active-color: var(--white-color);
+  --background-active-color: var(--accent-dark-color);
+  --background-checked-color: var(--accent-color);
 }/* ダークモード */
 
 

@@ -9,6 +9,45 @@
   <script src="/common.js" defer></script>
   <script src="./options.js" defer></script>
   <style>
+
+:root {
+  --white-color: #F5F5F5;               /* オフホワイト */
+  --white-dark-color: #DBDBDB;
+  --black-color: #303030;               /* オフブラック */
+  --black-dark-color: #212121;
+  --black-light-color: #474747;
+  --gray-color: #888;
+  --accent-color: #895B8A;              /* 古代紫 */
+  --accent-dark-color: #654366;
+  --accent-light-color: #BA7CBC;
+  --border-color: var(--gray-color);
+  
+  
+  --text-color: #000;
+  --background-color: var(--white-color);
+
+  --input-text-color: var(--black-color);
+  --input-background-color: #FFF;
+}/* ライトモード */
+@media (prefers-color-scheme: dark) {
+:root:not(.light) {
+  --text-color: var(--white-color);
+  --background-color: var(--black-dark-color);
+
+  --input-text-color: var(--white-color);
+  --input-background-color: var(--black-light-color);
+}
+}
+.dark:root {
+  --text-color: var(--white-color);
+  --background-color: var(--black-dark-color);
+
+  --input-text-color: var(--white-color);
+  --input-background-color: var(--black-light-color);
+}/* ダークモード */
+
+
+
 .hide, 
 [hidden] {
   display: none !important;
@@ -25,7 +64,8 @@ body {
   max-width: 600px;
 /*min-width: 360px;           /* Chrome 400px */
 /*min-height: 250px;          /* Firefox 242px */
-  background: #fafafa;
+  color: var(--text-color);
+  background: var(--background-color);
 }
 body, button, input, select, label {
   font-size: 14px;
@@ -34,8 +74,13 @@ body, button, input, select, label {
   line-height: 1.25;
   vertical-align: middle;
 }
+button, input, select {
+  border: 1px solid var(--gray-color);
+  color: var(--input-text-color);
+  background: var(--input-background-color);
+}
 input[type="checkbox"]:disabled + label {
-  color: #7A7C7E;
+  opacity: 0.7;
 }
 
 
@@ -92,22 +137,6 @@ p {
   display: inline-block;
   min-width: 4em;
   margin-right: .25em;
-}
-
-
-@media (prefers-color-scheme: dark) {
-  body {
-    color: #E8EAED;
-    background: #202124;
-  }
-  button, input, select {
-    border: 1px solid #888;
-    color: #E8EAED;
-    background: #444;
-  }
-  input[type="checkbox"]:disabled + label {
-    color: #9A9C9E;
-  }
 }
 
 #programmable_text,
@@ -334,6 +363,13 @@ body[data-browser="chrome"] .firefox {
     <p class="exmode exedit exam" data-template="checkbox" data-id="copy_empty">
 
     <hr><!-- ---------- -->
+    <p class="exmode indent2">
+      <label id="theme_label" data-i18n></label>
+      <select id="theme">
+        <option value="default">default</option>
+        <option value="light">light</option>
+        <option value="dark">dark</option>
+      </select>
     <p class="exmode exedit exam" data-template="checkbox" data-id="paste_overwrite">
     <p>
       <input id="use_english" type="checkbox">
