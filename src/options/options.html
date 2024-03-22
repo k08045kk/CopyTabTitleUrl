@@ -57,8 +57,10 @@
   display: block;
   clear: both;
 }
+@-moz-document url-prefix() {
 html {
   scrollbar-width: none;      /* Firefox アニメーション時にスクロールバーがちらつく対策 */
+}
 }
 body {
   max-width: 600px;
