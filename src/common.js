@@ -422,6 +422,9 @@ const exOptions = (cmd) => {
 
 async function converteStorageVersion3() {
   const oldStorage = await chrome.storage.local.get();
+  // const oldStorage = await chrome.storage.local.get(defaultStorageVersion2);
+  // 備考：バグ？下手にいじる方が怖いため、このままとする。
+  //       問題を起こした場合、 v3 標準設定として動作する予定
   if (oldStorage && oldStorage.version && oldStorage.version >= 3) {
     // バージョン３　変更なし
   } else if (oldStorage && oldStorage.version && oldStorage.version == 2) {
