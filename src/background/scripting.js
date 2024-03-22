@@ -113,7 +113,8 @@ async function executeScript(tab, cmd) {
         const injectImmediately = true;
         const target = {tabId:tab.id};
         const func = function() {
-          const obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl);
+          let   obj = null;
+          try { obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl); } catch {}
           return {
             pageText0: String(obj?.text0 ?? ''),
             pageText1: String(obj?.text1 ?? ''),
@@ -131,40 +132,53 @@ async function executeScript(tab, cmd) {
         Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
         // 備考：Firefox の MAIN world 対応待ち
         //   see https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
-        // 備考：次のコードは、 MAIN WORLD を直接参照します。
-        //       window.wrappedJSObject.CopyTabTitleUrl
+        // 備考：wrappedJSObject / XPCNativeWrapper() は、次のように ISOLAND / MAIN を遷移する。
+        //       window -> window (ISOLAND)
+        //       window.wrappedJSObject -> window (MAIN)
+        //       window.wrappedJSObject.CopyTabTitleUrl -> window.CopyTabTitleUrl (MAIN)
+        //       obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl) -> obj (ISOLAND)
+        //       obj.wrappedJSObject -> window.CopyTabTitleUrl (MAIN)
         // 備考：次のコードを許可します：XPCNativeWrapper()
-        //       window.CopyTabTitleUrl = {text0:'main world'};
+        //       (window.CopyTabTitleUrl ||= {}).text0 = 'main world0';
         // 備考：次のコードをブロックします：XPCNativeWrapper()
-        //       window.CopyTabTitleUrl = new Proxy(window.CopyTabTitleUrl, {get:() => 'hack world'});
+        //       Object.defineProperty(window.CopyTabTitleUrl||={}, 'text0', {get:()=>'hack world1'});
+        //       window.CopyTabTitleUrl = new Proxy(window.CopyTabTitleUrl||={}, {get:()=>'hack world2'});
         //       これは、特権領域（ISOLATED）を保護するための措置です。
         //   see https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Sharing_objects_with_page_scripts
+        // 備考：getter でエラーが発生の可能性がある。ペ本エラーは ${pageError} に出力しません。
+        //       TypeError: can't convert undefined to object
+        //       Object.defineProperty(window, 'CopyTabTitleUrl', {get:()=>{return window.aaa.bbb, {text0:'hack world3'};}});
       } else {
         const world = 'MAIN';
         const injectImmediately = true;
         const target = {tabId:tab.id};
         const func = function() {
+          const getter = (obj, name) => { try { return obj[name]; } catch {} };
+          const obj = getter(window, 'CopyTabTitleUrl');
           return {
-            pageText0: window.CopyTabTitleUrl?.text0 ?? '',
-            pageText1: window.CopyTabTitleUrl?.text1 ?? '',
-            pageText2: window.CopyTabTitleUrl?.text2 ?? '',
-            pageText3: window.CopyTabTitleUrl?.text3 ?? '',
-            pageText4: window.CopyTabTitleUrl?.text4 ?? '',
-            pageText5: window.CopyTabTitleUrl?.text5 ?? '',
-            pageText6: window.CopyTabTitleUrl?.text6 ?? '',
-            pageText7: window.CopyTabTitleUrl?.text7 ?? '',
-            pageText8: window.CopyTabTitleUrl?.text8 ?? '',
-            pageText9: window.CopyTabTitleUrl?.text9 ?? '',
+            pageText0: getter(obj, 'text0') ?? '',
+            pageText1: getter(obj, 'text1') ?? '',
+            pageText2: getter(obj, 'text2') ?? '',
+            pageText3: getter(obj, 'text3') ?? '',
+            pageText4: getter(obj, 'text4') ?? '',
+            pageText5: getter(obj, 'text5') ?? '',
+            pageText6: getter(obj, 'text6') ?? '',
+            pageText7: getter(obj, 'text7') ?? '',
+            pageText8: getter(obj, 'text8') ?? '',
+            pageText9: getter(obj, 'text9') ?? '',
           };
         };
         const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
         Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
         // 備考：ページスクリプトの String() を信用しない
+        // 備考：getter プロパティでエラーが発生した場合、次のエラーを出力します。
+        //       「TypeError: Cannot convert undefined or null to object」
       }
       // 備考：ユーザースクリプト（or 外部拡張機能）を想定する。
       //       Example: window.CopyTabTitleUrl = {text0: input};
       // 備考：ユーザー環境であるため、環境に破壊的変更が加えられていることを考慮する
     } catch (e) {
+      //console.log(e);
       data.pageError = e.toString();
     }
   }
