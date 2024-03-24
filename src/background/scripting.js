@@ -170,7 +170,11 @@ async function executeScript(tab, cmd) {
         };
         const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
         Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
-        // 備考：ページスクリプトの String() を信用しない
+        // 備考：ページスクリプトの String() を信用しない。次のように変換される。
+        //       Object: [object Object]
+        //       Array: in.join(',');
+        //       Function: undefined (未定義扱いで ${pageTextn} が残る)
+        //       Node: [object Object]
         // 備考：getter プロパティでエラーが発生した場合、次のエラーを出力します。
         //       「TypeError: Cannot convert undefined or null to object」
       }
