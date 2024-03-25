@@ -10,7 +10,9 @@
 // Chrome 109+
 // see https://developer.chrome.com/docs/extensions/reference/offscreen/
 // see #example-maintaining-the-lifecycle-of-an-offscreen-document
+let usingOffscreenDocumentCount = 0;
 let creatingOffscreenDocumentPromise = null;
+let closingOffscreenDocumentPromise = null;
 async function hasOffscreenDocument(path) {
   const offscreenUrl = chrome.runtime.getURL(path);
   if (chrome.runtime.getContexts) {
@@ -32,6 +34,10 @@ async function hasOffscreenDocument(path) {
   }
 };
 async function setupOffscreenDocument(path) {
+  usingOffscreenDocumentCount += 1;
+  if (closingOffscreenDocumentPromise) {
+    await closingOffscreenDocumentPromise;
+  }
   if (await hasOffscreenDocument(path)) {
     // ...
   } else {
@@ -48,12 +54,25 @@ async function setupOffscreenDocument(path) {
     }
   }
 };
-async function closeOffscreenDocument() {
-  await chrome.offscreen.closeDocument();
+async function teardownOffscreenDocument() {
+  usingOffscreenDocumentCount -= 1;
+  if (usingOffscreenDocumentCount <= 0) {
+    usingOffscreenDocumentCount = 0;
+    closingOffscreenDocumentPromise = chrome.offscreen.closeDocument();
+    await closingOffscreenDocumentPromise;
+    closingOffscreenDocumentPromise = null;
+  }
 };
 // 備考：オフスクリーンドキュメントは、１つしか開けない。
 // 　　　そのため、正常にクローズされなければならない。
 // 　　　別パスのオフスクリーンドキュメントが生存していてはならない。
+// 備考：複数同時に開かれることがあります。
+//       すべての処理が完了する前にオフスクリーンがだれかに閉じられると次のエラーを出力する。
+//       「Error: No current offscreen document.」
+//       そのため、オフスクリーンは、全員が使い終わった後に閉じなければならない。
+// 備考：オフスクリーンを閉じずにバックグラウンドが停止した場合、
+//       オフスクリーンは開いたままになる。その場合、 has 判定で複数開くのを防ぐ。
+//       （停止したバックグラウンドの処理は、消える）
 
 
 
@@ -115,7 +134,7 @@ const copyToClipboard = async (cmd, tabs) => {
     // オフスクリーン方式（Chrome 109+）
     await setupOffscreenDocument('/offscreen/offscreen.html');
     await chrome.runtime.sendMessage(data);
-    await closeOffscreenDocument();
+    await teardownOffscreenDocument();
   }
 };
 

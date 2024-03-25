@@ -15,6 +15,8 @@ function _executeScriptWithTimeout(obj, time) {
   });
   // 備考：現実的な時間で応答を返さない（#66）
   //       chrome.scripting.executeScript({target:{allFrames:true}})
+  //       injectImmediately = true で解決済み
+  //       本コードを一応残しておく。不要ならば、削除してよい。
 };
 
 
@@ -25,19 +27,20 @@ async function executeScript(tab, cmd) {
   const data = {pageError:''};
   try {
     const world = 'ISOLATED';
+    const injectImmediately = !cmd.exoptions.copy_scripting_wait;
     const target = {tabId:tab.id};
     const func = function() {
       return {
-        pageTitle: (document.title ?? '')+'',
-        pageURL: (document.URL ?? '')+'',
-        pageCharset: (document.characterSet ?? '')+'',
-        pageContentType: (document.contentType ?? '')+'',
-        pageCookie: (document.cookie ?? '')+'',
-        pageDir: (document.dir ?? '')+'',
-        pageDoctype: (document.doctype ?? '')+'',
-        pageLastModified: (document.lastModified ?? '')+'',
-        pageReferrer: (document.referrer ?? '')+'',
-        pageLang: (document.documentElement.lang ?? '')+'',
+        pageTitle: String(document.title ?? ''),
+        pageURL: String(document.URL ?? ''),
+        pageCharset: String(document.characterSet ?? ''),
+        pageContentType: String(document.contentType ?? ''),
+        pageCookie: String(document.cookie ?? ''),
+        pageDir: String(document.dir ?? ''),
+        pageDoctype: String(document.doctype ?? ''),
+        pageLastModified: String(document.lastModified ?? ''),
+        pageReferrer: String(document.referrer ?? ''),
+        pageLang: String(document.documentElement.lang ?? ''),
         
         pageCanonicalUrl: document.querySelector('link[rel="canonical" i]')?.href ?? '',
         pageImageSrc: document.querySelector('link[rel="image_src" i]')?.href ?? '',
@@ -84,14 +87,18 @@ async function executeScript(tab, cmd) {
         // 備考：ShadowDOM を含む場合、始点のと同じ DOM 内のみ取得する。（ShadowDOM を越境して取得しない）
       };
     };
-    const results = await chrome.scripting.executeScript({world, target, func});
-    Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+    const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
+    Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
     data.ogpUrl = data.ogUrl || data.pageCanonicalUrl || '';
     data.ogpImage = data.ogImage || data.pageImageSrc || '';
     data.ogpTitle = data.ogTitle || data.metaTitle || data.pageTitle || '';
     data.pageDescription = data.metaDescription || data.ogDescription || '';
     data.ogpDescription = data.ogDescription || data.metaDescription || '';
     // 備考：URL 系は、以降の処理でデコードする（ここではデコードしない）
+    // 備考：injectImmediately=true:  run_at=document_start?
+    //       injectImmediately=false: run_at=document_idle
+    //       copy_scripting_wait=true の場合、最初のスクリプトだけページ読み込みを待機します。
+    //       ２番目以降のスクリプトは、既にページが読み込まれているはずです。
   } catch (e) {
     //console.log(e);
     data.pageError = e.toString();
@@ -101,27 +108,81 @@ async function executeScript(tab, cmd) {
   
   if (!data.pageError && cmd.exoptions.copy_scripting_main) {
     try {
-      const world = 'MAIN';
-      const target = {tabId:tab.id};
-      const func = function() {
-        return {
-          pageText0: window.CopyTabTitleUrl?.text0?.toString() ?? '',
-          pageText1: window.CopyTabTitleUrl?.text1?.toString() ?? '',
-          pageText2: window.CopyTabTitleUrl?.text2?.toString() ?? '',
-          pageText3: window.CopyTabTitleUrl?.text3?.toString() ?? '',
-          pageText4: window.CopyTabTitleUrl?.text4?.toString() ?? '',
-          pageText5: window.CopyTabTitleUrl?.text5?.toString() ?? '',
-          pageText6: window.CopyTabTitleUrl?.text6?.toString() ?? '',
-          pageText7: window.CopyTabTitleUrl?.text7?.toString() ?? '',
-          pageText8: window.CopyTabTitleUrl?.text8?.toString() ?? '',
-          pageText9: window.CopyTabTitleUrl?.text9?.toString() ?? '',
-          // 備考：ユーザースクリプト（or 外部拡張機能）を想定する。
-          //       Example: window.CopyTabTitleUrl = {text0: input};
+      if (isFirefox()) {
+        const world = 'ISOLATED';
+        const injectImmediately = true;
+        const target = {tabId:tab.id};
+        const func = function() {
+          let   obj = null;
+          try { obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl); } catch {}
+          return {
+            pageText0: String(obj?.text0 ?? ''),
+            pageText1: String(obj?.text1 ?? ''),
+            pageText2: String(obj?.text2 ?? ''),
+            pageText3: String(obj?.text3 ?? ''),
+            pageText4: String(obj?.text4 ?? ''),
+            pageText5: String(obj?.text5 ?? ''),
+            pageText6: String(obj?.text6 ?? ''),
+            pageText7: String(obj?.text7 ?? ''),
+            pageText8: String(obj?.text8 ?? ''),
+            pageText9: String(obj?.text9 ?? ''),
+          };
         };
-      };
-      const results = await chrome.scripting.executeScript({world, target, func});
-      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
-    } catch {
+        const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
+        Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
+        // 備考：Firefox の MAIN world 対応待ち
+        //   see https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
+        // 備考：wrappedJSObject / XPCNativeWrapper() は、次のように ISOLAND / MAIN を遷移する。
+        //       window -> window (ISOLAND)
+        //       window.wrappedJSObject -> window (MAIN)
+        //       window.wrappedJSObject.CopyTabTitleUrl -> window.CopyTabTitleUrl (MAIN)
+        //       obj = XPCNativeWrapper(window.wrappedJSObject.CopyTabTitleUrl) -> obj (ISOLAND)
+        //       obj.wrappedJSObject -> window.CopyTabTitleUrl (MAIN)
+        // 備考：次のコードを許可します：XPCNativeWrapper()
+        //       (window.CopyTabTitleUrl ||= {}).text0 = 'main world0';
+        // 備考：次のコードをブロックします：XPCNativeWrapper()
+        //       Object.defineProperty(window.CopyTabTitleUrl||={}, 'text0', {get:()=>'hack world1'});
+        //       window.CopyTabTitleUrl = new Proxy(window.CopyTabTitleUrl||={}, {get:()=>'hack world2'});
+        //       これは、特権領域（ISOLATED）を保護するための措置です。
+        //   see https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Sharing_objects_with_page_scripts
+        // 備考：getter でエラーが発生の可能性がある。ペ本エラーは ${pageError} に出力しません。
+        //       TypeError: can't convert undefined to object
+        //       Object.defineProperty(window, 'CopyTabTitleUrl', {get:()=>{return window.aaa.bbb, {text0:'hack world3'};}});
+      } else {
+        const world = 'MAIN';
+        const injectImmediately = true;
+        const target = {tabId:tab.id};
+        const func = function() {
+          const getter = (obj, name) => { try { return obj[name]; } catch {} };
+          const obj = getter(window, 'CopyTabTitleUrl');
+          return {
+            pageText0: getter(obj, 'text0') ?? '',
+            pageText1: getter(obj, 'text1') ?? '',
+            pageText2: getter(obj, 'text2') ?? '',
+            pageText3: getter(obj, 'text3') ?? '',
+            pageText4: getter(obj, 'text4') ?? '',
+            pageText5: getter(obj, 'text5') ?? '',
+            pageText6: getter(obj, 'text6') ?? '',
+            pageText7: getter(obj, 'text7') ?? '',
+            pageText8: getter(obj, 'text8') ?? '',
+            pageText9: getter(obj, 'text9') ?? '',
+          };
+        };
+        const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
+        Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
+        // 備考：ページスクリプトの String() を信用しない。次のように変換される。
+        //       Object: [object Object]
+        //       Array: in.join(',');
+        //       Function: undefined (未定義扱いで ${pageTextn} が残る)
+        //       Node: [object Object]
+        // 備考：getter プロパティでエラーが発生した場合、次のエラーを出力します。
+        //       「TypeError: Cannot convert undefined or null to object」
+      }
+      // 備考：ユーザースクリプト（or 外部拡張機能）を想定する。
+      //       Example: window.CopyTabTitleUrl = {text0: input};
+      // 備考：ユーザー環境であるため、環境に破壊的変更が加えられていることを考慮する
+    } catch (e) {
+      //console.log(e);
       data.pageError = e.toString();
     }
   }
@@ -130,20 +191,29 @@ async function executeScript(tab, cmd) {
   if (!data.pageError && cmd.exoptions.copy_scripting_all && data.pageSelectionText == '') {
     try {
       const world = 'ISOLATED';
+      const injectImmediately = true;
       const target = {tabId:tab.id, allFrames:true};
       const func = function() {
         return {
           pageSelectionText: window.getSelection().toString(),
           
-          //pageURL: (document.URL ?? '')+'',
+          //pageURL: String(document.URL ?? ''),
         };
       };
-      //const results = await chrome.scripting.executeScript({world, target, func});
-      const results = await _executeScriptWithTimeout({world, target, func}, 150);
-      data.pageSelectionText = results.find(v => v.result.pageSelectionText)?.result.pageSelectionText 
+      const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
+      //const results = await _executeScriptWithTimeout({world, injectImmediately, target, func}, 150);
+      data.pageSelectionText = results.find(v => v.result?.pageSelectionText)?.result.pageSelectionText 
                             || '';
+      data.pageSelectionText = String(data.pageSelectionText);
       // 備考：サブフレームの選択テキスト対応
-      //data.pageURLs = results.map(v => v.result.pageURL || '');
+      //data.pageURLs = results.map(v => String(v.result?.pageURL || ''));
+      
+      // 備考：現実的な時間で応答を返さない（#66）
+      //       allFrames=true, injectImmediately=false の場合、 iframe loading=lazy で
+      //       document_idle まで読み込みを無限に待機する。
+      //       そのため、 allFrames=true の場合、 injectImmediately=true を確実に設定する
+      // 備考：results[n].result = null を出力することがあります。
+      //       injectImmediately=false, iframe loading=lazy
     } catch (e) {
       //console.log(e);
       data.pageError = e.toString();
@@ -156,14 +226,15 @@ async function executeScript(tab, cmd) {
   if (!data.pageError && isPrompt) {
     try {
       const world = 'ISOLATED';
+      const injectImmediately = true;
       const target = {tabId:tab.id};
       const func = function() {
         return {
           pagePrompt: window.prompt('Input string: ${pagePrompt}') ?? '',
         };
       };
-      const results = await chrome.scripting.executeScript({world, target, func});
-      Object.keys(results[0].result).forEach(key => data[key] = results[0].result[key]);
+      const results = await chrome.scripting.executeScript({world, injectImmediately, target, func});
+      Object.keys(results[0].result).forEach(key => data[key] = String(results[0].result[key]));
     } catch (e) {
       //console.log(e);
       data.pageError = e.toString();

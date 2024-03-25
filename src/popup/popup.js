@@ -10,8 +10,14 @@ const cmdPromise = chrome.storage.local.get(defaultStorage);
 
 
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const cmd = await cmdPromise;
+  
+  
+  // テーマ
+  const theme = ex3(cmd) ? cmd.theme : 'default';
+  document.documentElement.classList.toggle('light', theme === 'light');
+  document.documentElement.classList.toggle('dark', theme === 'dark');
   
   
   // チェックボックスイベント設定
@@ -38,9 +44,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   
   // コピーイベント設定
+  let startCopying = false;
   document.querySelectorAll('.copy').forEach((element) => {
     const id = element.id.match(/\d+$/)[0]-0;
     element.addEventListener('click', () => {
+      if (startCopying) { return; }
+      startCopying = true;
+      element.classList.add('checked');
+      document.body.classList.add('copying');
+      
       cmd.id = id;
       cmd.format = ex3(cmd, 'extended_edit') || 3<=id ? cmd.formats[id] : defaultStorage.formats[id];
       cmd.target = getTarget();
@@ -48,6 +60,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       chrome.runtime.sendMessage({target:'background.copy', cmd});
     });
   });
+  // 備考：通常、コピー処理は 100ms 以内には完了する。
+  //       コンテンツスクリプトがある場合、もう少し時間がかかることがある。
+  //       コピー完了後にポップアップを閉じる。
+  // 備考：ポップアップは、コピー完了後にクローズする。
+  //       これは、コピー完了を通知する意味がある。
+  //       クリックしてもコピー完了していないと、ポップアップは残り続ける。
+  //       その場合、ポップアップ範囲外をクリックすることでポップアップを閉じることができる。
+  //       また、閉じても処理は継続し、完了するとクリップボードに書き込まれる。（通知等はない）
+  // 備考：クリックを制御して、複数回コピーを阻止する。
+  //       もしも、複数回コピーが発生した場合、複数回コピーを実施する。（エラーしない）
+  //       その場合、通常最後のコピー内容がクリップボードに残る。
   
   
   // アクション

@@ -84,8 +84,8 @@ function compile(format, keyset, options) {
     
     try {
       if (m.groups.in === 'globalThis' && m.groups.idx != null) {
-        const idx = toValue(m.groups.idx);
-        ret = keyset['${'+idx+'}'];
+        const input = toValue(m.groups.idx);
+        ret = toProperty(input);
         success = true;
         // Deprecated: The feature will be deprecated if a better way to access the element is found.
         // ${out=globalThis["tab.status"]} => ${tab.status}
@@ -212,7 +212,7 @@ function compile(format, keyset, options) {
       } else {
         const input = reString.test(m.groups.in)
                     ? m.groups.in.slice(1, -1)
-                    : toProperty(m.groups.in);
+                    : toProperty(m.groups.in)+'';
         // ${'abc'.slice(1)} => bc
         // ${key}, ${key[idx]}, ${key.fn()}
         if (input == null) {

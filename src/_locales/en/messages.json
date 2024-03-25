@@ -175,6 +175,10 @@
     "message":    "Enable content script for main world",
     "description":"Enable content script for main world 🧪"
   },
+  "optionsCopyScriptingWaitContent": {
+    "message":    "Inject content script after page loaded",
+    "description":"Inject content script after page loaded 🧪"
+  },
   "optionsCopyTextContent": {
     "message":    "Enable $${text0} - $${text9}",
     "description":"Enable $${text0} - $${text9} 🧪"
@@ -233,6 +237,10 @@
     "description":"Copy space if empty string 🧪"
   },
   
+  "optionsThemeLabelContent": {
+    "message":    "Theme:",
+    "description":"Theme:"
+  },
   "optionsPasteOverwriteContent": {
     "message":    "Remove newlines when paste",
     "description":"Remove newline characters when paste on Options page 🧪"

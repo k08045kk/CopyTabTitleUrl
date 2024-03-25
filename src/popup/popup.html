@@ -9,9 +9,61 @@
   <script src="/common.js" defer></script>
   <script src="./popup.js" defer></script>
   <style>
+
+:root {
+  --white-color: #F5F5F5;               /* オフホワイト */
+  --white-dark-color: #DBDBDB;
+  --black-color: #303030;               /* オフブラック */
+  --black-dark-color: #212121;
+  --black-light-color: #474747;
+  --gray-color: #888;
+  --text-accent-color: var(--white-color);
+  --accent-color: #895B8A;              /* 古代紫 */
+  --accent-dark-color: #654366;
+  --accent-light-color: #BA7CBC;
+  --border-color: var(--gray-color);
+}
+:root {
+  --text-color: var(--black-color);
+  --background-color: var(--white-color);
+  --background-hover-color: var(--white-dark-color);
+  
+  --text-active-color: var(--white-color);
+  --background-active-color: var(--accent-light-color);
+  --background-checked-color: var(--accent-color);
+}/* ライトモード */
+@media (prefers-color-scheme: dark) {
+:root:not(.light) {
+  --text-color: var(--white-color);
+  --background-color: var(--black-color);
+  --background-hover-color: var(--black-light-color);
+  
+  --text-active-color: var(--white-color);
+  --background-active-color: var(--accent-dark-color);
+  --background-checked-color: var(--accent-color);
+}
+}
+.dark:root {
+  --text-color: var(--white-color);
+  --background-color: var(--black-color);
+  --background-hover-color: var(--black-light-color);
+  
+  --text-active-color: var(--white-color);
+  --background-active-color: var(--accent-dark-color);
+  --background-checked-color: var(--accent-color);
+}/* ダークモード */
+
+
+
 * {
   box-sizing: border-box;
 }
+.hide, 
+[hidden] {
+  display: none !important;
+}
+
+
 body {
   min-width: 160px; /* 10em - 3em = 7em */
   max-width: 250px; /* 15em - 3em = 12em */
@@ -20,16 +72,15 @@ body {
   font-size: 16px;
   user-select: none;
 }
-
+.copying {
+  pointer-events: none;
+}
 .clearfix::after {
   content: '';
   display: block;
   clear: both;
 }
-.hide, 
-[hidden] {
-  display: none !important;
-}
+
 
 .title {
   font-size: 12px;
@@ -68,41 +119,39 @@ body {
 
 
 body {
-  border: 1px solid #aaa;
-  color: #000;
-  background: #fff;
+  /* 標準状態 */
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  background: var(--background-color);
 }
 .box {
-  border-bottom: 1px solid #aaa;
-}
-@media (hover: hover) { /* モバイルで :hover が残る対策 */
-  .item:hover {
-    color: #000;
-    background: #ddd;
-  }
-}
-#target_win:checked ~ .box > #target_win_label, 
-#target_all:checked ~ .box > #target_all_label,
-.title,
-.item.copy:active {
-  color: #fff;
-  background: #A374B3;
+  border-bottom: 1px solid var(--border-color);
 }
 #target_win_label {
-  border-right: 1px solid #aaa;
+  border-right: 1px solid var(--border-color);
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    color: #E8EAED;
-    background: #444;
-  }
-  @media (hover: hover) {
-    .item:hover {
-      color: #E8EAED;
-      background: #666;
-    }
-  }
+
+@media (hover: hover) { /* モバイルで :hover が残る対策 */
+.item:hover {
+  /* ホバー中 */
+  background: var(--background-hover-color);
+}
+}
+.item:active,
+#target_win:checked ~ .box > #target_win_label:active, 
+#target_all:checked ~ .box > #target_all_label:active {
+  /* クリック中 */
+  color: var(--text-active-color);
+  background: var(--background-active-color);
+}
+.title,
+.item.checked, 
+#target_win:checked ~ .box > #target_win_label, 
+#target_all:checked ~ .box > #target_all_label {
+  /* 選択状態 */
+  color: var(--text-active-color);
+  background: var(--background-checked-color);
 }
   </style>
 

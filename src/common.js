@@ -222,6 +222,7 @@ const defaultStorageVersion3 = {
   browser_action_target: 'tab',         // tab / window / all
   newline: 'default',                   // default / CRLF / CR / LF
   separator: '${enter}',                // $text
+  theme: 'default',                     // v3.5.11
   popup: {                              // v3.3.1
     target: 'tab',
   },
@@ -249,6 +250,7 @@ const defaultStorageVersion3 = {
     copy_scripting: false,              // v3.1.0
     copy_scripting_all: false,          // v3.4.4
     copy_scripting_main: false,         // v3.3.6
+    copy_scripting_wait: false,         // v3.5.6
     copy_text: false,                   // v3.3.4
     extended_menus: false,              // v3.4.1
     
@@ -349,6 +351,7 @@ const extendedMode = [
   'copy_scripting',
   'copy_scripting_all',
   'copy_scripting_main',
+  'copy_scripting_wait',
   'copy_text',
   'extended_menus', 
   
@@ -378,6 +381,7 @@ const extendedEditMode = [
   'copy_scripting',
   'copy_scripting_all',
   'copy_scripting_main',
+  'copy_scripting_wait',
   'copy_text',
   'extended_menus', 
   
@@ -418,6 +422,9 @@ const exOptions = (cmd) => {
 
 async function converteStorageVersion3() {
   const oldStorage = await chrome.storage.local.get();
+  // const oldStorage = await chrome.storage.local.get(defaultStorageVersion2);
+  // 備考：バグ？下手にいじる方が怖いため、このままとする。
+  //       問題を起こした場合、 v3 標準設定として動作する予定
   if (oldStorage && oldStorage.version && oldStorage.version >= 3) {
     // バージョン３　変更なし
   } else if (oldStorage && oldStorage.version && oldStorage.version == 2) {
