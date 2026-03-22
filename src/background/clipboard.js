@@ -217,6 +217,18 @@ const onCopy = async (cmd) => {
   
   // クリップボードにコピー
   await copyToClipboard(cmd, temp);
+  if (ex3(cmd, 'copy_notification')) {
+    const text = createFormatText(cmd, temp);
+    const message = text.length > 100 ? text.slice(0, 100) + '…' : text;
+    const id = await chrome.notifications.create({
+      type: 'basic',
+      iconUrl: chrome.runtime.getURL('icon/48.png'),
+      title: 'Copied',
+      message: message || ' ',
+    });
+    setTimeout(() => chrome.notifications.clear(id), 2000);
+    // 備考：clear しない場合、Windows では通知が Action Center に残り続ける
+  }
   if (cmd.callback) {
     try {
       await chrome.runtime.sendMessage({target:'popup.'+cmd.callback});

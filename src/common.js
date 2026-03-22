@@ -258,6 +258,7 @@ const defaultStorageVersion3 = {
     
     copy_decode: false,                 // v3.1.0 （標準モードへ移行）
     copy_punycode: false,               // v3.1.0 （標準モードへ移行）
+    copy_notification: false,           // v3.6.2
     copy_clipboard_api: false,
     copy_html: false,
     

@@ -201,6 +201,10 @@
     "message":    "Decode the Punycode",
     "description":"Decode the Punycode"
   },
+  "optionsCopyNotificationContent": {
+    "message":    "Show system notification after copy",
+    "description":"Show system notification after copy"
+  },
   "optionsCopyClipboardApiContent": {
     "message":    "Copy using Clipboard API",
     "description":"Copy using Clipboard API"

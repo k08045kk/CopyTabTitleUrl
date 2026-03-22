@@ -47,6 +47,7 @@
     "activeTab",
     "clipboardWrite",
     "contextMenus",
+    "notifications",
     "offscreen",
     "scripting",
     "storage",
