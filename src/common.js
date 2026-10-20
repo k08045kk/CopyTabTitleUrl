@@ -70,8 +70,7 @@ const module = {};
 
 
 // ブラウザ判定
-const _isFirefox = chrome.runtime.getManifest()?.browser_specific_settings?.gecko?.id
-                 === 'CopyTabTitleUrl@bugbugnow.net';
+const _isFirefox = chrome.runtime.getManifest()?.browser_specific_settings?.gecko?.id;
 const isFirefox = () => _isFirefox;
 const isChrome = () => !isFirefox();
 const isKiwi = () => isChrome() && /(Android)/i.test(navigator.userAgent);
